@@ -133,7 +133,7 @@ def upsert_symmetry_log_row(new_row: dict):
         writer.writerows(final_rows)
 
     try:
-        tmp_runtime_sym = os.path.join(tempfile.gettempdir(), "nba2k26_symmetry_runtime.csv")
+        tmp_runtime_sym = os.path.join(tempfile.gettempdir(), "nba2k26_symmetry_runtime_v2.csv")
         with open(tmp_runtime_sym, mode="w", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=CSV_HEADERS)
             writer.writeheader()
@@ -526,7 +526,7 @@ def get_required_interval(elapsed_mins: float) -> int:
 def merge_cloud_backups():
     """Merge 24/7 GitHub Actions cloud backup CSVs and /tmp runtime cache into local CSVs without git conflicts."""
     for sym_src in [
-        os.path.join(tempfile.gettempdir(), "nba2k26_symmetry_runtime.csv"),
+        os.path.join(tempfile.gettempdir(), "nba2k26_symmetry_runtime_v2.csv"),
         os.path.join(BASE_DIR, "cloud_symmetry_backup.csv"),
     ]:
         if os.path.exists(sym_src) and os.path.getsize(sym_src) > 0:
