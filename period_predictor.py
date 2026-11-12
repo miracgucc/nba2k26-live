@@ -697,7 +697,7 @@ def analyze_sequential_barem_wave(
     # Never include morning/past matches that finished before the system was opened.
     recent_chain = []
     tracked_hist = hist[hist["game_id"].astype(str).str.strip().isin(logged_closing_fav.keys())].copy()
-    for _, r in tracked_hist.tail(15).iterrows():
+    for _, r in tracked_hist.iterrows():
         sh = int(r["raw_shift"])
         if sh == 0:
             sh_label = "🎯 0 (Beklenen)"

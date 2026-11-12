@@ -716,7 +716,7 @@ def render_live_dashboard():
     recent_chain = wave_global.get("recent_chain", [])
     if recent_chain:
         pills_html = ""
-        for idx_c, item in enumerate(recent_chain[-8:], 1):
+        for idx_c, item in enumerate(recent_chain, 1):
             sh = item["raw_shift"]
             t_short = (
                 f"{str(item['home_team']).replace(' (cyber)', '').split()[-1]} - "
@@ -750,8 +750,8 @@ def render_live_dashboard():
                 ref_line = f'🧮 36.Dk SkorTahmin: <b>{item["exp_barem_36"]}</b> ➔ Biten: <b>{item["act_barem"]}</b>'
 
             pills_html += (
-                f'<div style="background:{p_bg}; border:1.5px solid {p_bd}; color:{p_tx}; border-radius:10px; padding:0.48rem 0.65rem; min-width:142px; flex:1;">'
-                f'<div style="font-size:0.67rem; font-weight:700; opacity:0.85;">🕒 {time_only} | {t_short}</div>'
+                f'<div style="background:{p_bg}; border:1.5px solid {p_bd}; color:{p_tx}; border-radius:10px; padding:0.48rem 0.65rem; min-width:155px; flex:1 1 180px;">'
+                f'<div style="font-size:0.67rem; font-weight:700; opacity:0.85;">#{idx_c} &bull; 🕒 {time_only} | {t_short}</div>'
                 f'<div style="font-size:0.71rem; font-weight:700; margin-top:0.08rem;">Skor: {sc_pair} ({item["total_score"]} Sayı)</div>'
                 f'<div style="font-size:0.82rem; font-weight:800; margin:0.12rem 0;">{tag_txt}</div>'
                 f'<div style="font-size:0.66rem; opacity:0.95;">{ref_line}</div>'
@@ -763,13 +763,13 @@ def render_live_dashboard():
             <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:13px; padding:0.9rem 1.2rem; margin-top:0.9rem; box-shadow:var(--shadow-card);">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
                     <div style="font-size:0.92rem; font-weight:800; color:var(--text-primary);">
-                        🌊 Ardışık Maçlarda 36. Dakika Simetri Dalga Zinciri (Son 8 Maç: <span style="font-family:'JetBrains Mono',monospace; color:var(--score-text);">{wave_global['last_5_labels']}</span>)
+                        🌊 Ardışık Maçlarda 36. Dakika Simetri Dalga Zinciri (Toplam {len(recent_chain)} Maç | Son Zincir: <span style="font-family:'JetBrains Mono',monospace; color:var(--score-text);">{wave_global['last_5_labels']}</span>)
                     </div>
                     <div style="font-size:0.8rem; font-weight:700; color:var(--fav1-text); background:var(--pill-bg); border:1px solid var(--pill-border); padding:0.25rem 0.75rem; border-radius:999px;">
                         🔮 Sıradaki Maç Dalga Beklentisi ({wave_global['pattern_matches_count']} Benzer Zincir): ❄️ -2 Alt: %{wave_global['prob_minus_2']} &bull; 📉 -1 Alt: %{wave_global['prob_minus_1']} &bull; 🎯 Merkez (0): %{wave_global['prob_0']} &bull; 📈 +1 Üst: %{wave_global['prob_plus_1']} &bull; 🔥 +2 Üst: %{wave_global['prob_plus_2']}
                     </div>
                 </div>
-                <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+                <div style="display:flex; gap:0.45rem; flex-wrap:wrap; max-height:340px; overflow-y:auto; padding-right:4px;">
                     {pills_html}
                 </div>
             </div>
