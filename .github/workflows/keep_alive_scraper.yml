@@ -1,0 +1,51 @@
+name: 24/7 NBA 2K26 Live Odds & Results Auto-Scraper
+
+on:
+  schedule:
+    # Her 5 dakikada bir otomatik çalışır + Streamlit Cloud uygulamasını uyanık tutar
+    - cron: '*/5 * * * *'
+  workflow_dispatch: # Manuel tetikleme butonu
+
+permissions:
+  contents: write
+
+jobs:
+  scrape-and-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Pull Completed Match Results & Run 4-Min Live Snapshot Loop
+        run: |
+          python -c "
+          import time, pull_today_results, run_live_auto_scraper
+          try:
+              pull_today_results.pull_recent_cyberleague_matches(days_back=2)
+          except Exception as e:
+              print('Results sync warning:', e)
+          # 4 dakika boyunca her 25 saniyede bir canlı maçları ve 36.dk oranlarını yakala
+          for i in range(9):
+              try:
+                  run_live_auto_scraper.run_single_cycle()
+              except Exception as e:
+                  print('Cycle warning:', e)
+              if i < 8:
+                  time.sleep(25)
+          "
+
+      - name: Commit & Push Updated CSV Logs
+        run: |
+          git config --global user.name "NBA2K26-AutoBot"
+          git config --global user.email "bot@nba2k26.local"
+          git add matches_data.csv symmetry_analysis_log.csv live_matches_state.json || true
+          git diff --staged --quiet || (git commit -m "Auto-update live odds & match results [skip ci]" && git push)
