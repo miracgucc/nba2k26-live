@@ -4,7 +4,6 @@ on:
   push:
     branches: [ main ]
   schedule:
-    # Her 15 dakikada bir bulut sunucusunu uyanık tutar
     - cron: '*/15 * * * *'
   workflow_dispatch:
 
@@ -20,13 +19,16 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install Dependencies
+        run: pip install pandas numpy requests
+
       - name: Verify Live 1xBet Feed Connectivity from Cloud
         run: |
           python -c "
           import run_live_auto_scraper
           games = run_live_auto_scraper.fetch_all_live_games_via_api()
-          print('Cloud LiveFeed reachable! Active games count:', len(games) if games else 0)
-          if games:
-              for g in games:
-                  print(' ->', g.get('team_1'), 'vs', g.get('team_2'), '| Score:', g.get('score_1'), '-', g.get('score_2'), '| Barems:', len(g.get('barems', [])))
+          print('Cloud LiveFeed games:', len(games) if games else 0)
+          assert games is not None and len(games) > 0, 'Cloud IP received 0 games or blocked!'
+          for g in games:
+              print(' ->', g.get('team_1'), 'vs', g.get('team_2'), '| Score:', g.get('score_1'), '-', g.get('score_2'), '| Barems:', len(g.get('barems', [])))
           "
