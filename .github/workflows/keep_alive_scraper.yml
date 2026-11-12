@@ -32,14 +32,17 @@ jobs:
       - name: Run Cloud Live Scraper & Results Sync
         run: |
           python -c "
-          import shutil, os, json, pull_today_results, run_live_auto_scraper
+          import shutil, os, json, time, run_live_auto_scraper
           if os.path.exists('cloud_symmetry_backup.csv'):
               shutil.copyfile('cloud_symmetry_backup.csv', 'symmetry_analysis_log.csv')
           if os.path.exists('cloud_matches_backup.csv'):
               shutil.copyfile('cloud_matches_backup.csv', 'matches_data.csv')
-          games = run_live_auto_scraper.fetch_all_live_games_via_api('')
-          print('Cloud LiveFeed games:', len(games) if games else 0)
-          run_live_auto_scraper.run_single_cycle()
+          games = []
+          for i in range(6):
+              games = run_live_auto_scraper.fetch_all_live_games_via_api('')
+              run_live_auto_scraper.run_single_cycle()
+              if i < 5:
+                  time.sleep(25)
           shutil.copyfile('symmetry_analysis_log.csv', 'cloud_symmetry_backup.csv')
           shutil.copyfile('matches_data.csv', 'cloud_matches_backup.csv')
           with open('cloud_status.json', 'w', encoding='utf-8') as f:

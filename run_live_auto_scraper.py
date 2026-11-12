@@ -523,6 +523,19 @@ def merge_cloud_backups():
                 upsert_symmetry_log_row(r)
         except Exception:
             pass
+    cloud_m = os.path.join(BASE_DIR, "cloud_matches_backup.csv")
+    if os.path.exists(cloud_m) and os.path.getsize(cloud_m) > 0:
+        try:
+            df_c = pd.read_csv(cloud_m)
+            if os.path.exists(MATCHES_CSV_PATH) and os.path.getsize(MATCHES_CSV_PATH) > 0:
+                df_l = pd.read_csv(MATCHES_CSV_PATH)
+                if len(df_c) > len(df_l):
+                    df_merged = pd.concat([df_c, df_l], ignore_index=True).drop_duplicates(
+                        subset=["date", "team_1", "team_2", "score_1", "score_2"], keep="first"
+                    )
+                    df_merged.to_csv(MATCHES_CSV_PATH, index=False, encoding="utf-8")
+        except Exception:
+            pass
 
 
 def run_auto_scraper(force_manual=False):
