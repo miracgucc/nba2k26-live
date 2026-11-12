@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 import numpy as np
 import pandas as pd
 
@@ -694,10 +695,28 @@ def analyze_sequential_barem_wave(
     hist["wave_code"] = wave_codes
 
     # Build recent_chain STRICTLY AND ONLY from matches recorded in symmetry_analysis_log.csv!
-    # Never include morning/past matches that finished before the system was opened.
+    # Sort strictly by 1xBet sequential game_id so chronological order is 100% immune to server timezone.
     recent_chain = []
     tracked_hist = hist[hist["game_id"].astype(str).str.strip().isin(logged_closing_fav.keys())].copy()
+    if not tracked_hist.empty:
+        tracked_hist["_gid_num"] = (
+            tracked_hist["game_id"].astype(str).str.extract(r"(\d+)")[0].fillna(0).astype(int)
+        )
+        tracked_hist = tracked_hist.sort_values(by="_gid_num", ascending=True).reset_index(drop=True)
+
+    prev_dt = None
     for _, r in tracked_hist.iterrows():
+        raw_dt_str = str(r.get("date", "")).strip()
+        fixed_dt_str = raw_dt_str
+        try:
+            cur_dt = datetime.strptime(raw_dt_str, "%Y-%m-%d %H:%M")
+            if prev_dt is not None and cur_dt < prev_dt:
+                cur_dt = cur_dt + timedelta(hours=3)
+                fixed_dt_str = cur_dt.strftime("%Y-%m-%d %H:%M")
+            prev_dt = cur_dt
+        except Exception:
+            pass
+
         sh = int(r["raw_shift"])
         if sh == 0:
             sh_label = "🎯 0 (Beklenen)"
@@ -713,7 +732,7 @@ def analyze_sequential_barem_wave(
         recent_chain.append(
             {
                 "game_id": r.get("game_id", ""),
-                "date": r.get("date", ""),
+                "date": fixed_dt_str,
                 "home_team": r.get("home_team", ""),
                 "away_team": r.get("away_team", ""),
                 "home_total": int(r.get("home_total", 0) or 0),

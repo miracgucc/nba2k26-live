@@ -1,14 +1,25 @@
+import importlib
 import json
 import os
 import re
 import threading
 import time
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
+
+import period_predictor as _pp_mod
+import update_all_checkpoints as _uac_mod
+import pull_today_results as _ptr_mod
+import run_live_auto_scraper as _rlas_mod
+
+importlib.reload(_pp_mod)
+importlib.reload(_uac_mod)
+importlib.reload(_ptr_mod)
+importlib.reload(_rlas_mod)
 
 from period_predictor import (
     BAREM_RANGES,
@@ -34,6 +45,7 @@ from run_live_auto_scraper import (
 )
 from update_all_checkpoints import auto_settle_checkpoints
 
+TR_TZ = timezone(timedelta(hours=3))
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 st.set_page_config(
@@ -59,8 +71,12 @@ IS_DARK = st.session_state.ui_theme == "matte_dark"
 SCRAPE_LOCK = threading.Lock()
 
 
+ENGINE_VERSION = "v2.6-tr-tz"
+
+
 class BackgroundEngineState:
     def __init__(self):
+        self.version = ENGINE_VERSION
         self.is_running = False
         self.last_run_ts = 0.0
         self.last_run_str = "Hazırlanıyor"
@@ -70,17 +86,17 @@ class BackgroundEngineState:
 
 
 @st.cache_resource
-def get_background_engine() -> BackgroundEngineState:
+def get_background_engine(version: str = ENGINE_VERSION) -> BackgroundEngineState:
     state = BackgroundEngineState()
 
     def _worker():
-        while True:
+        while state.version == ENGINE_VERSION:
             try:
                 with SCRAPE_LOCK:
                     state.is_running = True
                     poll_sec = run_auto_scraper(force_manual=False)
                     state.last_run_ts = time.time()
-                    state.last_run_str = datetime.now().strftime("%H:%M:%S")
+                    state.last_run_str = datetime.now(TR_TZ).strftime("%H:%M:%S")
                     state.next_poll_sec = max(10, min(300, int(poll_sec or 60)))
                     state.scan_count += 1
                     state.last_error = ""
@@ -91,15 +107,15 @@ def get_background_engine() -> BackgroundEngineState:
                 state.is_running = False
 
             sleep_target = time.time() + state.next_poll_sec
-            while time.time() < sleep_target:
+            while time.time() < sleep_target and state.version == ENGINE_VERSION:
                 time.sleep(1.0)
 
-    t = threading.Thread(target=_worker, daemon=True, name="NBA2K26_LiveEngine")
+    t = threading.Thread(target=_worker, daemon=True, name=f"NBA2K26_LiveEngine_{version}")
     t.start()
     return state
 
 
-bg_engine = get_background_engine()
+bg_engine = get_background_engine(ENGINE_VERSION)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
