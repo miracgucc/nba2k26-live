@@ -1,194 +1,194 @@
 {
-  "updated_at": "2026-11-12 14:05:38",
-  "timestamp": 1794481538.5028982,
+  "updated_at": "2026-11-12 15:23:17",
+  "timestamp": 1794486197.557146,
   "domain": "https://fswin-best.icu",
   "recommended_poll_speed": 20,
-  "duration_sec": 5.57,
+  "duration_sec": 1.51,
   "live_matches": [
     {
-      "game_id": "CB-770216867",
-      "team_home": "Los Angeles Lakers (cyber)",
-      "team_away": "Golden State Warriors (cyber)",
-      "home_score": 52,
-      "away_score": 107,
+      "game_id": "CB-770239437",
+      "team_home": "Atlanta Hawks (cyber)",
+      "team_away": "Indiana Pacers (cyber)",
+      "home_score": 8,
+      "away_score": 5,
+      "quarter": 1,
+      "elapsed_mins": 2.7,
+      "remaining_mins": 9.3,
+      "check_time": "Q1 - Minute 2",
+      "status": "BAREM_OPEN",
+      "completed_quarters": [],
+      "live_q_score": "8-5",
+      "odds": {
+        "160 Or Less": 99.0,
+        "161-170": 99.0,
+        "171-180": 20.0,
+        "181-190": 8.02,
+        "191-200": 4.87,
+        "201-210": 3.72,
+        "211-220": 4.2,
+        "221-230": 6.91,
+        "231+": 13.0
+      },
+      "barem_probs": {
+        "160 Or Less": 0.1,
+        "161-170": 1.0,
+        "171-180": 5.9,
+        "181-190": 20.0,
+        "191-200": 32.7,
+        "201-210": 27.0,
+        "211-220": 10.9,
+        "221-230": 2.1,
+        "231+": 0.3
+      },
+      "clusters": {
+        "161-180": 6.9,
+        "171-190": 25.9,
+        "181-200": 52.7,
+        "191-210": 59.7,
+        "201-220": 37.9,
+        "211-230": 13.0,
+        "221-240": 2.3
+      },
+      "predicted_total": 197.7,
+      "predicted_home_final": 104.1,
+      "predicted_away_final": 93.6,
+      "best_cluster_name": "191-210",
+      "best_cluster_prob": 59.7,
+      "h2h_sample_size": 80,
+      "q3_q4_signal": {
+        "normal": {
+          "probability": 0.278,
+          "count": 157
+        },
+        "burst_positive": {
+          "probability": 0.342,
+          "count": 193
+        },
+        "collapse_negative": {
+          "probability": 0.381,
+          "count": 215
+        },
+        "signal": "⚖️ Dengeli Q3 ➔ Q4 Geçişi",
+        "detail": "Benzer Q3 temposundaki (53 sayı) 565 geçmiş maçta Q4 ortalaması 52.0 sayı oldu (Patlama ≥56: %34.2, Normal 49-55: %27.8, Çöküş ≤48: %38.1).",
+        "threshold": 50,
+        "sample_size": 565,
+        "streak_window": 3,
+        "burst_probability": 0.342,
+        "collapse_probability": 0.381,
+        "normal_probability": 0.278,
+        "burst_prob": 34.2,
+        "collapse_prob": 38.1,
+        "normal_prob": 27.8
+      },
+      "value_range": "181-190",
+      "highest_prob_range": "201-210",
+      "bookie_fav_1": "201-210",
+      "bookie_fav_1_odd": 3.72,
+      "bookie_fav_2": "211-220",
+      "bookie_fav_2_odd": 4.2,
+      "symmetry_gap": 0.48,
+      "is_symmetric_trap": true,
+      "dutch_odd": 1.97,
+      "best_ev_pct": 60.4,
+      "is_barem_open": true,
+      "updated_at": "15:23:17"
+    },
+    {
+      "game_id": "CB-770232119",
+      "team_home": "Minnesota Timberwolves (cyber)",
+      "team_away": "Oklahoma City Thunder (cyber)",
+      "home_score": 60,
+      "away_score": 62,
       "quarter": 3,
-      "elapsed_mins": 30.4,
-      "remaining_mins": 5.6,
-      "check_time": "Q3 - Minute 30",
+      "elapsed_mins": 26.8,
+      "remaining_mins": 9.2,
+      "check_time": "Q3 - Minute 26",
       "status": "BAREM_OPEN",
       "completed_quarters": [
         [
-          19,
-          40
+          29,
+          32
         ],
         [
           26,
-          42
+          24
         ]
       ],
-      "live_q_score": "7-25",
+      "live_q_score": "5-6",
       "odds": {
         "160 Or Less": 99.0,
         "161-170": 99.0,
         "171-180": 99.0,
         "181-190": 99.0,
-        "191-200": 99.0,
-        "201-210": 99.0,
-        "211-220": 3.18,
-        "221-230": 2.03,
-        "231+": 4.12
+        "191-200": 13.0,
+        "201-210": 3.85,
+        "211-220": 3.07,
+        "221-230": 4.05,
+        "231+": 5.61
       },
       "barem_probs": {
         "160 Or Less": 0.0,
         "161-170": 0.0,
         "171-180": 0.0,
-        "181-190": 0.0,
-        "191-200": 0.0,
-        "201-210": 0.0,
-        "211-220": 1.0,
-        "221-230": 17.0,
-        "231+": 81.9
+        "181-190": 0.7,
+        "191-200": 11.1,
+        "201-210": 40.6,
+        "211-220": 37.6,
+        "221-230": 9.4,
+        "231+": 0.6
       },
       "clusters": {
         "161-180": 0.0,
-        "171-190": 0.0,
-        "181-200": 0.0,
-        "191-210": 0.0,
-        "201-220": 1.1,
-        "211-230": 18.1,
-        "221-240": 66.7
+        "171-190": 0.7,
+        "181-200": 11.7,
+        "191-210": 51.7,
+        "201-220": 78.2,
+        "211-230": 47.0,
+        "221-240": 10.0
       },
-      "predicted_total": 237.3,
-      "predicted_home_final": 88.0,
-      "predicted_away_final": 149.3,
-      "best_cluster_name": "221-240",
-      "best_cluster_prob": 66.7,
-      "h2h_sample_size": 86,
+      "predicted_total": 210.1,
+      "predicted_home_final": 101.4,
+      "predicted_away_final": 108.7,
+      "best_cluster_name": "201-220",
+      "best_cluster_prob": 78.2,
+      "h2h_sample_size": 88,
       "q3_q4_signal": {
         "normal": {
-          "probability": 0.231,
-          "count": 95
+          "probability": 0.29,
+          "count": 177
         },
         "burst_positive": {
-          "probability": 0.505,
-          "count": 208
+          "probability": 0.344,
+          "count": 210
         },
         "collapse_negative": {
-          "probability": 0.265,
-          "count": 109
+          "probability": 0.367,
+          "count": 224
         },
-        "signal": "🔥 Q4 Sayı Patlaması Eğilimi",
-        "detail": "Benzer Q3 temposundaki (60 sayı) 412 geçmiş maçta Q4 ortalaması 55.1 sayı oldu (Patlama ≥56: %50.5, Normal 49-55: %23.1, Çöküş ≤48: %26.5).",
+        "signal": "⚖️ Dengeli Q3 ➔ Q4 Geçişi",
+        "detail": "Benzer Q3 temposundaki (47 sayı) 611 geçmiş maçta Q4 ortalaması 51.6 sayı oldu (Patlama ≥56: %34.4, Normal 49-55: %29.0, Çöküş ≤48: %36.7).",
         "threshold": 50,
-        "sample_size": 412,
+        "sample_size": 611,
         "streak_window": 3,
-        "burst_probability": 0.505,
-        "collapse_probability": 0.265,
-        "normal_probability": 0.231,
-        "burst_prob": 50.5,
-        "collapse_prob": 26.5,
-        "normal_prob": 23.1
+        "burst_probability": 0.344,
+        "collapse_probability": 0.367,
+        "normal_probability": 0.29,
+        "burst_prob": 34.4,
+        "collapse_prob": 36.7,
+        "normal_prob": 29.0
       },
-      "value_range": "231+",
-      "highest_prob_range": "221-230",
-      "bookie_fav_1": "221-230",
-      "bookie_fav_1_odd": 2.03,
-      "bookie_fav_2": "211-220",
-      "bookie_fav_2_odd": 3.18,
-      "symmetry_gap": 1.15,
-      "is_symmetric_trap": false,
-      "dutch_odd": 1.24,
-      "best_ev_pct": 237.4,
-      "is_barem_open": true,
-      "updated_at": "14:05:38"
-    },
-    {
-      "game_id": "CB-770224429",
-      "team_home": "New York Knicks (cyber)",
-      "team_away": "Boston Celtics (cyber)",
-      "home_score": 10,
-      "away_score": 14,
-      "quarter": 1,
-      "elapsed_mins": 5.2,
-      "remaining_mins": 6.8,
-      "check_time": "Q1 - Minute 5",
-      "status": "BAREM_OPEN",
-      "completed_quarters": [],
-      "live_q_score": "10-14",
-      "odds": {
-        "160 Or Less": 99.0,
-        "161-170": 99.0,
-        "171-180": 99.0,
-        "181-190": 20.0,
-        "191-200": 8.03,
-        "201-210": 4.08,
-        "211-220": 3.69,
-        "221-230": 5.48,
-        "231+": 4.35
-      },
-      "barem_probs": {
-        "160 Or Less": 0.0,
-        "161-170": 0.0,
-        "171-180": 0.1,
-        "181-190": 1.0,
-        "191-200": 7.0,
-        "201-210": 21.9,
-        "211-220": 34.4,
-        "221-230": 25.4,
-        "231+": 10.3
-      },
-      "clusters": {
-        "161-180": 0.1,
-        "171-190": 1.1,
-        "181-200": 8.0,
-        "191-210": 28.9,
-        "201-220": 56.2,
-        "211-230": 59.8,
-        "221-240": 34.3
-      },
-      "predicted_total": 216.4,
-      "predicted_home_final": 103.5,
-      "predicted_away_final": 112.9,
-      "best_cluster_name": "211-230",
-      "best_cluster_prob": 59.8,
-      "h2h_sample_size": 89,
-      "q3_q4_signal": {
-        "normal": {
-          "probability": 0.297,
-          "count": 148
-        },
-        "burst_positive": {
-          "probability": 0.394,
-          "count": 196
-        },
-        "collapse_negative": {
-          "probability": 0.309,
-          "count": 154
-        },
-        "signal": "🔥 Q4 Sayı Patlaması Eğilimi",
-        "detail": "Benzer Q3 temposundaki (53 sayı) 498 geçmiş maçta Q4 ortalaması 53.2 sayı oldu (Patlama ≥56: %39.4, Normal 49-55: %29.7, Çöküş ≤48: %30.9).",
-        "threshold": 50,
-        "sample_size": 498,
-        "streak_window": 3,
-        "burst_probability": 0.394,
-        "collapse_probability": 0.309,
-        "normal_probability": 0.297,
-        "burst_prob": 39.4,
-        "collapse_prob": 30.9,
-        "normal_prob": 29.7
-      },
-      "value_range": "221-230",
+      "value_range": "201-210",
       "highest_prob_range": "211-220",
       "bookie_fav_1": "211-220",
-      "bookie_fav_1_odd": 3.69,
+      "bookie_fav_1_odd": 3.07,
       "bookie_fav_2": "201-210",
-      "bookie_fav_2_odd": 4.08,
-      "symmetry_gap": 0.39,
-      "is_symmetric_trap": true,
-      "dutch_odd": 1.94,
-      "best_ev_pct": 39.2,
+      "bookie_fav_2_odd": 3.85,
+      "symmetry_gap": 0.78,
+      "is_symmetric_trap": false,
+      "dutch_odd": 1.71,
+      "best_ev_pct": 56.3,
       "is_barem_open": true,
-      "updated_at": "14:05:38"
+      "updated_at": "15:23:17"
     }
   ]
 }

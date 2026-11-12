@@ -8,7 +8,9 @@ import sys
 import tempfile
 import time
 import urllib.request
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
+
+TR_TZ = timezone(timedelta(hours=3))
 
 import numpy as np
 import pandas as pd
@@ -129,6 +131,15 @@ def upsert_symmetry_log_row(new_row: dict):
         writer = csv.DictWriter(f, fieldnames=CSV_HEADERS)
         writer.writeheader()
         writer.writerows(final_rows)
+
+    try:
+        tmp_runtime_sym = os.path.join(tempfile.gettempdir(), "nba2k26_symmetry_runtime.csv")
+        with open(tmp_runtime_sym, mode="w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=CSV_HEADERS)
+            writer.writeheader()
+            writer.writerows(final_rows)
+    except Exception:
+        pass
 
 
 def _map_barem_name(raw_name: str, params_list: list, parameter_val) -> str:
@@ -513,27 +524,31 @@ def get_required_interval(elapsed_mins: float) -> int:
 
 
 def merge_cloud_backups():
-    """Merge 24/7 GitHub Actions cloud backup CSVs into local CSVs without git conflicts."""
-    cloud_sym = os.path.join(BASE_DIR, "cloud_symmetry_backup.csv")
-    if os.path.exists(cloud_sym) and os.path.getsize(cloud_sym) > 0:
-        try:
-            with open(cloud_sym, "r", encoding="utf-8") as f:
-                c_rows = list(csv.DictReader(f))
-            for r in c_rows:
-                upsert_symmetry_log_row(r)
-        except Exception:
-            pass
+    """Merge 24/7 GitHub Actions cloud backup CSVs and /tmp runtime cache into local CSVs without git conflicts."""
+    for sym_src in [
+        os.path.join(tempfile.gettempdir(), "nba2k26_symmetry_runtime.csv"),
+        os.path.join(BASE_DIR, "cloud_symmetry_backup.csv"),
+    ]:
+        if os.path.exists(sym_src) and os.path.getsize(sym_src) > 0:
+            try:
+                with open(sym_src, "r", encoding="utf-8") as f:
+                    c_rows = list(csv.DictReader(f))
+                for r in c_rows:
+                    upsert_symmetry_log_row(r)
+            except Exception:
+                pass
     cloud_m = os.path.join(BASE_DIR, "cloud_matches_backup.csv")
     if os.path.exists(cloud_m) and os.path.getsize(cloud_m) > 0:
         try:
             df_c = pd.read_csv(cloud_m)
             if os.path.exists(MATCHES_CSV_PATH) and os.path.getsize(MATCHES_CSV_PATH) > 0:
                 df_l = pd.read_csv(MATCHES_CSV_PATH)
-                if len(df_c) > len(df_l):
-                    df_merged = pd.concat([df_c, df_l], ignore_index=True).drop_duplicates(
-                        subset=["date", "team_1", "team_2", "score_1", "score_2"], keep="first"
-                    )
-                    df_merged.to_csv(MATCHES_CSV_PATH, index=False, encoding="utf-8")
+                df_merged = (
+                    pd.concat([df_c, df_l], ignore_index=True)
+                    .sort_values("date")
+                    .drop_duplicates(subset=["game_id"], keep="last")
+                )
+                df_merged.to_csv(MATCHES_CSV_PATH, index=False, encoding="utf-8")
         except Exception:
             pass
 
@@ -621,7 +636,7 @@ def run_auto_scraper(force_manual=False):
                     "highest_prob_range": "-",
                     "dutch_odd": 0.0,
                     "is_barem_open": False,
-                    "updated_at": datetime.now().strftime("%H:%M:%S"),
+                    "updated_at": datetime.now(TR_TZ).strftime("%H:%M:%S"),
                 }
             )
             continue
@@ -750,7 +765,7 @@ def run_auto_scraper(force_manual=False):
                 "dutch_odd": sym_info["dutch_odd"],
                 "best_ev_pct": sym_info["best_ev_pct"],
                 "is_barem_open": is_barem_open,
-                "updated_at": datetime.now().strftime("%H:%M:%S"),
+                "updated_at": datetime.now(TR_TZ).strftime("%H:%M:%S"),
             }
         )
 
@@ -770,7 +785,7 @@ def run_auto_scraper(force_manual=False):
             row = {
                 "game_id": game_id_str,
                 "game_name": f"{team1} vs {team2}",
-                "date": datetime.now().strftime("%Y-%m-%d"),
+                "date": datetime.now(TR_TZ).strftime("%Y-%m-%d"),
                 "check_time": check_time,
                 "current_score": f"{total_home}-{total_away}",
                 "odds_160_or_less": full_odds["160 Or Less"],

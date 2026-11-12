@@ -8,8 +8,10 @@ import socket
 import ssl
 import time
 import urllib.request
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from update_all_checkpoints import auto_settle_checkpoints
+
+TR_TZ = timezone(timedelta(hours=3))
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CSV_PATH = os.path.join(BASE_DIR, "matches_data.csv")
@@ -207,6 +209,21 @@ def pull_today_results(only_tracked=False, days_back=1) -> int:
         except Exception:
             pass
 
+    # Map exact UTC+3 (Turkey Time) start times for all fetched games to fix any UTC timestamps from cloud runners
+    tr_time_by_id = {}
+    for g in all_raw_games:
+        if g.get("id") and g.get("dateStart"):
+            tr_time_by_id[f"CB-{g['id']}"] = datetime.fromtimestamp(g["dateStart"], tz=TR_TZ).strftime(
+                "%Y-%m-%d %H:%M"
+            )
+
+    tz_fixed_count = 0
+    for row in all_matches:
+        gid = str(row.get("game_id", "")).strip()
+        if gid in tr_time_by_id and row.get("date") != tr_time_by_id[gid]:
+            row["date"] = tr_time_by_id[gid]
+            tz_fixed_count += 1
+
     new_games = []
     for g in all_raw_games:
         try:
@@ -217,7 +234,7 @@ def pull_today_results(only_tracked=False, days_back=1) -> int:
                 continue
 
             date_start = g.get("dateStart", now)
-            game_time = datetime.fromtimestamp(date_start).strftime("%Y-%m-%d %H:%M")
+            game_time = datetime.fromtimestamp(date_start, tz=TR_TZ).strftime("%Y-%m-%d %H:%M")
             home_team = g.get("opp1", "").strip()
             away_team = g.get("opp2", "").strip()
             score_str = g.get("score", "").strip()
@@ -281,7 +298,7 @@ def pull_today_results(only_tracked=False, days_back=1) -> int:
         except Exception as e:
             print(f"Error parsing game result: {e}")
 
-    if new_games:
+    if new_games or tz_fixed_count > 0:
         headers_csv = [
             "game_id",
             "date",
@@ -312,7 +329,7 @@ def pull_today_results(only_tracked=False, days_back=1) -> int:
             writer = csv.DictWriter(f, fieldnames=headers_csv)
             writer.writeheader()
             writer.writerows(all_matches)
-        print(f"Added {len(new_games)} completed games to matches_data.csv (Total: {len(all_matches)}).")
+        print(f"Added {len(new_games)} completed games (tz fixed: {tz_fixed_count}) to matches_data.csv (Total: {len(all_matches)}).")
 
     auto_settle_checkpoints()
     return len(new_games)
