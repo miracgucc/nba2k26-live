@@ -1,121 +1,20 @@
 {
-  "updated_at": "2026-11-12 13:54:30",
-  "timestamp": 1794480870.645636,
+  "updated_at": "2026-11-12 13:57:44",
+  "timestamp": 1794481064.0454888,
   "domain": "https://fswin-best.icu",
   "recommended_poll_speed": 20,
-  "duration_sec": 0.68,
+  "duration_sec": 0.67,
   "live_matches": [
-    {
-      "game_id": "CB-770208874",
-      "team_home": "Los Angeles Clippers (cyber)",
-      "team_away": "Atlanta Hawks (cyber)",
-      "home_score": 102,
-      "away_score": 91,
-      "quarter": 4,
-      "elapsed_mins": 48.0,
-      "remaining_mins": 0.0,
-      "check_time": "Q4 - Minute 47",
-      "status": "WAITING_FINAL",
-      "completed_quarters": [
-        [
-          34,
-          20
-        ],
-        [
-          22,
-          33
-        ],
-        [
-          24,
-          24
-        ]
-      ],
-      "live_q_score": "22-14",
-      "odds": {
-        "160 Or Less": 99.0,
-        "161-170": 99.0,
-        "171-180": 99.0,
-        "181-190": 99.0,
-        "191-200": 99.0,
-        "201-210": 99.0,
-        "211-220": 99.0,
-        "221-230": 99.0,
-        "231+": 99.0
-      },
-      "barem_probs": {
-        "160 Or Less": 0.0,
-        "161-170": 0.0,
-        "171-180": 0.0,
-        "181-190": 19.2,
-        "191-200": 79.0,
-        "201-210": 1.8,
-        "211-220": 0.0,
-        "221-230": 0.0,
-        "231+": 0.0
-      },
-      "clusters": {
-        "161-180": 0.0,
-        "171-190": 19.2,
-        "181-200": 98.2,
-        "191-210": 80.8,
-        "201-220": 1.8,
-        "211-230": 0.0,
-        "221-240": 0.0
-      },
-      "predicted_total": 193.4,
-      "predicted_home_final": 102.2,
-      "predicted_away_final": 91.2,
-      "best_cluster_name": "181-200",
-      "best_cluster_prob": 98.2,
-      "h2h_sample_size": 46,
-      "q3_q4_signal": {
-        "normal": {
-          "probability": 0.303,
-          "count": 192
-        },
-        "burst_positive": {
-          "probability": 0.349,
-          "count": 221
-        },
-        "collapse_negative": {
-          "probability": 0.348,
-          "count": 220
-        },
-        "signal": "⚖️ Dengeli Q3 ➔ Q4 Geçişi",
-        "detail": "Benzer Q3 temposundaki (48 sayı) 633 geçmiş maçta Q4 ortalaması 52.1 sayı oldu (Patlama ≥56: %34.9, Normal 49-55: %30.3, Çöküş ≤48: %34.8).",
-        "threshold": 50,
-        "sample_size": 633,
-        "streak_window": 3,
-        "burst_probability": 0.349,
-        "collapse_probability": 0.348,
-        "normal_probability": 0.303,
-        "burst_prob": 34.9,
-        "collapse_prob": 34.8,
-        "normal_prob": 30.3
-      },
-      "value_range": "191-200",
-      "highest_prob_range": "191-200",
-      "bookie_fav_1": null,
-      "bookie_fav_1_odd": 99.0,
-      "bookie_fav_2": null,
-      "bookie_fav_2_odd": 99.0,
-      "symmetry_gap": 99.0,
-      "is_symmetric_trap": false,
-      "dutch_odd": 0.0,
-      "best_ev_pct": 0.0,
-      "is_barem_open": false,
-      "updated_at": "13:54:30"
-    },
     {
       "game_id": "CB-770216867",
       "team_home": "Los Angeles Lakers (cyber)",
       "team_away": "Golden State Warriors (cyber)",
-      "home_score": 42,
-      "away_score": 79,
+      "home_score": 45,
+      "away_score": 82,
       "quarter": 2,
-      "elapsed_mins": 23.2,
-      "remaining_mins": 0.8,
-      "check_time": "Q2 - Minute 23",
+      "elapsed_mins": 24.0,
+      "remaining_mins": 0.0,
+      "check_time": "Q2 - Minute 24",
       "status": "BAREM_OPEN",
       "completed_quarters": [
         [
@@ -123,17 +22,17 @@
           40
         ]
       ],
-      "live_q_score": "23-39",
+      "live_q_score": "26-42",
       "odds": {
         "160 Or Less": 99.0,
         "161-170": 99.0,
         "171-180": 99.0,
         "181-190": 99.0,
         "191-200": 99.0,
-        "201-210": 11.0,
-        "211-220": 2.568,
-        "221-230": 2.592,
-        "231+": 4.49
+        "201-210": 13.0,
+        "211-220": 2.69,
+        "221-230": 2.464,
+        "231+": 4.24
       },
       "barem_probs": {
         "160 Or Less": 0.0,
@@ -142,24 +41,24 @@
         "181-190": 0.0,
         "191-200": 0.0,
         "201-210": 0.2,
-        "211-220": 3.9,
-        "221-230": 23.4,
-        "231+": 72.6
+        "211-220": 2.9,
+        "221-230": 21.1,
+        "231+": 75.8
       },
       "clusters": {
         "161-180": 0.0,
         "171-190": 0.0,
         "181-200": 0.0,
         "191-210": 0.2,
-        "201-220": 4.0,
-        "211-230": 27.2,
-        "221-240": 66.6
+        "201-220": 3.1,
+        "211-230": 24.1,
+        "221-240": 64.1
       },
-      "predicted_total": 235.7,
-      "predicted_home_final": 102.4,
-      "predicted_away_final": 133.3,
+      "predicted_total": 236.7,
+      "predicted_home_final": 103.5,
+      "predicted_away_final": 133.2,
       "best_cluster_name": "221-240",
-      "best_cluster_prob": 66.6,
+      "best_cluster_prob": 64.1,
       "h2h_sample_size": 86,
       "q3_q4_signal": {
         "normal": {
@@ -187,17 +86,17 @@
         "normal_prob": 24.3
       },
       "value_range": "231+",
-      "highest_prob_range": "211-220",
-      "bookie_fav_1": "211-220",
-      "bookie_fav_1_odd": 2.568,
-      "bookie_fav_2": "221-230",
-      "bookie_fav_2_odd": 2.592,
-      "symmetry_gap": 0.024,
+      "highest_prob_range": "221-230",
+      "bookie_fav_1": "221-230",
+      "bookie_fav_1_odd": 2.464,
+      "bookie_fav_2": "211-220",
+      "bookie_fav_2_odd": 2.69,
+      "symmetry_gap": 0.226,
       "is_symmetric_trap": true,
       "dutch_odd": 1.29,
-      "best_ev_pct": 226.0,
+      "best_ev_pct": 221.4,
       "is_barem_open": true,
-      "updated_at": "13:54:30"
+      "updated_at": "13:57:44"
     },
     {
       "game_id": "CB-770224429",
@@ -222,7 +121,7 @@
       "highest_prob_range": "-",
       "dutch_odd": 0.0,
       "is_barem_open": false,
-      "updated_at": "13:54:30"
+      "updated_at": "13:57:44"
     }
   ]
 }
