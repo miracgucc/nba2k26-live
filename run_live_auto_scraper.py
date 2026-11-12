@@ -319,7 +319,7 @@ try {
             pass
 
 
-def fetch_all_live_games_via_api(domain: str) -> list:
+def fetch_all_live_games_via_api(domain: str = "") -> list:
     """
     Fetch ALL simultaneous live NBA 2K26 CyberLeague games and their exact Barem (G=3319 / GS=1322)
     odds directly via 1xBet's LiveFeed JSON API (`Get1x2_VZip` + `GetGameZip`) in ~0.3s.
@@ -512,8 +512,22 @@ def get_required_interval(elapsed_mins: float) -> int:
         return 300
 
 
+def merge_cloud_backups():
+    """Merge 24/7 GitHub Actions cloud backup CSVs into local CSVs without git conflicts."""
+    cloud_sym = os.path.join(BASE_DIR, "cloud_symmetry_backup.csv")
+    if os.path.exists(cloud_sym) and os.path.getsize(cloud_sym) > 0:
+        try:
+            with open(cloud_sym, "r", encoding="utf-8") as f:
+                c_rows = list(csv.DictReader(f))
+            for r in c_rows:
+                upsert_symmetry_log_row(r)
+        except Exception:
+            pass
+
+
 def run_auto_scraper(force_manual=False):
     init_csv()
+    merge_cloud_backups()
     start_ts = time.time()
 
     domain = discover_active_domain()
@@ -810,6 +824,9 @@ def run_auto_scraper(force_manual=False):
 
     print(f"[POLL_SPEED] {live_poll_speed} (Completed in {round(time.time() - start_ts, 2)}s)")
     return live_poll_speed
+
+
+run_single_cycle = run_auto_scraper
 
 
 if __name__ == "__main__":

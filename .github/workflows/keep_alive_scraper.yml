@@ -1,11 +1,17 @@
-name: 24/7 NBA 2K26 Cloud Keep-Alive & Health Check
+name: 24/7 NBA 2K26 Cloud Keep-Alive & Auto-Scraper
 
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'cloud_symmetry_backup.csv'
+      - 'cloud_matches_backup.csv'
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   cloud-keep-alive:
@@ -22,13 +28,28 @@ jobs:
       - name: Install Dependencies
         run: pip install pandas numpy requests
 
-      - name: Verify Live 1xBet Feed Connectivity from Cloud
+      - name: Run Cloud Live Scraper & Results Sync
         run: |
           python -c "
-          import run_live_auto_scraper
-          games = run_live_auto_scraper.fetch_all_live_games_via_api()
+          import shutil, os, pull_today_results, run_live_auto_scraper
+          if os.path.exists('cloud_symmetry_backup.csv'):
+              shutil.copyfile('cloud_symmetry_backup.csv', 'symmetry_analysis_log.csv')
+          if os.path.exists('cloud_matches_backup.csv'):
+              shutil.copyfile('cloud_matches_backup.csv', 'matches_data.csv')
+          games = run_live_auto_scraper.fetch_all_live_games_via_api('')
           print('Cloud LiveFeed games:', len(games) if games else 0)
-          assert games is not None and len(games) > 0, 'Cloud IP received 0 games or blocked!'
-          for g in games:
-              print(' ->', g.get('team_1'), 'vs', g.get('team_2'), '| Score:', g.get('score_1'), '-', g.get('score_2'), '| Barems:', len(g.get('barems', [])))
+          run_live_auto_scraper.run_single_cycle()
+          try:
+              pull_today_results.pull_today_results(days_back=1)
+          except Exception as e:
+              print('pull_today_results note:', e)
+          shutil.copyfile('symmetry_analysis_log.csv', 'cloud_symmetry_backup.csv')
+          shutil.copyfile('matches_data.csv', 'cloud_matches_backup.csv')
           "
+
+      - name: Save Cloud Backup Snapshots
+        run: |
+          git config --global user.name "NBA2K26-CloudBot"
+          git config --global user.email "bot@nba2k26.local"
+          git add cloud_symmetry_backup.csv cloud_matches_backup.csv || true
+          git diff --staged --quiet || (git commit -m "Cloud 24/7 snapshot sync [skip ci]" && git pull --rebase && git push)
