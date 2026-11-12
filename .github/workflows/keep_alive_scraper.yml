@@ -6,6 +6,7 @@ on:
     paths-ignore:
       - 'cloud_symmetry_backup.csv'
       - 'cloud_matches_backup.csv'
+      - 'cloud_status.json'
   schedule:
     - cron: '*/5 * * * *'
   workflow_dispatch:
@@ -31,7 +32,7 @@ jobs:
       - name: Run Cloud Live Scraper & Results Sync
         run: |
           python -c "
-          import shutil, os, pull_today_results, run_live_auto_scraper
+          import shutil, os, json, pull_today_results, run_live_auto_scraper
           if os.path.exists('cloud_symmetry_backup.csv'):
               shutil.copyfile('cloud_symmetry_backup.csv', 'symmetry_analysis_log.csv')
           if os.path.exists('cloud_matches_backup.csv'):
@@ -39,17 +40,16 @@ jobs:
           games = run_live_auto_scraper.fetch_all_live_games_via_api('')
           print('Cloud LiveFeed games:', len(games) if games else 0)
           run_live_auto_scraper.run_single_cycle()
-          try:
-              pull_today_results.pull_today_results(days_back=1)
-          except Exception as e:
-              print('pull_today_results note:', e)
           shutil.copyfile('symmetry_analysis_log.csv', 'cloud_symmetry_backup.csv')
           shutil.copyfile('matches_data.csv', 'cloud_matches_backup.csv')
+          with open('cloud_status.json', 'w', encoding='utf-8') as f:
+              json.dump({'games_found': len(games) if games else 0, 'games': [g.get('team1','') + ' vs ' + g.get('team2','') for g in (games or [])]}, f)
           "
 
       - name: Save Cloud Backup Snapshots
         run: |
           git config --global user.name "NBA2K26-CloudBot"
           git config --global user.email "bot@nba2k26.local"
-          git add cloud_symmetry_backup.csv cloud_matches_backup.csv || true
-          git diff --staged --quiet || (git commit -m "Cloud 24/7 snapshot sync [skip ci]" && git pull --rebase && git push)
+          git add -f cloud_symmetry_backup.csv cloud_matches_backup.csv cloud_status.json
+          git checkout -- .
+          git diff --staged --quiet || (git commit -m "Cloud 24/7 snapshot sync [skip ci]" && git pull --rebase --autostash && git push)
