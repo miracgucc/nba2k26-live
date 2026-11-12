@@ -1,59 +1,64 @@
 {
-  "updated_at": "2026-11-12 18:03:38",
-  "timestamp": 1794495818.8551495,
+  "updated_at": "2026-11-12 18:24:52",
+  "timestamp": 1794497092.1724322,
   "domain": "https://fswin-best.icu",
   "recommended_poll_speed": 20,
-  "duration_sec": 0.75,
+  "duration_sec": 5.18,
   "live_matches": [
     {
       "game_id": "CB-770273980",
       "team_home": "Indiana Pacers (cyber)",
       "team_away": "Atlanta Hawks (cyber)",
-      "home_score": 5,
-      "away_score": 6,
-      "quarter": 1,
-      "elapsed_mins": 2.6,
-      "remaining_mins": 9.4,
-      "check_time": "Q1 - Minute 2",
+      "home_score": 38,
+      "away_score": 26,
+      "quarter": 2,
+      "elapsed_mins": 15.4,
+      "remaining_mins": 8.6,
+      "check_time": "Q2 - Minute 15",
       "status": "BAREM_OPEN",
-      "completed_quarters": [],
-      "live_q_score": "5-6",
+      "completed_quarters": [
+        [
+          29,
+          20
+        ]
+      ],
+      "live_q_score": "9-6",
       "odds": {
         "160 Or Less": 99.0,
         "161-170": 99.0,
-        "171-180": 17.0,
-        "181-190": 6.62,
-        "191-200": 3.88,
-        "201-210": 3.72,
-        "211-220": 5.16,
-        "221-230": 9.17,
-        "231+": 16.0
+        "171-180": 20.0,
+        "181-190": 7.02,
+        "191-200": 3.52,
+        "201-210": 3.355,
+        "211-220": 5.0,
+        "221-230": 11.0,
+        "231+": 20.0
       },
       "barem_probs": {
         "160 Or Less": 0.0,
-        "161-170": 1.0,
-        "171-180": 6.8,
-        "181-190": 20.7,
-        "191-200": 33.1,
-        "201-210": 26.1,
-        "211-220": 10.1,
-        "221-230": 2.0,
-        "231+": 0.2
+        "161-170": 0.7,
+        "171-180": 7.0,
+        "181-190": 26.6,
+        "191-200": 38.4,
+        "201-210": 22.2,
+        "211-220": 4.6,
+        "221-230": 0.4,
+        "231+": 0.0
       },
       "clusters": {
         "161-180": 7.8,
-        "171-190": 27.5,
-        "181-200": 53.7,
-        "191-210": 59.2,
-        "201-220": 36.2,
-        "211-230": 12.1,
-        "221-240": 2.2
+        "171-190": 33.6,
+        "181-200": 64.9,
+        "191-210": 60.6,
+        "201-220": 26.9,
+        "211-230": 5.1,
+        "221-240": 0.5
       },
-      "predicted_total": 197.2,
-      "predicted_home_final": 95.4,
-      "predicted_away_final": 101.8,
-      "best_cluster_name": "191-210",
-      "best_cluster_prob": 59.2,
+      "predicted_total": 194.5,
+      "predicted_home_final": 109.6,
+      "predicted_away_final": 84.9,
+      "best_cluster_name": "181-200",
+      "best_cluster_prob": 64.9,
       "h2h_sample_size": 81,
       "q3_q4_signal": {
         "normal": {
@@ -83,27 +88,27 @@
       "value_range": "181-190",
       "highest_prob_range": "201-210",
       "bookie_fav_1": "201-210",
-      "bookie_fav_1_odd": 3.72,
+      "bookie_fav_1_odd": 3.355,
       "bookie_fav_2": "191-200",
-      "bookie_fav_2_odd": 3.88,
-      "symmetry_gap": 0.16,
+      "bookie_fav_2_odd": 3.52,
+      "symmetry_gap": 0.165,
       "is_symmetric_trap": true,
-      "dutch_odd": 1.9,
-      "best_ev_pct": 37.0,
+      "dutch_odd": 1.72,
+      "best_ev_pct": 86.7,
       "is_barem_open": true,
-      "updated_at": "18:03:38"
+      "updated_at": "18:24:52"
     },
     {
       "game_id": "CB-770265437",
       "team_home": "Minnesota Timberwolves (cyber)",
       "team_away": "Houston Rockets (cyber)",
-      "home_score": 60,
-      "away_score": 60,
-      "quarter": 3,
-      "elapsed_mins": 28.9,
-      "remaining_mins": 7.1,
-      "check_time": "Q3 - Minute 28",
-      "status": "BAREM_OPEN",
+      "home_score": 84,
+      "away_score": 86,
+      "quarter": 4,
+      "elapsed_mins": 42.8,
+      "remaining_mins": 5.2,
+      "check_time": "Q4 - Minute 42",
+      "status": "WAITING_FINAL",
       "completed_quarters": [
         [
           24,
@@ -112,83 +117,87 @@
         [
           26,
           30
+        ],
+        [
+          21,
+          22
         ]
       ],
-      "live_q_score": "10-9",
+      "live_q_score": "13-13",
       "odds": {
         "160 Or Less": 99.0,
         "161-170": 99.0,
         "171-180": 99.0,
-        "181-190": 17.0,
-        "191-200": 3.425,
-        "201-210": 2.46,
-        "211-220": 4.21,
-        "221-230": 14.0,
+        "181-190": 99.0,
+        "191-200": 99.0,
+        "201-210": 99.0,
+        "211-220": 99.0,
+        "221-230": 99.0,
         "231+": 99.0
       },
       "barem_probs": {
         "160 Or Less": 0.0,
         "161-170": 0.0,
-        "171-180": 0.0,
-        "181-190": 1.8,
-        "191-200": 21.4,
-        "201-210": 48.7,
-        "211-220": 25.1,
-        "221-230": 3.0,
-        "231+": 0.1
+        "171-180": 0.2,
+        "181-190": 33.2,
+        "191-200": 64.9,
+        "201-210": 1.7,
+        "211-220": 0.0,
+        "221-230": 0.0,
+        "231+": 0.0
       },
       "clusters": {
-        "161-180": 0.0,
-        "171-190": 1.8,
-        "181-200": 23.1,
-        "191-210": 70.0,
-        "201-220": 73.7,
-        "211-230": 28.1,
-        "221-240": 3.1
+        "161-180": 0.2,
+        "171-190": 33.4,
+        "181-200": 98.1,
+        "191-210": 66.6,
+        "201-220": 1.7,
+        "211-230": 0.0,
+        "221-240": 0.0
       },
-      "predicted_total": 206.0,
-      "predicted_home_final": 104.0,
-      "predicted_away_final": 102.0,
-      "best_cluster_name": "201-220",
-      "best_cluster_prob": 73.7,
+      "predicted_total": 192.1,
+      "predicted_home_final": 95.0,
+      "predicted_away_final": 97.0,
+      "best_cluster_name": "181-200",
+      "best_cluster_prob": 98.1,
       "h2h_sample_size": 90,
       "q3_q4_signal": {
         "normal": {
-          "probability": 0.285,
-          "count": 137
+          "probability": 0.313,
+          "count": 96
         },
         "burst_positive": {
-          "probability": 0.391,
-          "count": 188
+          "probability": 0.345,
+          "count": 106
         },
         "collapse_negative": {
-          "probability": 0.324,
-          "count": 156
+          "probability": 0.342,
+          "count": 105
         },
         "signal": "⚖️ Dengeli Q3 ➔ Q4 Geçişi",
-        "detail": "Benzer Q3 temposundaki (47 sayı) 481 geçmiş maçta Q4 ortalaması 52.7 sayı oldu (Patlama ≥56: %39.1, Normal 49-55: %28.5, Çöküş ≤48: %32.4).",
+        "detail": "Benzer Q3 temposundaki (43 sayı) 307 geçmiş maçta Q4 ortalaması 51.9 sayı oldu (Patlama ≥56: %34.5, Normal 49-55: %31.3, Çöküş ≤48: %34.2).",
         "threshold": 50,
-        "sample_size": 481,
+        "sample_size": 307,
         "streak_window": 3,
-        "burst_probability": 0.391,
-        "collapse_probability": 0.324,
-        "normal_probability": 0.285,
-        "burst_prob": 39.1,
-        "collapse_prob": 32.4,
-        "normal_prob": 28.5
+        "burst_probability": 0.345,
+        "collapse_probability": 0.342,
+        "normal_probability": 0.313,
+        "burst_prob": 34.5,
+        "collapse_prob": 34.2,
+        "normal_prob": 31.3
       },
-      "value_range": "201-210",
-      "highest_prob_range": "201-210",
-      "bookie_fav_1": "201-210",
-      "bookie_fav_1_odd": 2.46,
-      "bookie_fav_2": "191-200",
-      "bookie_fav_2_odd": 3.425,
-      "symmetry_gap": 0.965,
+      "value_range": "191-200",
+      "highest_prob_range": "191-200",
+      "bookie_fav_1": null,
+      "bookie_fav_1_odd": 99.0,
+      "bookie_fav_2": null,
+      "bookie_fav_2_odd": 99.0,
+      "symmetry_gap": 99.0,
       "is_symmetric_trap": false,
-      "dutch_odd": 1.43,
-      "best_ev_pct": 19.8,
-      "is_barem_open": true,
-      "updated_at": "18:03:38"
+      "dutch_odd": 0.0,
+      "best_ev_pct": 0.0,
+      "is_barem_open": false,
+      "updated_at": "18:24:52"
     }
   ]
 }

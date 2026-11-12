@@ -702,7 +702,11 @@ def analyze_sequential_barem_wave(
         tracked_hist["_gid_num"] = (
             tracked_hist["game_id"].astype(str).str.extract(r"(\d+)")[0].fillna(0).astype(int)
         )
-        tracked_hist = tracked_hist.sort_values(by="_gid_num", ascending=True).reset_index(drop=True)
+        tracked_hist = (
+            tracked_hist[tracked_hist["_gid_num"] >= 770265000]
+            .sort_values(by="_gid_num", ascending=True)
+            .reset_index(drop=True)
+        )
 
     prev_dt = None
     for _, r in tracked_hist.iterrows():

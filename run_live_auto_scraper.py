@@ -96,18 +96,26 @@ def upsert_symmetry_log_row(new_row: dict):
         except Exception:
             existing_rows = []
 
+    MIN_CLEAN_GID = 770265000
+
+    def _gid_int(g_str: str) -> int:
+        m = re.search(r"(\d+)", str(g_str or ""))
+        return int(m.group(1)) if m else 0
+
     dedup_map = {}
     game_order = []
     for r in existing_rows:
         gid = str(r.get("game_id", "")).strip()
         ctime = str(r.get("check_time", "")).strip()
-        if not gid:
+        if not gid or _gid_int(gid) < MIN_CLEAN_GID:
             continue
         if gid not in game_order:
             game_order.append(gid)
         dedup_map[(gid, ctime)] = r
 
     new_gid = str(new_row.get("game_id", "")).strip()
+    if _gid_int(new_gid) < MIN_CLEAN_GID:
+        return
     new_ctime = str(new_row.get("check_time", "")).strip()
     if new_gid not in game_order:
         game_order.append(new_gid)

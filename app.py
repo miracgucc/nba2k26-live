@@ -155,6 +155,10 @@ def load_symmetry_log() -> pd.DataFrame:
         try:
             df = pd.read_csv(CSV_PATH)
             if not df.empty and "game_id" in df.columns and "check_time" in df.columns:
+                g_nums = df["game_id"].astype(str).str.extract(r"(\d+)")[0].fillna(0).astype(int)
+                if (g_nums < 770265000).any():
+                    df = df[g_nums >= 770265000].copy()
+                    df.to_csv(CSV_PATH, index=False, encoding="utf-8")
                 df = df.drop_duplicates(subset=["game_id", "check_time"], keep="last").reset_index(drop=True)
             return df
         except Exception:
