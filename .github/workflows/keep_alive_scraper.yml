@@ -8,15 +8,21 @@ on:
       - 'cloud_matches_backup.csv'
       - 'cloud_status.json'
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/10 * * * *'
   workflow_dispatch:
+
+concurrency:
+  group: nba2k26-24x7-live-scraper
+  cancel-in-progress: false
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   cloud-keep-alive:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -29,30 +35,55 @@ jobs:
       - name: Install Dependencies
         run: pip install pandas numpy requests
 
-      - name: Run Cloud Live Scraper & Results Sync
-        run: |
-          python -c "
-          import shutil, os, json, time, run_live_auto_scraper
-          if os.path.exists('cloud_symmetry_backup.csv'):
-              shutil.copyfile('cloud_symmetry_backup.csv', 'symmetry_analysis_log.csv')
-          if os.path.exists('cloud_matches_backup.csv'):
-              shutil.copyfile('cloud_matches_backup.csv', 'matches_data.csv')
-          games = []
-          for i in range(6):
-              games = run_live_auto_scraper.fetch_all_live_games_via_api('')
-              run_live_auto_scraper.run_single_cycle()
-              if i < 5:
-                  time.sleep(25)
-          shutil.copyfile('symmetry_analysis_log.csv', 'cloud_symmetry_backup.csv')
-          shutil.copyfile('matches_data.csv', 'cloud_matches_backup.csv')
-          with open('cloud_status.json', 'w', encoding='utf-8') as f:
-              json.dump({'games_found': len(games) if games else 0, 'games': [g.get('team1','') + ' vs ' + g.get('team2','') for g in (games or [])]}, f)
-          "
-
-      - name: Save Cloud Backup Snapshots
+      - name: Run Continuous 10-Minute Live Scraper Loop (Every 15-20s)
         run: |
           git config --global user.name "NBA2K26-CloudBot"
           git config --global user.email "bot@nba2k26.local"
-          git add -f cloud_symmetry_backup.csv cloud_matches_backup.csv cloud_status.json
-          git checkout -- .
-          git diff --staged --quiet || (git commit -m "Cloud 24/7 snapshot sync [skip ci]" && git pull --rebase --autostash && git push)
+          python -c "
+          import shutil, os, json, time, subprocess, run_live_auto_scraper
+          start_loop = time.time()
+          cycle = 0
+          while time.time() - start_loop < 560:
+              cycle += 1
+              try:
+                  subprocess.run(['git', 'pull', '--rebase', '--autostash', 'origin', 'main'], timeout=15)
+              except Exception:
+                  pass
+              if os.path.exists('cloud_symmetry_backup.csv'):
+                  shutil.copyfile('cloud_symmetry_backup.csv', 'symmetry_analysis_log.csv')
+              if os.path.exists('cloud_matches_backup.csv'):
+                  shutil.copyfile('cloud_matches_backup.csv', 'matches_data.csv')
+              try:
+                  poll_sec = run_live_auto_scraper.run_single_cycle()
+              except Exception as e:
+                  print('Cycle error:', e)
+                  poll_sec = 20
+              shutil.copyfile('symmetry_analysis_log.csv', 'cloud_symmetry_backup.csv')
+              shutil.copyfile('matches_data.csv', 'cloud_matches_backup.csv')
+              try:
+                  subprocess.run(['git', 'add', '-f', 'cloud_symmetry_backup.csv', 'cloud_matches_backup.csv'], timeout=10)
+                  subprocess.run(['git', 'checkout', '--', '.'], timeout=10)
+                  diff_res = subprocess.run(['git', 'diff', '--staged', '--quiet'])
+                  if diff_res.returncode != 0:
+                      subprocess.run(['git', 'commit', '-m', 'Cloud 24/7 live odds sync'], timeout=10)
+                      subprocess.run(['git', 'pull', '--rebase', '--autostash', 'origin', 'main'], timeout=15)
+                      subprocess.run(['git', 'push', 'origin', 'main'], timeout=15)
+                      print(f'[Cycle {cycle}] Pushed updated CSVs to GitHub!')
+              except Exception as e:
+                  print('Git sync warning:', e)
+              wait_s = min(20, max(10, int(poll_sec or 20)))
+              if time.time() - start_loop + wait_s >= 560:
+                  break
+              time.sleep(wait_s)
+          "
+
+      - name: Self-Chain Next 10-Minute Cloud Worker Immediately
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -s -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            https://api.github.com/repos/${{ github.repository }}/actions/workflows/keep_alive_scraper.yml/dispatches \
+            -d '{"ref":"main"}' || true

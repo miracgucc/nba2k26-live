@@ -41,6 +41,7 @@ from run_live_auto_scraper import (
     MATCHES_CSV_PATH,
     TS_FILE,
     init_csv,
+    merge_cloud_backups,
     run_auto_scraper,
 )
 from update_all_checkpoints import auto_settle_checkpoints
@@ -149,6 +150,7 @@ def load_live_state() -> dict:
 
 def load_symmetry_log() -> pd.DataFrame:
     init_csv()
+    merge_cloud_backups()
     if os.path.exists(CSV_PATH) and os.path.getsize(CSV_PATH) > 0:
         try:
             df = pd.read_csv(CSV_PATH)
