@@ -1459,8 +1459,10 @@ with tab_sym:
 
             sym_records.append(
                 {
+                    "game_id": str(r.get("game_id", r.get("game_name", ""))),
                     "game_name": r.get("game_name", ""),
                     "check_time": r.get("check_time", ""),
+                    "el_min": el_min,
                     "window": win_bucket,
                     "fav1_b": fav1_b,
                     "fav1_o": fav1_o,
@@ -1485,24 +1487,26 @@ with tab_sym:
 
         df_sr = pd.DataFrame(sym_records)
         if not df_sr.empty:
-            tot_n = len(df_sr)
-            m2_pct = df_sr["hit_m2"].mean() * 100.0
-            m1_pct = df_sr["hit_m1"].mean() * 100.0
-            f0_pct = df_sr["hit_0"].mean() * 100.0
-            p1_pct = df_sr["hit_p1"].mean() * 100.0
-            p2_pct = df_sr["hit_p2"].mean() * 100.0
-            both_pct = df_sr["either_fav_hit"].mean() * 100.0
+            # Her maçın SON (35-36. Dk Kapanış) kaydını baz alarak Maç Bazlı Kapanış Simetrisini hesapla
+            df_closing = df_sr.sort_values("el_min").groupby("game_id", as_index=False).last()
+            tot_n = len(df_closing)
+            m2_pct = df_closing["hit_m2"].mean() * 100.0
+            m1_pct = df_closing["hit_m1"].mean() * 100.0
+            f0_pct = df_closing["hit_0"].mean() * 100.0
+            p1_pct = df_closing["hit_p1"].mean() * 100.0
+            p2_pct = df_closing["hit_p2"].mean() * 100.0
+            both_pct = df_closing["either_fav_hit"].mean() * 100.0
 
             s1, s2, s3, s4, s5, s6 = st.columns(6)
-            s1.metric("❄️ -2 Alt Bareme Kayma", f"%{m2_pct:.1f}", f"{int(df_sr['hit_m2'].sum())} / {tot_n} Kayıt")
-            s2.metric("📉 -1 Alt Bareme Kayma", f"%{m1_pct:.1f}", f"{int(df_sr['hit_m1'].sum())} / {tot_n} Kayıt")
-            s3.metric("🎯 0 (1. Favori Merkez)", f"%{f0_pct:.1f}", f"{int(df_sr['hit_0'].sum())} / {tot_n} Kayıt")
-            s4.metric("📈 +1 Üst Bareme Kayma", f"%{p1_pct:.1f}", f"{int(df_sr['hit_p1'].sum())} / {tot_n} Kayıt")
-            s5.metric("🔥 +2 Üst Bareme Kayma", f"%{p2_pct:.1f}", f"{int(df_sr['hit_p2'].sum())} / {tot_n} Kayıt")
+            s1.metric("❄️ -2 Alt Bareme Kayma", f"%{m2_pct:.1f}", f"{int(df_closing['hit_m2'].sum())} / {tot_n} Maç")
+            s2.metric("📉 -1 Alt Bareme Kayma", f"%{m1_pct:.1f}", f"{int(df_closing['hit_m1'].sum())} / {tot_n} Maç")
+            s3.metric("🎯 0 (1. Favori Merkez)", f"%{f0_pct:.1f}", f"{int(df_closing['hit_0'].sum())} / {tot_n} Maç")
+            s4.metric("📈 +1 Üst Bareme Kayma", f"%{p1_pct:.1f}", f"{int(df_closing['hit_p1'].sum())} / {tot_n} Maç")
+            s5.metric("🔥 +2 Üst Bareme Kayma", f"%{p2_pct:.1f}", f"{int(df_closing['hit_p2'].sum())} / {tot_n} Maç")
             s6.metric(
                 "🛡️ 1. veya 2. Favori",
                 f"%{both_pct:.1f}",
-                f"{int(df_sr['either_fav_hit'].sum())} / {tot_n} Kayıt",
+                f"{int(df_closing['either_fav_hit'].sum())} / {tot_n} Maç",
             )
 
             win_rows = []
