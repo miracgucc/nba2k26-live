@@ -1,20 +1,20 @@
 {
-  "updated_at": "2026-11-12 13:50:13",
-  "timestamp": 1794480613.3431222,
+  "updated_at": "2026-11-12 13:54:30",
+  "timestamp": 1794480870.645636,
   "domain": "https://fswin-best.icu",
   "recommended_poll_speed": 20,
-  "duration_sec": 0.62,
+  "duration_sec": 0.68,
   "live_matches": [
     {
       "game_id": "CB-770208874",
       "team_home": "Los Angeles Clippers (cyber)",
       "team_away": "Atlanta Hawks (cyber)",
-      "home_score": 98,
-      "away_score": 85,
+      "home_score": 102,
+      "away_score": 91,
       "quarter": 4,
-      "elapsed_mins": 44.9,
-      "remaining_mins": 3.1,
-      "check_time": "Q4 - Minute 44",
+      "elapsed_mins": 48.0,
+      "remaining_mins": 0.0,
+      "check_time": "Q4 - Minute 47",
       "status": "WAITING_FINAL",
       "completed_quarters": [
         [
@@ -30,7 +30,7 @@
           24
         ]
       ],
-      "live_q_score": "18-8",
+      "live_q_score": "22-14",
       "odds": {
         "160 Or Less": 99.0,
         "161-170": 99.0,
@@ -46,27 +46,27 @@
         "160 Or Less": 0.0,
         "161-170": 0.0,
         "171-180": 0.0,
-        "181-190": 15.6,
-        "191-200": 81.5,
-        "201-210": 2.9,
+        "181-190": 19.2,
+        "191-200": 79.0,
+        "201-210": 1.8,
         "211-220": 0.0,
         "221-230": 0.0,
         "231+": 0.0
       },
       "clusters": {
         "161-180": 0.0,
-        "171-190": 15.6,
-        "181-200": 97.1,
-        "191-210": 84.4,
-        "201-220": 2.9,
+        "171-190": 19.2,
+        "181-200": 98.2,
+        "191-210": 80.8,
+        "201-220": 1.8,
         "211-230": 0.0,
         "221-240": 0.0
       },
-      "predicted_total": 194.0,
-      "predicted_home_final": 105.1,
-      "predicted_away_final": 88.9,
+      "predicted_total": 193.4,
+      "predicted_home_final": 102.2,
+      "predicted_away_final": 91.2,
       "best_cluster_name": "181-200",
-      "best_cluster_prob": 97.1,
+      "best_cluster_prob": 98.2,
       "h2h_sample_size": 46,
       "q3_q4_signal": {
         "normal": {
@@ -104,18 +104,18 @@
       "dutch_odd": 0.0,
       "best_ev_pct": 0.0,
       "is_barem_open": false,
-      "updated_at": "13:50:13"
+      "updated_at": "13:54:30"
     },
     {
       "game_id": "CB-770216867",
       "team_home": "Los Angeles Lakers (cyber)",
       "team_away": "Golden State Warriors (cyber)",
-      "home_score": 35,
-      "away_score": 67,
+      "home_score": 42,
+      "away_score": 79,
       "quarter": 2,
-      "elapsed_mins": 19.8,
-      "remaining_mins": 4.2,
-      "check_time": "Q2 - Minute 19",
+      "elapsed_mins": 23.2,
+      "remaining_mins": 0.8,
+      "check_time": "Q2 - Minute 23",
       "status": "BAREM_OPEN",
       "completed_quarters": [
         [
@@ -123,17 +123,17 @@
           40
         ]
       ],
-      "live_q_score": "16-27",
+      "live_q_score": "23-39",
       "odds": {
         "160 Or Less": 99.0,
         "161-170": 99.0,
         "171-180": 99.0,
         "181-190": 99.0,
         "191-200": 99.0,
-        "201-210": 13.0,
-        "211-220": 3.064,
-        "221-230": 2.616,
-        "231+": 3.355
+        "201-210": 11.0,
+        "211-220": 2.568,
+        "221-230": 2.592,
+        "231+": 4.49
       },
       "barem_probs": {
         "160 Or Less": 0.0,
@@ -141,25 +141,25 @@
         "171-180": 0.0,
         "181-190": 0.0,
         "191-200": 0.0,
-        "201-210": 0.5,
-        "211-220": 6.4,
-        "221-230": 28.2,
-        "231+": 65.0
+        "201-210": 0.2,
+        "211-220": 3.9,
+        "221-230": 23.4,
+        "231+": 72.6
       },
       "clusters": {
         "161-180": 0.0,
         "171-190": 0.0,
         "181-200": 0.0,
-        "191-210": 0.5,
-        "201-220": 6.8,
-        "211-230": 34.5,
-        "221-240": 68.4
+        "191-210": 0.2,
+        "201-220": 4.0,
+        "211-230": 27.2,
+        "221-240": 66.6
       },
-      "predicted_total": 234.2,
-      "predicted_home_final": 101.9,
-      "predicted_away_final": 132.3,
+      "predicted_total": 235.7,
+      "predicted_home_final": 102.4,
+      "predicted_away_final": 133.3,
       "best_cluster_name": "221-240",
-      "best_cluster_prob": 68.4,
+      "best_cluster_prob": 66.6,
       "h2h_sample_size": 86,
       "q3_q4_signal": {
         "normal": {
@@ -187,17 +187,42 @@
         "normal_prob": 24.3
       },
       "value_range": "231+",
-      "highest_prob_range": "221-230",
-      "bookie_fav_1": "221-230",
-      "bookie_fav_1_odd": 2.616,
-      "bookie_fav_2": "211-220",
-      "bookie_fav_2_odd": 3.064,
-      "symmetry_gap": 0.448,
+      "highest_prob_range": "211-220",
+      "bookie_fav_1": "211-220",
+      "bookie_fav_1_odd": 2.568,
+      "bookie_fav_2": "221-230",
+      "bookie_fav_2_odd": 2.592,
+      "symmetry_gap": 0.024,
       "is_symmetric_trap": true,
-      "dutch_odd": 1.41,
-      "best_ev_pct": 118.1,
+      "dutch_odd": 1.29,
+      "best_ev_pct": 226.0,
       "is_barem_open": true,
-      "updated_at": "13:50:13"
+      "updated_at": "13:54:30"
+    },
+    {
+      "game_id": "CB-770224429",
+      "team_home": "New York Knicks (cyber)",
+      "team_away": "Boston Celtics (cyber)",
+      "home_score": 0,
+      "away_score": 0,
+      "quarter": 1,
+      "elapsed_mins": 0.0,
+      "remaining_mins": 12.0,
+      "status": "PRE_GAME",
+      "completed_quarters": [],
+      "live_q_score": "0-0",
+      "odds": {},
+      "barem_probs": {},
+      "predicted_total": 212.0,
+      "predicted_home_final": 106.0,
+      "predicted_away_final": 106.0,
+      "best_cluster_name": "201-220",
+      "best_cluster_prob": 0.0,
+      "value_range": "-",
+      "highest_prob_range": "-",
+      "dutch_odd": 0.0,
+      "is_barem_open": false,
+      "updated_at": "13:54:30"
     }
   ]
 }
