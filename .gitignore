@@ -22,6 +22,7 @@ scrape_*.py
 search_*.py
 sync_*.py
 update_*.py
+!update_all_checkpoints.py
 verify_*.py
 *.html
 *.png

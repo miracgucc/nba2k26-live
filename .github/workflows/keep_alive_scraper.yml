@@ -30,7 +30,7 @@ jobs:
           python -c "
           import time, pull_today_results, run_live_auto_scraper
           try:
-              pull_today_results.pull_recent_cyberleague_matches(days_back=2)
+              pull_today_results.pull_today_results(days_back=2)
           except Exception as e:
               print('Results sync warning:', e)
           # 4 dakika boyunca her 25 saniyede bir canlı maçları ve 36.dk oranlarını yakala
