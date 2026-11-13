@@ -1,4 +1,4 @@
-﻿import importlib
+import importlib
 import json
 import os
 import re
@@ -53,7 +53,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 st.set_page_config(
     page_title="NBA 2K26 CyberLeague Pro v2.0",
-    page_icon="ğŸ€",
+    page_icon="🏀",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
@@ -68,13 +68,13 @@ def toggle_ui_theme():
 
 IS_DARK = st.session_state.ui_theme == "matte_dark"
 
-# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# ─────────────────────────────────────────────────────────────────────────────
 # SINGLETON BACKGROUND DAEMON THREAD (24/7 ZERO-CRASH AUTO SCRAPER)
-# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# ─────────────────────────────────────────────────────────────────────────────
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v2.9-live-gh"
+ENGINE_VERSION = "v3.0-clean-utf8"
 
 
 class BackgroundEngineState:
@@ -82,7 +82,7 @@ class BackgroundEngineState:
         self.version = ENGINE_VERSION
         self.is_running = False
         self.last_run_ts = 0.0
-        self.last_run_str = "HazÄ±rlanÄ±yor"
+        self.last_run_str = "Hazırlanıyor"
         self.next_poll_sec = 60
         self.last_error = ""
         self.scan_count = 0
@@ -121,9 +121,9 @@ def get_background_engine(version: str = ENGINE_VERSION) -> BackgroundEngineStat
 bg_engine = get_background_engine(ENGINE_VERSION)
 
 
-# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# ─────────────────────────────────────────────────────────────────────────────
 # DATA LOADERS & ANALYTICS HELPERS
-# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# ─────────────────────────────────────────────────────────────────────────────
 def reset_all_data_clean_slate():
     with SCRAPE_LOCK:
         with open(CSV_PATH, "w", encoding="utf-8") as f:
@@ -279,28 +279,28 @@ def compute_team_dna_table(df_matches: pd.DataFrame) -> pd.DataFrame:
 
         rows.append(
             {
-                "TakÄ±m": t,
-                "MaÃ§ SayÄ±sÄ±": n_games,
-                "Ort. Toplam SayÄ±": round(tot_scores.mean(), 1),
+                "Takım": t,
+                "Maç Sayısı": n_games,
+                "Ort. Toplam Sayı": round(tot_scores.mean(), 1),
                 "Std. Sapma": round(tot_scores.std() if n_games > 1 else 0.0, 1),
                 "Q1 Ort.": round(q1_tot, 1),
                 "Q2 Ort.": round(q2_tot, 1),
                 "Q3 Ort.": round(q3_tot, 1),
                 "Q4 Ort.": round(q4_tot, 1),
-                "En Ã‡ok Ã‡Ä±kan Barem": f"{top_barem} (%{top_barem_pct:.0f})",
-                "En GÃ¼Ã§lÃ¼ 20'li KÃ¼me": f"{top_cluster} (%{top_cluster_pct:.0f})",
-                "211+ Ãœst OranÄ±": f"%{over_210_pct:.1f}",
+                "En Çok Çıkan Barem": f"{top_barem} (%{top_barem_pct:.0f})",
+                "En Güçlü 20'li Küme": f"{top_cluster} (%{top_cluster_pct:.0f})",
+                "211+ Üst Oranı": f"%{over_210_pct:.1f}",
             }
         )
     df_dna = pd.DataFrame(rows)
     if not df_dna.empty:
-        df_dna = df_dna.sort_values(by=["MaÃ§ SayÄ±sÄ±", "Ort. Toplam SayÄ±"], ascending=[False, False])
+        df_dna = df_dna.sort_values(by=["Maç Sayısı", "Ort. Toplam Sayı"], ascending=[False, False])
     return df_dna
 
 
-# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# ─────────────────────────────────────────────────────────────────────────────
 # EYE-FRIENDLY NORDIC SOFT SLATE / WARM MATTE THEME PALETTE
-# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# ─────────────────────────────────────────────────────────────────────────────
 if not IS_DARK:
     THEME_VARS = """
         --bg-app: #f3f5f8;
@@ -602,9 +602,9 @@ div.stButton > button {{
 )
 
 
-# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# ─────────────────────────────────────────────────────────────────────────────
 # TOP COMMAND BAR & CONTROLS
-# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# ─────────────────────────────────────────────────────────────────────────────
 live_state = load_live_state()
 active_domain = live_state.get("domain") or "https://1xbet.global"
 last_update_str = live_state.get("updated_at") or bg_engine.last_run_str
@@ -619,13 +619,13 @@ st.markdown(
     f"""
 <div class="cmd-header">
     <div>
-        <div class="cmd-title">ğŸ€ NBA 2K26 CyberLeague Pro</div>
-        <div class="cmd-sub">CanlÄ± Barem (Exact Points), KapanÄ±ÅŸ Simetrisi, TakÄ±m Barem DNA'sÄ± & Kasa/Dutching Terminali</div>
+        <div class="cmd-title">🏀 NBA 2K26 CyberLeague Pro</div>
+        <div class="cmd-sub">Canlı Barem (Exact Points), Kapanış Simetrisi, Takım Barem DNA'sı & Kasa/Dutching Terminali</div>
     </div>
     <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
         <div class="status-pill">
-            <span>â—</span>
-            <span>CanlÄ± AkÄ±ÅŸ Aktif ({active_domain.replace('https://', '')})</span>
+            <span>●</span>
+            <span>Canlı Akış Aktif ({active_domain.replace('https://', '')})</span>
             <span style="opacity:0.5;">|</span>
             <span>Son Tarama: {last_update_str} ({scan_dur}sn)</span>
             <span style="opacity:0.5;">|</span>
@@ -640,48 +640,48 @@ st.markdown(
 ctrl_c1, ctrl_c2, ctrl_c3, ctrl_c4, ctrl_c5, ctrl_c6 = st.columns([1.25, 1.25, 1.3, 1.0, 0.85, 0.9])
 
 with ctrl_c1:
-    if st.button("âš¡ AnlÄ±k CanlÄ± Barem Ã‡ek", use_container_width=True, type="primary"):
-        with st.spinner("1xBet / Mirror Ã¼zerinden canlÄ± maÃ§lar ve baremler Ã§ekiliyor (~2 sn)..."):
+    if st.button("⚡ Anlık Canlı Barem Çek", use_container_width=True, type="primary"):
+        with st.spinner("1xBet / Mirror üzerinden canlı maçlar ve baremler çekiliyor (~2 sn)..."):
             with SCRAPE_LOCK:
                 run_auto_scraper(force_manual=True)
                 bg_engine.last_run_ts = time.time()
                 bg_engine.last_run_str = datetime.now().strftime("%H:%M:%S")
-        st.toast("âœ… CanlÄ± maÃ§lar ve barem oranlarÄ± gÃ¼ncellendi!", icon="ğŸ€")
+        st.toast("✅ Canlı maçlar ve barem oranları güncellendi!", icon="🏀")
         st.rerun()
 
 with ctrl_c2:
-    if st.button("ğŸ”„ BitmiÅŸ MaÃ§larÄ± SonuÃ§landÄ±r", use_container_width=True):
-        with st.spinner("BitmiÅŸ maÃ§ sonuÃ§larÄ± kontrol ediliyor..."):
+    if st.button("🔄 Bitmiş Maçları Sonuçlandır", use_container_width=True):
+        with st.spinner("Bitmiş maç sonuçları kontrol ediliyor..."):
             pull_today_results(only_tracked=True)
             settled = auto_settle_checkpoints()
-        st.toast(f"âœ… {settled} barem kaydÄ± sonuÃ§landÄ±rÄ±ldÄ±!", icon="ğŸ¯")
+        st.toast(f"✅ {settled} barem kaydı sonuçlandırıldı!", icon="🎯")
         st.rerun()
 
 with ctrl_c3:
-    if st.button("ğŸ“¥ Son 4 Ay ArÅŸivini GÃ¼ncelle (120 GÃ¼n)", use_container_width=True):
-        with st.spinner("Son 4 aydaki (120 gÃ¼n) tÃ¼m tamamlanmÄ±ÅŸ CyberLeague maÃ§larÄ± Ã§ekiliyor..."):
+    if st.button("📥 Son 4 Ay Arşivini Güncelle (120 Gün)", use_container_width=True):
+        with st.spinner("Son 4 aydaki (120 gün) tüm tamamlanmış CyberLeague maçları çekiliyor..."):
             added = pull_today_results(only_tracked=False, days_back=125)
             auto_settle_checkpoints()
-        st.toast(f"ğŸ“¥ {added} yeni tamamlanmÄ±ÅŸ maÃ§ 4 aylÄ±k geÃ§miÅŸ arÅŸivine eklendi!", icon="ğŸ“Š")
+        st.toast(f"📥 {added} yeni tamamlanmış maç 4 aylık geçmiş arşivine eklendi!", icon="📊")
         st.rerun()
 
 with ctrl_c4:
-    if st.button("ğŸ—‘ï¸ Verileri SÄ±fÄ±rla", use_container_width=True):
+    if st.button("🗑️ Verileri Sıfırla", use_container_width=True):
         reset_all_data_clean_slate()
-        st.toast("ğŸ§¹ TÃ¼m kayÄ±tlar sÄ±fÄ±rlandÄ± (0 kayÄ±t). Temiz sayfa hazÄ±r!", icon="âœ¨")
+        st.toast("🧹 Tüm kayıtlar sıfırlandı (0 kayıt). Temiz sayfa hazır!", icon="✨")
         st.rerun()
 
 with ctrl_c5:
-    theme_btn_label = "ğŸŒ™ Mat Gece" if not IS_DARK else "ğŸŒ¤ï¸ Ferah GÃ¼n"
+    theme_btn_label = "🌙 Mat Gece" if not IS_DARK else "🌤️ Ferah Gün"
     st.button(theme_btn_label, on_click=toggle_ui_theme, use_container_width=True)
 
 with ctrl_c6:
-    auto_ui_refresh = st.toggle("â±ï¸ Oto-Yenile", value=True)
+    auto_ui_refresh = st.toggle("⏱️ Oto-Yenile", value=True)
 
 
-# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# ─────────────────────────────────────────────────────────────────────────────
 # MAIN DASHBOARD FRAGMENT (AUTO-REFRESHING WITHOUT FULL PAGE FLICKER)
-# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# ─────────────────────────────────────────────────────────────────────────────
 @st.fragment(run_every="15s" if auto_ui_refresh else None)
 def render_live_dashboard():
     state = load_live_state()
@@ -731,9 +731,9 @@ def render_live_dashboard():
         st.markdown(
             f"""
         <div class="kpi-card">
-            <div class="kpi-label">ğŸ”´ CanlÄ± CyberLeague MaÃ§Ä±</div>
-            <div class="kpi-val">{active_count} MaÃ§</div>
-            <div class="kpi-sub">{open_barem_count} MaÃ§ta Barem AÃ§Ä±k &bull; {hist_count} GeÃ§miÅŸ ArÅŸiv</div>
+            <div class="kpi-label">🔴 Canlı CyberLeague Maçı</div>
+            <div class="kpi-val">{active_count} Maç</div>
+            <div class="kpi-sub">{open_barem_count} Maçta Barem Açık &bull; {hist_count} Geçmiş Arşiv</div>
         </div>
         """,
             unsafe_allow_html=True,
@@ -742,9 +742,9 @@ def render_live_dashboard():
         st.markdown(
             f"""
         <div class="kpi-card">
-            <div class="kpi-label">ğŸ“‹ Barem KayÄ±t AkÄ±ÅŸÄ±</div>
+            <div class="kpi-label">📋 Barem Kayıt Akışı</div>
             <div class="kpi-val">{total_logs}</div>
-            <div class="kpi-sub">{pend_count} Bekleyen &bull; {comp_count} SonuÃ§lanan</div>
+            <div class="kpi-sub">{pend_count} Bekleyen &bull; {comp_count} Sonuçlanan</div>
         </div>
         """,
             unsafe_allow_html=True,
@@ -753,9 +753,9 @@ def render_live_dashboard():
         st.markdown(
             f"""
         <div class="kpi-card">
-            <div class="kpi-label">â­ 1xBet Favori Barem</div>
+            <div class="kpi-label">⭐ 1xBet Favori Barem</div>
             <div class="kpi-val" style="color:#059669;">%{fav_rate:.1f}</div>
-            <div class="kpi-sub">{fav_wins} / {comp_count} Ä°sabet (En DÃ¼ÅŸÃ¼k Oran)</div>
+            <div class="kpi-sub">{fav_wins} / {comp_count} İsabet (En Düşük Oran)</div>
         </div>
         """,
             unsafe_allow_html=True,
@@ -764,9 +764,9 @@ def render_live_dashboard():
         st.markdown(
             f"""
         <div class="kpi-card">
-            <div class="kpi-label">ğŸ”¥ Model Value Barem</div>
+            <div class="kpi-label">🔥 Model Value Barem</div>
             <div class="kpi-val" style="color:#d97706;">%{val_rate:.1f}</div>
-            <div class="kpi-sub">{val_wins} / {comp_count} Ä°sabet (Pozitif EV)</div>
+            <div class="kpi-sub">{val_wins} / {comp_count} İsabet (Pozitif EV)</div>
         </div>
         """,
             unsafe_allow_html=True,
@@ -775,17 +775,17 @@ def render_live_dashboard():
         st.markdown(
             f"""
         <div class="kpi-card">
-            <div class="kpi-label">ğŸ›¡ï¸ 20-SayÄ± KÃ¼me (Ã‡ifte Barem)</div>
+            <div class="kpi-label">🛡️ 20-Sayı Küme (Çifte Barem)</div>
             <div class="kpi-val" style="color:#2563eb;">%{clu_rate:.1f}</div>
-            <div class="kpi-sub">{clu_wins} / {comp_count} Ä°sabet (Ä°kili Blok)</div>
+            <div class="kpi-sub">{clu_wins} / {comp_count} İsabet (İkili Blok)</div>
         </div>
         """,
             unsafe_allow_html=True,
         )
 
-    # â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    # ─────────────────────────────────────────────────────────────────────────
     # SEQUENTIAL BAREM WAVE STRIP (LAST 8 MATCHES: 0, -1, +1 WAVE DETECTOR)
-    # â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    # ─────────────────────────────────────────────────────────────────────────
     wave_global = analyze_sequential_barem_wave(df_hist, df_log)
     recent_chain = wave_global.get("recent_chain", [])
     if recent_chain:
@@ -805,29 +805,29 @@ def render_live_dashboard():
                 p_bg = "var(--fav1-bg)"
                 p_bd = "var(--fav1-border)"
                 p_tx = "var(--fav1-text)"
-                tag_txt = "ğŸ¯ 0 (Beklenen)"
+                tag_txt = "🎯 0 (Beklenen)"
             elif sh < 0:
                 p_bg = "var(--fav2-bg)"
                 p_bd = "var(--fav2-border)"
                 p_tx = "var(--fav2-text)"
-                tag_txt = f"ğŸ“‰ {sh} ({abs(sh)} Alt Barem)"
+                tag_txt = f"📉 {sh} ({abs(sh)} Alt Barem)"
             else:
                 p_bg = "var(--val-bg)"
                 p_bd = "var(--val-border)"
                 p_tx = "var(--val-text)"
-                tag_txt = f"ğŸ“ˆ +{sh} ({sh} Ãœst Barem)"
+                tag_txt = f"📈 +{sh} ({sh} Üst Barem)"
 
             odd_36_val = float(item.get("exp_odd_36", 0.0) or 0.0)
             if odd_36_val > 0:
-                ref_line = f'ğŸ“Š 36.Dk Oran: <b>{item["exp_barem_36"]} ({odd_36_val:.2f})</b> â” Biten: <b>{item["act_barem"]}</b>'
+                ref_line = f'📊 36.Dk Oran: <b>{item["exp_barem_36"]} ({odd_36_val:.2f})</b> ➔ Biten: <b>{item["act_barem"]}</b>'
             else:
-                ref_line = f'ğŸ§® 36.Dk SkorTahmin: <b>{item["exp_barem_36"]}</b> â” Biten: <b>{item["act_barem"]}</b>'
+                ref_line = f'🧮 36.Dk SkorTahmin: <b>{item["exp_barem_36"]}</b> ➔ Biten: <b>{item["act_barem"]}</b>'
             drift_line = item.get("drift_label", "")
 
             pills_html += (
                 f'<div style="background:{p_bg}; border:1.5px solid {p_bd}; color:{p_tx}; border-radius:10px; padding:0.48rem 0.65rem; min-width:155px; flex:1 1 180px;">'
-                f'<div style="font-size:0.67rem; font-weight:700; opacity:0.85;">#{idx_c} &bull; ğŸ•’ {time_only} | {t_short}</div>'
-                f'<div style="font-size:0.71rem; font-weight:700; margin-top:0.08rem;">Skor: {sc_pair} ({item["total_score"]} SayÄ±)</div>'
+                f'<div style="font-size:0.67rem; font-weight:700; opacity:0.85;">#{idx_c} &bull; 🕒 {time_only} | {t_short}</div>'
+                f'<div style="font-size:0.71rem; font-weight:700; margin-top:0.08rem;">Skor: {sc_pair} ({item["total_score"]} Sayı)</div>'
                 f'<div style="font-size:0.82rem; font-weight:800; margin:0.12rem 0;">{tag_txt}</div>'
                 f'<div style="font-size:0.66rem; opacity:0.95;">{ref_line}</div>'
                 f'<div style="font-size:0.63rem; opacity:0.85; margin-top:0.08rem;">{drift_line}</div>'
@@ -839,10 +839,10 @@ def render_live_dashboard():
             <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:13px; padding:0.9rem 1.2rem; margin-top:0.9rem; box-shadow:var(--shadow-card);">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
                     <div style="font-size:0.92rem; font-weight:800; color:var(--text-primary);">
-                        ğŸŒŠ ArdÄ±ÅŸÄ±k MaÃ§larda 36. Dakika Simetri Dalga Zinciri (Toplam {len(recent_chain)} MaÃ§ | Son Zincir: <span style="font-family:'JetBrains Mono',monospace; color:var(--score-text);">{wave_global['last_5_labels']}</span>)
+                        🌊 Ardışık Maçlarda 36. Dakika Simetri Dalga Zinciri (Toplam {len(recent_chain)} Maç | Son Zincir: <span style="font-family:'JetBrains Mono',monospace; color:var(--score-text);">{wave_global['last_5_labels']}</span>)
                     </div>
                     <div style="font-size:0.8rem; font-weight:700; color:var(--fav1-text); background:var(--pill-bg); border:1px solid var(--pill-border); padding:0.25rem 0.75rem; border-radius:999px;">
-                        ğŸ”® SÄ±radaki MaÃ§ Dalga Beklentisi ({wave_global['pattern_matches_count']} Benzer Zincir): â„ï¸ -2 Alt: %{wave_global['prob_minus_2']} &bull; ğŸ“‰ -1 Alt: %{wave_global['prob_minus_1']} &bull; ğŸ¯ Merkez (0): %{wave_global['prob_0']} &bull; ğŸ“ˆ +1 Ãœst: %{wave_global['prob_plus_1']} &bull; ğŸ”¥ +2 Ãœst: %{wave_global['prob_plus_2']}
+                        🔮 Sıradaki Maç Dalga Beklentisi ({wave_global['pattern_matches_count']} Benzer Zincir): ❄️ -2 Alt: %{wave_global['prob_minus_2']} &bull; 📉 -1 Alt: %{wave_global['prob_minus_1']} &bull; 🎯 Merkez (0): %{wave_global['prob_0']} &bull; 📈 +1 Üst: %{wave_global['prob_plus_1']} &bull; 🔥 +2 Üst: %{wave_global['prob_plus_2']}
                     </div>
                 </div>
                 <div style="display:flex; gap:0.45rem; flex-wrap:wrap; max-height:340px; overflow-y:auto; padding-right:4px;">
@@ -853,18 +853,18 @@ def render_live_dashboard():
             unsafe_allow_html=True,
         )
 
-    # â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    # ─────────────────────────────────────────────────────────────────────────
     # SECTION 1: LIVE MATCH CARDS & 9-BAREM MATRIX
-    # â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    # ─────────────────────────────────────────────────────────────────────────
     st.markdown(
-        '<div class="section-hdr">ğŸ”´ CanlÄ± MaÃ§ KartlarÄ± & AnlÄ±k 9\'lu Barem Matrisi (0 - 36. Dakika)</div>',
+        '<div class="section-hdr">🔴 Canlı Maç Kartları & Anlık 9\'lu Barem Matrisi (0 - 36. Dakika)</div>',
         unsafe_allow_html=True,
     )
 
     if not live_matches:
         st.info(
-            "Åu an aktif canlÄ± maÃ§ bekleniyor veya tarama yapÄ±lÄ±yor. "
-            "YukarÄ±daki **'âš¡ AnlÄ±k CanlÄ± Barem Ã‡ek'** butonuna basarak anÄ±nda kontrol edebilirsiniz."
+            "Şu an aktif canlı maç bekleniyor veya tarama yapılıyor. "
+            "Yukarıdaki **'⚡ Anlık Canlı Barem Çek'** butonuna basarak anında kontrol edebilirsiniz."
         )
     else:
         for m in live_matches:
@@ -882,27 +882,27 @@ def render_live_dashboard():
 
             comp_qs = m.get("completed_quarters", [])
             q_str_parts = [f"Q{idx+1}: {hq}-{aq} ({hq+aq})" for idx, (hq, aq) in enumerate(comp_qs)]
-            q_str_parts.append(f"Q{q_num} (CanlÄ±): {m.get('live_q_score', '0-0')}")
+            q_str_parts.append(f"Q{q_num} (Canlı): {m.get('live_q_score', '0-0')}")
             quarters_summary = " &nbsp;&bull;&nbsp; ".join(q_str_parts)
 
             if status_code == "PRE_GAME":
                 badge_html = (
                     '<span style="background:var(--bg-subcard); border:1px solid var(--border-subtle); '
                     'color:var(--text-secondary); padding:0.28rem 0.75rem; border-radius:8px; font-size:0.76rem; font-weight:700;">'
-                    "â³ MAÃ‡ BAÅLAMADI</span>"
+                    "⏳ MAÇ BAŞLAMADI</span>"
                 )
             elif is_open:
                 rem_to_36 = max(0.0, 36.0 - el_m)
                 badge_html = (
                     '<span style="background:var(--pill-bg); border:1px solid var(--pill-border); '
                     'color:var(--pill-text); padding:0.28rem 0.75rem; border-radius:8px; font-size:0.76rem; font-weight:700;">'
-                    f"ğŸŸ¢ BAREM AÃ‡IK (KapanÄ±ÅŸa {rem_to_36:.1f} dk)</span>"
+                    f"🟢 BAREM AÇIK (Kapanışa {rem_to_36:.1f} dk)</span>"
                 )
             else:
                 badge_html = (
                     '<span style="background:rgba(225,29,72,0.1); border:1px solid rgba(225,29,72,0.28); '
                     'color:#e11d48; padding:0.28rem 0.75rem; border-radius:8px; font-size:0.76rem; font-weight:700;">'
-                    "ğŸ”’ 36+ DK BAREM KAPANDI â€” MaÃ§ Sonucu Bekleniyor</span>"
+                    "🔒 36+ DK BAREM KAPANDI — Maç Sonucu Bekleniyor</span>"
                 )
 
             pred_tot = m.get("predicted_total", 212.0)
@@ -918,7 +918,7 @@ def render_live_dashboard():
             sym_gap = m.get("symmetry_gap", 99.0)
 
             q3_sig = m.get("q3_q4_signal") or {}
-            q3_sig_label = q3_sig.get("signal", "NÃ¶tr Q4 Beklentisi")
+            q3_sig_label = q3_sig.get("signal", "Nötr Q4 Beklentisi")
             q4_burst_p = q3_sig.get("burst_prob", 35.0)
             q4_coll_p = q3_sig.get("collapse_prob", 25.0)
 
@@ -944,11 +944,11 @@ def render_live_dashboard():
             smart_color = {"TRAP_LOW": "#e11d48", "GOLDEN": "#059669"}.get(smart["zone_type"], "var(--text-secondary)")
             smart_html = (
                 f'<div class="info-strip" style="grid-column: 1 / -1; border-left:4px solid {smart_color};">'
-                f'<div class="info-strip-label">ğŸ¤– 35. Dk AkÄ±llÄ± Karar & Tuzak Kutusu</div>'
+                f'<div class="info-strip-label">🤖 35. Dk Akıllı Karar & Tuzak Kutusu</div>'
                 f'<div class="info-strip-val" style="font-size:0.84rem;">'
                 f'<b style="color:{smart_color};">{smart["zone_badge"]}</b> &nbsp;&bull;&nbsp; {smart["drift_badge"]}<br>'
                 f'Ana Tercih: <b>{smart["primary_pick"]}</b> &nbsp;&bull;&nbsp; Koruma: <b>{smart["backup_pick"]}</b> '
-                f'&nbsp;(GÃ¼ven: %{smart["confidence_pct"]})'
+                f'&nbsp;(Güven: %{smart["confidence_pct"]})'
                 f'<div style="font-size:0.72rem; color:var(--text-muted); margin-top:0.15rem;">{smart["reasoning"]}</div>'
                 f"</div></div>"
             )
@@ -959,22 +959,22 @@ def render_live_dashboard():
             for b_name, _, _ in BAREM_RANGES:
                 odd_v = float(odds_map.get(b_name, 99.0))
                 prob_v = float(probs_map.get(b_name, 0.0))
-                odd_disp = f"{odd_v:.2f}" if odd_v < 90.0 else "ğŸ”’"
+                odd_disp = f"{odd_v:.2f}" if odd_v < 90.0 else "🔒"
 
                 cls_list = ["barem-box"]
                 tag_html = ""
                 if b_name == fav1 and odd_v < 90.0:
                     cls_list.append("fav1")
-                    tag_html = '<div class="b-tag" style="background:var(--fav1-border); color:#ffffff;">â­ 1. FAVORÄ°</div>'
+                    tag_html = '<div class="b-tag" style="background:var(--fav1-border); color:#ffffff;">⭐ 1. FAVORİ</div>'
                 elif b_name == fav2 and odd_v < 90.0:
                     cls_list.append("fav2")
-                    tag_html = '<div class="b-tag" style="background:var(--fav2-border); color:#ffffff;">ğŸ¥ˆ 2. FAVORÄ°</div>'
+                    tag_html = '<div class="b-tag" style="background:var(--fav2-border); color:#ffffff;">🥈 2. FAVORİ</div>'
 
                 if b_name == val_rng and odd_v < 90.0 and b_name != fav1:
                     cls_list.append("val-pick")
-                    tag_html = '<div class="b-tag" style="background:var(--val-border); color:#ffffff;">ğŸ”¥ VALUE</div>'
+                    tag_html = '<div class="b-tag" style="background:var(--val-border); color:#ffffff;">🔥 VALUE</div>'
                 elif b_name == val_rng and b_name == fav1 and odd_v < 90.0:
-                    tag_html = '<div class="b-tag" style="background:var(--fav1-border); color:#ffffff;">â­ FAV + VALUE</div>'
+                    tag_html = '<div class="b-tag" style="background:var(--fav1-border); color:#ffffff;">⭐ FAV + VALUE</div>'
 
                 boxes_html += (
                     f'<div class="{" ".join(cls_list)}">'
@@ -986,7 +986,7 @@ def render_live_dashboard():
                 )
 
             sym_text = (
-                f"{fav1} & {fav2} (Fark: {sym_gap:.2f} | Ã‡ifte Åans: {dutch_odd:.2f})"
+                f"{fav1} & {fav2} (Fark: {sym_gap:.2f} | Çifte Şans: {dutch_odd:.2f})"
                 if sym_gap < 2.0
                 else f"Favori Barem: {fav1} ({fav1_odd if fav1_odd < 90 else '-'})"
             )
@@ -996,9 +996,9 @@ def render_live_dashboard():
             <div class="match-card">
                 <div class="match-top">
                     <div>
-                        <div class="teams-title">ğŸ€ {t_home} &nbsp;<span style="color:var(--text-muted); font-weight:500;">vs</span>&nbsp; {t_away}</div>
+                        <div class="teams-title">🏀 {t_home} &nbsp;<span style="color:var(--text-muted); font-weight:500;">vs</span>&nbsp; {t_away}</div>
                         <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.22rem; font-weight:500;">
-                            â±ï¸ <b>Q{q_num} â€” {el_m:.1f}. Dakika</b> (Ã‡eyrekte kalan: {rem_q:.1f} dk) &nbsp;&bull;&nbsp; {quarters_summary} &nbsp;&bull;&nbsp; ğŸ“š <b>GeÃ§miÅŸ Veri: {h2h_n} MaÃ§</b>
+                            ⏱️ <b>Q{q_num} — {el_m:.1f}. Dakika</b> (Çeyrekte kalan: {rem_q:.1f} dk) &nbsp;&bull;&nbsp; {quarters_summary} &nbsp;&bull;&nbsp; 📚 <b>Geçmiş Veri: {h2h_n} Maç</b>
                         </div>
                     </div>
                     <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
@@ -1008,34 +1008,34 @@ def render_live_dashboard():
                 </div>
                 <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:0.65rem; margin-bottom:0.4rem;">
                     <div class="info-strip">
-                        <div class="info-strip-label">ğŸ¯ Monte Carlo MaÃ§ Sonu Tahmini</div>
+                        <div class="info-strip-label">🎯 Monte Carlo Maç Sonu Tahmini</div>
                         <div class="info-strip-val">
-                            {pred_h:.0f} - {pred_a:.0f} &nbsp;<span style="color:var(--score-text);">(Toplam: {pred_tot:.1f} SayÄ±)</span>
+                            {pred_h:.0f} - {pred_a:.0f} &nbsp;<span style="color:var(--score-text);">(Toplam: {pred_tot:.1f} Sayı)</span>
                         </div>
                     </div>
                     <div class="info-strip">
-                        <div class="info-strip-label">âš–ï¸ Barem Simetri & Ã‡ifte Åans</div>
+                        <div class="info-strip-label">⚖️ Barem Simetri & Çifte Şans</div>
                         <div class="info-strip-val" style="color:var(--fav1-text);">
                             {sym_text}
                         </div>
                     </div>
                     <div class="info-strip">
-                        <div class="info-strip-label">ğŸ›¡ï¸ En GÃ¼Ã§lÃ¼ 20-SayÄ± KÃ¼mesi & Value</div>
+                        <div class="info-strip-label">🛡️ En Güçlü 20-Sayı Kümesi & Value</div>
                         <div class="info-strip-val" style="color:var(--val-text);">
-                            KÃ¼me: {clu_name} (%{clu_prob:.1f}) &nbsp;&bull;&nbsp; Value: {val_rng}
+                            Küme: {clu_name} (%{clu_prob:.1f}) &nbsp;&bull;&nbsp; Value: {val_rng}
                         </div>
                     </div>
                     <div class="info-strip">
-                        <div class="info-strip-label">âš¡ Q3 â” Q4 Patlama / Ã‡Ã¶kÃ¼ÅŸ DedektÃ¶rÃ¼</div>
+                        <div class="info-strip-label">⚡ Q3 ➔ Q4 Patlama / Çöküş Dedektörü</div>
                         <div class="info-strip-val">
-                            {q3_sig_label} <span style="font-size:0.76rem; color:var(--text-muted);">(Patlama %{q4_burst_p:.0f} / Ã‡Ã¶kÃ¼ÅŸ %{q4_coll_p:.0f})</span>
+                            {q3_sig_label} <span style="font-size:0.76rem; color:var(--text-muted);">(Patlama %{q4_burst_p:.0f} / Çöküş %{q4_coll_p:.0f})</span>
                         </div>
                     </div>
                     <div class="info-strip">
-                        <div class="info-strip-label">ğŸŒŠ ArdÄ±ÅŸÄ±k MaÃ§ Dalga Hedefi (-2 / -1 / 0 / +1 / +2)</div>
+                        <div class="info-strip-label">🌊 Ardışık Maç Dalga Hedefi (-2 / -1 / 0 / +1 / +2)</div>
                         <div class="info-strip-val" style="color:var(--score-text); font-size:0.84rem;">
                             -2: {w_bm2} &bull; -1: {w_bm1} &bull; <b>0: {w_b0}</b> &bull; +1: {w_bp1} &bull; +2: {w_bp2}
-                            <div style="font-size:0.74rem; color:var(--fav1-text); margin-top:0.1rem;">Ã–nerilen Dalga Ä°kilisi: {w_rec_pair} (%{w_rec_prob})</div>
+                            <div style="font-size:0.74rem; color:var(--fav1-text); margin-top:0.1rem;">Önerilen Dalga İkilisi: {w_rec_pair} (%{w_rec_prob})</div>
                         </div>
                     </div>
                     {smart_html}
@@ -1048,39 +1048,39 @@ def render_live_dashboard():
                 unsafe_allow_html=True,
             )
 
-    # â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    # ─────────────────────────────────────────────────────────────────────────
     # SECTION 2: MATCH-ISOLATED BAREM FLOW & CLOSING SYMMETRY TABLES (0 - 36m)
-    # â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    # ─────────────────────────────────────────────────────────────────────────
     st.markdown(
-        '<div class="section-hdr">ğŸ“Š MaÃ§ BazlÄ± AyrÄ±ÅŸtÄ±rÄ±lmÄ±ÅŸ Barem & Simetri AkÄ±ÅŸ Tablosu (0 - 36. Dakika)</div>',
+        '<div class="section-hdr">📊 Maç Bazlı Ayrıştırılmış Barem & Simetri Akış Tablosu (0 - 36. Dakika)</div>',
         unsafe_allow_html=True,
     )
 
     if df_log.empty:
         st.info(
-            "HenÃ¼z kaydedilmiÅŸ barem akÄ±ÅŸ verisi bulunmuyor. CanlÄ± bir maÃ§ta barem aÃ§Ä±kken (0-36. dk) her maÃ§ kendi baÄŸÄ±msÄ±z kutusunda buraya eklenecektir."
+            "Henüz kaydedilmiş barem akış verisi bulunmuyor. Canlı bir maçta barem açıkken (0-36. dk) her maç kendi bağımsız kutusunda buraya eklenecektir."
         )
     else:
         f_col1, f_col2, f_col3, f_col4 = st.columns([1.15, 1.35, 1.25, 1.25])
         with f_col1:
             status_filter = st.selectbox(
                 "Durum Filtresi",
-                ["TÃ¼mÃ¼", "â³ CanlÄ± / Bekleyen (PENDING)", "âœ… SonuÃ§lanan (COMPLETED)"],
+                ["Tümü", "⏳ Canlı / Bekleyen (PENDING)", "✅ Sonuçlanan (COMPLETED)"],
                 index=0,
             )
         with f_col2:
-            unique_games = ["TÃ¼m MaÃ§lar (Her MaÃ§ AyrÄ± Tabloda)"] + list(df_log["game_name"].dropna().unique())[::-1]
-            game_filter = st.selectbox("MaÃ§ Filtresi", unique_games, index=0)
+            unique_games = ["Tüm Maçlar (Her Maç Ayrı Tabloda)"] + list(df_log["game_name"].dropna().unique())[::-1]
+            game_filter = st.selectbox("Maç Filtresi", unique_games, index=0)
         with f_col3:
             min_filter = st.selectbox(
-                "Dakika AralÄ±ÄŸÄ±",
-                ["TÃ¼m Dakikalar (0-36. dk)", "ğŸ”¥ KapanÄ±ÅŸ BÃ¶lgesi (30-36. dk)", "âš¡ Erken/Orta Periyot (0-29. dk)"],
+                "Dakika Aralığı",
+                ["Tüm Dakikalar (0-36. dk)", "🔥 Kapanış Bölgesi (30-36. dk)", "⚡ Erken/Orta Periyot (0-29. dk)"],
                 index=0,
             )
         with f_col4:
             layout_mode = st.selectbox(
-                "GÃ¶rÃ¼nÃ¼m Modu",
-                ["ğŸ—‚ï¸ Her MaÃ§ AyrÄ± Kutuda (Alt Alta)", "ğŸ“‘ Her MaÃ§ AyrÄ± Sekmede (Tab)"],
+                "Görünüm Modu",
+                ["🗂️ Her Maç Ayrı Kutuda (Alt Alta)", "📑 Her Maç Ayrı Sekmede (Tab)"],
                 index=1,
             )
 
@@ -1090,7 +1090,7 @@ def render_live_dashboard():
         elif "COMPLETED" in status_filter:
             df_view = df_view[df_view["status"] == "COMPLETED"]
 
-        if not game_filter.startswith("TÃ¼m MaÃ§lar"):
+        if not game_filter.startswith("Tüm Maçlar"):
             df_view = df_view[df_view["game_name"] == game_filter]
 
         if "30-36" in min_filter:
@@ -1113,7 +1113,7 @@ def render_live_dashboard():
             ]
 
         if df_view.empty:
-            st.info("SeÃ§ilen filtreye uygun barem kaydÄ± bulunamadÄ±.")
+            st.info("Seçilen filtreye uygun barem kaydı bulunamadı.")
         else:
             # Group strictly by game_id so simultaneous games NEVER mix in a single table!
             # Order games so PENDING (active live) games appear first, then most recent games.
@@ -1152,14 +1152,14 @@ def render_live_dashboard():
                     if st_val == "COMPLETED" and act_rng:
                         hits = []
                         if act_rng == fav_rng:
-                            hits.append("â­ FAV TUTTU")
+                            hits.append("⭐ FAV TUTTU")
                         if act_rng == val_rng:
-                            hits.append("ğŸ”¥ VALUE TUTTU")
+                            hits.append("🔥 VALUE TUTTU")
                         if check_cluster_hit(clu_rng, act_rng):
-                            hits.append("ğŸ›¡ï¸ KÃœME TUTTU")
-                        outcome_badge = " | ".join(hits) if hits else f"âŒ ({act_rng})"
+                            hits.append("🛡️ KÜME TUTTU")
+                        outcome_badge = " | ".join(hits) if hits else f"❌ ({act_rng})"
                     else:
-                        outcome_badge = "â³ Bekliyor"
+                        outcome_badge = "⏳ Bekliyor"
 
                     def _fmt_cell(odd_col, prob_col):
                         o_v = float(r.get(odd_col, 99.0) or 99.0)
@@ -1171,7 +1171,7 @@ def render_live_dashboard():
                     rows.append(
                         {
                             "Dakika": r.get("check_time", ""),
-                            "AnlÄ±k Skor": r.get("current_score", ""),
+                            "Anlık Skor": r.get("current_score", ""),
                             "160-": _fmt_cell("odds_160_or_less", "model_prob_160_or_less"),
                             "161-170": _fmt_cell("odds_161_170", "model_prob_161_170"),
                             "171-180": _fmt_cell("odds_171_180", "model_prob_171_180"),
@@ -1181,11 +1181,11 @@ def render_live_dashboard():
                             "211-220": _fmt_cell("odds_211_220", "model_prob_211_220"),
                             "221-230": _fmt_cell("odds_221_230", "model_prob_221_230"),
                             "231+": _fmt_cell("odds_231_plus", "model_prob_231_plus"),
-                            "â­ 1xBet Fav": fav_rng,
-                            "ğŸ”¥ Value Barem": val_rng,
-                            "ğŸ›¡ï¸ 20-SayÄ± KÃ¼mesi": f"{clu_rng} (%{float(clu_prb or 0):.0f})",
-                            "MaÃ§ Sonu": f"{act_sc} ({act_rng})" if act_sc else "-",
-                            "SonuÃ§ Analizi": outcome_badge,
+                            "⭐ 1xBet Fav": fav_rng,
+                            "🔥 Value Barem": val_rng,
+                            "🛡️ 20-Sayı Kümesi": f"{clu_rng} (%{float(clu_prb or 0):.0f})",
+                            "Maç Sonu": f"{act_sc} ({act_rng})" if act_sc else "-",
+                            "Sonuç Analizi": outcome_badge,
                         }
                     )
                 return pd.DataFrame(rows)
@@ -1200,32 +1200,32 @@ def render_live_dashboard():
                 act_sc = str(g_sub.iloc[-1].get("actual_score", "")).replace("nan", "").strip()
                 act_rng = str(g_sub.iloc[-1].get("actual_range", "")).replace("nan", "").strip()
 
-                first_fav = str(df_m.iloc[0]["â­ 1xBet Fav"])
-                last_fav = str(df_m.iloc[-1]["â­ 1xBet Fav"])
-                last_clu = str(df_m.iloc[-1]["ğŸ›¡ï¸ 20-SayÄ± KÃ¼mesi"])
+                first_fav = str(df_m.iloc[0]["⭐ 1xBet Fav"])
+                last_fav = str(df_m.iloc[-1]["⭐ 1xBet Fav"])
+                last_clu = str(df_m.iloc[-1]["🛡️ 20-Sayı Kümesi"])
                 last_min = str(df_m.iloc[-1]["Dakika"])
 
                 if g_status == "COMPLETED" and act_rng:
                     status_pill_html = (
                         '<span style="background:var(--pill-bg); border:1px solid var(--pill-border); '
                         'color:var(--pill-text); padding:0.24rem 0.7rem; border-radius:8px; font-size:0.75rem; font-weight:700;">'
-                        f"âœ… SONUÃ‡LANDI: {act_sc} &bull; Kazanan Barem: {act_rng}</span>"
+                        f"✅ SONUÇLANDI: {act_sc} &bull; Kazanan Barem: {act_rng}</span>"
                     )
                 else:
                     status_pill_html = (
                         '<span style="background:var(--val-bg); border:1px solid var(--val-border); '
                         'color:var(--val-text); padding:0.24rem 0.7rem; border-radius:8px; font-size:0.75rem; font-weight:700;">'
-                        f"â³ CANLI / SONUÃ‡ BEKLENÄ°YOR (Son KayÄ±t: {last_min})</span>"
+                        f"⏳ CANLI / SONUÇ BEKLENİYOR (Son Kayıt: {last_min})</span>"
                     )
 
                 st.markdown(
                     f"""
                     <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-left:4px solid var(--score-text); border-radius:10px; padding:0.75rem 1.1rem; margin-top:0.65rem; margin-bottom:0.35rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; box-shadow:var(--shadow-card);">
                         <div>
-                            <span style="font-size:1.0rem; font-weight:800; color:var(--text-primary);">ğŸ€ {g_name}</span>
-                            <span style="font-size:0.76rem; color:var(--text-muted); margin-left:0.6rem; font-family:'JetBrains Mono',monospace;">[{gid}] &bull; {len(df_m)} Dakika KaydÄ±</span>
+                            <span style="font-size:1.0rem; font-weight:800; color:var(--text-primary);">🏀 {g_name}</span>
+                            <span style="font-size:0.76rem; color:var(--text-muted); margin-left:0.6rem; font-family:'JetBrains Mono',monospace;">[{gid}] &bull; {len(df_m)} Dakika Kaydı</span>
                             <div style="font-size:0.78rem; color:var(--text-secondary); margin-top:0.2rem;">
-                                ğŸ“ˆ <b>Favori Barem AkÄ±ÅŸÄ±:</b> {first_fav} â” <b>{last_fav}</b> &nbsp;&bull;&nbsp; ğŸ›¡ï¸ <b>Son KÃ¼me:</b> {last_clu}
+                                📈 <b>Favori Barem Akışı:</b> {first_fav} ➔ <b>{last_fav}</b> &nbsp;&bull;&nbsp; 🛡️ <b>Son Küme:</b> {last_clu}
                             </div>
                         </div>
                         <div>{status_pill_html}</div>
@@ -1245,7 +1245,7 @@ def render_live_dashboard():
                 for gid in sorted_gids[:12]:
                     g_sub = df_view[df_view["game_id"] == gid]
                     g_name = str(g_sub.iloc[-1].get("game_name", gid)).replace(" (cyber)", "")
-                    g_st = "â³" if (g_sub["status"] == "PENDING").any() else "âœ…"
+                    g_st = "⏳" if (g_sub["status"] == "PENDING").any() else "✅"
                     tab_labels.append(f"{g_st} {g_name} ({len(g_sub)})")
                 m_tabs = st.tabs(tab_labels)
                 for idx_t, gid in enumerate(sorted_gids[:12]):
@@ -1259,11 +1259,11 @@ def render_live_dashboard():
 render_live_dashboard()
 
 
-# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# ─────────────────────────────────────────────────────────────────────────────
 # SECTION 3: ADVANCED ANALYTICS & HISTORICAL ARCHIVE (ALL 4 MODULES)
-# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# ─────────────────────────────────────────────────────────────────────────────
 st.markdown(
-    '<div class="section-hdr">ğŸ§  GeliÅŸmiÅŸ Ä°statistik, GeÃ§miÅŸ TÃ¼m MaÃ§lar ArÅŸivi & Kasa/Dutching Merkezi</div>',
+    '<div class="section-hdr">🧠 Gelişmiş İstatistik, Geçmiş Tüm Maçlar Arşivi & Kasa/Dutching Merkezi</div>',
     unsafe_allow_html=True,
 )
 
@@ -1274,27 +1274,27 @@ live_matches_now = live_state_now.get("live_matches", [])
 
 tab_dna, tab_sym, tab_q3q4, tab_bankroll, tab_sim, tab_smart35 = st.tabs(
     [
-        f"ğŸ† 1. GeÃ§miÅŸ MaÃ§lar & TakÄ±m Barem DNA ({len(df_completed_archive)} MaÃ§)",
-        "âš–ï¸ 2. KapanÄ±ÅŸ OranÄ± (30-36. Dk) Simetri & Tuzak Analizi",
-        "âš¡ 3. Q3 â” Q4 Patlama / Ã‡Ã¶kÃ¼ÅŸ DedektÃ¶rÃ¼",
-        "ğŸ’° 4. CanlÄ± Kupon, Kasa (ROI) & Ã‡ifte Barem (Dutching) HesaplayÄ±cÄ±",
-        "ğŸ§® 5. Manuel CanlÄ± Tempo SimÃ¼latÃ¶rÃ¼",
-        "ğŸ¤– 6. 35. Dk AkÄ±llÄ± Kural & Sanal Kasa SimÃ¼latÃ¶rÃ¼",
+        f"🏆 1. Geçmiş Maçlar & Takım Barem DNA ({len(df_completed_archive)} Maç)",
+        "⚖️ 2. Kapanış Oranı (30-36. Dk) Simetri & Tuzak Analizi",
+        "⚡ 3. Q3 ➔ Q4 Patlama / Çöküş Dedektörü",
+        "💰 4. Canlı Kupon, Kasa (ROI) & Çifte Barem (Dutching) Hesaplayıcı",
+        "🧮 5. Manuel Canlı Tempo Simülatörü",
+        "🤖 6. 35. Dk Akıllı Kural & Sanal Kasa Simülatörü",
     ]
 )
 
-# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+# ═════════════════════════════════════════════════════════════════════════════
 # MODULE 6: 35th-MINUTE SMART RULES, TRANSITIONS & VIRTUAL BANKROLL SIMULATOR
-# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+# ═════════════════════════════════════════════════════════════════════════════
 with tab_smart35:
-    st.markdown("##### ğŸ¤– 35. Dakika AkÄ±llÄ± Kural Motoru â€” GerÃ§ek KapanÄ±ÅŸ OranlÄ± MaÃ§lardan HesaplanÄ±r")
+    st.markdown("##### 🤖 35. Dakika Akıllı Kural Motoru — Gerçek Kapanış Oranlı Maçlardan Hesaplanır")
     sim35 = simulate_35m_strategies(df_sym_all)
     if sim35["total_matches"] == 0:
-        st.info("SonuÃ§lanmÄ±ÅŸ canlÄ± kapanÄ±ÅŸ kaydÄ± bekleniyor. MaÃ§lar bittikÃ§e bu sekme otomatik dolar.")
+        st.info("Sonuçlanmış canlı kapanış kaydı bekleniyor. Maçlar bittikçe bu sekme otomatik dolar.")
     else:
         st.caption(
-            f"ğŸ“Š Analiz edilen gerÃ§ek maÃ§ sayÄ±sÄ±: **{sim35['total_matches']}** â€¢ Her maÃ§a sabit **1000 TL** bahis â€¢ "
-            "Oranlar 35. dakikadaki gerÃ§ek 1xBet kapanÄ±ÅŸ oranlarÄ±dÄ±r."
+            f"📊 Analiz edilen gerçek maç sayısı: **{sim35['total_matches']}** • Her maça sabit **1000 TL** bahis • "
+            "Oranlar 35. dakikadaki gerçek 1xBet kapanış oranlarıdır."
         )
         _n_games = df_sym_all["game_id"].nunique() if not df_sym_all.empty else 0
         _n_done = (
@@ -1302,17 +1302,17 @@ with tab_smart35:
             if (not df_sym_all.empty and "status" in df_sym_all.columns)
             else 0
         )
-        st.caption(f"ğŸ” Veri kaynaÄŸÄ±: {len(df_sym_all)} dakika kaydÄ± â€¢ {_n_games} maÃ§ â€¢ {_n_done} sonuÃ§lanmÄ±ÅŸ â€¢ sÃ¼rÃ¼m {ENGINE_VERSION}")
-        st.markdown("###### ğŸ’° Sanal Kasa: Hangi Strateji KazandÄ±rÄ±rdÄ±?")
+        st.caption(f"🔎 Veri kaynağı: {len(df_sym_all)} dakika kaydı • {_n_games} maç • {_n_done} sonuçlanmış • sürüm {ENGINE_VERSION}")
+        st.markdown("###### 💰 Sanal Kasa: Hangi Strateji Kazandırırdı?")
         st.dataframe(
             pd.DataFrame(
                 [
                     {
                         "Strateji": s["name"],
-                        "Ä°sabet": f"{s['wins']} / {s['total']} (%{s['win_rate']})",
-                        "Toplam YatÄ±rÄ±m": f"{s['cost']:.0f} TL",
-                        "Toplam DÃ¶nÃ¼ÅŸ": f"{s['return']:.0f} TL",
-                        "Net KÃ¢r / Zarar": f"{s['net_profit']:+.0f} TL",
+                        "İsabet": f"{s['wins']} / {s['total']} (%{s['win_rate']})",
+                        "Toplam Yatırım": f"{s['cost']:.0f} TL",
+                        "Toplam Dönüş": f"{s['return']:.0f} TL",
+                        "Net Kâr / Zarar": f"{s['net_profit']:+.0f} TL",
                         "ROI": f"%{s['roi_pct']:+.1f}",
                     }
                     for s in sim35["strategies"]
@@ -1322,34 +1322,34 @@ with tab_smart35:
             hide_index=True,
         )
         if sim35["odds_brackets"]:
-            st.markdown("###### ğŸšï¸ 35. Dk Favori Oran BandÄ±na GÃ¶re DavranÄ±ÅŸ")
+            st.markdown("###### 🎚️ 35. Dk Favori Oran Bandına Göre Davranış")
             st.dataframe(pd.DataFrame(sim35["odds_brackets"]), use_container_width=True, hide_index=True)
         if sim35["drift_brackets"]:
-            st.markdown("###### ğŸ“‰ MaÃ§ Ä°Ã§i Barem GÃ¶Ã§Ã¼ (Q1 â” 35. Dk) DavranÄ±ÅŸÄ±")
+            st.markdown("###### 📉 Maç İçi Barem Göçü (Q1 ➔ 35. Dk) Davranışı")
             st.dataframe(pd.DataFrame(sim35["drift_brackets"]), use_container_width=True, hide_index=True)
         if sim35["transitions"]:
-            st.markdown("###### ğŸŒŠ ArdÄ±ÅŸÄ±k MaÃ§ GeÃ§iÅŸ Matrisi (Ã–nceki MaÃ§ â” SÄ±radaki MaÃ§)")
+            st.markdown("###### 🌊 Ardışık Maç Geçiş Matrisi (Önceki Maç ➔ Sıradaki Maç)")
             st.dataframe(pd.DataFrame(sim35["transitions"]), use_container_width=True, hide_index=True)
-        st.markdown("###### ğŸ“’ MaÃ§ MaÃ§ Sanal Kupon Defteri")
+        st.markdown("###### 📒 Maç Maç Sanal Kupon Defteri")
         st.dataframe(pd.DataFrame(sim35["ledger"]), use_container_width=True, hide_index=True, height=420)
         st.warning(
-            "âš ï¸ Ã–rneklem kÃ¼Ã§Ã¼ktÃ¼r (onlarca maÃ§). YÃ¼zdeler maÃ§ sayÄ±sÄ± arttÄ±kÃ§a deÄŸiÅŸir; kesin kazanÃ§ garantisi deÄŸildir. "
-            "Sistem istatistiksel eÄŸilim gÃ¶sterir."
+            "⚠️ Örneklem küçüktür (onlarca maç). Yüzdeler maç sayısı arttıkça değişir; kesin kazanç garantisi değildir. "
+            "Sistem istatistiksel eğilim gösterir."
         )
 
-# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+# ═════════════════════════════════════════════════════════════════════════════
 # MODULE 1: HISTORICAL MATCHES CENTER, TEAM BAREM DNA & H2H ANALYZER
-# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+# ═════════════════════════════════════════════════════════════════════════════
 with tab_dna:
     if df_completed_archive.empty:
         st.info(
-            "Åu an geÃ§miÅŸ maÃ§ arÅŸivi boÅŸ. YukarÄ±daki **'ğŸ“¥ Son 4 Ay ArÅŸivini GÃ¼ncelle (120 GÃ¼n)'** butonuna basarak "
-            "son 4 ayÄ±n tamamlanmÄ±ÅŸ tÃ¼m CyberLeague maÃ§larÄ±nÄ± saniyeler iÃ§inde yÃ¼kleyebilirsiniz."
+            "Şu an geçmiş maç arşivi boş. Yukarıdaki **'📥 Son 4 Ay Arşivini Güncelle (120 Gün)'** butonuna basarak "
+            "son 4 ayın tamamlanmış tüm CyberLeague maçlarını saniyeler içinde yükleyebilirsiniz."
         )
     else:
         df_arc = df_completed_archive.copy()
         df_arc["Kazanan Barem"] = df_arc["total_score"].apply(get_range_from_score)
-        df_arc["20'li KÃ¼me"] = df_arc["total_score"].apply(get_cluster_from_score)
+        df_arc["20'li Küme"] = df_arc["total_score"].apply(get_cluster_from_score)
         df_arc["Q1 Toplam"] = df_arc["home_q1"].astype(int) + df_arc["away_q1"].astype(int)
         df_arc["Q2 Toplam"] = df_arc["home_q2"].astype(int) + df_arc["away_q2"].astype(int)
         df_arc["Q3 Toplam"] = df_arc["home_q3"].astype(int) + df_arc["away_q3"].astype(int)
@@ -1361,32 +1361,32 @@ with tab_dna:
 
         flt1, flt2, flt3 = st.columns([1.3, 1.3, 1.1])
         with flt1:
-            sel_t1 = st.selectbox("1. TakÄ±m Filtresi (H2H veya Tek TakÄ±m)", ["TÃ¼m TakÄ±mlar"] + all_teams, index=0)
+            sel_t1 = st.selectbox("1. Takım Filtresi (H2H veya Tek Takım)", ["Tüm Takımlar"] + all_teams, index=0)
         with flt2:
-            sel_t2 = st.selectbox("2. TakÄ±m Filtresi (Rakip / H2H)", ["TÃ¼m TakÄ±mlar"] + all_teams, index=0)
+            sel_t2 = st.selectbox("2. Takım Filtresi (Rakip / H2H)", ["Tüm Takımlar"] + all_teams, index=0)
         with flt3:
             sel_barem_flt = st.selectbox(
                 "Barem Filtresi",
-                ["TÃ¼m Baremler"] + [b[0] for b in BAREM_RANGES],
+                ["Tüm Baremler"] + [b[0] for b in BAREM_RANGES],
                 index=0,
             )
 
         df_filtered = df_arc.copy()
-        if sel_t1 != "TÃ¼m TakÄ±mlar" and sel_t2 != "TÃ¼m TakÄ±mlar":
+        if sel_t1 != "Tüm Takımlar" and sel_t2 != "Tüm Takımlar":
             df_filtered = df_filtered[
                 ((df_filtered["home_team"] == sel_t1) & (df_filtered["away_team"] == sel_t2))
                 | ((df_filtered["home_team"] == sel_t2) & (df_filtered["away_team"] == sel_t1))
             ]
-        elif sel_t1 != "TÃ¼m TakÄ±mlar":
+        elif sel_t1 != "Tüm Takımlar":
             df_filtered = df_filtered[
                 (df_filtered["home_team"] == sel_t1) | (df_filtered["away_team"] == sel_t1)
             ]
-        elif sel_t2 != "TÃ¼m TakÄ±mlar":
+        elif sel_t2 != "Tüm Takımlar":
             df_filtered = df_filtered[
                 (df_filtered["home_team"] == sel_t2) | (df_filtered["away_team"] == sel_t2)
             ]
 
-        if sel_barem_flt != "TÃ¼m Baremler":
+        if sel_barem_flt != "Tüm Baremler":
             df_filtered = df_filtered[df_filtered["Kazanan Barem"] == sel_barem_flt]
 
         # Summary metrics for filtered historical matches
@@ -1399,18 +1399,18 @@ with tab_dna:
             else "-"
         )
         modal_c = (
-            df_filtered["20'li KÃ¼me"].mode().iloc[0]
-            if n_flt > 0 and not df_filtered["20'li KÃ¼me"].mode().empty
+            df_filtered["20'li Küme"].mode().iloc[0]
+            if n_flt > 0 and not df_filtered["20'li Küme"].mode().empty
             else "-"
         )
-        m_c1.metric("ğŸ“š Filtrelenen MaÃ§ SayÄ±sÄ±", f"{n_flt} MaÃ§")
-        m_c2.metric("ğŸ€ Ortalama Toplam SayÄ±", f"{avg_tot:.1f} SayÄ±")
-        m_c3.metric("ğŸ¯ En Ã‡ok Ã‡Ä±kan 10'lu Barem", modal_b)
-        m_c4.metric("ğŸ›¡ï¸ En Ã‡ok Ã‡Ä±kan 20'li KÃ¼me", modal_c)
+        m_c1.metric("📚 Filtrelenen Maç Sayısı", f"{n_flt} Maç")
+        m_c2.metric("🏀 Ortalama Toplam Sayı", f"{avg_tot:.1f} Sayı")
+        m_c3.metric("🎯 En Çok Çıkan 10'lu Barem", modal_b)
+        m_c4.metric("🛡️ En Çok Çıkan 20'li Küme", modal_c)
 
         ch_col, dna_col = st.columns([1.05, 1.35])
         with ch_col:
-            st.markdown("##### ğŸ“Š GeÃ§miÅŸ MaÃ§larÄ±n 9'lu Barem DaÄŸÄ±lÄ±m GrafiÄŸi")
+            st.markdown("##### 📊 Geçmiş Maçların 9'lu Barem Dağılım Grafiği")
             barem_order = [b[0] for b in BAREM_RANGES]
             b_counts = [int((df_filtered["Kazanan Barem"] == b).sum()) for b in barem_order]
             b_pcts = [(c / n_flt * 100.0) if n_flt > 0 else 0.0 for c in b_counts]
@@ -1429,16 +1429,16 @@ with tab_dna:
                 paper_bgcolor="rgba(0,0,0,0)",
                 plot_bgcolor="rgba(0,0,0,0)",
                 font=dict(color="#475569" if not IS_DARK else "#cbd5e1", size=11),
-                yaxis=dict(title="MaÃ§ Adedi", range=[0, max(b_counts + [5]) * 1.25]),
+                yaxis=dict(title="Maç Adedi", range=[0, max(b_counts + [5]) * 1.25]),
             )
             st.plotly_chart(fig_hist_b, use_container_width=True)
 
         with dna_col:
-            st.markdown("##### ğŸ§¬ TakÄ±m BazlÄ± Barem DNA Tablosu (TÃ¼m CyberLeague TakÄ±mlarÄ±)")
+            st.markdown("##### 🧬 Takım Bazlı Barem DNA Tablosu (Tüm CyberLeague Takımları)")
             df_dna_table = compute_team_dna_table(df_arc)
             st.dataframe(df_dna_table, use_container_width=True, hide_index=True, height=310)
 
-        st.markdown("##### ğŸ“œ TamamlanmÄ±ÅŸ TÃ¼m MaÃ§larÄ±n DetaylÄ± Barem & Periyot ArÅŸivi")
+        st.markdown("##### 📜 Tamamlanmış Tüm Maçların Detaylı Barem & Periyot Arşivi")
         show_cols = [
             "date",
             "home_team",
@@ -1447,7 +1447,7 @@ with tab_dna:
             "away_total",
             "total_score",
             "Kazanan Barem",
-            "20'li KÃ¼me",
+            "20'li Küme",
             "Q1 Toplam",
             "Q2 Toplam",
             "Q3 Toplam",
@@ -1456,25 +1456,25 @@ with tab_dna:
         avail_cols = [c for c in show_cols if c in df_filtered.columns]
         st.dataframe(df_filtered[avail_cols].iloc[::-1], use_container_width=True, hide_index=True, height=340)
 
-# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+# ═════════════════════════════════════════════════════════════════════════════
 # MODULE 2: CLOSING ODDS (30-36 MIN) SYMMETRY & SEQUENTIAL WAVE BACKTEST
-# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+# ═════════════════════════════════════════════════════════════════════════════
 with tab_sym:
     st.markdown(
-        "##### ğŸŒŠ ArdÄ±ÅŸÄ±k MaÃ§larda 36. Dakika Simetri Dalga Analizi (`-2 Alt` / `-1 Alt` / `0 Beklenen` / `+1 Ãœst` / `+2 Ãœst`)"
+        "##### 🌊 Ardışık Maçlarda 36. Dakika Simetri Dalga Analizi (`-2 Alt` / `-1 Alt` / `0 Beklenen` / `+1 Üst` / `+2 Üst`)"
     )
     st.caption(
-        "SezdiÄŸiniz ardÄ±ÅŸÄ±k maÃ§ dalga Ã¶rÃ¼ntÃ¼sÃ¼nÃ¼ (**-2 Alt Barem, -1 Alt Barem, 0 Beklenen Merkez, +1 Ãœst Barem, +2 Ãœst Barem**) "
-        "4.504 gerÃ§ek maÃ§ Ã¼zerinde test eder ve sÄ±radaki maÃ§Ä±n hangi bareme kayacaÄŸÄ±nÄ± hesaplar."
+        "Sezdiğiniz ardışık maç dalga örüntüsünü (**-2 Alt Barem, -1 Alt Barem, 0 Beklenen Merkez, +1 Üst Barem, +2 Üst Barem**) "
+        "4.504 gerçek maç üzerinde test eder ve sıradaki maçın hangi bareme kayacağını hesaplar."
     )
 
     w_col1, w_col2, w_col3, w_col4, w_col5 = st.columns([1, 1, 1, 1, 1.2])
     seq_map = {
-        "â„ï¸ -2 (2 Alt Barem Geldi)": -2,
-        "ğŸ“‰ -1 (1 Alt Barem Geldi)": -1,
-        "ğŸ¯ 0 (36.Dk Beklenen Geldi)": 0,
-        "ğŸ“ˆ +1 (1 Ãœst Barem Geldi)": 1,
-        "ğŸ”¥ +2 (2 Ãœst Barem Geldi)": 2,
+        "❄️ -2 (2 Alt Barem Geldi)": -2,
+        "📉 -1 (1 Alt Barem Geldi)": -1,
+        "🎯 0 (36.Dk Beklenen Geldi)": 0,
+        "📈 +1 (1 Üst Barem Geldi)": 1,
+        "🔥 +2 (2 Üst Barem Geldi)": 2,
     }
     rev_map = {v: k for k, v in seq_map.items()}
 
@@ -1485,16 +1485,16 @@ with tab_sym:
 
     opts_list = list(seq_map.keys())
     with w_col1:
-        s_m1 = st.selectbox("1. Ã–nceki MaÃ§", opts_list, index=opts_list.index(rev_map.get(act_pat[0], opts_list[2])))
+        s_m1 = st.selectbox("1. Önceki Maç", opts_list, index=opts_list.index(rev_map.get(act_pat[0], opts_list[2])))
     with w_col2:
-        s_m2 = st.selectbox("2. Ã–nceki MaÃ§", opts_list, index=opts_list.index(rev_map.get(act_pat[1], opts_list[1])))
+        s_m2 = st.selectbox("2. Önceki Maç", opts_list, index=opts_list.index(rev_map.get(act_pat[1], opts_list[1])))
     with w_col3:
-        s_m3 = st.selectbox("3. Ã–nceki MaÃ§", opts_list, index=opts_list.index(rev_map.get(act_pat[2], opts_list[1])))
+        s_m3 = st.selectbox("3. Önceki Maç", opts_list, index=opts_list.index(rev_map.get(act_pat[2], opts_list[1])))
     with w_col4:
-        s_m4 = st.selectbox("4. (Son BitmiÅŸ) MaÃ§", opts_list, index=opts_list.index(rev_map.get(act_pat[3], opts_list[2])))
+        s_m4 = st.selectbox("4. (Son Bitmiş) Maç", opts_list, index=opts_list.index(rev_map.get(act_pat[3], opts_list[2])))
     with w_col5:
         test_fav_b = st.selectbox(
-            "CanlÄ± MaÃ§Ä±n 36.Dk Beklenen Baremi",
+            "Canlı Maçın 36.Dk Beklenen Baremi",
             [b[0] for b in BAREM_RANGES],
             index=5,
         )
@@ -1506,32 +1506,32 @@ with tab_sym:
 
     wk_m2, wk_m1, wk_0, wk_p1, wk_p2, wk_pair = st.columns(6)
     wk_m2.metric(
-        f"â„ï¸ -2 Alt ({sim_wave['target_minus_2_barem']})",
+        f"❄️ -2 Alt ({sim_wave['target_minus_2_barem']})",
         f"%{sim_wave['prob_minus_2']}",
-        "2 Alt Barem KaymasÄ±",
+        "2 Alt Barem Kayması",
     )
     wk_m1.metric(
-        f"ğŸ“‰ -1 Alt ({sim_wave['target_minus_1_barem']})",
+        f"📉 -1 Alt ({sim_wave['target_minus_1_barem']})",
         f"%{sim_wave['prob_minus_1']}",
         f"Toplam Alt: %{sim_wave['prob_down_total']}",
     )
     wk_0.metric(
-        f"ğŸ¯ 0 Beklenen ({sim_wave['target_0_barem']})",
+        f"🎯 0 Beklenen ({sim_wave['target_0_barem']})",
         f"%{sim_wave['prob_0']}",
         f"{sim_wave['pattern_matches_count']} Benzer Zincir",
     )
     wk_p1.metric(
-        f"ğŸ“ˆ +1 Ãœst ({sim_wave['target_plus_1_barem']})",
+        f"📈 +1 Üst ({sim_wave['target_plus_1_barem']})",
         f"%{sim_wave['prob_plus_1']}",
-        f"Toplam Ãœst: %{sim_wave['prob_up_total']}",
+        f"Toplam Üst: %{sim_wave['prob_up_total']}",
     )
     wk_p2.metric(
-        f"ğŸ”¥ +2 Ãœst ({sim_wave['target_plus_2_barem']})",
+        f"🔥 +2 Üst ({sim_wave['target_plus_2_barem']})",
         f"%{sim_wave['prob_plus_2']}",
-        "2 Ãœst Barem KaymasÄ±",
+        "2 Üst Barem Kayması",
     )
     wk_pair.metric(
-        "ğŸ›¡ï¸ Ã–nerilen Ä°kili KÃ¼me",
+        "🛡️ Önerilen İkili Küme",
         f"%{sim_wave['recommended_pair_prob']}",
         sim_wave["recommended_pair"],
     )
@@ -1545,23 +1545,23 @@ with tab_sym:
         return barem_names_list[n_idx]
 
     if default_wave.get("recent_chain"):
-        st.markdown("###### ğŸ“œ CanlÄ± Takip Edilip Tamamlanan MaÃ§larÄ±n `36. Dakika Beklenen vs Biten Barem (-2 / -1 / 0 / +1 / +2)` Zinciri")
+        st.markdown("###### 📜 Canlı Takip Edilip Tamamlanan Maçların `36. Dakika Beklenen vs Biten Barem (-2 / -1 / 0 / +1 / +2)` Zinciri")
         rc_rows = []
         for item in default_wave["recent_chain"][::-1]:
             eb = item["exp_barem_36"]
             rc_rows.append(
                 {
                     "Tarih / Saat": item["date"],
-                    "MaÃ§": f"{item['home_team']} vs {item['away_team']}",
+                    "Maç": f"{item['home_team']} vs {item['away_team']}",
                     "36. Dk Skor": item["s36"],
-                    "MaÃ§ Sonu Toplam": f"{item['home_total']}:{item['away_total']} ({item['total_score']})",
-                    "â„ï¸ -2 Alt Barem": _get_shifted_b(eb, -2),
-                    "ğŸ“‰ -1 Alt Barem": _get_shifted_b(eb, -1),
-                    "ğŸ¯ 0 (36.Dk Beklenen)": eb,
-                    "ğŸ“ˆ +1 Ãœst Barem": _get_shifted_b(eb, 1),
-                    "ğŸ”¥ +2 Ãœst Barem": _get_shifted_b(eb, 2),
-                    "Biten GerÃ§ek Barem": item["act_barem"],
-                    "Simetri Dalga SapmasÄ± (-2 / -1 / 0 / +1 / +2)": item["shift_label"],
+                    "Maç Sonu Toplam": f"{item['home_total']}:{item['away_total']} ({item['total_score']})",
+                    "❄️ -2 Alt Barem": _get_shifted_b(eb, -2),
+                    "📉 -1 Alt Barem": _get_shifted_b(eb, -1),
+                    "🎯 0 (36.Dk Beklenen)": eb,
+                    "📈 +1 Üst Barem": _get_shifted_b(eb, 1),
+                    "🔥 +2 Üst Barem": _get_shifted_b(eb, 2),
+                    "Biten Gerçek Barem": item["act_barem"],
+                    "Simetri Dalga Sapması (-2 / -1 / 0 / +1 / +2)": item["shift_label"],
                     "Referans": item["source"],
                 }
             )
@@ -1569,7 +1569,7 @@ with tab_sym:
 
     st.markdown("---")
     st.markdown(
-        "##### âš–ï¸ 1xBet KapanÄ±ÅŸ OranÄ± (30-36. Dk) Simetri TuzaÄŸÄ± & KomÅŸu Bareme (`-2 / -1 / 0 / +1 / +2`) Kayma Analizi"
+        "##### ⚖️ 1xBet Kapanış Oranı (30-36. Dk) Simetri Tuzağı & Komşu Bareme (`-2 / -1 / 0 / +1 / +2`) Kayma Analizi"
     )
     df_comp_sym = (
         df_sym_all[df_sym_all["status"] == "COMPLETED"].copy()
@@ -1579,9 +1579,9 @@ with tab_sym:
 
     if df_comp_sym.empty:
         st.info(
-            "Åu an `symmetry_analysis_log.csv` iÃ§inde sonuÃ§lanmÄ±ÅŸ (COMPLETED) canlÄ± barem kaydÄ± bekleniyor. "
-            "CanlÄ± maÃ§lar bittikÃ§e burada **-2 Alt, -1 Alt, 0 Favori, +1 Ãœst, +2 Ãœst Ä°sabet OranlarÄ±**, **Simetri TuzaÄŸÄ± (`Fark <= 0.65`) Kayma OranÄ±** "
-            "ve **Dakika Penceresi (`0-24 dk`, `24-30 dk`, `30-36 dk`)** istatistikleri otomatik hesaplanÄ±r."
+            "Şu an `symmetry_analysis_log.csv` içinde sonuçlanmış (COMPLETED) canlı barem kaydı bekleniyor. "
+            "Canlı maçlar bittikçe burada **-2 Alt, -1 Alt, 0 Favori, +1 Üst, +2 Üst İsabet Oranları**, **Simetri Tuzağı (`Fark <= 0.65`) Kayma Oranı** "
+            "ve **Dakika Penceresi (`0-24 dk`, `24-30 dk`, `30-36 dk`)** istatistikleri otomatik hesaplanır."
         )
     else:
         sym_records = []
@@ -1605,11 +1605,11 @@ with tab_sym:
             m_match = re.search(r"Minute\s+(\d+)", str(r.get("check_time", "")))
             el_min = int(m_match.group(1)) if m_match else 18
             if el_min >= 30:
-                win_bucket = "30-36. Dk (KapanÄ±ÅŸ)"
+                win_bucket = "30-36. Dk (Kapanış)"
             elif el_min >= 24:
-                win_bucket = "24-29. Dk (Q3 BaÅŸÄ±/OrtasÄ±)"
+                win_bucket = "24-29. Dk (Q3 Başı/Ortası)"
             else:
-                win_bucket = "0-23. Dk (Ä°lk YarÄ±)"
+                win_bucket = "0-23. Dk (İlk Yarı)"
 
             sym_records.append(
                 {
@@ -1641,7 +1641,7 @@ with tab_sym:
 
         df_sr = pd.DataFrame(sym_records)
         if not df_sr.empty:
-            # Her maÃ§Ä±n SON (35-36. Dk KapanÄ±ÅŸ) kaydÄ±nÄ± baz alarak MaÃ§ BazlÄ± KapanÄ±ÅŸ Simetrisini hesapla
+            # Her maçın SON (35-36. Dk Kapanış) kaydını baz alarak Maç Bazlı Kapanış Simetrisini hesapla
             df_closing = df_sr.sort_values("el_min").groupby("game_id", as_index=False).last()
             tot_n = len(df_closing)
             m2_pct = df_closing["hit_m2"].mean() * 100.0
@@ -1652,71 +1652,71 @@ with tab_sym:
             both_pct = df_closing["either_fav_hit"].mean() * 100.0
 
             s1, s2, s3, s4, s5, s6 = st.columns(6)
-            s1.metric("â„ï¸ -2 Alt Bareme Kayma", f"%{m2_pct:.1f}", f"{int(df_closing['hit_m2'].sum())} / {tot_n} MaÃ§")
-            s2.metric("ğŸ“‰ -1 Alt Bareme Kayma", f"%{m1_pct:.1f}", f"{int(df_closing['hit_m1'].sum())} / {tot_n} MaÃ§")
-            s3.metric("ğŸ¯ 0 (1. Favori Merkez)", f"%{f0_pct:.1f}", f"{int(df_closing['hit_0'].sum())} / {tot_n} MaÃ§")
-            s4.metric("ğŸ“ˆ +1 Ãœst Bareme Kayma", f"%{p1_pct:.1f}", f"{int(df_closing['hit_p1'].sum())} / {tot_n} MaÃ§")
-            s5.metric("ğŸ”¥ +2 Ãœst Bareme Kayma", f"%{p2_pct:.1f}", f"{int(df_closing['hit_p2'].sum())} / {tot_n} MaÃ§")
+            s1.metric("❄️ -2 Alt Bareme Kayma", f"%{m2_pct:.1f}", f"{int(df_closing['hit_m2'].sum())} / {tot_n} Maç")
+            s2.metric("📉 -1 Alt Bareme Kayma", f"%{m1_pct:.1f}", f"{int(df_closing['hit_m1'].sum())} / {tot_n} Maç")
+            s3.metric("🎯 0 (1. Favori Merkez)", f"%{f0_pct:.1f}", f"{int(df_closing['hit_0'].sum())} / {tot_n} Maç")
+            s4.metric("📈 +1 Üst Bareme Kayma", f"%{p1_pct:.1f}", f"{int(df_closing['hit_p1'].sum())} / {tot_n} Maç")
+            s5.metric("🔥 +2 Üst Bareme Kayma", f"%{p2_pct:.1f}", f"{int(df_closing['hit_p2'].sum())} / {tot_n} Maç")
             s6.metric(
-                "ğŸ›¡ï¸ 1. veya 2. Favori",
+                "🛡️ 1. veya 2. Favori",
                 f"%{both_pct:.1f}",
-                f"{int(df_closing['either_fav_hit'].sum())} / {tot_n} MaÃ§",
+                f"{int(df_closing['either_fav_hit'].sum())} / {tot_n} Maç",
             )
 
             win_rows = []
-            for w_name in ["0-23. Dk (Ä°lk YarÄ±)", "24-29. Dk (Q3 BaÅŸÄ±/OrtasÄ±)", "30-36. Dk (KapanÄ±ÅŸ)"]:
+            for w_name in ["0-23. Dk (İlk Yarı)", "24-29. Dk (Q3 Başı/Ortası)", "30-36. Dk (Kapanış)"]:
                 w_sub = df_sr[df_sr["window"] == w_name]
                 if w_sub.empty:
                     continue
                 win_rows.append(
                     {
                         "Dakika Penceresi": w_name,
-                        "KayÄ±t SayÄ±sÄ±": len(w_sub),
-                        "â„ï¸ -2 Alt Barem (%)": f"%{w_sub['hit_m2'].mean()*100:.1f}",
-                        "ğŸ“‰ -1 Alt Barem (%)": f"%{w_sub['hit_m1'].mean()*100:.1f}",
-                        "ğŸ¯ 0 (1. Favori) (%)": f"%{w_sub['hit_0'].mean()*100:.1f}",
-                        "ğŸ“ˆ +1 Ãœst Barem (%)": f"%{w_sub['hit_p1'].mean()*100:.1f}",
-                        "ğŸ”¥ +2 Ãœst Barem (%)": f"%{w_sub['hit_p2'].mean()*100:.1f}",
-                        "ğŸ¥ˆ 2. Favori (%)": f"%{w_sub['fav2_hit'].mean()*100:.1f}",
-                        "ğŸ›¡ï¸ 20-SayÄ± KÃ¼me (%)": f"%{w_sub['clu_hit'].mean()*100:.1f}",
+                        "Kayıt Sayısı": len(w_sub),
+                        "❄️ -2 Alt Barem (%)": f"%{w_sub['hit_m2'].mean()*100:.1f}",
+                        "📉 -1 Alt Barem (%)": f"%{w_sub['hit_m1'].mean()*100:.1f}",
+                        "🎯 0 (1. Favori) (%)": f"%{w_sub['hit_0'].mean()*100:.1f}",
+                        "📈 +1 Üst Barem (%)": f"%{w_sub['hit_p1'].mean()*100:.1f}",
+                        "🔥 +2 Üst Barem (%)": f"%{w_sub['hit_p2'].mean()*100:.1f}",
+                        "🥈 2. Favori (%)": f"%{w_sub['fav2_hit'].mean()*100:.1f}",
+                        "🛡️ 20-Sayı Küme (%)": f"%{w_sub['clu_hit'].mean()*100:.1f}",
                     }
                 )
             st.dataframe(pd.DataFrame(win_rows), use_container_width=True, hide_index=True)
 
-# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-# MODULE 3: Q3 â” Q4 BURST / COLLAPSE DETECTOR
-# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+# ═════════════════════════════════════════════════════════════════════════════
+# MODULE 3: Q3 ➔ Q4 BURST / COLLAPSE DETECTOR
+# ═════════════════════════════════════════════════════════════════════════════
 with tab_q3q4:
     st.markdown(
-        "##### âš¡ 3. Ã‡eyrek (Q3) Temposuna GÃ¶re 4. Ã‡eyrek (Q4) SayÄ± PatlamasÄ± / Ã‡Ã¶kÃ¼ÅŸ DedektÃ¶rÃ¼"
+        "##### ⚡ 3. Çeyrek (Q3) Temposuna Göre 4. Çeyrek (Q4) Sayı Patlaması / Çöküş Dedektörü"
     )
     if df_completed_archive.empty:
-        st.info("Q3 â” Q4 analizi iÃ§in geÃ§miÅŸ maÃ§ verisi bekleniyor.")
+        st.info("Q3 ➔ Q4 analizi için geçmiş maç verisi bekleniyor.")
     else:
-        q_teams = ["TÃ¼m TakÄ±mlar"] + sorted(
+        q_teams = ["Tüm Takımlar"] + sorted(
             set(df_completed_archive["home_team"].dropna().unique()).union(
                 set(df_completed_archive["away_team"].dropna().unique())
             )
         )
         qc1, qc2, qc3 = st.columns([1.3, 1.3, 1.2])
         with qc1:
-            q_t1 = st.selectbox("Ev Sahibi / 1. TakÄ±m", q_teams, index=0, key="q3_t1")
+            q_t1 = st.selectbox("Ev Sahibi / 1. Takım", q_teams, index=0, key="q3_t1")
         with qc2:
-            q_t2 = st.selectbox("Deplasman / 2. TakÄ±m", q_teams, index=0, key="q3_t2")
+            q_t2 = st.selectbox("Deplasman / 2. Takım", q_teams, index=0, key="q3_t2")
         with qc3:
-            q3_test_score = st.slider("3. Ã‡eyrek (Q3) Toplam SayÄ±sÄ±", 35, 72, 56, 1)
+            q3_test_score = st.slider("3. Çeyrek (Q3) Toplam Sayısı", 35, 72, 56, 1)
 
-        t1_arg = "" if q_t1 == "TÃ¼m TakÄ±mlar" else q_t1
-        t2_arg = "" if q_t2 == "TÃ¼m TakÄ±mlar" else q_t2
+        t1_arg = "" if q_t1 == "Tüm Takımlar" else q_t1
+        t2_arg = "" if q_t2 == "Tüm Takımlar" else q_t2
         sig_res = build_q3_q4_streak_signal(df_completed_archive, t1_arg, t2_arg, q3_score=q3_test_score)
 
         k_q1, k_q2, k_q3, k_q4 = st.columns(4)
-        k_q1.metric("ğŸ”” Tespit Edilen Q4 Sinyali", sig_res["signal"])
-        k_q2.metric("ğŸ”¥ Q4 SayÄ± PatlamasÄ± (56+ SayÄ±)", f"%{sig_res['burst_prob']:.1f}")
-        k_q3.metric("âš–ï¸ Q4 Normal Tempo (49-55 SayÄ±)", f"%{sig_res['normal_prob']:.1f}")
-        k_q4.metric("â„ï¸ Q4 SayÄ± Ã‡Ã¶kÃ¼ÅŸÃ¼ (â‰¤ 48 SayÄ±)", f"%{sig_res['collapse_prob']:.1f}")
+        k_q1.metric("🔔 Tespit Edilen Q4 Sinyali", sig_res["signal"])
+        k_q2.metric("🔥 Q4 Sayı Patlaması (56+ Sayı)", f"%{sig_res['burst_prob']:.1f}")
+        k_q3.metric("⚖️ Q4 Normal Tempo (49-55 Sayı)", f"%{sig_res['normal_prob']:.1f}")
+        k_q4.metric("❄️ Q4 Sayı Çöküşü (≤ 48 Sayı)", f"%{sig_res['collapse_prob']:.1f}")
 
-        st.info(f"ğŸ“Œ **Analiz Ã–zeti ({sig_res['sample_size']} Benzer MaÃ§):** {sig_res['detail']}")
+        st.info(f"📌 **Analiz Özeti ({sig_res['sample_size']} Benzer Maç):** {sig_res['detail']}")
 
         # Show actual Q3 vs Q4 scatter/distribution from archive
         df_q_arc = df_completed_archive.copy()
@@ -1728,9 +1728,9 @@ with tab_q3q4:
             df_q_arc = df_q_arc[(df_q_arc["home_team"] == t2_arg) | (df_q_arc["away_team"] == t2_arg)]
 
         q_buckets = [
-            ("DÃ¼ÅŸÃ¼k Q3 (â‰¤ 48 SayÄ±)", df_q_arc[df_q_arc["Q3_Tot"] <= 48]),
-            ("Orta Q3 (49 - 54 SayÄ±)", df_q_arc[(df_q_arc["Q3_Tot"] >= 49) & (df_q_arc["Q3_Tot"] <= 54)]),
-            ("YÃ¼ksek Q3 (55+ SayÄ±)", df_q_arc[df_q_arc["Q3_Tot"] >= 55]),
+            ("Düşük Q3 (≤ 48 Sayı)", df_q_arc[df_q_arc["Q3_Tot"] <= 48]),
+            ("Orta Q3 (49 - 54 Sayı)", df_q_arc[(df_q_arc["Q3_Tot"] >= 49) & (df_q_arc["Q3_Tot"] <= 54)]),
+            ("Yüksek Q3 (55+ Sayı)", df_q_arc[df_q_arc["Q3_Tot"] >= 55]),
         ]
         q_table_rows = []
         for b_label, sub_q in q_buckets:
@@ -1738,39 +1738,39 @@ with tab_q3q4:
                 continue
             q_table_rows.append(
                 {
-                    "3. Ã‡eyrek (Q3) Tempo Grubu": b_label,
-                    "MaÃ§ SayÄ±sÄ±": len(sub_q),
-                    "Q3 OrtalamasÄ±": round(sub_q["Q3_Tot"].mean(), 1),
-                    "Takip Eden Q4 OrtalamasÄ±": round(sub_q["Q4_Tot"].mean(), 1),
-                    "ğŸ”¥ Q4 Patlama (â‰¥56 SayÄ±) %": f"%{(sub_q['Q4_Tot'] >= 56).mean()*100:.1f}",
-                    "â„ï¸ Q4 Ã‡Ã¶kÃ¼ÅŸ (â‰¤48 SayÄ±) %": f"%{(sub_q['Q4_Tot'] <= 48).mean()*100:.1f}",
-                    "MaÃ§ Sonu Toplam Ort.": round(sub_q["total_score"].mean(), 1),
+                    "3. Çeyrek (Q3) Tempo Grubu": b_label,
+                    "Maç Sayısı": len(sub_q),
+                    "Q3 Ortalaması": round(sub_q["Q3_Tot"].mean(), 1),
+                    "Takip Eden Q4 Ortalaması": round(sub_q["Q4_Tot"].mean(), 1),
+                    "🔥 Q4 Patlama (≥56 Sayı) %": f"%{(sub_q['Q4_Tot'] >= 56).mean()*100:.1f}",
+                    "❄️ Q4 Çöküş (≤48 Sayı) %": f"%{(sub_q['Q4_Tot'] <= 48).mean()*100:.1f}",
+                    "Maç Sonu Toplam Ort.": round(sub_q["total_score"].mean(), 1),
                 }
             )
         st.dataframe(pd.DataFrame(q_table_rows), use_container_width=True, hide_index=True)
 
-# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+# ═════════════════════════════════════════════════════════════════════════════
 # MODULE 4: LIVE BANKROLL / ROI & DUTCHING (DOUBLE BAREM) STAKE CALCULATOR
-# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+# ═════════════════════════════════════════════════════════════════════════════
 with tab_bankroll:
     d_col1, d_col2 = st.columns([1.15, 1.25])
 
     with d_col1:
-        st.markdown("##### ğŸ›¡ï¸ Ã‡ifte Barem (Dutching) Kasa & Tutar HesaplayÄ±cÄ±")
+        st.markdown("##### 🛡️ Çifte Barem (Dutching) Kasa & Tutar Hesaplayıcı")
         st.caption(
-            "KomÅŸu iki bareme (20-sayÄ± kÃ¼mesi) toplam kasayÄ± Ã¶yle bÃ¶ler ki, **hangisi gelirse gelsin aynÄ± net kÃ¢rÄ±** elde edersiniz."
+            "Komşu iki bareme (20-sayı kümesi) toplam kasayı öyle böler ki, **hangisi gelirse gelsin aynı net kârı** elde edersiniz."
         )
 
         open_live_list = [m for m in live_matches_now if m.get("is_barem_open")]
-        preset_options = ["Manuel Oran GiriÅŸi"] + [
+        preset_options = ["Manuel Oran Girişi"] + [
             f"{m['team_home']} vs {m['team_away']} ({m.get('bookie_fav_1')} & {m.get('bookie_fav_2')})"
             for m in open_live_list
         ]
-        sel_preset = st.selectbox("CanlÄ± MaÃ§tan Otomatik Doldur", preset_options, index=0)
+        sel_preset = st.selectbox("Canlı Maçtan Otomatik Doldur", preset_options, index=0)
 
         def_b1_name, def_b2_name = "201-210", "211-220"
         def_o1, def_o2 = 4.50, 4.50
-        if sel_preset != "Manuel Oran GiriÅŸi":
+        if sel_preset != "Manuel Oran Girişi":
             idx_m = preset_options.index(sel_preset) - 1
             if 0 <= idx_m < len(open_live_list):
                 m_sel = open_live_list[idx_m]
@@ -1785,11 +1785,11 @@ with tab_bankroll:
 
         dc1, dc2, dc3 = st.columns(3)
         with dc1:
-            total_stake = st.number_input("Toplam Kupon TutarÄ± (TL)", min_value=10.0, max_value=100000.0, value=1000.0, step=100.0)
+            total_stake = st.number_input("Toplam Kupon Tutarı (TL)", min_value=10.0, max_value=100000.0, value=1000.0, step=100.0)
         with dc2:
-            odd_1 = st.number_input(f"1. Barem OranÄ± ({def_b1_name})", min_value=1.50, max_value=50.0, value=float(def_o1), step=0.10)
+            odd_1 = st.number_input(f"1. Barem Oranı ({def_b1_name})", min_value=1.50, max_value=50.0, value=float(def_o1), step=0.10)
         with dc3:
-            odd_2 = st.number_input(f"2. Barem OranÄ± ({def_b2_name})", min_value=1.50, max_value=50.0, value=float(def_o2), step=0.10)
+            odd_2 = st.number_input(f"2. Barem Oranı ({def_b2_name})", min_value=1.50, max_value=50.0, value=float(def_o2), step=0.10)
 
         inv_sum = (1.0 / odd_1) + (1.0 / odd_2)
         eff_dutch_odd = 1.0 / inv_sum if inv_sum > 0 else 0.0
@@ -1800,17 +1800,17 @@ with tab_bankroll:
         roi_pct = (net_profit / total_stake) * 100.0 if total_stake > 0 else 0.0
 
         st.success(
-            f"ğŸ’° **1. Bareme ({def_b1_name}) YatÄ±rÄ±lacak:** `{stake_1:.2f} TL` (Oran: {odd_1:.2f})\n\n"
-            f"ğŸ’° **2. Bareme ({def_b2_name}) YatÄ±rÄ±lacak:** `{stake_2:.2f} TL` (Oran: {odd_2:.2f})\n\n"
-            f"âœ… **Efektif Ã‡ifte Åans OranÄ±:** `{eff_dutch_odd:.2f}` | "
-            f"**Garanti Toplam DÃ¶nÃ¼ÅŸ:** `{gross_return:.2f} TL` | "
-            f"**Net KÃ¢r:** `+{net_profit:.2f} TL` (**+%{roi_pct:.1f} ROI**)"
+            f"💰 **1. Bareme ({def_b1_name}) Yatırılacak:** `{stake_1:.2f} TL` (Oran: {odd_1:.2f})\n\n"
+            f"💰 **2. Bareme ({def_b2_name}) Yatırılacak:** `{stake_2:.2f} TL` (Oran: {odd_2:.2f})\n\n"
+            f"✅ **Efektif Çifte Şans Oranı:** `{eff_dutch_odd:.2f}` | "
+            f"**Garanti Toplam Dönüş:** `{gross_return:.2f} TL` | "
+            f"**Net Kâr:** `+{net_profit:.2f} TL` (**+%{roi_pct:.1f} ROI**)"
         )
 
     with d_col2:
-        st.markdown("##### ğŸ“ˆ Strateji BazlÄ± GerÃ§ek Kasa (Bankroll) & ROI PerformansÄ±")
+        st.markdown("##### 📈 Strateji Bazlı Gerçek Kasa (Bankroll) & ROI Performansı")
         st.caption(
-            "SonuÃ§lanan (`COMPLETED`) her canlÄ± barem kaydÄ±na sabit **1.000 TL** yatÄ±rÄ±ldÄ±ÄŸÄ±nda 3 ana stratejinin gerÃ§ek net kÃ¢r/zarar tablosu:"
+            "Sonuçlanan (`COMPLETED`) her canlı barem kaydına sabit **1.000 TL** yatırıldığında 3 ana stratejinin gerçek net kâr/zarar tablosu:"
         )
         df_comp_roi = (
             df_sym_all[df_sym_all["status"] == "COMPLETED"].copy()
@@ -1819,8 +1819,8 @@ with tab_bankroll:
         )
         if df_comp_roi.empty:
             st.info(
-                "HenÃ¼z sonuÃ§lanmÄ±ÅŸ (`COMPLETED`) canlÄ± barem kaydÄ± yok. Takip edilen canlÄ± maÃ§lar sonuÃ§landÄ±kÃ§a "
-                "burada **1xBet Favori**, **Model Value** ve **20-SayÄ± KÃ¼mesi Dutching** stratejilerinin net TL kÃ¢rÄ± ve ROI yÃ¼zdesi listelenir."
+                "Henüz sonuçlanmış (`COMPLETED`) canlı barem kaydı yok. Takip edilen canlı maçlar sonuçlandıkça "
+                "burada **1xBet Favori**, **Model Value** ve **20-Sayı Kümesi Dutching** stratejilerinin net TL kârı ve ROI yüzdesi listelenir."
             )
         else:
             unit_bet = 1000.0
@@ -1879,45 +1879,45 @@ with tab_bankroll:
             tot_wagered = n_bets * unit_bet
             roi_rows = [
                 {
-                    "Strateji": "â­ 1xBet 1. Favori Tekli Barem",
-                    "Kupon SayÄ±sÄ±": n_bets,
-                    "Toplam YatÄ±rÄ±m": f"{tot_wagered:,.0f} TL",
-                    "Net KÃ¢r / Zarar": f"{fav_pnl:+,.0f} TL",
+                    "Strateji": "⭐ 1xBet 1. Favori Tekli Barem",
+                    "Kupon Sayısı": n_bets,
+                    "Toplam Yatırım": f"{tot_wagered:,.0f} TL",
+                    "Net Kâr / Zarar": f"{fav_pnl:+,.0f} TL",
                     "ROI (%)": f"%{(fav_pnl / tot_wagered)*100:+.1f}",
                 },
                 {
-                    "Strateji": "ğŸ”¥ Model Value (Pozitif EV) Tekli Barem",
-                    "Kupon SayÄ±sÄ±": n_bets,
-                    "Toplam YatÄ±rÄ±m": f"{tot_wagered:,.0f} TL",
-                    "Net KÃ¢r / Zarar": f"{val_pnl:+,.0f} TL",
+                    "Strateji": "🔥 Model Value (Pozitif EV) Tekli Barem",
+                    "Kupon Sayısı": n_bets,
+                    "Toplam Yatırım": f"{tot_wagered:,.0f} TL",
+                    "Net Kâr / Zarar": f"{val_pnl:+,.0f} TL",
                     "ROI (%)": f"%{(val_pnl / tot_wagered)*100:+.1f}",
                 },
                 {
-                    "Strateji": "ğŸ›¡ï¸ 20-SayÄ± KÃ¼mesi (Ã‡ifte Barem Dutching)",
-                    "Kupon SayÄ±sÄ±": n_bets,
-                    "Toplam YatÄ±rÄ±m": f"{tot_wagered:,.0f} TL",
-                    "Net KÃ¢r / Zarar": f"{clu_pnl:+,.0f} TL",
+                    "Strateji": "🛡️ 20-Sayı Kümesi (Çifte Barem Dutching)",
+                    "Kupon Sayısı": n_bets,
+                    "Toplam Yatırım": f"{tot_wagered:,.0f} TL",
+                    "Net Kâr / Zarar": f"{clu_pnl:+,.0f} TL",
                     "ROI (%)": f"%{(clu_pnl / tot_wagered)*100:+.1f}",
                 },
             ]
             st.dataframe(pd.DataFrame(roi_rows), use_container_width=True, hide_index=True)
 
-# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+# ═════════════════════════════════════════════════════════════════════════════
 # MODULE 5: MANUAL LIVE TEMPO & MONTE CARLO SIMULATOR
-# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+# ═════════════════════════════════════════════════════════════════════════════
 with tab_sim:
     s_c1, s_c2, s_c3 = st.columns(3)
     with s_c1:
-        sim_q = st.selectbox("Aktif Ã‡eyrek", [1, 2, 3, 4], index=2)
-        sim_rem = st.slider("Ã‡eyrekte Kalan Dakika", 0.0, 12.0, 4.5, 0.5)
+        sim_q = st.selectbox("Aktif Çeyrek", [1, 2, 3, 4], index=2)
+        sim_rem = st.slider("Çeyrekte Kalan Dakika", 0.0, 12.0, 4.5, 0.5)
     with s_c2:
         sim_hq1 = st.number_input("Ev Q1", 0, 60, 26)
         sim_hq2 = st.number_input("Ev Q2", 0, 60, 27)
-        sim_hq3 = st.number_input("Ev Q3 (veya CanlÄ±)", 0, 60, 18)
+        sim_hq3 = st.number_input("Ev Q3 (veya Canlı)", 0, 60, 18)
     with s_c3:
         sim_aq1 = st.number_input("Dep Q1", 0, 60, 25)
         sim_aq2 = st.number_input("Dep Q2", 0, 60, 26)
-        sim_aq3 = st.number_input("Dep Q3 (veya CanlÄ±)", 0, 60, 19)
+        sim_aq3 = st.number_input("Dep Q3 (veya Canlı)", 0, 60, 19)
 
     comp_q_list = []
     if sim_q == 1:
@@ -1944,9 +1944,9 @@ with tab_sim:
         quarter_length=12.0,
     )
     st.success(
-        f"ğŸ¯ **Tahmini MaÃ§ Sonu:** {sim_res['predicted_home_final']:.0f} - {sim_res['predicted_away_final']:.0f} "
-        f"(**Toplam: {sim_res['predicted_total']:.1f} SayÄ±**) | "
-        f"**En GÃ¼Ã§lÃ¼ 20-SayÄ± KÃ¼mesi:** `{sim_res['best_cluster_name']}` (%{sim_res['best_cluster_prob']:.1f})"
+        f"🎯 **Tahmini Maç Sonu:** {sim_res['predicted_home_final']:.0f} - {sim_res['predicted_away_final']:.0f} "
+        f"(**Toplam: {sim_res['predicted_total']:.1f} Sayı**) | "
+        f"**En Güçlü 20-Sayı Kümesi:** `{sim_res['best_cluster_name']}` (%{sim_res['best_cluster_prob']:.1f})"
     )
     b_probs = sim_res.get("barem_probs", {})
     fig_sim = go.Figure(
@@ -1964,6 +1964,6 @@ with tab_sim:
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(color="#475569" if not IS_DARK else "#cbd5e1", size=11),
-        yaxis=dict(title="OlasÄ±lÄ±k (%)", range=[0, max(list(b_probs.values()) + [35]) * 1.2]),
+        yaxis=dict(title="Olasılık (%)", range=[0, max(list(b_probs.values()) + [35]) * 1.2]),
     )
     st.plotly_chart(fig_sim, use_container_width=True)
