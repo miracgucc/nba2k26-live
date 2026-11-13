@@ -1261,7 +1261,7 @@ with tab_smart35:
         st.info("SonuÃ§lanmÄ±ÅŸ canlÄ± kapanÄ±ÅŸ kaydÄ± bekleniyor. MaÃ§lar bittikÃ§e bu sekme otomatik dolar.")
     else:
         st.caption(
-            f"ğŸ“Š Analiz edilen gerÃ§ek maÃ§ sayÄ±sÄ±: **{sim35['total_matches']}** â€¢ Her maÃ§a sabit **100 TL** bahis â€¢ "
+            f"ğŸ“Š Analiz edilen gerÃ§ek maÃ§ sayÄ±sÄ±: **{sim35['total_matches']}** â€¢ Her maÃ§a sabit **1000 TL** bahis â€¢ "
             "Oranlar 35. dakikadaki gerÃ§ek 1xBet kapanÄ±ÅŸ oranlarÄ±dÄ±r."
         )
         _n_games = df_sym_all["game_id"].nunique() if not df_sym_all.empty else 0

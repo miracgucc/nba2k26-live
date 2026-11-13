@@ -1010,7 +1010,7 @@ def analyze_smart_35m_decision(
 
 def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
     """
-    Simulate 4 concrete 35th-minute betting strategies (100 TL flat stake per match)
+    Simulate 4 concrete 35th-minute betting strategies (1000 TL flat stake per match)
     across all COMPLETED matches in symmetry_analysis_log.csv, and build real analytical tables:
     1. Smart Hybrid Strategy (<2.10 -> -1 Alt Barem, >=2.10 -> 0 Merkez, or -1 if severe drift <= -2)
     2. Pure 0 (Merkez - 1. Favori)
@@ -1040,7 +1040,7 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
     comp["_gid_num"] = comp["game_id"].astype(str).str.extract(r"(\d+)")[0].fillna(0).astype(int)
     comp = comp[comp["_gid_num"] >= 770265000].sort_values(by="_gid_num", ascending=True, kind="stable")
 
-    stake = 100.0
+    stake = 1000.0
     ledger = []
     s_smart_ret, s_smart_wins = 0.0, 0
     s_0_ret, s_0_wins = 0.0, 0
@@ -1126,8 +1126,8 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
                 "-1 Alt Barem": f"{m1_b} ({odd_m1:.2f})",
                 "🤖 Akıllı Kural Seçimi": f"{smart_b} ({smart_odd:.2f}) [{smart_rule}]",
                 "Biten Barem (Skor)": f"{act_b} ({last_r.get('actual_score', '')})",
-                "Akıllı Kupon (100 TL)": f"✅ +{ret_smart - stake:.0f} TL" if hit_smart else "❌ -100 TL",
-                "İkili Koruma (0 & -1)": f"✅ +{ret_dutch - stake:.0f} TL ({dutch_odd:.2f})" if hit_dutch else "❌ -100 TL",
+                "Akıllı Kupon (1000 TL)": f"✅ +{ret_smart - stake:.0f} TL" if hit_smart else "❌ -1000 TL",
+                "İkili Koruma (0 & -1)": f"✅ +{ret_dutch - stake:.0f} TL ({dutch_odd:.2f})" if hit_dutch else "❌ -1000 TL",
             }
         )
 
