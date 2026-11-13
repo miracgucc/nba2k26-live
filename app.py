@@ -159,9 +159,35 @@ def _read_csv_safe(path: str) -> pd.DataFrame:
     return pd.DataFrame()
 
 
+@st.cache_data(ttl=45, show_spinner=False)
+def _fetch_github_csv(filename: str) -> pd.DataFrame:
+    """Fetch latest cloud-bot CSV directly from GitHub Raw so Streamlit Cloud never freezes on stale deploys."""
+    try:
+        import io
+        import urllib.request
+
+        bucket = int(time.time() // 45)
+        url = f"https://raw.githubusercontent.com/miracgucc/nba2k26-live/main/{filename}?cb={bucket}"
+        req = urllib.request.Request(
+            url,
+            headers={
+                "Cache-Control": "no-cache",
+                "Pragma": "no-cache",
+                "User-Agent": "Mozilla/5.0",
+            },
+        )
+        with urllib.request.urlopen(req, timeout=6) as resp:
+            raw_text = resp.read().decode("utf-8")
+        if raw_text.strip():
+            return pd.read_csv(io.StringIO(raw_text))
+    except Exception:
+        pass
+    return pd.DataFrame()
+
+
 def load_symmetry_log() -> pd.DataFrame:
     """
-    Stateless loader: combines the local log AND the 24/7 cloud-bot backup in memory on every call.
+    Stateless loader: combines local log, local backup, AND live GitHub Raw cloud-bot backup.
     Never writes files, so no thread race / stale-file / redeploy-overwrite can ever hide matches.
     COMPLETED rows always win over PENDING rows for the same (game_id, check_time).
     """
@@ -169,6 +195,7 @@ def load_symmetry_log() -> pd.DataFrame:
     frames = [
         _read_csv_safe(CSV_PATH),
         _read_csv_safe(os.path.join(BASE_DIR, "cloud_symmetry_backup.csv")),
+        _fetch_github_csv("cloud_symmetry_backup.csv"),
     ]
     frames = [f for f in frames if not f.empty and "game_id" in f.columns and "check_time" in f.columns]
     if not frames:
@@ -187,11 +214,16 @@ def load_symmetry_log() -> pd.DataFrame:
 
 
 def load_completed_matches() -> pd.DataFrame:
-    frames = [_read_csv_safe(MATCHES_CSV_PATH), _read_csv_safe(os.path.join(BASE_DIR, "cloud_matches_backup.csv"))]
+    frames = [
+        _read_csv_safe(MATCHES_CSV_PATH),
+        _read_csv_safe(os.path.join(BASE_DIR, "cloud_matches_backup.csv")),
+        _fetch_github_csv("cloud_matches_backup.csv"),
+    ]
     frames = [f for f in frames if not f.empty and "game_id" in f.columns]
     if not frames:
         return pd.DataFrame()
     df = pd.concat(frames, ignore_index=True)
+    df["game_id"] = df["game_id"].astype(str).str.strip()
     return df.drop_duplicates(subset=["game_id"], keep="last").reset_index(drop=True)
 
 
