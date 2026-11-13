@@ -8,7 +8,10 @@ import sys
 import tempfile
 import time
 import urllib.request
+import threading
 from datetime import datetime, timedelta, timezone
+
+_FILE_LOCK = threading.RLock()
 
 TR_TZ = timezone(timedelta(hours=3))
 
@@ -83,6 +86,12 @@ def _extract_minute_num(check_time_str: str) -> int:
 
 
 def upsert_symmetry_log_row(new_row: dict):
+    """Thread-safe wrapper: serialises all read-modify-write cycles on symmetry_analysis_log.csv."""
+    with _FILE_LOCK:
+        _upsert_symmetry_log_row_unlocked(new_row)
+
+
+def _upsert_symmetry_log_row_unlocked(new_row: dict):
     """
     Upsert a checkpoint row by (game_id, check_time) so simultaneous games never create
     duplicate minute rows and rows stay cleanly grouped by game_id and sorted by minute.
@@ -135,19 +144,12 @@ def upsert_symmetry_log_row(new_row: dict):
         g_rows.sort(key=lambda x: _extract_minute_num(x.get("check_time", "")))
         final_rows.extend(g_rows)
 
-    with open(CSV_PATH, mode="w", newline="", encoding="utf-8") as f:
+    tmp_main = CSV_PATH + ".tmp"
+    with open(tmp_main, mode="w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=CSV_HEADERS)
         writer.writeheader()
         writer.writerows(final_rows)
-
-    try:
-        tmp_runtime_sym = os.path.join(tempfile.gettempdir(), "nba2k26_symmetry_runtime_v2.csv")
-        with open(tmp_runtime_sym, mode="w", newline="", encoding="utf-8") as f:
-            writer = csv.DictWriter(f, fieldnames=CSV_HEADERS)
-            writer.writeheader()
-            writer.writerows(final_rows)
-    except Exception:
-        pass
+    os.replace(tmp_main, CSV_PATH)
 
 
 def _map_barem_name(raw_name: str, params_list: list, parameter_val) -> str:
@@ -531,34 +533,53 @@ def get_required_interval(elapsed_mins: float) -> int:
         return 300
 
 
+_LAST_MERGE_SIG = {"sig": None}
+
+
 def merge_cloud_backups():
-    """Merge 24/7 GitHub Actions cloud backup CSVs and /tmp runtime cache into local CSVs without git conflicts."""
-    for sym_src in [
-        os.path.join(tempfile.gettempdir(), "nba2k26_symmetry_runtime_v2.csv"),
-        os.path.join(BASE_DIR, "cloud_symmetry_backup.csv"),
-    ]:
-        if os.path.exists(sym_src) and os.path.getsize(sym_src) > 0:
+    """
+    Merge the 24/7 GitHub Actions cloud backup CSVs into the local CSVs.
+    Runs only when a backup file actually changed (size/mtime signature), under a global lock,
+    with atomic writes so concurrent UI/engine threads can never truncate or corrupt the log.
+    """
+    cloud_sym = os.path.join(BASE_DIR, "cloud_symmetry_backup.csv")
+    cloud_m = os.path.join(BASE_DIR, "cloud_matches_backup.csv")
+
+    def _sig(p):
+        try:
+            st_ = os.stat(p)
+            return (st_.st_size, int(st_.st_mtime))
+        except Exception:
+            return None
+
+    cur_sig = (_sig(cloud_sym), _sig(cloud_m))
+    with _FILE_LOCK:
+        if _LAST_MERGE_SIG["sig"] == cur_sig:
+            return
+        if os.path.exists(cloud_sym) and os.path.getsize(cloud_sym) > 0:
             try:
-                with open(sym_src, "r", encoding="utf-8") as f:
+                with open(cloud_sym, "r", encoding="utf-8") as f:
                     c_rows = list(csv.DictReader(f))
                 for r in c_rows:
-                    upsert_symmetry_log_row(r)
+                    _upsert_symmetry_log_row_unlocked(r)
             except Exception:
                 pass
-    cloud_m = os.path.join(BASE_DIR, "cloud_matches_backup.csv")
-    if os.path.exists(cloud_m) and os.path.getsize(cloud_m) > 0:
-        try:
-            df_c = pd.read_csv(cloud_m)
-            if os.path.exists(MATCHES_CSV_PATH) and os.path.getsize(MATCHES_CSV_PATH) > 0:
-                df_l = pd.read_csv(MATCHES_CSV_PATH)
-                df_merged = (
-                    pd.concat([df_c, df_l], ignore_index=True)
-                    .sort_values("date")
-                    .drop_duplicates(subset=["game_id"], keep="last")
-                )
-                df_merged.to_csv(MATCHES_CSV_PATH, index=False, encoding="utf-8")
-        except Exception:
-            pass
+        if os.path.exists(cloud_m) and os.path.getsize(cloud_m) > 0:
+            try:
+                df_c = pd.read_csv(cloud_m)
+                if os.path.exists(MATCHES_CSV_PATH) and os.path.getsize(MATCHES_CSV_PATH) > 0:
+                    df_l = pd.read_csv(MATCHES_CSV_PATH)
+                    df_merged = (
+                        pd.concat([df_c, df_l], ignore_index=True)
+                        .sort_values("date")
+                        .drop_duplicates(subset=["game_id"], keep="last")
+                    )
+                    tmp_m = MATCHES_CSV_PATH + ".tmp"
+                    df_merged.to_csv(tmp_m, index=False, encoding="utf-8")
+                    os.replace(tmp_m, MATCHES_CSV_PATH)
+            except Exception:
+                pass
+        _LAST_MERGE_SIG["sig"] = cur_sig
 
 
 def run_auto_scraper(force_manual=False):
