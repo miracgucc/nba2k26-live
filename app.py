@@ -758,7 +758,7 @@ def render_live_dashboard():
     recent_chain = wave_global.get("recent_chain", [])
     if recent_chain:
         pills_html = ""
-        for idx_c, item in enumerate(recent_chain, 1):
+        for idx_c, item in reversed(list(enumerate(recent_chain, 1))):
             sh = item["raw_shift"]
             t_short = (
                 f"{str(item['home_team']).replace(' (cyber)', '').split()[-1]} - "
