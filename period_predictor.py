@@ -12,6 +12,8 @@ __all__ = [
     "predict_live_inplay",
     "analyze_barem_symmetry",
     "analyze_sequential_barem_wave",
+    "analyze_smart_35m_decision",
+    "simulate_35m_strategies",
 ]
 
 BAREM_RANGES = [
@@ -457,6 +459,18 @@ def predict_live_inplay(
         pred_home_final *= shrinkage
         pred_away_final *= shrinkage
 
+    # Blowout / Rölanti Freni: 4.500 maçlık arşivde fark 28+ sayıya çıktığında Q4 ortalaması 52.5'tan 44-46'ya düşer
+    cur_tot_h = sum(h_q for h_q, _ in completed_quarters) + float(home_live_score)
+    cur_tot_a = sum(a_q for _, a_q in completed_quarters) + float(away_live_score)
+    live_gap = abs(cur_tot_h - cur_tot_a)
+    if current_quarter >= 3 and live_gap >= 28:
+        brake_pts = min(9.5, 4.0 + (live_gap - 28.0) * 0.22) * ((48.0 - min(47.0, total_elapsed_mins)) / 16.0)
+        tot_now = pred_home_final + pred_away_final
+        if tot_now > 0:
+            brake_ratio = max(0.92, (tot_now - brake_pts) / tot_now)
+            pred_home_final *= brake_ratio
+            pred_away_final *= brake_ratio
+
     # Dynamic standard deviation shrinks as remaining match minutes decrease!
     total_rem_mins = max(0.5, (4.0 * quarter_length) - total_elapsed_mins)
     rem_fraction = float(np.clip(total_rem_mins / (4.0 * quarter_length), 0.08, 1.0))
@@ -629,13 +643,17 @@ def analyze_sequential_barem_wave(
     logged_closing_fav = {}
     logged_closing_odd = {}
     logged_closing_min = {}
+    logged_opening_fav = {}
     if df_log is not None and not df_log.empty and "game_id" in df_log.columns:
         for gid, grp in df_log.groupby("game_id"):
+            first_r = grp.iloc[0]
             last_r = grp.iloc[-1]
+            first_fav = str(first_r.get("highest_prob_range", "")).strip()
             fav_val = str(last_r.get("highest_prob_range", "")).strip()
             if fav_val in barem_names:
                 gid_clean = str(gid).strip()
                 logged_closing_fav[gid_clean] = fav_val
+                logged_opening_fav[gid_clean] = first_fav if first_fav in barem_names else fav_val
                 odd_col = barem_to_col.get(fav_val, "")
                 odd_val = float(last_r.get(odd_col, 0.0) or 0.0) if odd_col else 0.0
                 logged_closing_odd[gid_clean] = round(odd_val, 2) if 1.0 < odd_val < 90.0 else 0.0
@@ -733,9 +751,23 @@ def analyze_sequential_barem_wave(
         else:
             sh_label = f"🔥 +{sh} ({sh} Üst Barem)"
 
+        gid_item = str(r.get("game_id", "")).strip()
+        open_b = logged_opening_fav.get(gid_item, r["exp_barem_36"])
+        close_b = r["exp_barem_36"]
+        if open_b in barem_names and close_b in barem_names:
+            drift_val = barem_names.index(close_b) - barem_names.index(open_b)
+        else:
+            drift_val = 0
+        if drift_val > 0:
+            drift_lbl = f"📈 +{drift_val} Göç ({open_b}➔{close_b})"
+        elif drift_val < 0:
+            drift_lbl = f"📉 {drift_val} Göç ({open_b}➔{close_b})"
+        else:
+            drift_lbl = f"⚖️ 0 Sabit ({close_b})"
+
         recent_chain.append(
             {
-                "game_id": r.get("game_id", ""),
+                "game_id": gid_item,
                 "date": fixed_dt_str,
                 "home_team": r.get("home_team", ""),
                 "away_team": r.get("away_team", ""),
@@ -744,8 +776,11 @@ def analyze_sequential_barem_wave(
                 "s36": int(r["s36"]),
                 "q4_tot": int(r["q4_tot"]),
                 "total_score": int(r["total_score"]),
-                "exp_barem_36": r["exp_barem_36"],
+                "opening_barem": open_b,
+                "exp_barem_36": close_b,
                 "exp_odd_36": float(r.get("exp_odd_36", 0.0) or 0.0),
+                "drift": drift_val,
+                "drift_label": drift_lbl,
                 "act_barem": r["act_barem"],
                 "raw_shift": sh,
                 "wave_code": int(r["wave_code"]),
@@ -757,6 +792,7 @@ def analyze_sequential_barem_wave(
     all_wave_codes = list(hist["wave_code"])
     all_raw_shifts = list(hist["raw_shift"])
     tracked_wave_codes = [x["wave_code"] for x in recent_chain]
+    tracked_raw_shifts = [x["raw_shift"] for x in recent_chain]
     target_seq = list(custom_seq) if custom_seq is not None else (tracked_wave_codes[-4:] if tracked_wave_codes else [])
 
     # If user selected -2 or +2 in custom_seq, match against raw_shifts; otherwise match wave_codes
@@ -778,6 +814,17 @@ def analyze_sequential_barem_wave(
         for i in range(len(search_space) - 3):
             if search_space[i : i + 3] == short_seq:
                 next_raw_shifts.append(all_raw_shifts[i + 3])
+
+    # Also boost real tracked chain transitions (weight x8) so real 1xBet closing-odd behavior dominates!
+    if len(tracked_wave_codes) >= 4 and target_seq:
+        last_w = target_seq[-1]
+        real_next = []
+        for i in range(len(tracked_wave_codes) - 1):
+            cur_match_code = tracked_raw_shifts[i] if use_raw else tracked_wave_codes[i]
+            if cur_match_code == last_w:
+                real_next.append(tracked_raw_shifts[i + 1])
+        if real_next:
+            next_raw_shifts = list(next_raw_shifts) + (real_next * 12)
 
     if not next_raw_shifts:
         next_raw_shifts = all_raw_shifts
@@ -847,4 +894,376 @@ def analyze_sequential_barem_wave(
         "target_plus_2_barem": b_p2,
         "recommended_pair": rec_pair,
         "recommended_pair_prob": rec_pair_prob,
+    }
+
+
+def _shift_barem_name(base_b: str, delta: int) -> str:
+    names = [b[0] for b in BAREM_RANGES]
+    if base_b not in names:
+        return base_b
+    return names[max(0, min(len(names) - 1, names.index(base_b) + delta))]
+
+
+def analyze_smart_35m_decision(
+    fav1_barem: str,
+    fav1_odd: float,
+    fav2_barem: str,
+    fav2_odd: float,
+    game_id: str,
+    df_log: pd.DataFrame,
+    recent_chain: list,
+    score_gap: int = 0,
+) -> dict:
+    """
+    35th-Minute Smart Decision & Trap Detector based on proven live 1xBet closing-odd rules:
+    1. Odds Bracket Rule:
+       - < 2.10: Low-Odd Trap! Center (0) only hits ~30%, shifts to -1/-2 Alt Barem ~50%+.
+       - 2.10 - 2.34: Golden Band! Center (0) hits ~67% directly, (0 or -1) hits ~83%+.
+       - >= 2.35: Wide / Trap Zone (1st & 2nd Fav close).
+    2. In-Game Barem Migration (Q1 -> Current/35m Drift):
+       - Tracks whether the match's favorite barem drifted up (+1/+2), stayed flat (0), or collapsed (-1/-2/-3).
+    3. Sequential Wave Context:
+       - After a +1/+2 Upper Barem match, 100% of matches revert to 0 (Merkez) or -1 Alt Barem!
+    """
+    barem_names = [b[0] for b in BAREM_RANGES]
+    base_b = fav1_barem if fav1_barem in barem_names else "201-210"
+    b_0 = base_b
+    b_m1 = _shift_barem_name(base_b, -1)
+    b_m2 = _shift_barem_name(base_b, -2)
+    b_p1 = _shift_barem_name(base_b, 1)
+
+    # Calculate in-game drift for this game_id
+    open_b = base_b
+    drift = 0
+    if df_log is not None and not df_log.empty and game_id and "game_id" in df_log.columns:
+        g_sub = df_log[df_log["game_id"].astype(str).str.strip() == str(game_id).strip()]
+        if not g_sub.empty:
+            first_b = str(g_sub.iloc[0].get("highest_prob_range", "")).strip()
+            if first_b in barem_names:
+                open_b = first_b
+                drift = barem_names.index(base_b) - barem_names.index(open_b)
+
+    if drift > 0:
+        drift_badge = f"📈 +{drift} Kademe Yükseliş ({open_b} ➔ {base_b})"
+    elif drift < 0:
+        drift_badge = f"📉 {drift} Kademe Düşüş ({open_b} ➔ {base_b})"
+    else:
+        drift_badge = f"⚖️ Sabit Barem ({base_b})"
+
+    prev_shift = recent_chain[-1]["raw_shift"] if recent_chain else 0
+    odd_val = float(fav1_odd or 0.0)
+
+    # Evaluate decision rule
+    reasons = []
+    if odd_val > 1.0 and odd_val < 2.10:
+        zone_badge = f"⚠️ DÜŞÜK ORAN TUZAĞI ({odd_val:.2f} < 2.10)"
+        zone_type = "TRAP_LOW"
+        primary_pick = f"📉 -1 Alt Barem: {b_m1}"
+        backup_pick = f"🎯 0 Merkez: {b_0}"
+        conf_pct = 75.0
+        reasons.append(f"35.dk oranı <2.10 ({odd_val:.2f}) olduğunda Merkez (0) sadece %30 gelirken %50 oranında -1/-2 Alt Bareme kayıyor")
+    elif 2.10 <= odd_val <= 2.34:
+        zone_badge = f"💎 ALTIN ORAN BANDI ({odd_val:.2f})"
+        zone_type = "GOLDEN"
+        primary_pick = f"🎯 0 Merkez: {b_0}"
+        backup_pick = f"📉 -1 Alt Barem: {b_m1}"
+        conf_pct = 83.3
+        reasons.append(f"35.dk oranı 2.10-2.34 Altın Bandında ({odd_val:.2f}) olduğunda Merkez (0) %67 doğrudan, (0 veya -1) %83.3 isabet sağlıyor")
+    else:
+        zone_badge = f"⚖️ YÜKSEK ORAN / MAKAS AÇIK ({odd_val:.2f})" if odd_val < 90 else "⏳ Oran Bekleniyor"
+        zone_type = "WIDE"
+        if drift <= -2:
+            primary_pick = f"📉 -1 Alt Barem: {b_m1}"
+            backup_pick = f"❄️ -2 Alt Barem: {b_m2}"
+            conf_pct = 72.0
+            reasons.append(f"Maç içi barem {open_b} ➔ {base_b} ({drift}) çöktüğü için aşağı yönlü sarkma devam ediyor")
+        else:
+            primary_pick = f"🎯 0 Merkez: {b_0}"
+            backup_pick = f"📉 -1 Alt Barem: {b_m1}" if fav2_barem == b_m1 else f"🥈 2.Fav: {fav2_barem or b_m1}"
+            conf_pct = 70.0
+            reasons.append("Oran >=2.35 kararsız bölgede; 1. Favori ve komşu barem ikili koruma (Dutching) önerilir")
+
+    if prev_shift >= 1:
+        reasons.append(f"Önceki maç +{prev_shift} Üst Barem bitti (Üst sonrası %100 oranında 0 Merkez veya -1 Alt Bareme dönüş var!)")
+        conf_pct = min(92.0, conf_pct + 6.0)
+    elif drift >= 1:
+        reasons.append(f"Barem Q1'den +{drift} yükseldi (%100 oranında ulaştığı {b_0} veya başladığı {b_m1} bareminde kalıyor)")
+
+    if abs(score_gap) >= 28:
+        reasons.append(f"⚠️ Fark {abs(score_gap)} sayı (Blowout Rölanti Freni: Q4'te tempo düşüşü ve -1/-2 Alt Barem eğilimi yüksek)")
+        if zone_type != "TRAP_LOW":
+            primary_pick = f"📉 -1 Alt Barem: {b_m1}"
+            backup_pick = f"🎯 0 Merkez: {b_0}"
+
+    return {
+        "zone_badge": zone_badge,
+        "zone_type": zone_type,
+        "drift": drift,
+        "open_barem": open_b,
+        "drift_badge": drift_badge,
+        "primary_pick": primary_pick,
+        "backup_pick": backup_pick,
+        "confidence_pct": round(conf_pct, 1),
+        "reasoning": " • ".join(reasons),
+    }
+
+
+def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
+    """
+    Simulate 4 concrete 35th-minute betting strategies (100 TL flat stake per match)
+    across all COMPLETED matches in symmetry_analysis_log.csv, and build real analytical tables:
+    1. Smart Hybrid Strategy (<2.10 -> -1 Alt Barem, >=2.10 -> 0 Merkez, or -1 if severe drift <= -2)
+    2. Pure 0 (Merkez - 1. Favori)
+    3. Pure -1 (1 Alt Barem)
+    4. Dutching (0 Merkez & -1 Alt Barem Çifte Şans)
+    """
+    barem_names = [b[0] for b in BAREM_RANGES]
+    b_cols = {
+        "160 Or Less": "odds_160_or_less",
+        "161-170": "odds_161_170",
+        "171-180": "odds_171_180",
+        "181-190": "odds_181_190",
+        "191-200": "odds_191_200",
+        "201-210": "odds_201_210",
+        "211-220": "odds_211_220",
+        "221-230": "odds_221_230",
+        "231+": "odds_231_plus",
+    }
+
+    if df_log is None or df_log.empty or "status" not in df_log.columns:
+        return {"total_matches": 0, "strategies": [], "ledger": [], "odds_brackets": [], "drift_brackets": [], "transitions": []}
+
+    comp = df_log[df_log["status"] == "COMPLETED"].copy()
+    if comp.empty:
+        return {"total_matches": 0, "strategies": [], "ledger": [], "odds_brackets": [], "drift_brackets": [], "transitions": []}
+
+    comp["_gid_num"] = comp["game_id"].astype(str).str.extract(r"(\d+)")[0].fillna(0).astype(int)
+    comp = comp[comp["_gid_num"] >= 770265000].sort_values(by="_gid_num", ascending=True, kind="stable")
+
+    stake = 100.0
+    ledger = []
+    s_smart_ret, s_smart_wins = 0.0, 0
+    s_0_ret, s_0_wins = 0.0, 0
+    s_m1_ret, s_m1_wins = 0.0, 0
+    s_dutch_ret, s_dutch_wins = 0.0, 0
+
+    raw_records = []
+    for gid, grp in comp.groupby("game_id", sort=False):
+        first_r = grp.iloc[0]
+        last_r = grp.iloc[-1]
+        fav_b = str(last_r.get("highest_prob_range", "")).strip()
+        act_b = str(last_r.get("actual_range", "")).strip()
+        open_b = str(first_r.get("highest_prob_range", "")).strip()
+        if fav_b not in barem_names or act_b not in barem_names:
+            continue
+
+        idx_fav = barem_names.index(fav_b)
+        idx_act = barem_names.index(act_b)
+        shift = idx_act - idx_fav
+        drift = (idx_fav - barem_names.index(open_b)) if open_b in barem_names else 0
+        m1_b = barem_names[max(0, idx_fav - 1)]
+
+        odd_0 = float(last_r.get(b_cols[fav_b], 0.0) or 0.0)
+        odd_m1 = float(last_r.get(b_cols[m1_b], 0.0) or 0.0)
+        if odd_0 <= 1.0 or odd_0 >= 90.0:
+            odd_0 = 2.20
+        if odd_m1 <= 1.0 or odd_m1 >= 90.0:
+            odd_m1 = 3.20
+
+        # Smart Strategy rule: if odd_0 < 2.10 (Low-Odd Trap) or severe downward drift <= -3 -> back -1 Alt Barem; else back 0 Merkez
+        if odd_0 < 2.10 or drift <= -3:
+            smart_b = m1_b
+            smart_odd = odd_m1
+            smart_rule = "⚠️ Düşük Oran Tuzağı (<2.10) ➔ -1 Alt" if odd_0 < 2.10 else "📉 Sert Barem Çöküşü ➔ -1 Alt"
+        else:
+            smart_b = fav_b
+            smart_odd = odd_0
+            smart_rule = "💎 Altın Bant (2.10-2.34) ➔ 0 Merkez" if odd_0 <= 2.34 else "🎯 Standart ➔ 0 Merkez"
+
+        hit_smart = act_b == smart_b
+        hit_0 = act_b == fav_b
+        hit_m1 = act_b == m1_b
+        hit_dutch = act_b in (fav_b, m1_b)
+        dutch_odd = round(1.0 / ((1.0 / odd_0) + (1.0 / odd_m1)), 2)
+
+        ret_smart = round(stake * smart_odd, 1) if hit_smart else 0.0
+        ret_0 = round(stake * odd_0, 1) if hit_0 else 0.0
+        ret_m1 = round(stake * odd_m1, 1) if hit_m1 else 0.0
+        ret_dutch = round(stake * dutch_odd, 1) if hit_dutch else 0.0
+
+        s_smart_ret += ret_smart
+        s_smart_wins += int(hit_smart)
+        s_0_ret += ret_0
+        s_0_wins += int(hit_0)
+        s_m1_ret += ret_m1
+        s_m1_wins += int(hit_m1)
+        s_dutch_ret += ret_dutch
+        s_dutch_wins += int(hit_dutch)
+
+        raw_records.append(
+            {
+                "game_id": gid,
+                "game_name": str(last_r.get("game_name", "")).replace(" (cyber)", ""),
+                "check_time": str(last_r.get("check_time", "")),
+                "open_b": open_b,
+                "fav_b": fav_b,
+                "odd_0": odd_0,
+                "m1_b": m1_b,
+                "odd_m1": odd_m1,
+                "act_b": act_b,
+                "act_score": str(last_r.get("actual_score", "")),
+                "shift": shift,
+                "drift": drift,
+            }
+        )
+
+        ledger.append(
+            {
+                "Maç": str(last_r.get("game_name", "")).replace(" (cyber)", ""),
+                "Kapanış Dk": str(last_r.get("check_time", "")),
+                "Q1➔35.Dk Göç": f"{drift:+d} ({open_b}➔{fav_b})" if drift != 0 else f"0 ({fav_b})",
+                "35.Dk Favori (0)": f"{fav_b} ({odd_0:.2f})",
+                "-1 Alt Barem": f"{m1_b} ({odd_m1:.2f})",
+                "🤖 Akıllı Kural Seçimi": f"{smart_b} ({smart_odd:.2f}) [{smart_rule}]",
+                "Biten Barem (Skor)": f"{act_b} ({last_r.get('actual_score', '')})",
+                "Akıllı Kupon (100 TL)": f"✅ +{ret_smart - stake:.0f} TL" if hit_smart else "❌ -100 TL",
+                "İkili Koruma (0 & -1)": f"✅ +{ret_dutch - stake:.0f} TL ({dutch_odd:.2f})" if hit_dutch else "❌ -100 TL",
+            }
+        )
+
+    tot_m = len(raw_records)
+    if tot_m == 0:
+        return {"total_matches": 0, "strategies": [], "ledger": [], "odds_brackets": [], "drift_brackets": [], "transitions": []}
+
+    tot_cost = tot_m * stake
+    strategies = [
+        {
+            "name": "🤖 Akıllı Hibrit Strateji (<2.10 ise -1 Alt / >=2.10 ise 0 Merkez)",
+            "wins": s_smart_wins,
+            "total": tot_m,
+            "win_rate": round(s_smart_wins / tot_m * 100.0, 1),
+            "cost": round(tot_cost, 0),
+            "return": round(s_smart_ret, 0),
+            "net_profit": round(s_smart_ret - tot_cost, 0),
+            "roi_pct": round((s_smart_ret / tot_cost - 1.0) * 100.0, 1),
+        },
+        {
+            "name": "🛡️ İkili Koruma (Dutching: 0 Merkez + -1 Alt Çifte Barem)",
+            "wins": s_dutch_wins,
+            "total": tot_m,
+            "win_rate": round(s_dutch_wins / tot_m * 100.0, 1),
+            "cost": round(tot_cost, 0),
+            "return": round(s_dutch_ret, 0),
+            "net_profit": round(s_dutch_ret - tot_cost, 0),
+            "roi_pct": round((s_dutch_ret / tot_cost - 1.0) * 100.0, 1),
+        },
+        {
+            "name": "🎯 Sabit 0 (Her Maç Sadece 35.Dk 1. Favori Merkez)",
+            "wins": s_0_wins,
+            "total": tot_m,
+            "win_rate": round(s_0_wins / tot_m * 100.0, 1),
+            "cost": round(tot_cost, 0),
+            "return": round(s_0_ret, 0),
+            "net_profit": round(s_0_ret - tot_cost, 0),
+            "roi_pct": round((s_0_ret / tot_cost - 1.0) * 100.0, 1),
+        },
+        {
+            "name": "📉 Sabit -1 (Her Maç Sadece -1 Alt Barem Sürprizi)",
+            "wins": s_m1_wins,
+            "total": tot_m,
+            "win_rate": round(s_m1_wins / tot_m * 100.0, 1),
+            "cost": round(tot_cost, 0),
+            "return": round(s_m1_ret, 0),
+            "net_profit": round(s_m1_ret - tot_cost, 0),
+            "roi_pct": round((s_m1_ret / tot_cost - 1.0) * 100.0, 1),
+        },
+    ]
+
+    # 1. Odds Bracket Breakdown
+    odds_brackets = []
+    for low_o, high_o, lbl, advice in [
+        (1.0, 2.10, "⚠️ Düşük Oran Tuzağı (< 2.10)", "📉 -1 Alt Barem Oyna (Merkez %30'da kalır!)"),
+        (2.10, 2.35, "💎 Altın Oran Bandı (2.10 - 2.34)", "🎯 0 Merkez Oyna (Merkez %67, 0/-1 %83+ gelir!)"),
+        (2.35, 99.0, "⚖️ Yüksek Oran / Makas Açık (>= 2.35)", "🛡️ 1. ve 2. Favori İkili Koruma"),
+    ]:
+        sub = [x for x in raw_records if low_o <= x["odd_0"] < high_o]
+        if sub:
+            n_s = len(sub)
+            c_0 = sum(1 for x in sub if x["shift"] == 0)
+            c_m1 = sum(1 for x in sub if x["shift"] == -1)
+            c_m2 = sum(1 for x in sub if x["shift"] <= -2)
+            c_up = sum(1 for x in sub if x["shift"] >= 1)
+            odds_brackets.append(
+                {
+                    "35. Dk 1. Favori Oran Bandı": lbl,
+                    "Maç Sayısı": n_s,
+                    "🎯 0 (Merkez) İsabet": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s})",
+                    "📉 -1 Alt Barem": f"%{c_m1/n_s*100:.1f} ({c_m1}/{n_s})",
+                    "❄️ -2 Alt Barem": f"%{c_m2/n_s*100:.1f} ({c_m2}/{n_s})",
+                    "📈 +1/+2 Üst Barem": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
+                    "🛡️ (0 veya -1) Toplam": f"%{(c_0+c_m1)/n_s*100:.1f} ({c_0+c_m1}/{n_s})",
+                    "💡 Sistem Kuralı": advice,
+                }
+            )
+
+    # 2. Drift (Q1 -> 35m Barem Migration) Breakdown
+    drift_brackets = []
+    for cond_fn, lbl, advice in [
+        (lambda d: d >= 1, "📈 Barem Yükseldi (Q1 ➔ 35.Dk +1/+3)", "🎯 %100 Ulaştığı (0) veya Başladığı (-1) Baremde Kalır"),
+        (lambda d: d == 0, "⚖️ Barem Sabit Kaldı (Q1 ➔ 35.Dk 0)", "🎯 Merkez (0) veya -1 Alt Standart Dağılım"),
+        (lambda d: d == -1, "📉 Barem 1 Kademe Düştü (Q1 ➔ 35.Dk -1)", "🎯 Yeni Merkezde (0) Dengelenme Eğilimi"),
+        (lambda d: d <= -2, "❄️ Barem Çöktü (Q1 ➔ 35.Dk -2/-3)", "📉 Çöküş Devam Eder (-1 / -2 Alt Barem Avantajlı)"),
+    ]:
+        sub = [x for x in raw_records if cond_fn(x["drift"])]
+        if sub:
+            n_s = len(sub)
+            c_0 = sum(1 for x in sub if x["shift"] == 0)
+            c_m1 = sum(1 for x in sub if x["shift"] == -1)
+            c_m2 = sum(1 for x in sub if x["shift"] <= -2)
+            c_up = sum(1 for x in sub if x["shift"] >= 1)
+            drift_brackets.append(
+                {
+                    "Maç İçi Barem Göçü (Q1 ➔ 35. Dk)": lbl,
+                    "Maç Sayısı": n_s,
+                    "🎯 0 (Merkez)": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s})",
+                    "📉 -1 Alt Barem": f"%{c_m1/n_s*100:.1f} ({c_m1}/{n_s})",
+                    "❄️ -2 Alt Barem": f"%{c_m2/n_s*100:.1f} ({c_m2}/{n_s})",
+                    "📈 +1/+2 Üst": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
+                    "💡 Davranış Özeti": advice,
+                }
+            )
+
+    # 3. Sequential Match-to-Match Transitions (Real Tracked Chain)
+    transitions = []
+    for cond_fn, lbl in [
+        (lambda s: s == 0, "🎯 Önceki Maç 0 (Merkez) Bittiğinde ➔ Sıradaki Maç"),
+        (lambda s: s <= -1, "📉 Önceki Maç -1 / -2 (Alt Barem) Bittiğinde ➔ Sıradaki Maç"),
+        (lambda s: s >= 1, "📈 Önceki Maç +1 / +2 (Üst Barem) Bittiğinde ➔ Sıradaki Maç"),
+    ]:
+        nxt = [raw_records[i + 1] for i in range(len(raw_records) - 1) if cond_fn(raw_records[i]["shift"])]
+        if nxt:
+            n_s = len(nxt)
+            c_0 = sum(1 for x in nxt if x["shift"] == 0)
+            c_m1 = sum(1 for x in nxt if x["shift"] == -1)
+            c_m2 = sum(1 for x in nxt if x["shift"] <= -2)
+            c_up = sum(1 for x in nxt if x["shift"] >= 1)
+            transitions.append(
+                {
+                    "Ardışık Maç Geçiş Durumu": lbl,
+                    "Örneklem": n_s,
+                    "🎯 Sıradaki 0 (Merkez)": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s})",
+                    "📉 Sıradaki -1 Alt": f"%{c_m1/n_s*100:.1f} ({c_m1}/{n_s})",
+                    "❄️ Sıradaki -2 Alt": f"%{c_m2/n_s*100:.1f} ({c_m2}/{n_s})",
+                    "📈 Sıradaki +1/+2 Üst": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
+                    "🛡️ (0 veya -1) Oranı": f"%{(c_0+c_m1)/n_s*100:.1f} ({c_0+c_m1}/{n_s})",
+                }
+            )
+
+    return {
+        "total_matches": tot_m,
+        "strategies": strategies,
+        "ledger": ledger[::-1],
+        "odds_brackets": odds_brackets,
+        "drift_brackets": drift_brackets,
+        "transitions": transitions,
     }

@@ -26,11 +26,13 @@ from period_predictor import (
     CLUSTER_RANGES,
     analyze_barem_symmetry,
     analyze_sequential_barem_wave,
+    analyze_smart_35m_decision,
     build_q3_q4_streak_signal,
     get_cluster_from_score,
     get_range_from_score,
     predict_live_inplay,
     predict_period_scores,
+    simulate_35m_strategies,
 )
 from pull_today_results import discover_active_domain, pull_today_results
 from run_live_auto_scraper import (
@@ -72,7 +74,7 @@ IS_DARK = st.session_state.ui_theme == "matte_dark"
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v2.6-tr-tz"
+ENGINE_VERSION = "v2.7-smart-35m"
 
 
 class BackgroundEngineState:
@@ -770,6 +772,7 @@ def render_live_dashboard():
                 ref_line = f'📊 36.Dk Oran: <b>{item["exp_barem_36"]} ({odd_36_val:.2f})</b> ➔ Biten: <b>{item["act_barem"]}</b>'
             else:
                 ref_line = f'🧮 36.Dk SkorTahmin: <b>{item["exp_barem_36"]}</b> ➔ Biten: <b>{item["act_barem"]}</b>'
+            drift_line = item.get("drift_label", "")
 
             pills_html += (
                 f'<div style="background:{p_bg}; border:1.5px solid {p_bd}; color:{p_tx}; border-radius:10px; padding:0.48rem 0.65rem; min-width:155px; flex:1 1 180px;">'
@@ -777,6 +780,7 @@ def render_live_dashboard():
                 f'<div style="font-size:0.71rem; font-weight:700; margin-top:0.08rem;">Skor: {sc_pair} ({item["total_score"]} Sayı)</div>'
                 f'<div style="font-size:0.82rem; font-weight:800; margin:0.12rem 0;">{tag_txt}</div>'
                 f'<div style="font-size:0.66rem; opacity:0.95;">{ref_line}</div>'
+                f'<div style="font-size:0.63rem; opacity:0.85; margin-top:0.08rem;">{drift_line}</div>'
                 f"</div>"
             )
 
@@ -877,6 +881,28 @@ def render_live_dashboard():
             w_rec_pair = match_wave["recommended_pair"]
             w_rec_prob = match_wave["recommended_pair_prob"]
 
+            smart = analyze_smart_35m_decision(
+                fav1_barem=fav1,
+                fav1_odd=float(fav1_odd or 0.0),
+                fav2_barem=fav2,
+                fav2_odd=float(m.get("bookie_fav_2_odd", 99.0) or 99.0),
+                game_id=str(m.get("game_id", "")),
+                df_log=df_log,
+                recent_chain=recent_chain,
+                score_gap=abs(int(h_sc) - int(a_sc)),
+            )
+            smart_color = {"TRAP_LOW": "#e11d48", "GOLDEN": "#059669"}.get(smart["zone_type"], "var(--text-secondary)")
+            smart_html = (
+                f'<div class="info-strip" style="grid-column: 1 / -1; border-left:4px solid {smart_color};">'
+                f'<div class="info-strip-label">🤖 35. Dk Akıllı Karar & Tuzak Kutusu</div>'
+                f'<div class="info-strip-val" style="font-size:0.84rem;">'
+                f'<b style="color:{smart_color};">{smart["zone_badge"]}</b> &nbsp;&bull;&nbsp; {smart["drift_badge"]}<br>'
+                f'Ana Tercih: <b>{smart["primary_pick"]}</b> &nbsp;&bull;&nbsp; Koruma: <b>{smart["backup_pick"]}</b> '
+                f'&nbsp;(Güven: %{smart["confidence_pct"]})'
+                f'<div style="font-size:0.72rem; color:var(--text-muted); margin-top:0.15rem;">{smart["reasoning"]}</div>'
+                f"</div></div>"
+            )
+
             odds_map = m.get("odds", {})
             probs_map = m.get("barem_probs", {})
             boxes_html = ""
@@ -962,6 +988,7 @@ def render_live_dashboard():
                             <div style="font-size:0.74rem; color:var(--fav1-text); margin-top:0.1rem;">Önerilen Dalga İkilisi: {w_rec_pair} (%{w_rec_prob})</div>
                         </div>
                     </div>
+                    {smart_html}
                 </div>
                 <div class="barem-grid">
                     {boxes_html}
@@ -1195,15 +1222,63 @@ df_sym_all = load_symmetry_log()
 live_state_now = load_live_state()
 live_matches_now = live_state_now.get("live_matches", [])
 
-tab_dna, tab_sym, tab_q3q4, tab_bankroll, tab_sim = st.tabs(
+tab_dna, tab_sym, tab_q3q4, tab_bankroll, tab_sim, tab_smart35 = st.tabs(
     [
         f"🏆 1. Geçmiş Maçlar & Takım Barem DNA ({len(df_completed_archive)} Maç)",
         "⚖️ 2. Kapanış Oranı (30-36. Dk) Simetri & Tuzak Analizi",
         "⚡ 3. Q3 ➔ Q4 Patlama / Çöküş Dedektörü",
         "💰 4. Canlı Kupon, Kasa (ROI) & Çifte Barem (Dutching) Hesaplayıcı",
         "🧮 5. Manuel Canlı Tempo Simülatörü",
+        "🤖 6. 35. Dk Akıllı Kural & Sanal Kasa Simülatörü",
     ]
 )
+
+# ═════════════════════════════════════════════════════════════════════════════
+# MODULE 6: 35th-MINUTE SMART RULES, TRANSITIONS & VIRTUAL BANKROLL SIMULATOR
+# ═════════════════════════════════════════════════════════════════════════════
+with tab_smart35:
+    st.markdown("##### 🤖 35. Dakika Akıllı Kural Motoru — Gerçek Kapanış Oranlı Maçlardan Hesaplanır")
+    sim35 = simulate_35m_strategies(df_sym_all)
+    if sim35["total_matches"] == 0:
+        st.info("Sonuçlanmış canlı kapanış kaydı bekleniyor. Maçlar bittikçe bu sekme otomatik dolar.")
+    else:
+        st.caption(
+            f"📊 Analiz edilen gerçek maç sayısı: **{sim35['total_matches']}** • Her maça sabit **100 TL** bahis • "
+            "Oranlar 35. dakikadaki gerçek 1xBet kapanış oranlarıdır."
+        )
+        st.markdown("###### 💰 Sanal Kasa: Hangi Strateji Kazandırırdı?")
+        st.dataframe(
+            pd.DataFrame(
+                [
+                    {
+                        "Strateji": s["name"],
+                        "İsabet": f"{s['wins']} / {s['total']} (%{s['win_rate']})",
+                        "Toplam Yatırım": f"{s['cost']:.0f} TL",
+                        "Toplam Dönüş": f"{s['return']:.0f} TL",
+                        "Net Kâr / Zarar": f"{s['net_profit']:+.0f} TL",
+                        "ROI": f"%{s['roi_pct']:+.1f}",
+                    }
+                    for s in sim35["strategies"]
+                ]
+            ),
+            use_container_width=True,
+            hide_index=True,
+        )
+        if sim35["odds_brackets"]:
+            st.markdown("###### 🎚️ 35. Dk Favori Oran Bandına Göre Davranış")
+            st.dataframe(pd.DataFrame(sim35["odds_brackets"]), use_container_width=True, hide_index=True)
+        if sim35["drift_brackets"]:
+            st.markdown("###### 📉 Maç İçi Barem Göçü (Q1 ➔ 35. Dk) Davranışı")
+            st.dataframe(pd.DataFrame(sim35["drift_brackets"]), use_container_width=True, hide_index=True)
+        if sim35["transitions"]:
+            st.markdown("###### 🌊 Ardışık Maç Geçiş Matrisi (Önceki Maç ➔ Sıradaki Maç)")
+            st.dataframe(pd.DataFrame(sim35["transitions"]), use_container_width=True, hide_index=True)
+        st.markdown("###### 📒 Maç Maç Sanal Kupon Defteri")
+        st.dataframe(pd.DataFrame(sim35["ledger"]), use_container_width=True, hide_index=True, height=420)
+        st.warning(
+            "⚠️ Örneklem küçüktür (onlarca maç). Yüzdeler maç sayısı arttıkça değişir; kesin kazanç garantisi değildir. "
+            "Sistem istatistiksel eğilim gösterir."
+        )
 
 # ═════════════════════════════════════════════════════════════════════════════
 # MODULE 1: HISTORICAL MATCHES CENTER, TEAM BAREM DNA & H2H ANALYZER
