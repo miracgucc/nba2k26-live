@@ -74,7 +74,7 @@ IS_DARK = st.session_state.ui_theme == "matte_dark"
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v2.8-stateless"
+ENGINE_VERSION = "v2.9-live-gh"
 
 
 class BackgroundEngineState:
