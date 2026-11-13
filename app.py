@@ -1049,7 +1049,7 @@ def render_live_dashboard():
             layout_mode = st.selectbox(
                 "GÃ¶rÃ¼nÃ¼m Modu",
                 ["ğŸ—‚ï¸ Her MaÃ§ AyrÄ± Kutuda (Alt Alta)", "ğŸ“‘ Her MaÃ§ AyrÄ± Sekmede (Tab)"],
-                index=0,
+                index=1,
             )
 
         df_view = df_log.copy()
