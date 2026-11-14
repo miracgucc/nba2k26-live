@@ -741,15 +741,15 @@ def analyze_sequential_barem_wave(
 
         sh = int(r["raw_shift"])
         if sh == 0:
-            sh_label = "🎯 0 (Beklenen)"
+            sh_label = "🎯 Tam Favori Geldi (0)"
         elif sh == -1:
-            sh_label = "📉 -1 (1 Alt Barem)"
+            sh_label = "📉 1 Alt Bareme Düştü (-1)"
         elif sh == 1:
-            sh_label = "📈 +1 (1 Üst Barem)"
+            sh_label = "📈 1 Üst Bareme Çıktı (+1)"
         elif sh < -1:
-            sh_label = f"❄️ {sh} ({abs(sh)} Alt Barem)"
+            sh_label = f"❄️ {abs(sh)} Alt Bareme Düştü ({sh})"
         else:
-            sh_label = f"🔥 +{sh} ({sh} Üst Barem)"
+            sh_label = f"🔥 {sh} Üst Bareme Çıktı (+{sh})"
 
         gid_item = str(r.get("game_id", "")).strip()
         open_b = logged_opening_fav.get(gid_item, r["exp_barem_36"])
@@ -759,11 +759,11 @@ def analyze_sequential_barem_wave(
         else:
             drift_val = 0
         if drift_val > 0:
-            drift_lbl = f"📈 +{drift_val} Göç ({open_b}➔{close_b})"
+            drift_lbl = f"📈 Başlangıçtan +{drift_val} Üste Çıktı ({open_b}➔{close_b})"
         elif drift_val < 0:
-            drift_lbl = f"📉 {drift_val} Göç ({open_b}➔{close_b})"
+            drift_lbl = f"📉 Başlangıçtan {abs(drift_val)} Alta Düştü ({open_b}➔{close_b})"
         else:
-            drift_lbl = f"⚖️ 0 Sabit ({close_b})"
+            drift_lbl = f"⚖️ Başlangıçla Aynı Kaldı ({close_b})"
 
         recent_chain.append(
             {
@@ -852,26 +852,31 @@ def analyze_sequential_barem_wave(
     pair_up_prob = round(p_0 + p_p1, 1)
 
     if pair_down_prob >= pair_up_prob + 2.0:
-        wave_dir = f"📉 Merkez (0) veya -1 Alt Barem Eğilimi (%{pair_down_prob})"
-        rec_pair = f"{b_m1} & {b_0} (Beklenen + 1 Alt Barem)"
+        wave_dir = f"📉 Favori ({b_0}) veya 1 Alt Barem ({b_m1}) Eğilimi (%{pair_down_prob})"
+        rec_pair = f"{b_m1} (1 Alt Barem) ile {b_0} (Favori Barem)"
         rec_pair_prob = pair_down_prob
     elif pair_up_prob >= pair_down_prob + 2.0:
-        wave_dir = f"📈 Merkez (0) veya +1 Üst Barem Eğilimi (%{pair_up_prob})"
-        rec_pair = f"{b_0} & {b_p1} (Beklenen + 1 Üst Barem)"
+        wave_dir = f"📈 Favori ({b_0}) veya 1 Üst Barem ({b_p1}) Eğilimi (%{pair_up_prob})"
+        rec_pair = f"{b_0} (Favori Barem) ile {b_p1} (1 Üst Barem)"
         rec_pair_prob = pair_up_prob
     else:
-        wave_dir = f"🎯 Merkez (0) Odaklı Dengeli Dalga (Merkez %{p_0} | -1 Alt %{p_m1} | +1 Üst %{p_p1})"
+        wave_dir = f"🎯 Favori ({b_0}) Odaklı Dengeli Dalga (Favori %{p_0} | 1 Alt %{p_m1} | 1 Üst %{p_p1})"
         if pair_down_prob >= pair_up_prob:
-            rec_pair = f"{b_m1} & {b_0} (Beklenen + 1 Alt Barem)"
+            rec_pair = f"{b_m1} (1 Alt Barem) ile {b_0} (Favori Barem)"
             rec_pair_prob = pair_down_prob
         else:
-            rec_pair = f"{b_0} & {b_p1} (Beklenen + 1 Üst Barem)"
+            rec_pair = f"{b_0} (Favori Barem) ile {b_p1} (1 Üst Barem)"
             rec_pair_prob = pair_up_prob
 
     last_5_codes = [x["raw_shift"] for x in recent_chain[-5:]]
-    last_5_fmt = " ➔ ".join(
-        [("0 (Merkez)" if c == 0 else f"{c:+d}. Barem") for c in last_5_codes]
-    )
+    def _fmt_code(c: int) -> str:
+        if c == 0:
+            return "Favori Geldi"
+        elif c < 0:
+            return f"{abs(c)} Alt Geldi"
+        else:
+            return f"{c} Üst Geldi"
+    last_5_fmt = " ➔ ".join([_fmt_code(c) for c in last_5_codes])
 
     return {
         "recent_chain": recent_chain,
@@ -943,17 +948,17 @@ def analyze_smart_35m_decision(
     sec_b_clean = fav2_barem if (fav2_barem in barem_names and fav2_barem != base_b) else b_m1
 
     if sec_dir >= 1:
-        sec_dir_badge = f"📈 2.Favori Üstte ({sec_b_clean})"
+        sec_dir_badge = f"📈 2.Favori Üst Baremi Gösteriyor ({sec_b_clean})"
         sec_dir_tip = (
-            "1xBet'in en düşük oranlı 2. seçeneği mevcut favorinin BİR ÜST bareminde duruyor. "
-            "62 maçlık veride 2. favori üstteyken maçların alt bareme (-1) düşme ihtimali çok düşüktür (%7); "
-            "oran 2.10 üstüyse 1. Favori (0 Merkez) %61.1 isabet ve +%39.9 kâr (ROI) üretmiştir."
+            "1xBet'in en düşük oranlı 2. seçeneği şu anki favorinin BİR ÜST bareminde duruyor. "
+            "62 maçlık veride 2. favori üstteyken maçların alt bareme düşme ihtimali çok düşüktür (%7); "
+            "oran 2.10 üstüyse direkt 1. Favori Barem %61.1 isabet ve +%39.9 kâr (ROI) üretmiştir."
         )
     else:
-        sec_dir_badge = f"📉 2.Favori Altta ({sec_b_clean})"
+        sec_dir_badge = f"📉 2.Favori Alt Baremi Gösteriyor ({sec_b_clean})"
         sec_dir_tip = (
-            "1xBet'in 2. favorisi mevcut favorinin BİR ALT bareminde duruyor. "
-            "Bu durumda maçların %48.5'i alt baremlere (-1 veya -2) kaymış, üst bareme (+1) ise hiç (%0) gitmemiştir."
+            "1xBet'in 2. favorisi şu anki favorinin BİR ALT bareminde duruyor. "
+            "Bu durumda maçların %48.5'i alt baremlere kaymış, üst bareme ise hiç (%0) gitmemiştir."
         )
 
     # Calculate in-game drift for this game_id
@@ -968,14 +973,14 @@ def analyze_smart_35m_decision(
                 drift = barem_names.index(base_b) - barem_names.index(open_b)
 
     if drift > 0:
-        drift_badge = f"📈 +{drift} Göç ({open_b}➔{base_b})"
+        drift_badge = f"📈 Maç Başından Beri +{drift} Üste Çıktı ({open_b}➔{base_b})"
     elif drift < 0:
-        drift_badge = f"📉 {drift} Göç ({open_b}➔{base_b})"
+        drift_badge = f"📉 Maç Başından Beri {abs(drift)} Alta Düştü ({open_b}➔{base_b})"
     else:
-        drift_badge = f"⚖️ 0 Sabit ({base_b})"
+        drift_badge = f"⚖️ Maç Başıyla Aynı Barem ({base_b})"
     drift_tip = (
         f"Maçın 1. çeyrek başındaki favori baremi ({open_b}) ile şu anki favori baremi ({base_b}) arasındaki değişim. "
-        "+1/+2 göç maçın hızlandığını, -1/-2 göç ise maçın yavaşladığını gösterir."
+        "Üste çıkması maçın hızlı gittiğini, alta düşmesi ise maçın yavaşladığını gösterir."
     )
 
     gap = abs(int(score_gap or 0))
@@ -1044,82 +1049,82 @@ def analyze_smart_35m_decision(
 
     # Smart Dutching v2 recommendation: 10+ gap -> 0 & -1; otherwise -> 0 & 2ndFav
     if gap >= 10:
-        dutch_pick = f"🛡️ {b_0} + {b_m1} (10+ Fark Koruma)"
+        dutch_pick = f"🛡️ {b_0} (Favori) ile {b_m1} (1 Alt Barem) İkisini Kapat"
     else:
-        dutch_pick = f"🛡️ {b_0} + {sec_b_clean} (1. & 2. Favori)"
+        dutch_pick = f"🛡️ {b_0} (1. Favori) ile {sec_b_clean} (2. Favori) İkisini Kapat"
 
     # V3.1 Decision Engine
     if gap <= 5 and float(elapsed_mins or 35.0) >= 30.0:
-        zone_badge = f"⛔ PAS GEÇ / YAKIN MAÇ TUZAĞI (Fark: {gap})"
+        zone_badge = f"⛔ PAS GEÇ / YAKIN MAÇ TUZAĞI (Fark: {gap} Sayı)"
         zone_type = "PASS_CLUTCH"
         stake_badge = "0 TL (PAS GEÇ — Uzatma/Faul Riski)"
-        primary_pick = f"⛔ Bahis Alma (İlla Oynanacaksa: {b_0} + {b_p1})"
+        primary_pick = f"⛔ Bahis Alma (İlla Oynanacaksa: {b_0} veya {b_p1})"
         backup_pick = dutch_pick
         conf_pct = 38.0
         reasons.append(
-            f"35.dk civarı fark {gap} sayı (0-5 arası) olduğunda son bölümde ort. 59 sayı atılıyor ve maçların %33'ü üst bareme patlıyor (Merkez ROI: -%10.8)"
+            f"35.dk civarı fark {gap} sayı (0-5 arası) olduğunda son bölümde ort. 59 sayı atılıyor ve maçların %33'ü üst bareme patlıyor (Favori Barem ROI: -%10.8)"
         )
     elif odd_val > 1.0 and odd_val < 1.85:
-        zone_badge = f"⚠️ <1.85 AŞIRI FAVORİ TUZAĞI ({odd_val:.2f})"
+        zone_badge = f"⚠️ <1.85 AŞIRI DÜŞÜK ORAN TUZAĞI ({odd_val:.2f})"
         zone_type = "TRAP_EXTREME"
         stake_badge = "1000 TL (Standart Bahis — 2. Favoriye)"
-        primary_pick = f"🥈 2. Favori Sürprizi: {sec_b_clean} ({fav2_odd:.2f})"
-        backup_pick = f"🎯 0 Merkez: {b_0}"
+        primary_pick = f"🥈 2. Favori Baremi Oyna: {sec_b_clean} (Oran: {fav2_odd:.2f})"
+        backup_pick = f"🎯 1. Favori Barem: {b_0}"
         conf_pct = 74.0
         reasons.append(
             f"1. Favori oranı 1.85 altındayken ({odd_val:.2f}) 1. Favori -%37.1 zarar yazıyor; doğrudan 2. Favori ({sec_b_clean}) oynamak +%41.8 ROI kazandırdı"
         )
     elif odd_val >= 2.10 and sec_dir >= 1:
-        zone_badge = f"🔥 SÜPER SİNYAL: 2.FAV ÜSTTE + ORAN {odd_val:.2f}"
+        zone_badge = f"🔥 SÜPER SİNYAL: 2.FAVORİ ÜSTTE + ORAN {odd_val:.2f}"
         zone_type = "SUPER_SIGNAL"
         stake_badge = "2000 TL (Kademeli Kasa: Güçlü Sinyal)"
-        primary_pick = f"🎯 0 Merkez: {b_0} ({odd_val:.2f})"
+        primary_pick = f"🎯 Direkt 1. Favori Baremi Oyna: {b_0} (Oran: {odd_val:.2f})"
         backup_pick = dutch_pick
         conf_pct = 88.0
         reasons.append(
-            f"2. Favori üstte ({sec_b_clean}) ve oran >=2.10 ({odd_val:.2f}): 62 maçta %61.1 doğrudan Merkez (0) tuttu (+%39.9 ROI) ve hiç -1 Alt gelmedi (%0)"
+            f"2. Favori üstte ({sec_b_clean}) ve oran >=2.10 ({odd_val:.2f}): 62 maçta %61.1 doğrudan 1. Favori ({b_0}) tuttu (+%39.9 ROI) ve hiç alt bareme düşmedi (%0)"
         )
     elif gap >= 18 and odd_val >= 1.85:
-        zone_badge = f"🔥 BLOWOUT GÜÇLÜ MERKEZ (Fark: {gap} | Oran: {odd_val:.2f})"
+        zone_badge = f"🔥 FARK AÇIK (RÖLANTİ) SİNYALİ (Fark: {gap} | Oran: {odd_val:.2f})"
         zone_type = "SUPER_SIGNAL"
         stake_badge = "2000 TL (Kademeli Kasa: Rölanti Sinyali)"
-        primary_pick = f"🎯 0 Merkez: {b_0} ({odd_val:.2f})"
-        backup_pick = f"🛡️ {b_0} + {b_m1} (%95 Bölge)"
+        primary_pick = f"🎯 Direkt 1. Favori Baremi Oyna: {b_0} (Oran: {odd_val:.2f})"
+        backup_pick = f"🛡️ {b_0} (Favori) ile {b_m1} (1 Alt) İkisini Kapat (%95 Tutma)"
         conf_pct = 86.0
         reasons.append(
-            f"18+ sayı farkta ({gap}) son çeyrek rölantiye girer (ort. 47.4 sayı); maçların %95'i 0 veya -1 kalır, 0 Merkez tek başına %60 isabet ve +%27.5 ROI üretir"
+            f"18+ sayı farkta ({gap}) son çeyrek rölantiye girer (ort. 47.4 sayı); maçların %95'i Favori ({b_0}) veya 1 Alt ({b_m1}) biter, 1. Favori tek başına %60 isabet ve +%27.5 ROI üretir"
         )
     elif odd_val > 1.0 and odd_val < 2.10 and sec_dir <= -1:
-        zone_badge = f"⚠️ DÜŞÜK ORAN + ALT BASKISI ({odd_val:.2f})"
+        zone_badge = f"⚠️ DÜŞÜK ORAN + ALT BAREM BASKISI ({odd_val:.2f})"
         zone_type = "TRAP_LOW"
-        stake_badge = "1000 TL (Standart Bahis — -1 Alt)"
-        primary_pick = f"📉 -1 Alt Barem: {b_m1}"
-        backup_pick = f"🎯 0 Merkez: {b_0}"
+        stake_badge = "1000 TL (Standart Bahis — 1 Alt Bareme)"
+        primary_pick = f"📉 1 Alt Baremi Oyna: {b_m1} (Favori {b_0} Yerine)"
+        backup_pick = f"🎯 1. Favori Barem: {b_0}"
         conf_pct = 76.0
         reasons.append(
-            f"Oran <2.10 ({odd_val:.2f}) ve 2. Favori altta ({b_m1}) olduğunda 0 Merkez -%16.6 zarar ederken -1 Alt Barem +%16.6 ROI sağlıyor"
+            f"Oran <2.10 ({odd_val:.2f}) ve 2. Favori altta ({b_m1}) olduğunda 1. Favori ({b_0}) -%16.6 zarar ederken 1 Alt Barem ({b_m1}) +%16.6 ROI sağlıyor"
         )
     elif 1.85 <= odd_val <= 2.79:
-        zone_badge = f"💎 ALTIN MERKEZ BANDI ({odd_val:.2f})"
+        zone_badge = f"💎 İDEAL ORAN BANDI ({odd_val:.2f})"
         zone_type = "GOLDEN"
-        stake_badge = "1000 TL (Standart Bahis — 0 Merkez)"
-        primary_pick = f"🎯 0 Merkez: {b_0}"
+        stake_badge = "1000 TL (Standart Bahis — 1. Favoriye)"
+        primary_pick = f"🎯 Direkt 1. Favori Baremi Oyna: {b_0}"
         backup_pick = dutch_pick
         conf_pct = 80.0
         reasons.append(
-            f"Oran {odd_val:.2f} dengeli bölgede; 0 Merkez doğrudan ~%52 isabet (+%16-21 ROI), Akıllı İkili Koruma ({dutch_pick}) %82+ isabet sağlıyor"
+            f"Oran {odd_val:.2f} dengeli bölgede; 1. Favori ({b_0}) doğrudan ~%52 isabet (+%16-21 ROI), İkili Koruma ({dutch_pick}) %82+ isabet sağlıyor"
         )
     else:
-        zone_badge = f"⚖️ YÜKSEK ORAN / MAKAS AÇIK ({odd_val:.2f})" if odd_val < 90 else "⏳ Oran Bekleniyor"
+        zone_badge = f"⚖️ YÜKSEK ORAN / KARARSIZ MAÇ ({odd_val:.2f})" if odd_val < 90 else "⏳ Oran Bekleniyor"
         zone_type = "WIDE"
         stake_badge = "1000 TL (İkili Koruma Önerilir)"
-        primary_pick = f"🎯 0 Merkez: {b_0}"
+        primary_pick = f"🎯 1. Favori Barem: {b_0}"
         backup_pick = dutch_pick
         conf_pct = 68.0
-        reasons.append("Oran >=2.80 kararsız bölgede; tek barem yerine 1. ve 2. Favori İkili Koruma (Dutching) daha güvenlidir")
+        reasons.append("Oran >=2.80 kararsız bölgede; tek barem yerine 1. ve 2. Favori İkili Koruma (Çifte Şans) daha güvenlidir")
 
     if prev_shift >= 1:
-        reasons.append(f"Önceki maç +{prev_shift} Üst bitti (Üst sonrası sıradaki maçta %69 oranında 0 veya -1'e dönüş var)")
+        reasons.append(f"Önceki maç {prev_shift} Üst Baremde bitti (Üst bittikten sonra sıradaki maçta %69 ihtimalle Favori veya 1 Alt Barem gelir)")
 
     return {
         "zone_badge": zone_badge,

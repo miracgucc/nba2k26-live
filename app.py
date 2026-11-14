@@ -74,7 +74,7 @@ IS_DARK = st.session_state.ui_theme == "matte_dark"
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v3.1-smart-62m"
+ENGINE_VERSION = "v3.2-smart-62m"
 
 
 class BackgroundEngineState:
@@ -805,23 +805,23 @@ def render_live_dashboard():
                 p_bg = "var(--fav1-bg)"
                 p_bd = "var(--fav1-border)"
                 p_tx = "var(--fav1-text)"
-                tag_txt = "🎯 0 (Beklenen)"
+                tag_txt = "🎯 Tam Favori Geldi"
             elif sh < 0:
                 p_bg = "var(--fav2-bg)"
                 p_bd = "var(--fav2-border)"
                 p_tx = "var(--fav2-text)"
-                tag_txt = f"📉 {sh} ({abs(sh)} Alt Barem)"
+                tag_txt = f"📉 {abs(sh)} Alt Bareme Düştü"
             else:
                 p_bg = "var(--val-bg)"
                 p_bd = "var(--val-border)"
                 p_tx = "var(--val-text)"
-                tag_txt = f"📈 +{sh} ({sh} Üst Barem)"
+                tag_txt = f"📈 {sh} Üst Bareme Çıktı"
 
             odd_36_val = float(item.get("exp_odd_36", 0.0) or 0.0)
             if odd_36_val > 0:
-                ref_line = f'📊 36.Dk Oran: <b>{item["exp_barem_36"]} ({odd_36_val:.2f})</b> ➔ Biten: <b>{item["act_barem"]}</b>'
+                ref_line = f'📊 36.Dk Favori: <b>{item["exp_barem_36"]} ({odd_36_val:.2f})</b> ➔ Biten: <b>{item["act_barem"]}</b>'
             else:
-                ref_line = f'🧮 36.Dk SkorTahmin: <b>{item["exp_barem_36"]}</b> ➔ Biten: <b>{item["act_barem"]}</b>'
+                ref_line = f'🧮 36.Dk Tahmin: <b>{item["exp_barem_36"]}</b> ➔ Biten: <b>{item["act_barem"]}</b>'
             drift_line = item.get("drift_label", "")
 
             pills_html += (
@@ -839,10 +839,10 @@ def render_live_dashboard():
             <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:13px; padding:0.9rem 1.2rem; margin-top:0.9rem; box-shadow:var(--shadow-card);">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
                     <div style="font-size:0.92rem; font-weight:800; color:var(--text-primary);">
-                        🌊 Ardışık Maçlarda 36. Dakika Simetri Dalga Zinciri (Toplam {len(recent_chain)} Maç | Son Zincir: <span style="font-family:'JetBrains Mono',monospace; color:var(--score-text);">{wave_global['last_5_labels']}</span>)
+                        🌊 Son Biten Maçlarda 36. Dakika Favorisi Tuttu mu, Kaydı mı? (Toplam {len(recent_chain)} Maç | Son 5 Maç: <span style="font-family:'JetBrains Mono',monospace; color:var(--score-text);">{wave_global['last_5_labels']}</span>)
                     </div>
                     <div style="font-size:0.8rem; font-weight:700; color:var(--fav1-text); background:var(--pill-bg); border:1px solid var(--pill-border); padding:0.25rem 0.75rem; border-radius:999px;">
-                        🔮 Sıradaki Maç Dalga Beklentisi ({wave_global['pattern_matches_count']} Benzer Zincir): ❄️ -2 Alt: %{wave_global['prob_minus_2']} &bull; 📉 -1 Alt: %{wave_global['prob_minus_1']} &bull; 🎯 Merkez (0): %{wave_global['prob_0']} &bull; 📈 +1 Üst: %{wave_global['prob_plus_1']} &bull; 🔥 +2 Üst: %{wave_global['prob_plus_2']}
+                        🔮 Sıradaki Maç Beklentisi ({wave_global['pattern_matches_count']} Benzer Maç): ❄️ 2 Alt Barem: %{wave_global['prob_minus_2']} &bull; 📉 1 Alt Barem: %{wave_global['prob_minus_1']} &bull; 🎯 Tam Favori: %{wave_global['prob_0']} &bull; 📈 1 Üst Barem: %{wave_global['prob_plus_1']} &bull; 🔥 2 Üst Barem: %{wave_global['prob_plus_2']}
                     </div>
                 </div>
                 <div style="display:flex; gap:0.45rem; flex-wrap:wrap; max-height:340px; overflow-y:auto; padding-right:4px;">
@@ -978,11 +978,34 @@ def render_live_dashboard():
 
             odds_map = m.get("odds", {})
             probs_map = m.get("barem_probs", {})
+            barem_names_card = [b[0] for b in BAREM_RANGES]
+            fav1_idx_card = barem_names_card.index(fav1) if fav1 in barem_names_card else -1
             boxes_html = ""
-            for b_name, _, _ in BAREM_RANGES:
+            for idx_b, (b_name, _, _) in enumerate(BAREM_RANGES):
                 odd_v = float(odds_map.get(b_name, 99.0))
                 prob_v = float(probs_map.get(b_name, 0.0))
                 odd_disp = f"{odd_v:.2f}" if odd_v < 90.0 else "🔒"
+
+                if fav1_idx_card >= 0:
+                    b_diff = idx_b - fav1_idx_card
+                    if b_diff == 0:
+                        rel_pos_lbl = "🎯 Favori (Merkez)"
+                        rel_pos_tip = f"{b_name}: Şu an 1xBet'in en düşük oran verdiği 1. Favori barem."
+                    elif b_diff == -1:
+                        rel_pos_lbl = "📉 1 Alt Barem"
+                        rel_pos_tip = f"{b_name}: Favori baremin ({fav1}) hemen 1 kademe altındaki barem."
+                    elif b_diff == 1:
+                        rel_pos_lbl = "📈 1 Üst Barem"
+                        rel_pos_tip = f"{b_name}: Favori baremin ({fav1}) hemen 1 kademe üstündeki barem."
+                    elif b_diff < -1:
+                        rel_pos_lbl = f"❄️ {abs(b_diff)} Alt Barem"
+                        rel_pos_tip = f"{b_name}: Favori baremin ({fav1}) {abs(b_diff)} kademe altındaki barem."
+                    else:
+                        rel_pos_lbl = f"🔥 {b_diff} Üst Barem"
+                        rel_pos_tip = f"{b_name}: Favori baremin ({fav1}) {b_diff} kademe üstündeki barem."
+                else:
+                    rel_pos_lbl = ""
+                    rel_pos_tip = f"{b_name} baremi (Model olasılığı: %{prob_v:.1f})"
 
                 cls_list = ["barem-box"]
                 tag_html = ""
@@ -995,13 +1018,20 @@ def render_live_dashboard():
 
                 if b_name == val_rng and odd_v < 90.0 and b_name != fav1:
                     cls_list.append("val-pick")
-                    tag_html = '<div class="b-tag" style="background:var(--val-border); color:#ffffff;">🔥 VALUE</div>'
+                    tag_html = '<div class="b-tag" style="background:var(--val-border); color:#ffffff;">🔥 DEĞERLİ ORAN</div>'
                 elif b_name == val_rng and b_name == fav1 and odd_v < 90.0:
-                    tag_html = '<div class="b-tag" style="background:var(--fav1-border); color:#ffffff;">⭐ FAV + VALUE</div>'
+                    tag_html = '<div class="b-tag" style="background:var(--fav1-border); color:#ffffff;">⭐ FAVORİ + DEĞERLİ</div>'
+
+                rel_pos_html = (
+                    f'<div style="font-size:0.62rem; font-weight:700; color:var(--text-muted); margin-top:0.1rem;">{rel_pos_lbl}</div>'
+                    if rel_pos_lbl
+                    else ""
+                )
 
                 boxes_html += (
-                    f'<div class="{" ".join(cls_list)}">'
+                    f'<div class="{" ".join(cls_list)}" style="cursor:help;" title="{rel_pos_tip}">'
                     f'<div class="b-name">{b_name}</div>'
+                    f'{rel_pos_html}'
                     f'<div class="b-odd">{odd_disp}</div>'
                     f'<div class="b-prob">Model: %{prob_v:.1f}</div>'
                     f"{tag_html}"
@@ -1009,9 +1039,9 @@ def render_live_dashboard():
                 )
 
             sym_text = (
-                f"{fav1} & {fav2} (Fark: {sym_gap:.2f} | Çifte Şans: {dutch_odd:.2f})"
-                if sym_gap < 2.0
-                else f"Favori Barem: {fav1} ({fav1_odd if fav1_odd < 90 else '-'})"
+                f"1.Fav: {fav1} ({fav1_odd:.2f}) &bull; 2.Fav: {fav2} (İkisini Kapatma Oranı: {dutch_odd:.2f})"
+                if sym_gap < 2.0 and fav1_odd < 90
+                else f"1. Favori Barem: {fav1} ({fav1_odd if fav1_odd < 90 else '-'})"
             )
 
             st.markdown(
@@ -1054,11 +1084,11 @@ def render_live_dashboard():
                             {q3_sig_label} <span style="font-size:0.76rem; color:var(--text-muted);">(Patlama %{q4_burst_p:.0f} / Çöküş %{q4_coll_p:.0f})</span>
                         </div>
                     </div>
-                    <div class="info-strip" style="cursor:help;" title="Önceki biten maçların 35. dakika favorisine göre nasıl bittiğine (0: Favori, -1: Alt Barem, +1: Üst Barem) bakarak bu maçta hangi baremlerin öne çıktığını gösterir.">
-                        <div class="info-strip-label">🌊 Ardışık Maç Dalga Hedefi (-2 / -1 / 0 / +1 / +2) [?]</div>
-                        <div class="info-strip-val" style="color:var(--score-text); font-size:0.84rem;">
-                            -2: {w_bm2} &bull; -1: {w_bm1} &bull; <b>0: {w_b0}</b> &bull; +1: {w_bp1} &bull; +2: {w_bp2}
-                            <div style="font-size:0.74rem; color:var(--fav1-text); margin-top:0.1rem;">Önerilen Dalga İkilisi: {w_rec_pair} (%{w_rec_prob})</div>
+                    <div class="info-strip" style="cursor:help;" title="Şu anki 1. Favori baremi merkeze alır; maç biraz düşük biterse 1 veya 2 Alt Barem, biraz yüksek biterse 1 veya 2 Üst Barem hangi aralığa denk geliyor onu açıkça gösterir.">
+                        <div class="info-strip-label">🌊 Komşu Baremler & Dalga Hedefi (Alt / Favori / Üst) [?]</div>
+                        <div class="info-strip-val" style="color:var(--score-text); font-size:0.81rem; line-height:1.45;">
+                            ❄️ 2 Alt: <b>{w_bm2}</b> &bull; 📉 1 Alt: <b>{w_bm1}</b> &bull; 🎯 <b>Favori: {w_b0}</b> &bull; 📈 1 Üst: <b>{w_bp1}</b> &bull; 🔥 2 Üst: <b>{w_bp2}</b>
+                            <div style="font-size:0.74rem; color:var(--fav1-text); margin-top:0.12rem;">🛡️ En Güçlü İkili Barem: <b>{w_rec_pair}</b> (Tutma İhtimali: %{w_rec_prob})</div>
                         </div>
                     </div>
                     {smart_html}
