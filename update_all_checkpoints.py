@@ -1,10 +1,26 @@
 import os
+import shutil
 import pandas as pd
 from period_predictor import get_range_from_score
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CSV_PATH = os.path.join(BASE_DIR, "symmetry_analysis_log.csv")
-MATCHES_CSV = os.path.join(BASE_DIR, "matches_data.csv")
+_IS_GH_ACTIONS = os.environ.get("GITHUB_ACTIONS") == "true"
+CSV_PATH = os.path.join(BASE_DIR, "symmetry_analysis_log.csv" if _IS_GH_ACTIONS else "runtime_symmetry_log.csv")
+MATCHES_CSV = os.path.join(BASE_DIR, "matches_data.csv" if _IS_GH_ACTIONS else "runtime_matches_data.csv")
+
+if not _IS_GH_ACTIONS:
+    _seed_sym = os.path.join(BASE_DIR, "symmetry_analysis_log.csv")
+    _seed_m = os.path.join(BASE_DIR, "matches_data.csv")
+    if not os.path.exists(CSV_PATH) and os.path.exists(_seed_sym):
+        try:
+            shutil.copyfile(_seed_sym, CSV_PATH)
+        except Exception:
+            pass
+    if not os.path.exists(MATCHES_CSV) and os.path.exists(_seed_m):
+        try:
+            shutil.copyfile(_seed_m, MATCHES_CSV)
+        except Exception:
+            pass
 
 
 def auto_settle_checkpoints():

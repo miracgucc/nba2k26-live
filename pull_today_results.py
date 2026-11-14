@@ -14,8 +14,9 @@ from update_all_checkpoints import auto_settle_checkpoints
 TR_TZ = timezone(timedelta(hours=3))
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CSV_PATH = os.path.join(BASE_DIR, "matches_data.csv")
-LOG_CSV_PATH = os.path.join(BASE_DIR, "symmetry_analysis_log.csv")
+_IS_GH_ACTIONS = os.environ.get("GITHUB_ACTIONS") == "true"
+CSV_PATH = os.path.join(BASE_DIR, "matches_data.csv" if _IS_GH_ACTIONS else "runtime_matches_data.csv")
+LOG_CSV_PATH = os.path.join(BASE_DIR, "symmetry_analysis_log.csv" if _IS_GH_ACTIONS else "runtime_symmetry_log.csv")
 MIRROR_CACHE_PATH = os.path.join(BASE_DIR, "mirror_cache.json")
 
 TEAM_STARS = {

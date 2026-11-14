@@ -30,3 +30,6 @@ verify_*.py
 *.zip
 *.txt
 !requirements.txt
+runtime_*.csv
+runtime_*.json
+*.tmp

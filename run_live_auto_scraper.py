@@ -33,11 +33,12 @@ from pull_today_results import (
 from update_all_checkpoints import auto_settle_checkpoints
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CSV_PATH = os.path.join(BASE_DIR, "symmetry_analysis_log.csv")
-MATCHES_CSV_PATH = os.path.join(BASE_DIR, "matches_data.csv")
+_IS_GH_ACTIONS = os.environ.get("GITHUB_ACTIONS") == "true"
+CSV_PATH = os.path.join(BASE_DIR, "symmetry_analysis_log.csv" if _IS_GH_ACTIONS else "runtime_symmetry_log.csv")
+MATCHES_CSV_PATH = os.path.join(BASE_DIR, "matches_data.csv" if _IS_GH_ACTIONS else "runtime_matches_data.csv")
 CACHE_FILE = os.path.join(BASE_DIR, "match_detail_cache.json")
 TS_FILE = os.path.join(BASE_DIR, "match_log_timestamps.json")
-LIVE_STATE_FILE = os.path.join(BASE_DIR, "live_matches_state.json")
+LIVE_STATE_FILE = os.path.join(BASE_DIR, "live_matches_state.json" if _IS_GH_ACTIONS else "runtime_live_state.json")
 
 CSV_HEADERS = [
     "game_id",

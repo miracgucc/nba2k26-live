@@ -75,7 +75,26 @@ IS_DARK = st.session_state.ui_theme == "matte_dark"
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v4.1-sade-turkce"
+ENGINE_VERSION = "v4.2-sade-turkce"
+
+
+def _ensure_clean_git_tracked_files():
+    """Keep git-tracked CSV/JSON files clean on Streamlit Cloud so git pull never blocks."""
+    try:
+        import subprocess
+        if os.environ.get("GITHUB_ACTIONS") != "true":
+            subprocess.run(
+                ["git", "checkout", "--", "symmetry_analysis_log.csv", "matches_data.csv", "live_matches_state.json"],
+                cwd=BASE_DIR,
+                timeout=3,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+    except Exception:
+        pass
+
+
+_ensure_clean_git_tracked_files()
 
 
 class BackgroundEngineState:
@@ -142,12 +161,13 @@ def reset_all_data_clean_slate():
 
 
 def load_live_state() -> dict:
-    if os.path.exists(LIVE_STATE_FILE) and os.path.getsize(LIVE_STATE_FILE) > 0:
-        try:
-            with open(LIVE_STATE_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception:
-            return {}
+    for candidate in (LIVE_STATE_FILE, os.path.join(BASE_DIR, "live_matches_state.json")):
+        if os.path.exists(candidate) and os.path.getsize(candidate) > 0:
+            try:
+                with open(candidate, "r", encoding="utf-8") as f:
+                    return json.load(f)
+            except Exception:
+                pass
     return {}
 
 
@@ -188,13 +208,14 @@ def _fetch_github_csv(filename: str) -> pd.DataFrame:
 
 def load_symmetry_log() -> pd.DataFrame:
     """
-    Stateless loader: combines local log, local backup, AND live GitHub Raw cloud-bot backup.
+    Stateless loader: combines local runtime log, git seed log, local backup, AND live GitHub Raw cloud-bot backup.
     Never writes files, so no thread race / stale-file / redeploy-overwrite can ever hide matches.
     COMPLETED rows always win over PENDING rows for the same (game_id, check_time).
     """
     init_csv()
     frames = [
         _read_csv_safe(CSV_PATH),
+        _read_csv_safe(os.path.join(BASE_DIR, "symmetry_analysis_log.csv")),
         _read_csv_safe(os.path.join(BASE_DIR, "cloud_symmetry_backup.csv")),
         _fetch_github_csv("cloud_symmetry_backup.csv"),
     ]
@@ -217,6 +238,7 @@ def load_symmetry_log() -> pd.DataFrame:
 def load_completed_matches() -> pd.DataFrame:
     frames = [
         _read_csv_safe(MATCHES_CSV_PATH),
+        _read_csv_safe(os.path.join(BASE_DIR, "matches_data.csv")),
         _read_csv_safe(os.path.join(BASE_DIR, "cloud_matches_backup.csv")),
         _fetch_github_csv("cloud_matches_backup.csv"),
     ]
@@ -1707,20 +1729,20 @@ with tab_dna:
 # ═════════════════════════════════════════════════════════════════════════════
 with tab_sym:
     st.markdown(
-        "##### 🌊 Ardışık Maçlarda 36. Dakika Simetri Dalga Analizi (`-2 Alt` / `-1 Alt` / `0 Beklenen` / `+1 Üst` / `+2 Üst`)"
+        "##### 🌊 Ardışık Maçlarda 36. Dakika Favorisi Tuttu mu, Komşu Bareme mi Kaydı? (`2 Alt / 1 Alt / Favori / 1 Üst / 2 Üst`)"
     )
     st.caption(
-        "Sezdiğiniz ardışık maç dalga örüntüsünü (**-2 Alt Barem, -1 Alt Barem, 0 Beklenen Merkez, +1 Üst Barem, +2 Üst Barem**) "
-        "4.504 gerçek maç üzerinde test eder ve sıradaki maçın hangi bareme kayacağını hesaplar."
+        "Son 4 maçın nasıl bittiğini seçerek (Örn: Favori geldi, 1 Alt Barem geldi, 1 Üst Barem geldi) "
+        "4.550+ gerçek maç üzerinde sıradaki maçın hangi baremde biteceğini test edebilirsiniz."
     )
 
     w_col1, w_col2, w_col3, w_col4, w_col5 = st.columns([1, 1, 1, 1, 1.2])
     seq_map = {
-        "❄️ -2 (2 Alt Barem Geldi)": -2,
-        "📉 -1 (1 Alt Barem Geldi)": -1,
-        "🎯 0 (36.Dk Beklenen Geldi)": 0,
-        "📈 +1 (1 Üst Barem Geldi)": 1,
-        "🔥 +2 (2 Üst Barem Geldi)": 2,
+        "❄️ 2 Alt Barem Geldi": -2,
+        "📉 1 Alt Barem Geldi": -1,
+        "🎯 Tam Favori Barem Geldi": 0,
+        "📈 1 Üst Barem Geldi": 1,
+        "🔥 2 Üst Barem Geldi": 2,
     }
     rev_map = {v: k for k, v in seq_map.items()}
 
@@ -1740,7 +1762,7 @@ with tab_sym:
         s_m4 = st.selectbox("4. (Son Bitmiş) Maç", opts_list, index=opts_list.index(rev_map.get(act_pat[3], opts_list[2])))
     with w_col5:
         test_fav_b = st.selectbox(
-            "Canlı Maçın 36.Dk Beklenen Baremi",
+            "Canlı Maçın 36.Dk Favori Baremi",
             [b[0] for b in BAREM_RANGES],
             index=5,
         )
@@ -1752,32 +1774,32 @@ with tab_sym:
 
     wk_m2, wk_m1, wk_0, wk_p1, wk_p2, wk_pair = st.columns(6)
     wk_m2.metric(
-        f"❄️ -2 Alt ({sim_wave['target_minus_2_barem']})",
+        f"❄️ 2 Alt Barem ({sim_wave['target_minus_2_barem']})",
         f"%{sim_wave['prob_minus_2']}",
-        "2 Alt Barem Kayması",
+        "2 Kademe Düşük Biter",
     )
     wk_m1.metric(
-        f"📉 -1 Alt ({sim_wave['target_minus_1_barem']})",
+        f"📉 1 Alt Barem ({sim_wave['target_minus_1_barem']})",
         f"%{sim_wave['prob_minus_1']}",
         f"Toplam Alt: %{sim_wave['prob_down_total']}",
     )
     wk_0.metric(
-        f"🎯 0 Beklenen ({sim_wave['target_0_barem']})",
+        f"🎯 Favori Barem ({sim_wave['target_0_barem']})",
         f"%{sim_wave['prob_0']}",
-        f"{sim_wave['pattern_matches_count']} Benzer Zincir",
+        f"{sim_wave['pattern_matches_count']} Benzer Maç",
     )
     wk_p1.metric(
-        f"📈 +1 Üst ({sim_wave['target_plus_1_barem']})",
+        f"📈 1 Üst Barem ({sim_wave['target_plus_1_barem']})",
         f"%{sim_wave['prob_plus_1']}",
         f"Toplam Üst: %{sim_wave['prob_up_total']}",
     )
     wk_p2.metric(
-        f"🔥 +2 Üst ({sim_wave['target_plus_2_barem']})",
+        f"🔥 2 Üst Barem ({sim_wave['target_plus_2_barem']})",
         f"%{sim_wave['prob_plus_2']}",
-        "2 Üst Barem Kayması",
+        "2 Kademe Yüksek Biter",
     )
     wk_pair.metric(
-        "🛡️ Önerilen İkili Küme",
+        "🛡️ En Güçlü İkili Barem",
         f"%{sim_wave['recommended_pair_prob']}",
         sim_wave["recommended_pair"],
     )
@@ -1791,7 +1813,7 @@ with tab_sym:
         return barem_names_list[n_idx]
 
     if default_wave.get("recent_chain"):
-        st.markdown("###### 📜 Canlı Takip Edilip Tamamlanan Maçların `36. Dakika Beklenen vs Biten Barem (-2 / -1 / 0 / +1 / +2)` Zinciri")
+        st.markdown("###### 📜 Canlı Takip Edilip Tamamlanan Maçların `36. Dakika Favori Barem vs Biten Barem` Tablosu")
         rc_rows = []
         for item in default_wave["recent_chain"][::-1]:
             eb = item["exp_barem_36"]
@@ -1801,13 +1823,13 @@ with tab_sym:
                     "Maç": f"{item['home_team']} vs {item['away_team']}",
                     "36. Dk Skor": item["s36"],
                     "Maç Sonu Toplam": f"{item['home_total']}:{item['away_total']} ({item['total_score']})",
-                    "❄️ -2 Alt Barem": _get_shifted_b(eb, -2),
-                    "📉 -1 Alt Barem": _get_shifted_b(eb, -1),
-                    "🎯 0 (36.Dk Beklenen)": eb,
-                    "📈 +1 Üst Barem": _get_shifted_b(eb, 1),
-                    "🔥 +2 Üst Barem": _get_shifted_b(eb, 2),
+                    "❄️ 2 Alt Barem": _get_shifted_b(eb, -2),
+                    "📉 1 Alt Barem": _get_shifted_b(eb, -1),
+                    "🎯 36.Dk Favori Barem": eb,
+                    "📈 1 Üst Barem": _get_shifted_b(eb, 1),
+                    "🔥 2 Üst Barem": _get_shifted_b(eb, 2),
                     "Biten Gerçek Barem": item["act_barem"],
-                    "Simetri Dalga Sapması (-2 / -1 / 0 / +1 / +2)": item["shift_label"],
+                    "Nasıl Sonuçlandı?": item["shift_label"],
                     "Referans": item["source"],
                 }
             )
@@ -2226,75 +2248,80 @@ with tab_bankroll:
 
             tot_wagered = max(1.0, n_bets * unit_bet)
             sel_wagered = max(1.0, v3_sel_bets * unit_bet)
+            raw_comp_cnt = len(df_comp_roi)
+            st.caption(
+                f"✅ **Hesaplanan Kapanış Maç Sayısı: {n_bets} Maç** "
+                f"*(Toplam {raw_comp_cnt} ham dakika kaydından erken dakikalardaki {max(0, raw_comp_cnt - n_bets)} kayıt temizlendi; sadece 32. dakika ve sonrası baz alındı)*"
+            )
             roi_rows = [
                 {
-                    "Strateji": "🔥 v3 Seçici Akıllı Strateji (0-5 Fark Pas + 32-36.Dk Kural)",
-                    "Kupon Sayısı": v3_sel_bets,
-                    "İsabet Oranı": f"{v3_sel_hits} / {v3_sel_bets} (%{(v3_sel_hits/max(1,v3_sel_bets))*100:.1f})",
-                    "Toplam Yatırım": f"{sel_wagered:,.0f} TL",
+                    "Oynama Yöntemi (Strateji)": "🔥 Seçici Akıllı Strateji (0-5 Sayı Farklı Yakın Maçları Pas Geç + 32-36.Dk Kural)",
+                    "Oynanan Maç": v3_sel_bets,
+                    "Tutma Oranı": f"{v3_sel_hits} / {v3_sel_bets} (%{(v3_sel_hits/max(1,v3_sel_bets))*100:.1f})",
+                    "Toplam Yatırılan": f"{sel_wagered:,.0f} TL",
                     "Net Kâr / Zarar": f"{v3_sel_pnl:+,.0f} TL",
-                    "ROI (%)": f"%{(v3_sel_pnl / sel_wagered)*100:+.1f}",
+                    "Kâr Oranı (%)": f"%{(v3_sel_pnl / sel_wagered)*100:+.1f}",
                 },
                 {
-                    "Strateji": "🤖 v3 Akıllı Hibrit (Tüm Maçlar: <1.85➔2.Fav | <2.10&Alt➔1 Alt | Diğer➔Favori)",
-                    "Kupon Sayısı": n_bets,
-                    "İsabet Oranı": f"{v3_all_hits} / {n_bets} (%{(v3_all_hits/max(1,n_bets))*100:.1f})",
-                    "Toplam Yatırım": f"{tot_wagered:,.0f} TL",
+                    "Oynama Yöntemi (Strateji)": "🤖 Tüm Maçlara Akıllı Tek Barem (Oran <1.85➔2.Fav | Oran <2.10&Alt➔1 Alt | Diğer➔1.Fav)",
+                    "Oynanan Maç": n_bets,
+                    "Tutma Oranı": f"{v3_all_hits} / {n_bets} (%{(v3_all_hits/max(1,n_bets))*100:.1f})",
+                    "Toplam Yatırılan": f"{tot_wagered:,.0f} TL",
                     "Net Kâr / Zarar": f"{v3_all_pnl:+,.0f} TL",
-                    "ROI (%)": f"%{(v3_all_pnl / tot_wagered)*100:+.1f}",
+                    "Kâr Oranı (%)": f"%{(v3_all_pnl / tot_wagered)*100:+.1f}",
                 },
                 {
-                    "Strateji": "⭐ 1xBet 1. Favori Tekli Barem (32+ Dk Kapanış)",
-                    "Kupon Sayısı": n_bets,
-                    "İsabet Oranı": f"{fav_hits} / {n_bets} (%{(fav_hits/max(1,n_bets))*100:.1f})",
-                    "Toplam Yatırım": f"{tot_wagered:,.0f} TL",
+                    "Oynama Yöntemi (Strateji)": "⭐ Her Maç 1xBet 1. Favori Baremi Oynamak (32+ Dk Kapanış)",
+                    "Oynanan Maç": n_bets,
+                    "Tutma Oranı": f"{fav_hits} / {n_bets} (%{(fav_hits/max(1,n_bets))*100:.1f})",
+                    "Toplam Yatırılan": f"{tot_wagered:,.0f} TL",
                     "Net Kâr / Zarar": f"{fav_pnl:+,.0f} TL",
-                    "ROI (%)": f"%{(fav_pnl / tot_wagered)*100:+.1f}",
+                    "Kâr Oranı (%)": f"%{(fav_pnl / tot_wagered)*100:+.1f}",
                 },
                 {
-                    "Strateji": "🛡️ Akıllı İkili Koruma (Dutching v2: 10+ Farkta Fav&1Alt / Diğerlerinde 1.&2.Fav)",
-                    "Kupon Sayısı": n_bets,
-                    "İsabet Oranı": f"{dutch_v2_hits} / {n_bets} (%{(dutch_v2_hits/max(1,n_bets))*100:.1f})",
-                    "Toplam Yatırım": f"{tot_wagered:,.0f} TL",
+                    "Oynama Yöntemi (Strateji)": "🛡️ Akıllı İki Barem Kapatma (Fark 10+ ise Favori & 1 Alt / Diğerlerinde 1. & 2. Favori)",
+                    "Oynanan Maç": n_bets,
+                    "Tutma Oranı": f"{dutch_v2_hits} / {n_bets} (%{(dutch_v2_hits/max(1,n_bets))*100:.1f})",
+                    "Toplam Yatırılan": f"{tot_wagered:,.0f} TL",
                     "Net Kâr / Zarar": f"{dutch_v2_pnl:+,.0f} TL",
-                    "ROI (%)": f"%{(dutch_v2_pnl / tot_wagered)*100:+.1f}",
+                    "Kâr Oranı (%)": f"%{(dutch_v2_pnl / tot_wagered)*100:+.1f}",
                 },
                 {
-                    "Strateji": "🛡️ 20-Sayı Kümesi (Model Çifte Barem Dutching)",
-                    "Kupon Sayısı": n_bets,
-                    "İsabet Oranı": f"{clu_hits} / {n_bets} (%{(clu_hits/max(1,n_bets))*100:.1f})",
-                    "Toplam Yatırım": f"{tot_wagered:,.0f} TL",
+                    "Oynama Yöntemi (Strateji)": "🛡️ 20-Sayı Kümesi (Yan Yana En Güçlü İki Baremi Kapatma)",
+                    "Oynanan Maç": n_bets,
+                    "Tutma Oranı": f"{clu_hits} / {n_bets} (%{(clu_hits/max(1,n_bets))*100:.1f})",
+                    "Toplam Yatırılan": f"{tot_wagered:,.0f} TL",
                     "Net Kâr / Zarar": f"{clu_pnl:+,.0f} TL",
-                    "ROI (%)": f"%{(clu_pnl / tot_wagered)*100:+.1f}",
+                    "Kâr Oranı (%)": f"%{(clu_pnl / tot_wagered)*100:+.1f}",
                 },
                 {
-                    "Strateji": "🔥 Model Value (Pozitif EV) Tekli Barem",
-                    "Kupon Sayısı": n_bets,
-                    "İsabet Oranı": f"{val_hits} / {n_bets} (%{(val_hits/max(1,n_bets))*100:.1f})",
-                    "Toplam Yatırım": f"{tot_wagered:,.0f} TL",
+                    "Oynama Yöntemi (Strateji)": "🔥 Modelin Değerli Bulduğu (Value) Tek Baremi Oynamak",
+                    "Oynanan Maç": n_bets,
+                    "Tutma Oranı": f"{val_hits} / {n_bets} (%{(val_hits/max(1,n_bets))*100:.1f})",
+                    "Toplam Yatırılan": f"{tot_wagered:,.0f} TL",
                     "Net Kâr / Zarar": f"{val_pnl:+,.0f} TL",
-                    "ROI (%)": f"%{(val_pnl / tot_wagered)*100:+.1f}",
+                    "Kâr Oranı (%)": f"%{(val_pnl / tot_wagered)*100:+.1f}",
                 },
             ]
             st.dataframe(
                 pd.DataFrame(roi_rows),
                 column_config={
-                    "Strateji": st.column_config.TextColumn(
-                        help="Test edilen bahis stratejisi (32. dakika ve sonrası gerçek kapanış oranlarıyla hesaplanır)."
+                    "Oynama Yöntemi (Strateji)": st.column_config.TextColumn(
+                        help="Test edilen bahis yöntemi (Sadece 32. dakika ve sonrası gerçek kapanış oranlarıyla hesaplanır)."
                     ),
-                    "Kupon Sayısı": st.column_config.NumberColumn(
-                        help="Seçilen dakika filtresine giren toplam maç / kupon sayısı."
+                    "Oynanan Maç": st.column_config.NumberColumn(
+                        help="32. dakika ve sonrasında kapanış kaydı bulunan toplam maç sayısı (her maça 1 kupon)."
                     ),
-                    "İsabet Oranı": st.column_config.TextColumn(
+                    "Tutma Oranı": st.column_config.TextColumn(
                         help="Tutan kupon sayısı ve yüzdesi."
                     ),
-                    "Toplam Yatırım": st.column_config.TextColumn(
-                        help="Her kupona sabit 1.000 TL yatırıldığında kasadan çıkan toplam tutar."
+                    "Toplam Yatırılan": st.column_config.TextColumn(
+                        help="Her maça sabit 1.000 TL yatırıldığında kasadan çıkan toplam tutar."
                     ),
                     "Net Kâr / Zarar": st.column_config.TextColumn(
-                        help="Tüm kuponlar sonuçlandıktan sonra kasada kalan net kâr veya zarar."
+                        help="Tüm kuponlar sonuçlandıktan sonra cebimizde kalan net kâr veya zarar."
                     ),
-                    "ROI (%)": st.column_config.TextColumn(
+                    "Kâr Oranı (%)": st.column_config.TextColumn(
                         help="Yatırılan toplam paraya göre yüzdesel net kâr oranı."
                     ),
                 },
