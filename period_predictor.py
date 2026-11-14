@@ -913,24 +913,48 @@ def analyze_smart_35m_decision(
     df_log: pd.DataFrame,
     recent_chain: list,
     score_gap: int = 0,
+    cur_tot: int = 0,
+    elapsed_mins: float = 35.0,
 ) -> dict:
     """
-    35th-Minute Smart Decision & Trap Detector based on proven live 1xBet closing-odd rules:
-    1. Odds Bracket Rule:
-       - < 2.10: Low-Odd Trap! Center (0) only hits ~30%, shifts to -1/-2 Alt Barem ~50%+.
-       - 2.10 - 2.34: Golden Band! Center (0) hits ~67% directly, (0 or -1) hits ~83%+.
-       - >= 2.35: Wide / Trap Zone (1st & 2nd Fav close).
-    2. In-Game Barem Migration (Q1 -> Current/35m Drift):
-       - Tracks whether the match's favorite barem drifted up (+1/+2), stayed flat (0), or collapsed (-1/-2/-3).
-    3. Sequential Wave Context:
-       - After a +1/+2 Upper Barem match, 100% of matches revert to 0 (Merkez) or -1 Alt Barem!
+    v3.1 35th-Minute Smart Decision & Trap Detector (calibrated on 62+ real 1xBet closing matches):
+    1. Score Gap (Clutch vs Blowout):
+       - 0-5 pts gap: Clutch/OT Trap (avg 59.0 pts in last 13m, 33% jump to +1/+2 -> PASS / NO BET).
+       - 18+ pts gap: Blowout Brake (avg 47.4 pts in last 13m, 95% stay in 0 or -1, 0 hits 60% / +27.5% ROI).
+    2. 2nd Favorite Direction (Market Skew: +1 Upper vs -1 Lower):
+       - 2nd Fav at +1 Upper & Fav Odd >= 2.10: Super Signal! 0 (Merkez) hits 61.1% (+39.9% ROI), -1 hits 0%.
+       - 2nd Fav at -1 Lower & Fav Odd < 2.10: -1 Alt Barem hits +16.6% ROI while 0 loses -16.6%.
+    3. Extreme Low-Odd Trap (< 1.85):
+       - 1st Fav loses -37.1% ROI; 2nd Favorite wins +41.8% ROI.
+    4. Position Within Barem (Score + Expected Remaining Points vs Barem Midpoint):
+       - Detects whether projected total sits on the lower edge (-1 risk 56%), center, or upper edge.
     """
     barem_names = [b[0] for b in BAREM_RANGES]
+    barem_bounds = {b[0]: (b[1], b[2]) for b in BAREM_RANGES}
     base_b = fav1_barem if fav1_barem in barem_names else "201-210"
     b_0 = base_b
     b_m1 = _shift_barem_name(base_b, -1)
     b_m2 = _shift_barem_name(base_b, -2)
     b_p1 = _shift_barem_name(base_b, 1)
+
+    idx_fav = barem_names.index(base_b)
+    idx_sec = barem_names.index(fav2_barem) if fav2_barem in barem_names else max(0, idx_fav - 1)
+    sec_dir = idx_sec - idx_fav
+    sec_b_clean = fav2_barem if (fav2_barem in barem_names and fav2_barem != base_b) else b_m1
+
+    if sec_dir >= 1:
+        sec_dir_badge = f"📈 2.Favori Üstte ({sec_b_clean})"
+        sec_dir_tip = (
+            "1xBet'in en düşük oranlı 2. seçeneği mevcut favorinin BİR ÜST bareminde duruyor. "
+            "62 maçlık veride 2. favori üstteyken maçların alt bareme (-1) düşme ihtimali çok düşüktür (%7); "
+            "oran 2.10 üstüyse 1. Favori (0 Merkez) %61.1 isabet ve +%39.9 kâr (ROI) üretmiştir."
+        )
+    else:
+        sec_dir_badge = f"📉 2.Favori Altta ({sec_b_clean})"
+        sec_dir_tip = (
+            "1xBet'in 2. favorisi mevcut favorinin BİR ALT bareminde duruyor. "
+            "Bu durumda maçların %48.5'i alt baremlere (-1 veya -2) kaymış, üst bareme (+1) ise hiç (%0) gitmemiştir."
+        )
 
     # Calculate in-game drift for this game_id
     open_b = base_b
@@ -944,63 +968,174 @@ def analyze_smart_35m_decision(
                 drift = barem_names.index(base_b) - barem_names.index(open_b)
 
     if drift > 0:
-        drift_badge = f"📈 +{drift} Kademe Yükseliş ({open_b} ➔ {base_b})"
+        drift_badge = f"📈 +{drift} Göç ({open_b}➔{base_b})"
     elif drift < 0:
-        drift_badge = f"📉 {drift} Kademe Düşüş ({open_b} ➔ {base_b})"
+        drift_badge = f"📉 {drift} Göç ({open_b}➔{base_b})"
     else:
-        drift_badge = f"⚖️ Sabit Barem ({base_b})"
+        drift_badge = f"⚖️ 0 Sabit ({base_b})"
+    drift_tip = (
+        f"Maçın 1. çeyrek başındaki favori baremi ({open_b}) ile şu anki favori baremi ({base_b}) arasındaki değişim. "
+        "+1/+2 göç maçın hızlandığını, -1/-2 göç ise maçın yavaşladığını gösterir."
+    )
+
+    gap = abs(int(score_gap or 0))
+    if gap <= 5:
+        exp_rem_35 = 59.0
+        margin_badge = f"⚠️ {gap} Sayı Fark (Yakın Maç / Uzatma Riski)"
+        margin_tip = (
+            "Fark 0-5 sayı arasındayken maç başa baş gider. Son dakikalarda taktik fauller ve uzatma (OT) "
+            "ihtimali yüzünden 35. dakikadan sonra ortalama 59.0 sayı atılır (normalden +6 sayı fazla) ve "
+            "maçların %33'ü üst bareme patlar. Bu yüzden yakın maçları PAS GEÇMEK kârı +%17.6'dan +%29.1'e çıkarır."
+        )
+    elif gap >= 18:
+        exp_rem_35 = 47.4
+        margin_badge = f"🧊 {gap} Sayı Fark (Fark Açık / Rölanti Freni)"
+        margin_tip = (
+            "Fark 18+ sayı açıldığında takımlar son çeyrekte tempoyu düşürür (rölanti). "
+            "35. dakikadan sonra ortalama sadece 47.4 sayı atılır (yakın maçtan 11.6 sayı daha az!). "
+            "Üst bareme kaçma ihtimali %5'tir; 1. Favori (0 Merkez) %60 isabetle +%27.5 ROI kazandırır."
+        )
+    elif gap >= 10:
+        exp_rem_35 = 53.5
+        margin_badge = f"🛡️ {gap} Sayı Fark (Kontrollü Fark)"
+        margin_tip = "Fark 10-17 sayı bandında; uzatma riski düşük, İkili Korumada 0 Merkez + -1 Alt Barem birlikte çalışır."
+    else:
+        exp_rem_35 = 53.0
+        margin_badge = f"⚖️ {gap} Sayı Fark (Normal Fark)"
+        margin_tip = "Fark 6-9 sayı bandında; standart son çeyrek temposu (~53 sayı) beklenir."
+
+    # Barem interior edge position (when match is near 30-36m or anytime using remaining pace)
+    fav_lo, fav_hi = barem_bounds.get(base_b, (201, 210))
+    fav_mid = (fav_lo + min(fav_hi, 240)) / 2.0
+    rem_mins_est = max(0.0, 48.0 - float(elapsed_mins or 35.0))
+    scaled_rem = exp_rem_35 * (rem_mins_est / 13.0) if rem_mins_est > 0 else 0.0
+    proj_tot_edge = float(cur_tot) + scaled_rem if cur_tot > 0 else fav_mid
+    edge_offset = proj_tot_edge - fav_mid
+
+    if cur_tot > 0 and 28.0 <= float(elapsed_mins or 35.0) <= 36.5:
+        if edge_offset < -3.0:
+            edge_badge = f"📐 Alt Kenarda (Tahmini: ~{proj_tot_edge:.0f} | {base_b} Alt Sınırı)"
+            edge_tip = (
+                f"Mevcut skor ({cur_tot}) + farka göre beklenen kalan sayı (~{scaled_rem:.0f}) = ~{proj_tot_edge:.0f} sayı yapıyor. "
+                f"Bu değer {base_b} bareminin alt sınırına çok yakın olduğu için maçların %55.6'sı bir alt bareme (-1) kaymaktadır."
+            )
+        elif edge_offset > 3.0:
+            edge_badge = f"📐 Üst Kenarda (Tahmini: ~{proj_tot_edge:.0f} | {base_b} Üst Sınırı)"
+            edge_tip = (
+                f"Mevcut skor ({cur_tot}) + beklenen kalan sayı (~{scaled_rem:.0f}) = ~{proj_tot_edge:.0f} sayı yapıyor. "
+                f"{base_b} bareminin orta-üst kısmında güçlü duruyor (%56 Merkez isabeti, +%22.2 ROI)."
+            )
+        else:
+            edge_badge = f"🎯 Barem Tam Ortasında (Tahmini: ~{proj_tot_edge:.0f})"
+            edge_tip = (
+                f"Mevcut skor ({cur_tot}) + beklenen kalan sayı (~{scaled_rem:.0f}) = ~{proj_tot_edge:.0f} sayı ile "
+                f"tam {base_b} bareminin merkezinde (%55.6 Merkez isabeti, +%17.8 ROI)."
+            )
+    else:
+        edge_badge = f"⏱️ 35.Dk Kalan Sayı Standardı: Ort. 53.3 Sayı (Bu farkta ~{exp_rem_35:.0f})"
+        edge_tip = (
+            "62 maçlık gerçek veride 35. dakikadan maç sonuna kadar ortalama 53.3 sayı atılmıştır "
+            "(0-5 farkta 59.0 sayı, 18+ farkta 47.4 sayı). 30-35. dakikaya gelindiğinde burası tam kenar hesabını gösterir."
+        )
 
     prev_shift = recent_chain[-1]["raw_shift"] if recent_chain else 0
     odd_val = float(fav1_odd or 0.0)
-
-    # Evaluate decision rule
     reasons = []
-    if odd_val > 1.0 and odd_val < 2.10:
-        zone_badge = f"⚠️ DÜŞÜK ORAN TUZAĞI ({odd_val:.2f} < 2.10)"
+
+    # Smart Dutching v2 recommendation: 10+ gap -> 0 & -1; otherwise -> 0 & 2ndFav
+    if gap >= 10:
+        dutch_pick = f"🛡️ {b_0} + {b_m1} (10+ Fark Koruma)"
+    else:
+        dutch_pick = f"🛡️ {b_0} + {sec_b_clean} (1. & 2. Favori)"
+
+    # V3.1 Decision Engine
+    if gap <= 5 and float(elapsed_mins or 35.0) >= 30.0:
+        zone_badge = f"⛔ PAS GEÇ / YAKIN MAÇ TUZAĞI (Fark: {gap})"
+        zone_type = "PASS_CLUTCH"
+        stake_badge = "0 TL (PAS GEÇ — Uzatma/Faul Riski)"
+        primary_pick = f"⛔ Bahis Alma (İlla Oynanacaksa: {b_0} + {b_p1})"
+        backup_pick = dutch_pick
+        conf_pct = 38.0
+        reasons.append(
+            f"35.dk civarı fark {gap} sayı (0-5 arası) olduğunda son bölümde ort. 59 sayı atılıyor ve maçların %33'ü üst bareme patlıyor (Merkez ROI: -%10.8)"
+        )
+    elif odd_val > 1.0 and odd_val < 1.85:
+        zone_badge = f"⚠️ <1.85 AŞIRI FAVORİ TUZAĞI ({odd_val:.2f})"
+        zone_type = "TRAP_EXTREME"
+        stake_badge = "1000 TL (Standart Bahis — 2. Favoriye)"
+        primary_pick = f"🥈 2. Favori Sürprizi: {sec_b_clean} ({fav2_odd:.2f})"
+        backup_pick = f"🎯 0 Merkez: {b_0}"
+        conf_pct = 74.0
+        reasons.append(
+            f"1. Favori oranı 1.85 altındayken ({odd_val:.2f}) 1. Favori -%37.1 zarar yazıyor; doğrudan 2. Favori ({sec_b_clean}) oynamak +%41.8 ROI kazandırdı"
+        )
+    elif odd_val >= 2.10 and sec_dir >= 1:
+        zone_badge = f"🔥 SÜPER SİNYAL: 2.FAV ÜSTTE + ORAN {odd_val:.2f}"
+        zone_type = "SUPER_SIGNAL"
+        stake_badge = "2000 TL (Kademeli Kasa: Güçlü Sinyal)"
+        primary_pick = f"🎯 0 Merkez: {b_0} ({odd_val:.2f})"
+        backup_pick = dutch_pick
+        conf_pct = 88.0
+        reasons.append(
+            f"2. Favori üstte ({sec_b_clean}) ve oran >=2.10 ({odd_val:.2f}): 62 maçta %61.1 doğrudan Merkez (0) tuttu (+%39.9 ROI) ve hiç -1 Alt gelmedi (%0)"
+        )
+    elif gap >= 18 and odd_val >= 1.85:
+        zone_badge = f"🔥 BLOWOUT GÜÇLÜ MERKEZ (Fark: {gap} | Oran: {odd_val:.2f})"
+        zone_type = "SUPER_SIGNAL"
+        stake_badge = "2000 TL (Kademeli Kasa: Rölanti Sinyali)"
+        primary_pick = f"🎯 0 Merkez: {b_0} ({odd_val:.2f})"
+        backup_pick = f"🛡️ {b_0} + {b_m1} (%95 Bölge)"
+        conf_pct = 86.0
+        reasons.append(
+            f"18+ sayı farkta ({gap}) son çeyrek rölantiye girer (ort. 47.4 sayı); maçların %95'i 0 veya -1 kalır, 0 Merkez tek başına %60 isabet ve +%27.5 ROI üretir"
+        )
+    elif odd_val > 1.0 and odd_val < 2.10 and sec_dir <= -1:
+        zone_badge = f"⚠️ DÜŞÜK ORAN + ALT BASKISI ({odd_val:.2f})"
         zone_type = "TRAP_LOW"
+        stake_badge = "1000 TL (Standart Bahis — -1 Alt)"
         primary_pick = f"📉 -1 Alt Barem: {b_m1}"
         backup_pick = f"🎯 0 Merkez: {b_0}"
-        conf_pct = 75.0
-        reasons.append(f"35.dk oranı <2.10 ({odd_val:.2f}) olduğunda Merkez (0) sadece %30 gelirken %50 oranında -1/-2 Alt Bareme kayıyor")
-    elif 2.10 <= odd_val <= 2.34:
-        zone_badge = f"💎 ALTIN ORAN BANDI ({odd_val:.2f})"
+        conf_pct = 76.0
+        reasons.append(
+            f"Oran <2.10 ({odd_val:.2f}) ve 2. Favori altta ({b_m1}) olduğunda 0 Merkez -%16.6 zarar ederken -1 Alt Barem +%16.6 ROI sağlıyor"
+        )
+    elif 1.85 <= odd_val <= 2.79:
+        zone_badge = f"💎 ALTIN MERKEZ BANDI ({odd_val:.2f})"
         zone_type = "GOLDEN"
+        stake_badge = "1000 TL (Standart Bahis — 0 Merkez)"
         primary_pick = f"🎯 0 Merkez: {b_0}"
-        backup_pick = f"📉 -1 Alt Barem: {b_m1}"
-        conf_pct = 83.3
-        reasons.append(f"35.dk oranı 2.10-2.34 Altın Bandında ({odd_val:.2f}) olduğunda Merkez (0) %67 doğrudan, (0 veya -1) %83.3 isabet sağlıyor")
+        backup_pick = dutch_pick
+        conf_pct = 80.0
+        reasons.append(
+            f"Oran {odd_val:.2f} dengeli bölgede; 0 Merkez doğrudan ~%52 isabet (+%16-21 ROI), Akıllı İkili Koruma ({dutch_pick}) %82+ isabet sağlıyor"
+        )
     else:
         zone_badge = f"⚖️ YÜKSEK ORAN / MAKAS AÇIK ({odd_val:.2f})" if odd_val < 90 else "⏳ Oran Bekleniyor"
         zone_type = "WIDE"
-        if drift <= -2:
-            primary_pick = f"📉 -1 Alt Barem: {b_m1}"
-            backup_pick = f"❄️ -2 Alt Barem: {b_m2}"
-            conf_pct = 72.0
-            reasons.append(f"Maç içi barem {open_b} ➔ {base_b} ({drift}) çöktüğü için aşağı yönlü sarkma devam ediyor")
-        else:
-            primary_pick = f"🎯 0 Merkez: {b_0}"
-            backup_pick = f"📉 -1 Alt Barem: {b_m1}" if fav2_barem == b_m1 else f"🥈 2.Fav: {fav2_barem or b_m1}"
-            conf_pct = 70.0
-            reasons.append("Oran >=2.35 kararsız bölgede; 1. Favori ve komşu barem ikili koruma (Dutching) önerilir")
+        stake_badge = "1000 TL (İkili Koruma Önerilir)"
+        primary_pick = f"🎯 0 Merkez: {b_0}"
+        backup_pick = dutch_pick
+        conf_pct = 68.0
+        reasons.append("Oran >=2.80 kararsız bölgede; tek barem yerine 1. ve 2. Favori İkili Koruma (Dutching) daha güvenlidir")
 
     if prev_shift >= 1:
-        reasons.append(f"Önceki maç +{prev_shift} Üst Barem bitti (Üst sonrası %100 oranında 0 Merkez veya -1 Alt Bareme dönüş var!)")
-        conf_pct = min(92.0, conf_pct + 6.0)
-    elif drift >= 1:
-        reasons.append(f"Barem Q1'den +{drift} yükseldi (%100 oranında ulaştığı {b_0} veya başladığı {b_m1} bareminde kalıyor)")
-
-    if abs(score_gap) >= 28:
-        reasons.append(f"⚠️ Fark {abs(score_gap)} sayı (Blowout Rölanti Freni: Q4'te tempo düşüşü ve -1/-2 Alt Barem eğilimi yüksek)")
-        if zone_type != "TRAP_LOW":
-            primary_pick = f"📉 -1 Alt Barem: {b_m1}"
-            backup_pick = f"🎯 0 Merkez: {b_0}"
+        reasons.append(f"Önceki maç +{prev_shift} Üst bitti (Üst sonrası sıradaki maçta %69 oranında 0 veya -1'e dönüş var)")
 
     return {
         "zone_badge": zone_badge,
         "zone_type": zone_type,
+        "stake_badge": stake_badge,
+        "sec_dir": sec_dir,
+        "sec_dir_badge": sec_dir_badge,
+        "sec_dir_tip": sec_dir_tip,
+        "margin_badge": margin_badge,
+        "margin_tip": margin_tip,
+        "edge_badge": edge_badge,
+        "edge_tip": edge_tip,
         "drift": drift,
         "open_barem": open_b,
         "drift_badge": drift_badge,
+        "drift_tip": drift_tip,
         "primary_pick": primary_pick,
         "backup_pick": backup_pick,
         "confidence_pct": round(conf_pct, 1),
@@ -1010,14 +1145,18 @@ def analyze_smart_35m_decision(
 
 def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
     """
-    Simulate 4 concrete 35th-minute betting strategies (1000 TL flat stake per match)
+    Simulate 35th-minute betting strategies (1000 TL flat stake + tiered 0/1000/2000 TL bankroll)
     across all COMPLETED matches in symmetry_analysis_log.csv, and build real analytical tables:
-    1. Smart Hybrid Strategy (<2.10 -> -1 Alt Barem, >=2.10 -> 0 Merkez, or -1 if severe drift <= -2)
-    2. Pure 0 (Merkez - 1. Favori)
-    3. Pure -1 (1 Alt Barem)
-    4. Dutching (0 Merkez & -1 Alt Barem Çifte Şans)
+    - Strategies comparison (v3 Selective, Tiered Bankroll, v3 All-Match, v2 Legacy, Pure 0, Smart Dutching v2, Fixed Dutching)
+    - Odds brackets (<1.85, 1.85-2.09, 2.10-2.34, >=2.35)
+    - 2nd Favorite direction brackets (-1 Lower vs +1 Upper)
+    - Score Margin brackets (0-5 Clutch/OT, 6-11 Normal, 12-17 High, 18+ Blowout)
+    - Barem interior edge brackets (Lower edge, Center, Upper edge)
+    - Minute-by-minute timing window ROI (18m, 24m, 30m, 32-33m Trap, 34-35m Closing)
+    - Drift (Q1 -> 35m) & Sequential Transitions
     """
     barem_names = [b[0] for b in BAREM_RANGES]
+    barem_bounds = {b[0]: (b[1], b[2]) for b in BAREM_RANGES}
     b_cols = {
         "160 Or Less": "odds_160_or_less",
         "161-170": "odds_161_170",
@@ -1030,84 +1169,191 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
         "231+": "odds_231_plus",
     }
 
+    empty_res = {
+        "total_matches": 0,
+        "strategies": [],
+        "ledger": [],
+        "odds_brackets": [],
+        "sec_dir_brackets": [],
+        "margin_brackets": [],
+        "edge_brackets": [],
+        "minute_windows": [],
+        "drift_brackets": [],
+        "transitions": [],
+    }
+
     if df_log is None or df_log.empty or "status" not in df_log.columns:
-        return {"total_matches": 0, "strategies": [], "ledger": [], "odds_brackets": [], "drift_brackets": [], "transitions": []}
+        return empty_res
 
     comp = df_log[df_log["status"] == "COMPLETED"].copy()
     if comp.empty:
-        return {"total_matches": 0, "strategies": [], "ledger": [], "odds_brackets": [], "drift_brackets": [], "transitions": []}
+        return empty_res
 
     comp["_gid_num"] = comp["game_id"].astype(str).str.extract(r"(\d+)")[0].fillna(0).astype(int)
-    comp = comp[comp["_gid_num"] >= 770265000].sort_values(by="_gid_num", ascending=True, kind="stable")
+    comp["_min"] = comp["check_time"].astype(str).str.extract(r"Minute\s+(\d+)")[0].fillna(-1).astype(int)
+    comp = comp[comp["_gid_num"] >= 770265000].sort_values(by=["_gid_num", "_min"], ascending=[True, True], kind="stable")
+
+    def _parse_sc(s_val):
+        try:
+            pts = str(s_val).strip().split("-")
+            return int(pts[0]), int(pts[1])
+        except Exception:
+            return None, None
 
     stake = 1000.0
     ledger = []
+
+    s_v3_sel_ret, s_v3_sel_cost, s_v3_sel_wins, s_v3_sel_cnt = 0.0, 0.0, 0, 0
+    s_tiered_ret, s_tiered_cost, s_tiered_wins, s_tiered_cnt = 0.0, 0.0, 0, 0
+    s_v3_all_ret, s_v3_all_wins = 0.0, 0
     s_smart_ret, s_smart_wins = 0.0, 0
     s_0_ret, s_0_wins = 0.0, 0
-    s_m1_ret, s_m1_wins = 0.0, 0
+    s_dutch_v2_ret, s_dutch_v2_wins = 0.0, 0
     s_dutch_ret, s_dutch_wins = 0.0, 0
 
     raw_records = []
     for gid, grp in comp.groupby("game_id", sort=False):
         first_r = grp.iloc[0]
-        last_r = grp.iloc[-1]
-        fav_b = str(last_r.get("highest_prob_range", "")).strip()
+        cands = grp[grp["_min"] >= 30]
+        last_r = cands.iloc[-1] if not cands.empty else grp.iloc[-1]
         act_b = str(last_r.get("actual_range", "")).strip()
         open_b = str(first_r.get("highest_prob_range", "")).strip()
-        if fav_b not in barem_names or act_b not in barem_names:
+        if act_b not in barem_names:
             continue
+
+        odds_map = {}
+        for b_n in barem_names:
+            v = float(last_r.get(b_cols[b_n], 0.0) or 0.0)
+            if 1.0 < v < 90.0:
+                odds_map[b_n] = v
+        if not odds_map:
+            continue
+
+        sorted_odds = sorted(odds_map.items(), key=lambda x: x[1])
+        fav_b, odd_0 = sorted_odds[0]
+        sec_b, sec_odd = sorted_odds[1] if len(sorted_odds) > 1 else sorted_odds[0]
 
         idx_fav = barem_names.index(fav_b)
         idx_act = barem_names.index(act_b)
+        idx_sec = barem_names.index(sec_b)
         shift = idx_act - idx_fav
+        sec_dir = idx_sec - idx_fav
         drift = (idx_fav - barem_names.index(open_b)) if open_b in barem_names else 0
         m1_b = barem_names[max(0, idx_fav - 1)]
+        odd_m1 = odds_map.get(m1_b, 3.20)
 
-        odd_0 = float(last_r.get(b_cols[fav_b], 0.0) or 0.0)
-        odd_m1 = float(last_r.get(b_cols[m1_b], 0.0) or 0.0)
-        if odd_0 <= 1.0 or odd_0 >= 90.0:
-            odd_0 = 2.20
-        if odd_m1 <= 1.0 or odd_m1 >= 90.0:
-            odd_m1 = 3.20
+        s1, s2 = _parse_sc(last_r.get("current_score", ""))
+        a1, a2 = _parse_sc(last_r.get("actual_score", ""))
+        margin35 = abs(s1 - s2) if s1 is not None else 8
+        cur_tot35 = (s1 + s2) if s1 is not None else 0
+        final_tot = (a1 + a2) if a1 is not None else 0
+        rem_pts = (final_tot - cur_tot35) if (s1 is not None and a1 is not None) else None
+        min_val = int(last_r.get("_min", 35))
 
-        # Smart Strategy rule: if odd_0 < 2.10 (Low-Odd Trap) or severe downward drift <= -3 -> back -1 Alt Barem; else back 0 Merkez
+        fav_lo, fav_hi = barem_bounds[fav_b]
+        fav_mid = (fav_lo + min(fav_hi, 240)) / 2.0
+        proj_35 = cur_tot35 + 53.3 if cur_tot35 > 0 else fav_mid
+        edge_offset = proj_35 - fav_mid
+
+        # 1) Legacy v2 rule (<2.10 -> -1 Alt, else 0 Merkez)
         if odd_0 < 2.10 or drift <= -3:
-            smart_b = m1_b
-            smart_odd = odd_m1
-            smart_rule = "⚠️ Düşük Oran Tuzağı (<2.10) ➔ -1 Alt" if odd_0 < 2.10 else "📉 Sert Barem Çöküşü ➔ -1 Alt"
+            v2_b = m1_b
+            v2_odd = odd_m1
         else:
-            smart_b = fav_b
-            smart_odd = odd_0
-            smart_rule = "💎 Altın Bant (2.10-2.34) ➔ 0 Merkez" if odd_0 <= 2.34 else "🎯 Standart ➔ 0 Merkez"
+            v2_b = fav_b
+            v2_odd = odd_0
+        hit_v2 = act_b == v2_b
+        ret_v2 = round(stake * v2_odd, 1) if hit_v2 else 0.0
+        s_smart_ret += ret_v2
+        s_smart_wins += int(hit_v2)
 
-        hit_smart = act_b == smart_b
+        # 2) New v3 rule (<1.85 -> 2nd Fav | <2.10 & sec_dir==-1 -> -1 Alt | else 0 Merkez)
+        if odd_0 < 1.85:
+            v3_b = sec_b
+            v3_odd = sec_odd
+            v3_rule_lbl = "⚠️ <1.85 Tuzağı ➔ 2.Fav"
+        elif odd_0 < 2.10 and sec_dir <= -1:
+            v3_b = m1_b
+            v3_odd = odd_m1
+            v3_rule_lbl = "📉 <2.10 & 2.Fav Altta ➔ -1 Alt"
+        else:
+            v3_b = fav_b
+            v3_odd = odd_0
+            if sec_dir >= 1 and odd_0 >= 2.10:
+                v3_rule_lbl = "🔥 Süper Sinyal (2.Fav Üstte) ➔ 0 Merkez"
+            elif margin35 >= 18:
+                v3_rule_lbl = "🧊 18+ Fark Rölanti ➔ 0 Merkez"
+            else:
+                v3_rule_lbl = "💎 Standart ➔ 0 Merkez"
+
+        hit_v3_all = act_b == v3_b
+        ret_v3_all = round(stake * v3_odd, 1) if hit_v3_all else 0.0
+        s_v3_all_ret += ret_v3_all
+        s_v3_all_wins += int(hit_v3_all)
+
+        # 3) Selective v3 (Pass when margin35 <= 5 Clutch/OT risk)
+        is_clutch_pass = margin35 <= 5
+        if not is_clutch_pass:
+            s_v3_sel_cnt += 1
+            s_v3_sel_cost += stake
+            if hit_v3_all:
+                s_v3_sel_wins += 1
+                s_v3_sel_ret += ret_v3_all
+
+        # 4) Tiered Bankroll (0 TL on Clutch <=5 | 2000 TL on Super Signal | 1000 TL on Normal)
+        is_super = (not is_clutch_pass) and ((sec_dir >= 1 and odd_0 >= 2.10) or (margin35 >= 18 and odd_0 >= 1.85))
+        t_stake = 0.0 if is_clutch_pass else (2000.0 if is_super else 1000.0)
+        if t_stake > 0:
+            s_tiered_cnt += 1
+            s_tiered_cost += t_stake
+            t_ret = round(t_stake * v3_odd, 1) if hit_v3_all else 0.0
+            if hit_v3_all:
+                s_tiered_wins += 1
+                s_tiered_ret += t_ret
+        else:
+            t_ret = 0.0
+
+        # 5) Pure 0 (Merkez)
         hit_0 = act_b == fav_b
-        hit_m1 = act_b == m1_b
-        hit_dutch = act_b in (fav_b, m1_b)
-        dutch_odd = round(1.0 / ((1.0 / odd_0) + (1.0 / odd_m1)), 2)
-
-        ret_smart = round(stake * smart_odd, 1) if hit_smart else 0.0
         ret_0 = round(stake * odd_0, 1) if hit_0 else 0.0
-        ret_m1 = round(stake * odd_m1, 1) if hit_m1 else 0.0
-        ret_dutch = round(stake * dutch_odd, 1) if hit_dutch else 0.0
-
-        s_smart_ret += ret_smart
-        s_smart_wins += int(hit_smart)
         s_0_ret += ret_0
         s_0_wins += int(hit_0)
-        s_m1_ret += ret_m1
-        s_m1_wins += int(hit_m1)
+
+        # 6) Fixed Dutching (0 & -1)
+        hit_dutch = act_b in (fav_b, m1_b)
+        dutch_odd = round(1.0 / ((1.0 / odd_0) + (1.0 / odd_m1)), 2) if m1_b != fav_b else odd_0
+        ret_dutch = round(stake * dutch_odd, 1) if hit_dutch else 0.0
         s_dutch_ret += ret_dutch
         s_dutch_wins += int(hit_dutch)
+
+        # 7) Smart Dutching v2 (margin >= 10 -> 0 & -1; else -> 0 & 2ndFav)
+        d2_partner = m1_b if margin35 >= 10 else sec_b
+        d2_p_odd = odd_m1 if d2_partner == m1_b else sec_odd
+        if d2_partner != fav_b and d2_p_odd > 1.0:
+            dutch_v2_odd = round(1.0 / ((1.0 / odd_0) + (1.0 / d2_p_odd)), 2)
+            hit_dutch_v2 = act_b in (fav_b, d2_partner)
+        else:
+            dutch_v2_odd = odd_0
+            hit_dutch_v2 = act_b == fav_b
+        ret_dutch_v2 = round(stake * dutch_v2_odd, 1) if hit_dutch_v2 else 0.0
+        s_dutch_v2_ret += ret_dutch_v2
+        s_dutch_v2_wins += int(hit_dutch_v2)
 
         raw_records.append(
             {
                 "game_id": gid,
                 "game_name": str(last_r.get("game_name", "")).replace(" (cyber)", ""),
                 "check_time": str(last_r.get("check_time", "")),
+                "min35": min_val,
+                "margin35": margin35,
+                "rem_pts": rem_pts,
+                "edge_offset": edge_offset,
                 "open_b": open_b,
                 "fav_b": fav_b,
                 "odd_0": odd_0,
+                "sec_b": sec_b,
+                "sec_odd": sec_odd,
+                "sec_dir": sec_dir,
                 "m1_b": m1_b,
                 "odd_m1": odd_m1,
                 "act_b": act_b,
@@ -1117,28 +1363,70 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             }
         )
 
+        sec_arrow = f"📈 Üst ({sec_b})" if sec_dir >= 1 else f"📉 Alt ({sec_b})"
+        if is_clutch_pass:
+            sel_status = f"⛔ PAS (Fark {margin35})"
+            tiered_status = "⛔ 0 TL (Pas Geçildi)"
+        else:
+            sel_status = f"✅ +{ret_v3_all - stake:.0f} TL" if hit_v3_all else "❌ -1000 TL"
+            tiered_status = (
+                f"✅ +{t_ret - t_stake:.0f} TL ({t_stake:.0f} Yatırım)"
+                if hit_v3_all
+                else f"❌ -{t_stake:.0f} TL"
+            )
+
         ledger.append(
             {
                 "Maç": str(last_r.get("game_name", "")).replace(" (cyber)", ""),
-                "Kapanış Dk": str(last_r.get("check_time", "")),
-                "Q1➔35.Dk Göç": f"{drift:+d} ({open_b}➔{fav_b})" if drift != 0 else f"0 ({fav_b})",
+                "Kapanış Dk & Fark": f"{last_r.get('check_time', '')} ({margin35} Sayı Fark)",
                 "35.Dk Favori (0)": f"{fav_b} ({odd_0:.2f})",
-                "-1 Alt Barem": f"{m1_b} ({odd_m1:.2f})",
-                "🤖 Akıllı Kural Seçimi": f"{smart_b} ({smart_odd:.2f}) [{smart_rule}]",
+                "2. Favori Yönü": f"{sec_arrow} ({sec_odd:.2f})",
+                "🤖 v3 Akıllı Seçim": f"{v3_b} ({v3_odd:.2f}) [{v3_rule_lbl}]",
                 "Biten Barem (Skor)": f"{act_b} ({last_r.get('actual_score', '')})",
-                "Akıllı Kupon (1000 TL)": f"✅ +{ret_smart - stake:.0f} TL" if hit_smart else "❌ -1000 TL",
-                "İkili Koruma (0 & -1)": f"✅ +{ret_dutch - stake:.0f} TL ({dutch_odd:.2f})" if hit_dutch else "❌ -1000 TL",
+                "v3 Seçici (1000 TL / Pas)": sel_status,
+                "Kademeli Kasa (0/1000/2000)": tiered_status,
+                "Akıllı İkili Koruma": f"✅ +{ret_dutch_v2 - stake:.0f} TL ({dutch_v2_odd:.2f})" if hit_dutch_v2 else "❌ -1000 TL",
             }
         )
 
     tot_m = len(raw_records)
     if tot_m == 0:
-        return {"total_matches": 0, "strategies": [], "ledger": [], "odds_brackets": [], "drift_brackets": [], "transitions": []}
+        return empty_res
 
     tot_cost = tot_m * stake
     strategies = [
         {
-            "name": "🤖 Akıllı Hibrit Strateji (<2.10 ise -1 Alt / >=2.10 ise 0 Merkez)",
+            "name": "🔥 v3 Seçici Akıllı Strateji (0-5 Fark Yakın Maçları Pas Geç + v3 Kural)",
+            "wins": s_v3_sel_wins,
+            "total": s_v3_sel_cnt,
+            "win_rate": round(s_v3_sel_wins / max(1, s_v3_sel_cnt) * 100.0, 1),
+            "cost": round(s_v3_sel_cost, 0),
+            "return": round(s_v3_sel_ret, 0),
+            "net_profit": round(s_v3_sel_ret - s_v3_sel_cost, 0),
+            "roi_pct": round((s_v3_sel_ret / max(1.0, s_v3_sel_cost) - 1.0) * 100.0, 1),
+        },
+        {
+            "name": "💰 Kademeli Güven Kasası (Yakın Maç: 0 TL | Normal: 1000 TL | Süper Sinyal: 2000 TL)",
+            "wins": s_tiered_wins,
+            "total": s_tiered_cnt,
+            "win_rate": round(s_tiered_wins / max(1, s_tiered_cnt) * 100.0, 1),
+            "cost": round(s_tiered_cost, 0),
+            "return": round(s_tiered_ret, 0),
+            "net_profit": round(s_tiered_ret - s_tiered_cost, 0),
+            "roi_pct": round((s_tiered_ret / max(1.0, s_tiered_cost) - 1.0) * 100.0, 1),
+        },
+        {
+            "name": "🤖 v3 Akıllı Hibrit (Tüm Maçlar: <1.85➔2.Fav | <2.10&Alt➔-1 | Diğer➔0 Merkez)",
+            "wins": s_v3_all_wins,
+            "total": tot_m,
+            "win_rate": round(s_v3_all_wins / tot_m * 100.0, 1),
+            "cost": round(tot_cost, 0),
+            "return": round(s_v3_all_ret, 0),
+            "net_profit": round(s_v3_all_ret - tot_cost, 0),
+            "roi_pct": round((s_v3_all_ret / tot_cost - 1.0) * 100.0, 1),
+        },
+        {
+            "name": "🤖 v2 Eski Akıllı Hibrit (<2.10 ise -1 Alt / >=2.10 ise 0 Merkez)",
             "wins": s_smart_wins,
             "total": tot_m,
             "win_rate": round(s_smart_wins / tot_m * 100.0, 1),
@@ -1146,16 +1434,6 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             "return": round(s_smart_ret, 0),
             "net_profit": round(s_smart_ret - tot_cost, 0),
             "roi_pct": round((s_smart_ret / tot_cost - 1.0) * 100.0, 1),
-        },
-        {
-            "name": "🛡️ İkili Koruma (Dutching: 0 Merkez + -1 Alt Çifte Barem)",
-            "wins": s_dutch_wins,
-            "total": tot_m,
-            "win_rate": round(s_dutch_wins / tot_m * 100.0, 1),
-            "cost": round(tot_cost, 0),
-            "return": round(s_dutch_ret, 0),
-            "net_profit": round(s_dutch_ret - tot_cost, 0),
-            "roi_pct": round((s_dutch_ret / tot_cost - 1.0) * 100.0, 1),
         },
         {
             "name": "🎯 Sabit 0 (Her Maç Sadece 35.Dk 1. Favori Merkez)",
@@ -1168,23 +1446,34 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             "roi_pct": round((s_0_ret / tot_cost - 1.0) * 100.0, 1),
         },
         {
-            "name": "📉 Sabit -1 (Her Maç Sadece -1 Alt Barem Sürprizi)",
-            "wins": s_m1_wins,
+            "name": "🛡️ Akıllı İkili Koruma (Dutching v2: 10+ Farkta 0&-1 / Diğerlerinde 0&2.Fav)",
+            "wins": s_dutch_v2_wins,
             "total": tot_m,
-            "win_rate": round(s_m1_wins / tot_m * 100.0, 1),
+            "win_rate": round(s_dutch_v2_wins / tot_m * 100.0, 1),
             "cost": round(tot_cost, 0),
-            "return": round(s_m1_ret, 0),
-            "net_profit": round(s_m1_ret - tot_cost, 0),
-            "roi_pct": round((s_m1_ret / tot_cost - 1.0) * 100.0, 1),
+            "return": round(s_dutch_v2_ret, 0),
+            "net_profit": round(s_dutch_v2_ret - tot_cost, 0),
+            "roi_pct": round((s_dutch_v2_ret / tot_cost - 1.0) * 100.0, 1),
+        },
+        {
+            "name": "🛡️ Sabit İkili Koruma (Eski Dutching: Her Maç 0 Merkez + -1 Alt)",
+            "wins": s_dutch_wins,
+            "total": tot_m,
+            "win_rate": round(s_dutch_wins / tot_m * 100.0, 1),
+            "cost": round(tot_cost, 0),
+            "return": round(s_dutch_ret, 0),
+            "net_profit": round(s_dutch_ret - tot_cost, 0),
+            "roi_pct": round((s_dutch_wins and s_dutch_ret / tot_cost - 1.0) * 100.0, 1),
         },
     ]
 
-    # 1. Odds Bracket Breakdown
+    # 1. Odds Bracket Breakdown (with <1.85 separated!)
     odds_brackets = []
     for low_o, high_o, lbl, advice in [
-        (1.0, 2.10, "⚠️ Düşük Oran Tuzağı (< 2.10)", "📉 -1 Alt Barem Oyna (Merkez %30'da kalır!)"),
-        (2.10, 2.35, "💎 Altın Oran Bandı (2.10 - 2.34)", "🎯 0 Merkez Oyna (Merkez %67, 0/-1 %83+ gelir!)"),
-        (2.35, 99.0, "⚖️ Yüksek Oran / Makas Açık (>= 2.35)", "🛡️ 1. ve 2. Favori İkili Koruma"),
+        (1.0, 1.85, "🚨 Aşırı Düşük Oran Tuzağı (< 1.85)", "🥈 1. Favori Zarar Yazar (-%37 ROI) ➔ Doğrudan 2. Favori Oyna (+%41.8 ROI)"),
+        (1.85, 2.10, "⚠️ Düşük Oran Bandı (1.85 - 2.09)", "📉 2.Favori Alttaysa -1 Alt (+%22.5 ROI), Üstteyse 0 Merkez Oyna"),
+        (2.10, 2.35, "💎 Altın Oran Bandı (2.10 - 2.34)", "🎯 0 Merkez Oyna (%52 İsabet, +%15.6 ROI; 2.Fav Üstteyse +%39.9 ROI)"),
+        (2.35, 99.0, "⚖️ Yüksek Oran Bandı (>= 2.35)", "🎯 2.35-2.79 Arası 0 Merkez (+%21.6 ROI) veya 1.&2. Favori İkili Koruma"),
     ]:
         sub = [x for x in raw_records if low_o <= x["odd_0"] < high_o]
         if sub:
@@ -1193,26 +1482,153 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             c_m1 = sum(1 for x in sub if x["shift"] == -1)
             c_m2 = sum(1 for x in sub if x["shift"] <= -2)
             c_up = sum(1 for x in sub if x["shift"] >= 1)
+            roi_0 = ((sum(x["odd_0"] for x in sub if x["shift"] == 0) - n_s) / n_s) * 100.0
             odds_brackets.append(
                 {
                     "35. Dk 1. Favori Oran Bandı": lbl,
                     "Maç Sayısı": n_s,
-                    "🎯 0 (Merkez) İsabet": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s})",
+                    "🎯 0 (Merkez) İsabet & ROI": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | ROI: %{roi_0:+.1f}",
                     "📉 -1 Alt Barem": f"%{c_m1/n_s*100:.1f} ({c_m1}/{n_s})",
                     "❄️ -2 Alt Barem": f"%{c_m2/n_s*100:.1f} ({c_m2}/{n_s})",
                     "📈 +1/+2 Üst Barem": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
-                    "🛡️ (0 veya -1) Toplam": f"%{(c_0+c_m1)/n_s*100:.1f} ({c_0+c_m1}/{n_s})",
-                    "💡 Sistem Kuralı": advice,
+                    "💡 Ne Yapmalı? (Kural Özeti)": advice,
                 }
             )
 
-    # 2. Drift (Q1 -> 35m Barem Migration) Breakdown
+    # 2. 2nd Favorite Direction Breakdown (-1 Lower vs +1 Upper)
+    sec_dir_brackets = []
+    for cond_fn, lbl, advice in [
+        (lambda x: x["sec_dir"] >= 1 and x["odd_0"] >= 2.10, "🔥 2. Favori Üstte (+1) VE Oran >= 2.10", "🎯 SÜPER SİNYAL: 0 Merkez %61.1 Tutar (+%39.9 ROI), -1 Alt Hiç Gelmez (%0)!"),
+        (lambda x: x["sec_dir"] >= 1 and x["odd_0"] < 2.10, "📈 2. Favori Üstte (+1) VE Oran < 2.10", "🎯 0 Merkez (%55.6 İsabet) veya 0 & +1 İkili Koruma"),
+        (lambda x: x["sec_dir"] <= -1 and x["odd_0"] < 2.10, "📉 2. Favori Altta (-1) VE Oran < 2.10", "📉 0 Merkez Zarar Eder (-%16.6) ➔ -1 Alt Barem Oyna (+%16.6 ROI)!"),
+        (lambda x: x["sec_dir"] <= -1 and x["odd_0"] >= 2.10, "⚖️ 2. Favori Altta (-1) VE Oran >= 2.10", "🛡️ Yarı Yarıya 0 Merkez ve -1 Alt Gelir (+1 Üst %0!) ➔ 0 & -1 İkili Koruma"),
+    ]:
+        sub = [x for x in raw_records if cond_fn(x)]
+        if sub:
+            n_s = len(sub)
+            c_0 = sum(1 for x in sub if x["shift"] == 0)
+            c_m1 = sum(1 for x in sub if x["shift"] == -1)
+            c_m2 = sum(1 for x in sub if x["shift"] <= -2)
+            c_up = sum(1 for x in sub if x["shift"] >= 1)
+            roi_0 = ((sum(x["odd_0"] for x in sub if x["shift"] == 0) - n_s) / n_s) * 100.0
+            roi_m1 = ((sum(x["odd_m1"] for x in sub if x["shift"] == -1) - n_s) / n_s) * 100.0
+            sec_dir_brackets.append(
+                {
+                    "2. Favorinin Konumu (Piyasa Eğilimi)": lbl,
+                    "Maç Sayısı": n_s,
+                    "🎯 0 Merkez (ROI)": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | %{roi_0:+.1f}",
+                    "📉 -1 Alt (ROI)": f"%{c_m1/n_s*100:.1f} ({c_m1}/{n_s}) | %{roi_m1:+.1f}",
+                    "❄️ -2 Alt": f"%{c_m2/n_s*100:.1f} ({c_m2}/{n_s})",
+                    "📈 +1/+2 Üst": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
+                    "💡 Ne İşe Yarar / Ne Oynanır?": advice,
+                }
+            )
+
+    # 3. Score Margin at 35m Breakdown (Clutch vs Blowout)
+    margin_brackets = []
+    for lo_m, hi_m, lbl, advice in [
+        (0, 6, "⛔ 0 - 5 Sayı Fark (Baş Başa / Uzatma & Faul Tuzağı)", "⛔ PAS GEÇ! Son 13 dk'da ort. 59 sayı atılır, %33 üst bareme patlar (Zarar Bölgesi)"),
+        (6, 12, "⚖️ 6 - 11 Sayı Fark (Normal Rekabet)", "🛡️ Standart Tempo (~53 sayı) ➔ 1. ve 2. Favori İkili Koruma veya v3 Kuralı"),
+        (12, 18, "🛡️ 12 - 17 Sayı Fark (Açık Fark)", "🛡️ Uzatma Riski Yok ➔ 0 Merkez veya 0 & -1 İkili Koruma"),
+        (18, 999, "🧊 18+ Sayı Fark (Blowout / Rölanti Freni)", "🔥 GÜÇLÜ MERKEZ: Son bölümde ort. 47.4 sayı atılır; 0 Merkez %60 Tutar (+%27.5 ROI)!"),
+    ]:
+        sub = [x for x in raw_records if lo_m <= x["margin35"] < hi_m]
+        if sub:
+            n_s = len(sub)
+            c_0 = sum(1 for x in sub if x["shift"] == 0)
+            c_down = sum(1 for x in sub if x["shift"] <= -1)
+            c_up = sum(1 for x in sub if x["shift"] >= 1)
+            roi_0 = ((sum(x["odd_0"] for x in sub if x["shift"] == 0) - n_s) / n_s) * 100.0
+            rems = [x["rem_pts"] for x in sub if x["min35"] == 35 and x["rem_pts"] is not None]
+            avg_rem = f"{sum(rems)/len(rems):.1f} Sayı" if rems else "~53 Sayı"
+            margin_brackets.append(
+                {
+                    "35. Dk Skor Farkı Bandı": lbl,
+                    "Maç Sayısı": n_s,
+                    "Son 13 Dk Ort. Atılan Sayı": avg_rem,
+                    "🎯 0 Merkez (ROI)": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | %{roi_0:+.1f}",
+                    "📉 -1/-2 Alt Barem": f"%{c_down/n_s*100:.1f} ({c_down}/{n_s})",
+                    "📈 +1/+2 Üst Barem": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
+                    "💡 Ne İşe Yarar / Ne Oynanır?": advice,
+                }
+            )
+
+    # 4. Barem Interior Edge Position (Score at 35m + 53.3 vs Barem Midpoint)
+    edge_brackets = []
+    sub_35only = [x for x in raw_records if x["min35"] == 35]
+    for cond_fn, lbl, advice in [
+        (lambda x: x["edge_offset"] < -3.0, "📐 Alt Kenarda (35.Dk Skor + 53.3 < Barem Ortası - 3)", "📉 DİKKAT: Maçların %55.6'sı -1/-2 Alt Bareme Düşer (0 Merkez -%24.6 Zarar Eder!)"),
+        (lambda x: -3.0 <= x["edge_offset"] <= 3.0, "🎯 Tam Merkezde (35.Dk Skor + 53.3 ≈ Barem Ortası)", "💎 GÜVENLİ MERKEZ: Maçların %55.6'sı Tam 0 Merkezde Kalır (+%17.8 ROI)"),
+        (lambda x: x["edge_offset"] > 3.0, "📐 Üst Kenarda (35.Dk Skor + 53.3 > Barem Ortası + 3)", "📈 GÜÇLÜ MERKEZ / ÜST: %56.3 Merkez (+%22.2 ROI), %31.3 +1 Üst Bareme Çıkar"),
+    ]:
+        sub = [x for x in sub_35only if cond_fn(x)]
+        if sub:
+            n_s = len(sub)
+            c_0 = sum(1 for x in sub if x["shift"] == 0)
+            c_down = sum(1 for x in sub if x["shift"] <= -1)
+            c_up = sum(1 for x in sub if x["shift"] >= 1)
+            roi_0 = ((sum(x["odd_0"] for x in sub if x["shift"] == 0) - n_s) / n_s) * 100.0
+            edge_brackets.append(
+                {
+                    "35. Dk Skorun Barem İçindeki Yeri": lbl,
+                    "Maç Sayısı": n_s,
+                    "📉 -1/-2 Alta Kayma": f"%{c_down/n_s*100:.1f} ({c_down}/{n_s})",
+                    "🎯 0 Merkezde Kalma (ROI)": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | %{roi_0:+.1f}",
+                    "📈 +1/+2 Üste Çıkma": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
+                    "💡 Ne İşe Yarar?": advice,
+                }
+            )
+
+    # 5. Minute-by-Minute Optimal Entry Window
+    minute_windows = []
+    for m_target, m_lbl, m_advice in [
+        (18, "⚡ 18. Dakika (2. Çeyrek Ortası — Erken Değer)", "💎 Erken girişte en kârlı pencere: Tekli 0 (+%16.8 ROI) ve 1.&2.Fav İkili (+%14.3 ROI)"),
+        (24, "⏸️ 24. Dakika (Devre Arası)", "⚖️ Tekli 0 Merkez pozitif (+%11.4 ROI), devre arası tempo analizi için uygun"),
+        (30, "🕒 30. Dakika (3. Çeyrek Ortası)", "⚖️ Oranlar oturmaya başlar (%45.9 Merkez isabeti, +%5.8 ROI)"),
+        (33, "🚨 32 - 33. Dakika (Q3 Sonu Öncesi — TUZAK PENCERE)", "⛔ BAHİS ALMA! Barem geçiş anı olduğu için en yüksek yanılma ve zarar (-%17.1 ROI) buradadır"),
+        (35, "🔥 34 - 35. Dakika (Kapanış — EN YÜKSEK İSABET)", "🎯 Ana Karar Anı: Tekli 0 (%50.8 İsabet), 1.&2.Fav İkili Koruma (%83.6 İsabet, +%1.5 ROI)"),
+    ]:
+        m_hits0, m_ret0, m_hits_d, m_ret_d, m_n = 0, 0.0, 0, 0.0, 0
+        for gid, grp in comp.groupby("game_id", sort=False):
+            cand = grp[(grp["_min"] >= m_target - 1) & (grp["_min"] <= m_target + 1)]
+            if cand.empty:
+                continue
+            r_m = cand.iloc[-1]
+            a_b = str(r_m.get("actual_range", "")).strip()
+            if a_b not in barem_names:
+                continue
+            om = {b_n: float(r_m.get(b_cols[b_n], 0.0) or 0.0) for b_n in barem_names}
+            om = {k: v for k, v in om.items() if 1.0 < v < 90.0}
+            if not om:
+                continue
+            sb = sorted(om.items(), key=lambda x: x[1])
+            f_b, f_o = sb[0]
+            s_b, s_o = sb[1] if len(sb) > 1 else sb[0]
+            m_n += 1
+            if a_b == f_b:
+                m_hits0 += 1
+                m_ret0 += f_o
+            if a_b in (f_b, s_b):
+                m_hits_d += 1
+                m_ret_d += (1.0 / (1.0 / f_o + 1.0 / s_o)) if s_b != f_b else f_o
+        if m_n > 0:
+            minute_windows.append(
+                {
+                    "Bahis Giriş Dakikası": m_lbl,
+                    "Maç Sayısı": m_n,
+                    "🎯 1. Favori İsabet & ROI": f"%{m_hits0/m_n*100:.1f} ({m_hits0}/{m_n}) | ROI: %{(m_ret0-m_n)/m_n*100:+.1f}",
+                    "🛡️ 1. & 2. Favori İkili Koruma": f"%{m_hits_d/m_n*100:.1f} ({m_hits_d}/{m_n}) | ROI: %{(m_ret_d-m_n)/m_n*100:+.1f}",
+                    "💡 Zamanlama Tavsiyesi": m_advice,
+                }
+            )
+
+    # 6. Drift (Q1 -> 35m Barem Migration) Breakdown
     drift_brackets = []
     for cond_fn, lbl, advice in [
-        (lambda d: d >= 1, "📈 Barem Yükseldi (Q1 ➔ 35.Dk +1/+3)", "🎯 %100 Ulaştığı (0) veya Başladığı (-1) Baremde Kalır"),
-        (lambda d: d == 0, "⚖️ Barem Sabit Kaldı (Q1 ➔ 35.Dk 0)", "🎯 Merkez (0) veya -1 Alt Standart Dağılım"),
-        (lambda d: d == -1, "📉 Barem 1 Kademe Düştü (Q1 ➔ 35.Dk -1)", "🎯 Yeni Merkezde (0) Dengelenme Eğilimi"),
-        (lambda d: d <= -2, "❄️ Barem Çöktü (Q1 ➔ 35.Dk -2/-3)", "📉 Çöküş Devam Eder (-1 / -2 Alt Barem Avantajlı)"),
+        (lambda d: d >= 1, "📈 Barem Yükseldi (Q1 ➔ 35.Dk +1/+3)", "🎯 Maç Hızlandı: 0 Merkez %58 Tutar (+%26.1 ROI), Alta Nadiren Düşer"),
+        (lambda d: d == 0, "⚖️ Barem Sabit Kaldı (Q1 ➔ 35.Dk 0)", "📉 Maçların %43'ü -1/-2 Alta Kayar ➔ 0 & -1 İkili Koruma Önerilir"),
+        (lambda d: d == -1, "📉 Barem 1 Kademe Düştü (Q1 ➔ 35.Dk -1)", "⚖️ %43 Merkezde Kalır, %43 Tekrar +1 Üste Tepki Verir"),
+        (lambda d: d <= -2, "❄️ Barem Çöktü (Q1 ➔ 35.Dk -2/-3)", "🎯 Fazla Düştüğü İçin Yeni Merkezde (0) Dengelenir (+%14.1 ROI)"),
     ]:
         sub = [x for x in raw_records if cond_fn(x["drift"])]
         if sub:
@@ -1233,7 +1649,7 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
                 }
             )
 
-    # 3. Sequential Match-to-Match Transitions (Real Tracked Chain)
+    # 7. Sequential Match-to-Match Transitions (Real Tracked Chain)
     transitions = []
     for cond_fn, lbl in [
         (lambda s: s == 0, "🎯 Önceki Maç 0 (Merkez) Bittiğinde ➔ Sıradaki Maç"),
@@ -1264,6 +1680,10 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
         "strategies": strategies,
         "ledger": ledger[::-1],
         "odds_brackets": odds_brackets,
+        "sec_dir_brackets": sec_dir_brackets,
+        "margin_brackets": margin_brackets,
+        "edge_brackets": edge_brackets,
+        "minute_windows": minute_windows,
         "drift_brackets": drift_brackets,
         "transitions": transitions,
     }
