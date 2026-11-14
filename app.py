@@ -27,6 +27,7 @@ from period_predictor import (
     analyze_archive_4500_symmetry,
     analyze_barem_symmetry,
     analyze_sequential_barem_wave,
+    analyze_matchup_live_summary,
     analyze_smart_35m_decision,
     build_q3_q4_streak_signal,
     get_cluster_from_score,
@@ -75,7 +76,7 @@ IS_DARK = st.session_state.ui_theme == "matte_dark"
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v4.4-clean-card"
+ENGINE_VERSION = "v4.5-pro-suite"
 
 
 def _ensure_clean_git_tracked_files():
@@ -902,6 +903,25 @@ def render_live_dashboard():
                 f"</div>"
             )
 
+        last10_items = recent_chain[-10:]
+        l10_n = len(last10_items)
+        l10_fav_hits = sum(1 for x in last10_items if x["raw_shift"] == 0)
+        l10_near_hits = sum(1 for x in last10_items if abs(x["raw_shift"]) <= 1)
+        if l10_near_hits >= max(1, int(l10_n * 0.7)):
+            form_badge_html = (
+                f'<span style="font-size:0.78rem; font-weight:800; color:#059669; background:rgba(5,150,105,0.1); '
+                f'border:1px solid rgba(5,150,105,0.3); padding:0.24rem 0.7rem; border-radius:999px;" '
+                f'title="Son {l10_n} maçın {l10_near_hits} tanesinde 36. dakika favorisi veya hemen 1 komşu baremi geldi. Piyasa şu an düzenli ve öngörülebilir ilerliyor.">'
+                f'🔥 Son {l10_n} Maç Sistem Formu: {l10_fav_hits}/{l10_n} Tam Favori &bull; {l10_near_hits}/{l10_n} Komşu İkili (🟢 Piyasa Düzenli)</span>'
+            )
+        else:
+            form_badge_html = (
+                f'<span style="font-size:0.78rem; font-weight:800; color:#d97706; background:rgba(217,119,6,0.1); '
+                f'border:1px solid rgba(217,119,6,0.3); padding:0.24rem 0.7rem; border-radius:999px;" '
+                f'title="Son {l10_n} maçta sürpriz sapmalar yaşandı. Tek barem yerine İki Barem Kapatma (Çifte Şans) tercih etmeniz önerilir.">'
+                f'⚠️ Son {l10_n} Maç Sistem Formu: {l10_fav_hits}/{l10_n} Tam Favori &bull; {l10_near_hits}/{l10_n} Komşu İkili (🟠 Dalgalı — İkili Kapatın)</span>'
+            )
+
         st.markdown(
             f"""
             <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:13px; padding:0.9rem 1.2rem; margin-top:0.9rem; box-shadow:var(--shadow-card);">
@@ -909,8 +929,11 @@ def render_live_dashboard():
                     <div style="font-size:0.92rem; font-weight:800; color:var(--text-primary);">
                         🌊 Son Biten Maçlarda 36. Dakika Favorisi Tuttu mu, Kaydı mı? (Toplam {len(recent_chain)} Maç | Son 5 Maç: <span style="font-family:'JetBrains Mono',monospace; color:var(--score-text);">{wave_global['last_5_labels']}</span>)
                     </div>
-                    <div style="font-size:0.8rem; font-weight:700; color:var(--fav1-text); background:var(--pill-bg); border:1px solid var(--pill-border); padding:0.25rem 0.75rem; border-radius:999px;">
-                        🔮 Sıradaki Maç Beklentisi ({wave_global['pattern_matches_count']} Benzer Maç): ❄️ 2 Alt Barem: %{wave_global['prob_minus_2']} &bull; 📉 1 Alt Barem: %{wave_global['prob_minus_1']} &bull; 🎯 Tam Favori: %{wave_global['prob_0']} &bull; 📈 1 Üst Barem: %{wave_global['prob_plus_1']} &bull; 🔥 2 Üst Barem: %{wave_global['prob_plus_2']}
+                    <div style="display:flex; gap:0.45rem; flex-wrap:wrap; align-items:center;">
+                        {form_badge_html}
+                        <div style="font-size:0.78rem; font-weight:700; color:var(--fav1-text); background:var(--pill-bg); border:1px solid var(--pill-border); padding:0.24rem 0.7rem; border-radius:999px;">
+                            🔮 Sıradaki Maç Beklentisi: 📉 1 Alt: %{wave_global['prob_minus_1']} &bull; 🎯 Tam Favori: %{wave_global['prob_0']} &bull; 📈 1 Üst: %{wave_global['prob_plus_1']}
+                        </div>
                     </div>
                 </div>
                 <div style="display:flex; gap:0.45rem; flex-wrap:wrap; max-height:340px; overflow-y:auto; padding-right:4px;">
@@ -935,6 +958,46 @@ def render_live_dashboard():
             "Yukarıdaki **'⚡ Anlık Canlı Barem Çek'** butonuna basarak anında kontrol edebilirsiniz."
         )
     else:
+        # 30-36m Closing Decision Alert Banner at the very top of Live Matches
+        closing_alerts_html = ""
+        for m_al in live_matches:
+            el_al = float(m_al.get("elapsed_mins", 0.0) or 0.0)
+            f1_al = m_al.get("bookie_fav_1") or "-"
+            f1_odd_al = float(m_al.get("bookie_fav_1_odd", 99.0) or 99.0)
+            if 30.0 <= el_al <= 36.2 and m_al.get("is_barem_open", False) and f1_odd_al < 90.0:
+                th_al = str(m_al.get("team_home", "")).replace(" (cyber)", "")
+                ta_al = str(m_al.get("team_away", "")).replace(" (cyber)", "")
+                hsc_al = int(m_al.get("home_score", 0) or 0)
+                asc_al = int(m_al.get("away_score", 0) or 0)
+                rem_lock = max(0.0, 36.0 - el_al)
+                sm_al = analyze_smart_35m_decision(
+                    fav1_barem=f1_al,
+                    fav1_odd=f1_odd_al,
+                    fav2_barem=m_al.get("bookie_fav_2") or "-",
+                    fav2_odd=float(m_al.get("bookie_fav_2_odd", 99.0) or 99.0),
+                    game_id=str(m_al.get("game_id", "")),
+                    df_log=df_log,
+                    recent_chain=recent_chain,
+                    score_gap=abs(hsc_al - asc_al),
+                    cur_tot=hsc_al + asc_al,
+                    elapsed_mins=el_al,
+                    odds_map=m_al.get("odds", {}),
+                )
+                closing_alerts_html += (
+                    f'<div style="background:rgba(5,150,105,0.12); border:2px solid #059669; border-radius:12px; padding:0.75rem 1.1rem; margin-bottom:0.75rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; box-shadow:var(--shadow-card);">'
+                    f'<div>'
+                    f'<span style="background:#059669; color:#ffffff; padding:0.18rem 0.6rem; border-radius:6px; font-size:0.74rem; font-weight:800;">🚨 KARAR ANI (KAPANIŞA {rem_lock:.1f} DK KALDI)</span> '
+                    f'<span style="font-size:0.98rem; font-weight:800; color:var(--text-primary); margin-left:0.4rem;">🏀 {th_al} vs {ta_al} ({el_al:.1f}. Dk | Skor: {hsc_al}-{asc_al})</span>'
+                    f'<div style="font-size:0.84rem; color:var(--text-primary); margin-top:0.28rem;">'
+                    f'<b>🎯 Tek Barem:</b> {sm_al["primary_pick"]} &nbsp;&bull;&nbsp; <b>🛡️ İkili Kapatma:</b> {sm_al["backup_pick"]} &nbsp;&bull;&nbsp; <b>💰 Önerilen:</b> {sm_al["stake_badge"]}'
+                    f'</div>'
+                    f'<div style="font-size:0.78rem; color:var(--text-secondary); margin-top:0.15rem;">{sm_al["dutch_split_badge"]}</div>'
+                    f'</div>'
+                    f'</div>'
+                )
+        if closing_alerts_html:
+            st.markdown(closing_alerts_html, unsafe_allow_html=True)
+
         for m in live_matches:
             t_home = m.get("team_home", "")
             t_away = m.get("team_away", "")
@@ -1021,6 +1084,7 @@ def render_live_dashboard():
                 "TRAP_EXTREME": "#e11d48",
                 "TRAP_LOW": "#d97706",
             }.get(smart["zone_type"], "var(--text-secondary)")
+            h2h_live = analyze_matchup_live_summary(df_hist, t_home, t_away)
             main_reason_short = str(smart.get("reasoning", "")).split(" • ")[0]
             smart_html = (
                 f'<div class="info-strip" style="grid-column: 1 / -1; border-left:4px solid {smart_color}; padding:0.75rem 0.95rem;">'
@@ -1028,14 +1092,15 @@ def render_live_dashboard():
                 f'<div class="info-strip-label" style="font-size:0.84rem; margin:0;">👑 35. Dakika Ne Oynamalı? (Net Karar Özeti)</div>'
                 f'<span style="background:var(--bg-subtle); border:1px solid {smart_color}; color:{smart_color}; padding:0.18rem 0.65rem; border-radius:999px; font-size:0.76rem; font-weight:800;">{smart["zone_badge"]}</span>'
                 f'</div>'
-                f'<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap:0.55rem; margin-bottom:0.5rem;">'
+                f'<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:0.55rem; margin-bottom:0.5rem;">'
                 f'<div style="background:var(--bg-subtle); border:1px solid var(--border-subtle); border-left:3px solid #059669; border-radius:8px; padding:0.5rem 0.7rem;" title="Tek bir barem oynayacaksanız sistemin geçmiş 63 maça bakarak önerdiği 1 numaralı barem.">'
                 f'<div style="font-size:0.68rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">🎯 1. Tercih (Tek Barem Oyna)</div>'
                 f'<div style="font-size:0.9rem; font-weight:800; color:var(--text-primary); margin-top:0.15rem;">{smart["primary_pick"]}</div>'
                 f'</div>'
-                f'<div style="background:var(--bg-subtle); border:1px solid var(--border-subtle); border-left:3px solid #2563eb; border-radius:8px; padding:0.5rem 0.7rem;" title="İşi garantiye almak için iki bareme birden bahis bölerek ikisinden biri tuttuğunda kâr etme yöntemi.">'
+                f'<div style="background:var(--bg-subtle); border:1px solid var(--border-subtle); border-left:3px solid #2563eb; border-radius:8px; padding:0.5rem 0.7rem;" title="{smart["dutch_split_tip"]}">'
                 f'<div style="font-size:0.68rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">🛡️ 2. Tercih (Garanti İkili Kapat)</div>'
                 f'<div style="font-size:0.9rem; font-weight:800; color:var(--text-primary); margin-top:0.15rem;">{smart["backup_pick"]}</div>'
+                f'<div style="font-size:0.74rem; color:var(--text-secondary); margin-top:0.2rem; line-height:1.35;">{smart["dutch_split_badge"]}</div>'
                 f'</div>'
                 f'<div style="background:var(--bg-subtle); border:1px solid var(--border-subtle); border-left:3px solid {smart_color}; border-radius:8px; padding:0.5rem 0.7rem;" title="Yakın maçta (0-5 fark) 0 TL Pas Geç, normal maçta 1000 TL, çok güçlü sinyalde 2000 TL önerilir.">'
                 f'<div style="font-size:0.68rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">💰 Ne Kadar Oynanmalı?</div>'
@@ -1151,16 +1216,24 @@ def render_live_dashboard():
                             {pred_h:.0f} - {pred_a:.0f} &nbsp;<span style="color:var(--score-text);">(Toplam: {pred_tot:.1f} Sayı)</span>
                         </div>
                     </div>
-                    <div class="info-strip" style="cursor:help;" title="1xBet'teki en düşük oranlı 1. Favori ve 2. Favori baremleri gösterir. Çifte Şans (Dutching) oranı, iki bareme aynı kazancı verecek şekilde parayı böldüğünüzde oluşan net orandır.">
-                        <div class="info-strip-label">⚖️ Barem Simetri & Çifte Şans [?]</div>
+                    <div class="info-strip" style="cursor:help;" title="{smart['odd_trend_tip']}">
+                        <div class="info-strip-label">⚖️ Barem Simetri & Oran Yönü [?]</div>
                         <div class="info-strip-val" style="color:var(--fav1-text);">
                             {sym_text}
+                            <div style="font-size:0.74rem; color:var(--text-secondary); margin-top:0.12rem;">{smart['odd_trend_badge']}</div>
                         </div>
                     </div>
                     <div class="info-strip" style="cursor:help;" title="20-Sayı Kümesi: Yan yana iki baremin (toplam 20 sayılık geniş aralığın) gelme ihtimalidir. Akıllı Value Nedeni: {val_reason}">
                         <div class="info-strip-label">🛡️ En Güçlü 20-Sayı Kümesi & Akıllı Value [?]</div>
                         <div class="info-strip-val" style="color:var(--val-text);">
                             Küme: {clu_name} (%{clu_prob:.1f}) &nbsp;&bull;&nbsp; 🔥 Value: {val_rng}
+                        </div>
+                    </div>
+                    <div class="info-strip" style="cursor:help;" title="{h2h_live['q4_pace_tip']}">
+                        <div class="info-strip-label">🤝 İki Takım Geçmişi & 4. Çeyrek Karakteri [?]</div>
+                        <div class="info-strip-val" style="font-size:0.8rem; line-height:1.4;">
+                            Son 5 Maç: <b>{h2h_live['last5_str']}</b> &bull; En Çok: <b>{h2h_live['top_cluster_str']}</b>
+                            <div style="font-size:0.74rem; color:var(--text-secondary); margin-top:0.12rem;">{h2h_live['q4_pace_badge']}</div>
                         </div>
                     </div>
                     <div class="info-strip" style="cursor:help;" title="3. çeyrek temposuna bakarak 4. çeyrekte sayı patlaması mı (yüksek skor) yoksa tempo çöküşü mü (rölanti/düşük skor) yaşanacağını tahmin eder.">

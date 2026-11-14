@@ -1024,11 +1024,24 @@ def analyze_smart_35m_decision(
             f"Bu durumda maçların neredeyse yarısı (%48.5) alt bareme ({b_m1}) kaymış, üst bareme ({b_p1}) ise hiç (%0) çıkmamıştır."
         )
 
-    # Calculate in-game drift (Q1 -> Now) and Late 5m Pendulum (30m -> 35m) for this game_id
+    # Calculate in-game drift (Q1 -> Now), Late 5m Pendulum (30m -> 35m), and Odds Drop Velocity for this game_id
     open_b = base_b
     drift = 0
     late_jump = 0
     b_30m = base_b
+    odd_prev_ref = float(fav1_odd or 0.0)
+    odd_prev_min = int(float(elapsed_mins or 0))
+    barem_to_col_local = {
+        "160 ve altı": "odds_160_or_less",
+        "161-170": "odds_161_170",
+        "171-180": "odds_171_180",
+        "181-190": "odds_181_190",
+        "191-200": "odds_191_200",
+        "201-210": "odds_201_210",
+        "211-220": "odds_211_220",
+        "221-230": "odds_221_230",
+        "231 ve üstü": "odds_231_plus",
+    }
     if df_log is not None and not df_log.empty and game_id and "game_id" in df_log.columns:
         g_sub = df_log[df_log["game_id"].astype(str).str.strip() == str(game_id).strip()].copy()
         if not g_sub.empty:
@@ -1045,6 +1058,34 @@ def analyze_smart_35m_decision(
                 if b30_cand in barem_names:
                     b_30m = b30_cand
                     late_jump = barem_names.index(base_b) - barem_names.index(b_30m)
+            # Odds velocity for current favorite barem over the last 3-10 minutes
+            col_fav_now = barem_to_col_local.get(base_b)
+            if col_fav_now and col_fav_now in g_sub.columns:
+                cur_m_val = float(elapsed_mins or g_sub["_m"].max())
+                prev_rows = g_sub[(g_sub["_m"] <= max(0.0, cur_m_val - 2.0)) & (g_sub["_m"] >= max(0.0, cur_m_val - 12.0))]
+                if prev_rows.empty and len(g_sub) >= 2:
+                    prev_rows = g_sub.iloc[:-1]
+                for _, pr in prev_rows.iloc[::-1].iterrows():
+                    try:
+                        po = float(pr.get(col_fav_now, 99.0) or 99.0)
+                        if 1.01 < po < 85.0:
+                            odd_prev_ref = po
+                            odd_prev_min = int(pr.get("_m", 0))
+                            break
+                    except Exception:
+                        pass
+
+    cur_o_now = float(fav1_odd or 99.0)
+    odd_delta = round(odd_prev_ref - cur_o_now, 2) if (1.01 < odd_prev_ref < 85.0 and 1.01 < cur_o_now < 85.0) else 0.0
+    if odd_delta >= 0.18:
+        odd_trend_badge = f"📉 Oran Düşüyor: {odd_prev_ref:.2f} ➔ {cur_o_now:.2f} (Güçleniyor)"
+        odd_trend_tip = f"{base_b} bareminin oranı {odd_prev_min}. dakikada {odd_prev_ref:.2f} iken şu an {cur_o_now:.2f} seviyesine düştü. 1xBet bu baremin gelme ihtimalini artırıyor."
+    elif odd_delta <= -0.18:
+        odd_trend_badge = f"📈 Oran Yükseliyor: {odd_prev_ref:.2f} ➔ {cur_o_now:.2f} (Zayıflıyor)"
+        odd_trend_tip = f"{base_b} bareminin oranı {odd_prev_min}. dakikada {odd_prev_ref:.2f} iken şu an {cur_o_now:.2f} seviyesine yükseldi. Maç temposu yan bareme kayıyor olabilir."
+    else:
+        odd_trend_badge = f"➖ Oran Dengeli ({cur_o_now:.2f})" if cur_o_now < 90 else "⏳ Oran Bekleniyor"
+        odd_trend_tip = f"{base_b} bareminin oranı son dakikalarda sabit/dengeli ({cur_o_now:.2f}) seyrediyor."
 
     if drift > 0:
         drift_badge = f"📈 Maç Başında {open_b} Bekleniyordu ➔ Şimdi {base_b} Oldu (Maç Hızlandı)"
@@ -1242,13 +1283,36 @@ def analyze_smart_35m_decision(
     odd_val = float(fav1_odd or 0.0)
     reasons = []
 
-    # Two-barem cover recommendation
+    # Two-barem cover recommendation + Ready-made 1000 TL Dutching Split
     if gap >= 10:
+        dutch_b1, dutch_b2 = b_0, b_m1
         dutch_pick = f"🛡️ {b_0} ile {b_m1} İkisini Birden Kapat"
         dutch_short = f"{b_0} ve {b_m1}"
     else:
+        dutch_b1, dutch_b2 = b_0, sec_b_clean
         dutch_pick = f"🛡️ {b_0} ile {sec_b_clean} İkisini Birden Kapat"
         dutch_short = f"{b_0} ve {sec_b_clean}"
+
+    d_o1 = valid_odds_dict.get(dutch_b1, odd_val if odd_val < 90 else 2.25)
+    d_o2 = valid_odds_dict.get(dutch_b2, odd2_val if odd2_val < 90 else 2.65)
+    if dutch_b1 != dutch_b2 and 1.01 < d_o1 < 85.0 and 1.01 < d_o2 < 85.0:
+        inv_d = (1.0 / d_o1) + (1.0 / d_o2)
+        st_1 = int(round(1000.0 * (1.0 / d_o1) / inv_d))
+        st_2 = 1000 - st_1
+        ret_tl = int(round(st_1 * d_o1))
+        net_tl = ret_tl - 1000
+        eff_d_odd = round(1.0 / inv_d, 2)
+        dutch_split_badge = (
+            f"💸 1000 TL Hazır Bölüşüm: <b>{dutch_b1}</b> ({d_o1:.2f}) ➔ <b>{st_1} TL</b> + "
+            f"<b>{dutch_b2}</b> ({d_o2:.2f}) ➔ <b>{st_2} TL</b> &bull; Kazanç: <b>{ret_tl} TL ({net_tl:+d} TL Net)</b>"
+        )
+        dutch_split_tip = (
+            f"Toplam 1000 TL'yi {dutch_b1} ({st_1} TL) ve {dutch_b2} ({st_2} TL) olarak böldüğünüzde, "
+            f"iki baremden hangisi gelirse gelsin yaklaşık {ret_tl} TL geri alırsınız ({net_tl:+d} TL net kâr, ortak oran {eff_d_odd:.2f})."
+        )
+    else:
+        dutch_split_badge = f"💸 İki Barem Ortak Oran: {dutch_short}"
+        dutch_split_tip = "Canlı oranlar açıldığında 1000 TL için hangi bareme kaç TL yatırılacağı burada otomatik hesaplanır."
 
     # Plain-Turkish Decision Engine
     if gap <= 5 and float(elapsed_mins or 35.0) >= 30.0:
@@ -1361,6 +1425,10 @@ def analyze_smart_35m_decision(
         "pendulum_tip": pendulum_tip,
         "seq_sym_badge": seq_sym_badge,
         "seq_sym_tip": seq_sym_tip,
+        "odd_trend_badge": odd_trend_badge,
+        "odd_trend_tip": odd_trend_tip,
+        "dutch_split_badge": dutch_split_badge,
+        "dutch_split_tip": dutch_split_tip,
         "drift": drift,
         "open_barem": open_b,
         "drift_badge": drift_badge,
@@ -1370,6 +1438,86 @@ def analyze_smart_35m_decision(
         "confidence_pct": round(conf_pct, 1),
         "reasoning": " • ".join(reasons),
     }
+
+
+def analyze_matchup_live_summary(df_matches: pd.DataFrame, team_home: str, team_away: str) -> dict:
+    """
+    Compute concise H2H & 4th-quarter DNA summary for a live match card:
+    - Last 5 H2H total scores & average
+    - Most frequent H2H 20-point cluster & single barem
+    - Combined 4th-quarter average points (Slow Q4 <= 51.5 -> %86 Center/Lower; Fast Q4 >= 53.8)
+    """
+    res = {
+        "last5_str": "Veri bekleniyor",
+        "top_cluster_str": "-",
+        "q4_pace_badge": "⚖️ 4. Çeyrek Ortalaması: ~52.4 Sayı",
+        "q4_pace_tip": "İki takımın 4. çeyrek sayı ortalaması.",
+    }
+    if df_matches is None or df_matches.empty or not team_home or not team_away:
+        return res
+
+    df_m = df_matches.copy()
+    for col in ["home_q4", "away_q4", "total_score", "is_ot"]:
+        if col in df_m.columns:
+            df_m[col] = pd.to_numeric(df_m[col], errors="coerce")
+
+    th = str(team_home).strip()
+    ta = str(team_away).strip()
+
+    # 1) H2H games (either direction)
+    h2h = df_m[
+        ((df_m["home_team"] == th) & (df_m["away_team"] == ta))
+        | ((df_m["home_team"] == ta) & (df_m["away_team"] == th))
+    ].dropna(subset=["total_score"])
+
+    if not h2h.empty:
+        last5_scores = [str(int(s)) for s in h2h["total_score"].tail(5).tolist()][::-1]
+        avg_h2h = float(h2h["total_score"].mean())
+        res["last5_str"] = f"{' • '.join(last5_scores)} (Ort: {avg_h2h:.1f})"
+
+        # Best 20-pt cluster in H2H
+        best_c = None
+        best_cp = -1.0
+        for c_name, c_lo, c_hi, _ in CLUSTER_RANGES:
+            p = float(((h2h["total_score"] >= c_lo) & (h2h["total_score"] <= c_hi)).mean() * 100.0)
+            if p > best_cp:
+                best_cp = p
+                best_c = c_name
+        if best_c:
+            res["top_cluster_str"] = f"{best_c} (%{best_cp:.0f} — {len(h2h)} Maç)"
+
+    # 2) Combined 4th-quarter pace (non-OT games)
+    no_ot = df_m[df_m.get("is_ot", 0) == 0] if "is_ot" in df_m.columns else df_m
+    hq4_s = pd.concat([
+        no_ot[no_ot["home_team"] == th]["home_q4"],
+        no_ot[no_ot["away_team"] == th]["away_q4"],
+    ]).dropna()
+    aq4_s = pd.concat([
+        no_ot[no_ot["home_team"] == ta]["home_q4"],
+        no_ot[no_ot["away_team"] == ta]["away_q4"],
+    ]).dropna()
+
+    q4_h_avg = float(hq4_s.mean()) if len(hq4_s) >= 5 else 26.2
+    q4_a_avg = float(aq4_s.mean()) if len(aq4_s) >= 5 else 26.2
+    q4_sum = q4_h_avg + q4_a_avg
+
+    if q4_sum <= 51.6:
+        res["q4_pace_badge"] = f"🐢 Yavaş 4. Çeyrek ({q4_sum:.1f} Sayı ➔ %86 Favori/Alt Barem)"
+        res["q4_pace_tip"] = (
+            f"Bu iki takımın 4. çeyrek ortalamaları toplamı {q4_sum:.1f} sayıdır (lig ortalaması 52.4'ten düşük). "
+            f"Yavaş 4. çeyrek takımlarının maçlarında son periyotta sayı patlaması yaşanmaz ve %85.7 oranında Favori veya 1 Alt Barem gelir!"
+        )
+    elif q4_sum >= 53.6:
+        res["q4_pace_badge"] = f"⚡ Hızlı 4. Çeyrek ({q4_sum:.1f} Sayı ➔ Yüksek Son Periyot Temposu)"
+        res["q4_pace_tip"] = (
+            f"Bu iki takımın 4. çeyrek ortalamaları toplamı {q4_sum:.1f} sayıdır (lig ortalaması 52.4'ten yüksek). "
+            f"Son periyotta hızlı hücum ettikleri için alt bareme düşme ihtimali azalır."
+        )
+    else:
+        res["q4_pace_badge"] = f"⚖️ Dengeli 4. Çeyrek (Ort. {q4_sum:.1f} Sayı)"
+        res["q4_pace_tip"] = f"Bu iki takımın 4. çeyrek sayı ortalamaları toplamı {q4_sum:.1f} sayı ile tam lig ortalamasındadır."
+
+    return res
 
 
 def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
