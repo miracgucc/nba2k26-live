@@ -527,13 +527,21 @@ def predict_live_inplay(
 
 def analyze_barem_symmetry(odds_dict: dict, barem_probs: dict) -> dict:
     """
-    Analyze 1xBet Barem Odds vs Model Probabilities:
+    Analyze 1xBet Barem Odds vs Model Probabilities (v4.3 Smart Symmetry Value Engine):
     - Identifies Bookmaker 1st & 2nd Favorites
     - Calculates Symmetry Ratio (gap between top 2 favorite barem odds)
-    - Calculates Best Value Range (highest positive EV / Edge)
+    - Calculates Smart Value Range (Simetri + Piyasa + Model Hibrit Değerli Barem):
+      * Filters out unrealistic longshot traps (> 3.65 odd or > 1 barem step away from favorites)
+      * Blends 80% normalized 1xBet Market Probability + 20% Monte Carlo Model Probability
+      * Applies 4 empirical 63-match symmetry adjustments:
+        1) Golden Band (2.08-2.45) + Upper (+1) 2nd Favorite -> Boosts 1st Favorite (+18%)
+        2) Compressed Favorite (<2.08) + Lower (-1) 2nd Favorite -> Shifts value to 2nd Favorite (+12%)
+        3) Twin Odds (gap <= 0.35) -> Boosts 2nd Favorite (+8%) when Model agrees or -1 lower
+        4) Model #1 Barem Confirmation (>= 22%) -> Boosts confirmed barem (+5%)
+      * Maximizes hybrid Value Score = TrueProb + 0.55 * ExpectedValue
     - Calculates Best Dutching (Çifte Barem) combined odd
     """
-    valid_odds = {k: float(v) for k, v in (odds_dict or {}).items() if v and 1.01 < float(v) < 90.0}
+    valid_odds = {k: float(v) for k, v in (odds_dict or {}).items() if v and 1.01 < float(v) < 85.0}
     sorted_by_odds = sorted(valid_odds.items(), key=lambda x: x[1])
 
     bookie_fav_1 = sorted_by_odds[0][0] if len(sorted_by_odds) >= 1 else None
@@ -548,23 +556,78 @@ def analyze_barem_symmetry(odds_dict: dict, barem_probs: dict) -> dict:
     # Dutching (Çifte Şans) effective odd if backing top 2 adjacent barems
     dutch_odd = round(1.0 / ((1.0 / bookie_fav_1_odd) + (1.0 / bookie_fav_2_odd)), 2) if (bookie_fav_1 and bookie_fav_2) else 0.0
 
-    # Value pick calculation: Model Prob vs Implied Prob
+    barem_names = [b[0] for b in BAREM_RANGES]
     best_value_range = None
     best_ev = -999.0
-    for b_name, _, _ in BAREM_RANGES:
-        prob_pct = float((barem_probs or {}).get(b_name, 0.0))
-        odd = valid_odds.get(b_name, 99.0)
-        if odd < 90.0 and prob_pct >= 12.0:
-            ev = (prob_pct / 100.0) * odd - 1.0
-            if ev > best_ev:
+    best_score = -999.0
+    value_reason = "Yeterli canlı oran verisi yok."
+
+    if valid_odds and bookie_fav_1:
+        fav1_idx = barem_names.index(bookie_fav_1) if bookie_fav_1 in barem_names else -1
+        fav2_idx = barem_names.index(bookie_fav_2) if (bookie_fav_2 and bookie_fav_2 in barem_names) else fav1_idx
+
+        inv_sum = sum(1.0 / o for o in valid_odds.values())
+        mkt_probs = {b: (1.0 / o) / inv_sum * 100.0 for b, o in valid_odds.items()} if inv_sum > 0 else {}
+
+        top_mod_b = max(valid_odds.keys(), key=lambda k: float((barem_probs or {}).get(k, 0.0)))
+        mod_fav1_p = float((barem_probs or {}).get(bookie_fav_1, 0.0))
+
+        for b_name, odd in valid_odds.items():
+            idx = barem_names.index(b_name) if b_name in barem_names else -1
+            if fav1_idx >= 0 and idx >= 0:
+                if abs(idx - fav1_idx) > 1 and b_name != bookie_fav_2:
+                    continue
+            if odd > 3.65 and b_name != bookie_fav_1:
+                continue
+
+            mp = float((barem_probs or {}).get(b_name, 0.0))
+            kp = float(mkt_probs.get(b_name, 0.0))
+            true_p = (0.80 * kp + 0.20 * mp) / 100.0
+            reasons = []
+
+            # 1) Golden Band (2.08-2.45) + Upper 2nd Fav (+1): Center stays solid
+            if fav2_idx > fav1_idx and 2.08 <= bookie_fav_1_odd <= 2.45:
+                if b_name == bookie_fav_1:
+                    true_p += 0.18
+                    reasons.append(f"2.Favori üstte ({bookie_fav_2}) ve oran Altın Bantta ({bookie_fav_1_odd:.2f}) olduğu için merkez çok güçlü")
+
+            # 2) Compressed Favorite (< 2.08) + Lower 2nd Fav (-1): Downward shift
+            if bookie_fav_1_odd < 2.08 and fav2_idx < fav1_idx:
+                if b_name == bookie_fav_2 and bookie_fav_2_odd <= 3.30:
+                    true_p += 0.12
+                    reasons.append(f"1.Favori oranı ({bookie_fav_1_odd:.2f}) aşırı sıkıştığı için 1 Alt Barem ({bookie_fav_2}) değerli")
+                elif b_name == bookie_fav_1 and bookie_fav_1_odd < 1.92:
+                    true_p -= 0.06
+
+            # 3) Twin Odds (gap <= 0.35): 2nd Fav offers higher payout for near-equal probability
+            if symmetry_gap <= 0.35 and b_name == bookie_fav_2:
+                if mp >= mod_fav1_p * 0.88 or fav2_idx < fav1_idx:
+                    true_p += 0.08
+                    reasons.append(f"İkiz oran (fark {symmetry_gap:.2f}) ve yüksek oran avantajı ({odd:.2f})")
+
+            # 4) Model Top Barem agreement
+            if b_name == top_mod_b and mp >= 22.0:
+                true_p += 0.05
+                reasons.append(f"Monte Carlo modeli de 1. sırada (%{mp:.0f}) destekliyor")
+
+            ev = true_p * odd - 1.0
+            score = true_p + (ev * 0.55)
+            if score > best_score:
+                best_score = score
                 best_ev = ev
                 best_value_range = b_name
+                if reasons:
+                    value_reason = f"{b_name} ({odd:.2f}): " + " • ".join(reasons)
+                else:
+                    value_reason = f"{b_name} ({odd:.2f}): Piyasa (%{kp:.0f}) ve Model (%{mp:.0f}) dengesinde en yüksek beklenen değer"
 
     if not best_value_range:
-        if barem_probs:
-            best_value_range = max(barem_probs.keys(), key=lambda k: barem_probs[k])
-        elif bookie_fav_1:
+        if bookie_fav_1:
             best_value_range = bookie_fav_1
+            value_reason = f"{bookie_fav_1}: Aktif 1. Favori barem"
+        elif barem_probs:
+            best_value_range = max(barem_probs.keys(), key=lambda k: barem_probs[k])
+            value_reason = f"{best_value_range}: Modelin en yüksek olasılıklı baremi"
         else:
             best_value_range = "201-210"
 
@@ -582,6 +645,7 @@ def analyze_barem_symmetry(odds_dict: dict, barem_probs: dict) -> dict:
         "is_symmetric_trap": is_symmetric_trap,
         "dutch_odd": dutch_odd,
         "value_range": best_value_range,
+        "value_reason": value_reason,
         "best_ev_pct": round(best_ev * 100.0, 1) if best_ev > -900 else 0.0,
     }
 

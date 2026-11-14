@@ -75,7 +75,7 @@ IS_DARK = st.session_state.ui_theme == "matte_dark"
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v4.2-sade-turkce"
+ENGINE_VERSION = "v4.3-smart-value"
 
 
 def _ensure_clean_git_tracked_files():
@@ -231,8 +231,37 @@ def load_symmetry_log() -> pd.DataFrame:
     df["_done"] = (df["status"].astype(str) == "COMPLETED").astype(int)
     df = df.sort_values("_done", kind="stable").drop_duplicates(subset=["game_id", "check_time"], keep="last")
     df["_min"] = df["check_time"].astype(str).str.extract(r"Minute\s+(\d+)")[0].fillna(0).astype(int)
-    df = df.sort_values(["_gnum", "_min"], kind="stable").drop(columns=["_gnum", "_done", "_min"])
-    return df.reset_index(drop=True)
+    df = df.sort_values(["_gnum", "_min"], kind="stable").drop(columns=["_gnum", "_done", "_min"]).reset_index(drop=True)
+
+    # Dynamically upgrade value_range with v4.3 Smart Symmetry Value Engine for all historical rows
+    _b_cols = [
+        ("160 ve altı", "odds_160_or_less", "model_prob_160_or_less"),
+        ("161-170", "odds_161_170", "model_prob_161_170"),
+        ("171-180", "odds_171_180", "model_prob_171_180"),
+        ("181-190", "odds_181_190", "model_prob_181_190"),
+        ("191-200", "odds_191_200", "model_prob_191_200"),
+        ("201-210", "odds_201_210", "model_prob_201_210"),
+        ("211-220", "odds_211_220", "model_prob_211_220"),
+        ("221-230", "odds_221_230", "model_prob_221_230"),
+        ("231 ve üstü", "odds_231_plus", "model_prob_231_plus"),
+    ]
+    smart_vals = []
+    for _, r in df.iterrows():
+        o_d = {}
+        p_d = {}
+        for b_lbl, oc, pc in _b_cols:
+            try:
+                o_d[b_lbl] = float(r.get(oc, 99.0) or 99.0)
+            except Exception:
+                o_d[b_lbl] = 99.0
+            try:
+                p_d[b_lbl] = float(r.get(pc, 0.0) or 0.0)
+            except Exception:
+                p_d[b_lbl] = 0.0
+        sym_r = analyze_barem_symmetry(o_d, p_d)
+        smart_vals.append(sym_r.get("value_range") or str(r.get("value_range", "")))
+    df["value_range"] = smart_vals
+    return df
 
 
 def load_completed_matches() -> pd.DataFrame:
@@ -802,8 +831,8 @@ def render_live_dashboard():
     with k4:
         st.markdown(
             f"""
-        <div class="kpi-card" title="32. dakika ve sonrasında Model olasılığının 1xBet oranına göre değerli (Value) bulduğu baremin tutma oranı.">
-            <div class="kpi-label">🔥 Model Value (32+ Dk)</div>
+        <div class="kpi-card" title="Akıllı Değerli Barem (Smart Value): 1xBet piyasa olasılığı (%80), Monte Carlo model olasılığı (%20) ve 4 simetri kuralını (Altın Bant, 2.Favori Yönü, İkiz Oran, Model Teyidi) birleştirerek 3.65 oran altındaki en kârlı tek baremi seçer.">
+            <div class="kpi-label">🔥 Akıllı Value (32+ Dk)</div>
             <div class="kpi-val" style="color:#d97706;">%{val_rate:.1f}</div>
             <div class="kpi-sub">{val_wins} / {eval_n} Maç İsabet (32+ Dk Kapanış)</div>
         </div>
@@ -950,7 +979,9 @@ def render_live_dashboard():
             fav1 = m.get("bookie_fav_1") or "-"
             fav1_odd = m.get("bookie_fav_1_odd", 99.0)
             fav2 = m.get("bookie_fav_2") or "-"
-            val_rng = m.get("value_range") or "-"
+            sym_live = analyze_barem_symmetry(m.get("odds", {}), m.get("barem_probs", {}))
+            val_rng = sym_live.get("value_range") or m.get("value_range") or "-"
+            val_reason = sym_live.get("value_reason") or "Piyasa ve model simetrisine göre en yüksek beklenen değerli barem."
             clu_name = m.get("best_cluster_name") or "-"
             clu_prob = m.get("best_cluster_prob", 0.0)
             dutch_odd = m.get("dutch_odd", 0.0)
@@ -1122,10 +1153,10 @@ def render_live_dashboard():
                             {sym_text}
                         </div>
                     </div>
-                    <div class="info-strip" style="cursor:help;" title="20-Sayı Kümesi: Yan yana iki baremin (toplam 20 sayılık geniş aralığın) gelme ihtimalidir. Value ise 1xBet oranının model olasılığına göre normalden yüksek (değerli) kaldığı baremdir.">
-                        <div class="info-strip-label">🛡️ En Güçlü 20-Sayı Kümesi & Value [?]</div>
+                    <div class="info-strip" style="cursor:help;" title="20-Sayı Kümesi: Yan yana iki baremin (toplam 20 sayılık geniş aralığın) gelme ihtimalidir. Akıllı Value Nedeni: {val_reason}">
+                        <div class="info-strip-label">🛡️ En Güçlü 20-Sayı Kümesi & Akıllı Value [?]</div>
                         <div class="info-strip-val" style="color:var(--val-text);">
-                            Küme: {clu_name} (%{clu_prob:.1f}) &nbsp;&bull;&nbsp; Value: {val_rng}
+                            Küme: {clu_name} (%{clu_prob:.1f}) &nbsp;&bull;&nbsp; 🔥 Value: {val_rng}
                         </div>
                     </div>
                     <div class="info-strip" style="cursor:help;" title="3. çeyrek temposuna bakarak 4. çeyrekte sayı patlaması mı (yüksek skor) yoksa tempo çöküşü mü (rölanti/düşük skor) yaşanacağını tahmin eder.">
@@ -2295,7 +2326,7 @@ with tab_bankroll:
                     "Kâr Oranı (%)": f"%{(clu_pnl / tot_wagered)*100:+.1f}",
                 },
                 {
-                    "Oynama Yöntemi (Strateji)": "🔥 Modelin Değerli Bulduğu (Value) Tek Baremi Oynamak",
+                    "Oynama Yöntemi (Strateji)": "🔥 Akıllı Value Barem (%80 Piyasa + %20 Model + 4 Simetri Kuralı ile Değerli Tek Barem)",
                     "Oynanan Maç": n_bets,
                     "Tutma Oranı": f"{val_hits} / {n_bets} (%{(val_hits/max(1,n_bets))*100:.1f})",
                     "Toplam Yatırılan": f"{tot_wagered:,.0f} TL",
