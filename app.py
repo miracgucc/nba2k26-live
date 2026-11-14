@@ -75,7 +75,7 @@ IS_DARK = st.session_state.ui_theme == "matte_dark"
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v4.0-deep-symmetry"
+ENGINE_VERSION = "v4.1-sade-turkce"
 
 
 class BackgroundEngineState:
@@ -970,9 +970,9 @@ def render_live_dashboard():
             }.get(smart["zone_type"], "var(--text-secondary)")
             smart_html = (
                 f'<div class="info-strip" style="grid-column: 1 / -1; border-left:4px solid {smart_color};" '
-                f'title="Fareyi aşağıdaki rozetlerin üstüne getirerek her simetri kuralının ne işe yaradığını okuyabilirsiniz.">'
-                f'<div class="info-strip-label">👑 35. Dk Akıllı Karar & Derin Simetri Kutusu v4.0 '
-                f'<span style="font-weight:500; opacity:0.8;">(Açıklama için rozetlerin üstüne gelin ℹ️)</span></div>'
+                f'title="Fareyi aşağıdaki kutucukların üstüne getirerek her bilginin ne anlama geldiğini sade Türkçe ile okuyabilirsiniz.">'
+                f'<div class="info-strip-label">👑 35. Dakika Ne Oynamalı? (Akıllı Karar & Simetri Özeti) '
+                f'<span style="font-weight:500; opacity:0.8;">(Detaylı açıklama için yazıların üstüne fareyle gelin ℹ️)</span></div>'
                 f'<div class="info-strip-val" style="font-size:0.84rem; line-height:1.58;">'
                 f'<span title="{smart["reasoning"]}" style="cursor:help; border-bottom:1px dotted currentColor;">'
                 f'<b style="color:{smart_color};">{smart["zone_badge"]} [?]</b></span> &nbsp;&bull;&nbsp; '
@@ -992,15 +992,15 @@ def render_live_dashboard():
                 f'{smart["pendulum_badge"]} [?]</span> &nbsp;&bull;&nbsp; '
                 f'<span title="{smart["seq_sym_tip"]}" style="cursor:help; border-bottom:1px dotted var(--text-muted);">'
                 f'{smart["seq_sym_badge"]} [?]</span><br>'
-                f'<span title="Tek barem oynayacaksanız sistemin 62 canlı maç ve 4.550 arşiv maçına göre önerdiği 1 numaralı tercih." style="cursor:help;">'
-                f'🎯 Ana Tercih: <b>{smart["primary_pick"]}</b></span> &nbsp;&bull;&nbsp; '
-                f'<span title="İkili Koruma (Dutching): İki bareme birden bahis bölerek ikisinden biri tuttuğunda kâr etme yöntemi." style="cursor:help;">'
-                f'🛡️ İkili Koruma: <b>{smart["backup_pick"]}</b></span> &nbsp;&bull;&nbsp; '
-                f'<span title="Kademeli Kasa Önerisi: Yakın maçta (0-5 fark) 0 TL Pas, normal maçta 1000 TL, süper sinyalde 2000 TL." style="cursor:help;">'
-                f'💰 Kasa: <b>{smart["stake_badge"]}</b></span> &nbsp;&bull;&nbsp; '
+                f'<span title="Tek bir barem oynayacaksanız sistemin geçmiş maçlara bakarak önerdiği 1 numaralı barem." style="cursor:help;">'
+                f'🎯 Tek Barem Önerisi: <b>{smart["primary_pick"]}</b></span> &nbsp;&bull;&nbsp; '
+                f'<span title="Garantiye almak için iki bareme birden bahis bölerek ikisinden biri tuttuğunda kâr etme yöntemi." style="cursor:help;">'
+                f'🛡️ İki Barem Kapatma Önerisi: <b>{smart["backup_pick"]}</b></span> &nbsp;&bull;&nbsp; '
+                f'<span title="Bu maça ne kadar yatırılmalı? Yakın maçta (0-5 fark) 0 TL Pas, normal maçta 1000 TL, çok güçlü sinyalde 2000 TL." style="cursor:help;">'
+                f'💰 Önerilen Tutar: <b>{smart["stake_badge"]}</b></span> &nbsp;&bull;&nbsp; '
                 f'<span title="{smart["edge_tip"]}" style="cursor:help; border-bottom:1px dotted var(--text-muted);">'
                 f'{smart["edge_badge"]} [?]</span>'
-                f'<div style="font-size:0.72rem; color:var(--text-muted); margin-top:0.18rem;">💡 {smart["reasoning"]}</div>'
+                f'<div style="font-size:0.75rem; color:var(--text-primary); background:var(--bg-subtle); padding:0.35rem 0.6rem; border-radius:6px; margin-top:0.28rem;">💬 <b>Neden Bu Tercih?</b> {smart["reasoning"]}</div>'
                 f"</div></div>"
             )
 
@@ -1369,16 +1369,16 @@ tab_dna, tab_sym, tab_q3q4, tab_bankroll, tab_sim, tab_smart35 = st.tabs(
 # ═════════════════════════════════════════════════════════════════════════════
 with tab_smart35:
     st.markdown(
-        "##### 🤖 35. Dakika Akıllı Kural Motoru v3.1 — Gerçek Kapanış Oranlı Maçlardan Hesaplanır",
-        help="Bu sekmedeki tüm tablolar ve sanal kasa sonuçları, canlı takip edilip tamamlanmış gerçek maçların 35. dakika 1xBet kapanış oranlarından otomatik hesaplanır.",
+        "##### 🤖 35. Dakika Ne Oynamalı? — Gerçek Maçlardan Çıkarılan Sade Kurallar & Kasa Tablosu",
+        help="Bu sekmedeki tüm tablolar ve kasa sonuçları, canlı takip edilip tamamlanmış gerçek maçların 35. dakika 1xBet kapanış oranlarından otomatik hesaplanır.",
     )
     sim35 = simulate_35m_strategies(df_sym_all)
     if sim35["total_matches"] == 0:
         st.info("Sonuçlanmış canlı kapanış kaydı bekleniyor. Maçlar bittikçe bu sekme otomatik dolar.")
     else:
         st.caption(
-            f"📊 Analiz edilen gerçek maç sayısı: **{sim35['total_matches']}** • Her maça sabit **1000 TL** (veya Kademeli Kasa: **0 / 1000 / 2000 TL**) bahis • "
-            "Tablo başlıklarındaki **`?`** ikonlarının veya aşağıdaki kutuların üstüne fareyle gelerek her terimin ne işe yaradığını okuyabilirsiniz."
+            f"📊 İncelenen gerçek maç sayısı: **{sim35['total_matches']}** • Her maça sabit **1000 TL** (veya Kademeli Kasa: **0 / 1000 / 2000 TL**) bahis • "
+            "Tablo başlıklarındaki **`?`** işaretlerinin veya aşağıdaki kutuların üstüne fareyle gelerek her kuralın ne işe yaradığını okuyabilirsiniz."
         )
         _n_games = df_sym_all["game_id"].nunique() if not df_sym_all.empty else 0
         _n_done = (
@@ -1392,38 +1392,38 @@ with tab_smart35:
             """
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:0.55rem; margin:0.5rem 0 0.85rem 0;">
                 <div class="info-strip" style="cursor:help; border-left:4px solid #059669;"
-                     title="1xBet'te en düşük oranlı 1. Favori baremin hemen yanında 2. Favori vardır. Eğer 2. Favori BİR ÜST baremdeyse (ör. 1.Fav 201-210 iken 2.Fav 211-220 ise) ve 1.Fav oranı 2.10 üstüyse, maç neredeyse hiç alt bareme düşmez (%0) ve 1. Favori %61.1 isabetle +%39.9 kâr verir!">
-                    <div class="info-strip-label">🔥 1. Kural: 2. Favori Yönü [?]</div>
+                     title="1xBet'te en düşük oranlı 1. Favori baremin yanında 2. Favori vardır. Eğer 2. Favori BİR ÜST baremdeyse (ör. 1.Favori 201-210 iken 2.Favori 211-220 ise) ve 1.Favori oranı 2.10 üstüyse, maç hiç alt bareme düşmez (%0) ve direkt 1. Favori %61 oranında tutar!">
+                    <div class="info-strip-label">🔥 1. Kural: 2. Favori Nerede Duruyor? [?]</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
-                        <b>2. Favori Üstteyse (+1)</b> maç alta düşmez, <b>0 Merkez</b> oyna (<b>+%39.9 ROI</b>). <b>Alttaysa (-1)</b> ve oran &lt;2.10 ise <b>-1 Alt</b> oyna.
+                        <b>2. Favori üst baremdeyse</b> maç alta düşmez, direkt <b>1. Favoriyi</b> oyna. <b>Alt baremdeyse</b> ve oran 2.10 altındaysa <b>1 Alt Baremi</b> oyna.
                     </div>
                 </div>
                 <div class="info-strip" style="cursor:help; border-left:4px solid #dc2626;"
-                     title="35. dakikada iki takım arasındaki skor farkı 0 ile 5 sayı arasındaysa maç başa baş demektir. Son dakikalarda taktik fauller ve uzatma (OT) riski yüzünden normalden +6 sayı fazla (ort. 59 sayı) atılır ve barem yukarı patlar. Bu maçlara bahis almamak (PAS) genel kârı +%17.6'dan +%29.1'e çıkarır!">
-                    <div class="info-strip-label">⛔ 2. Kural: 0-5 Fark Yakın Maç Tuzağı [?]</div>
+                     title="35. dakikada iki takım arasındaki skor farkı 0 ile 5 sayı arasındaysa maç başa baş demektir. Son dakikalarda taktik fauller ve uzatma yüzünden normalden 6 sayı fazla (ort. 59 sayı) atılır ve maç üst bareme kaçar. Bu maçlara bahis almamak (Pas Geçmek) seni zarardan korur!">
+                    <div class="info-strip-label">⛔ 2. Kural: Fark 0-5 Sayı İse Pas Geç [?]</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
-                        35. dk'da fark <b>0-5 sayı</b> ise faul/uzatma yüzünden barem patlar. <b>PAS GEÇMEK (0 TL)</b> seni zarardan korur.
+                        35. dk'da fark <b>0-5 sayı</b> ise faul ve uzatma yüzünden çok sayı atılır. <b>Bahis Alma (Pas Geç)</b>.
                     </div>
                 </div>
                 <div class="info-strip" style="cursor:help; border-left:4px solid #2563eb;"
-                     title="35. dakikada fark 18 sayı veya daha fazlaysa maç kopmuş demektir. Takımlar son çeyrekte rölantiye geçer, ortalama sadece 47.4 sayı atılır (yakın maçtan 11.6 sayı daha az!). Üst bareme kaçma ihtimali %5'tir; 0 Merkez %60 tutar (+%27.5 ROI).">
-                    <div class="info-strip-label">🧊 3. Kural: 18+ Fark Rölanti Freni [?]</div>
+                     title="35. dakikada fark 18 sayı veya daha fazlaysa maç kopmuş demektir. Takımlar son çeyrekte tempoyu düşürür, ortalama sadece 47 sayı atılır. Üst bareme kaçma ihtimali %5'tir; direkt 1. Favori Barem %60 oranında tutar.">
+                    <div class="info-strip-label">🧊 3. Kural: Fark 18+ Sayı İse Maç Yavaşlar [?]</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
-                        Fark <b>18+ sayı</b> ise son çeyrek yavaşlar (ort. 47.4 sayı). Üste kaçmaz; <b>0 Merkez %60</b> tutar (<b>+%27.5 ROI</b>).
+                        Fark <b>18+ sayı</b> olduğunda son çeyrek yavaşlar (ort. 47 sayı). Üst bareme kaçmaz; <b>1. Favori %60</b> tutar.
                     </div>
                 </div>
                 <div class="info-strip" style="cursor:help; border-left:4px solid #e11d48;"
-                     title="35. dakikada 1. Favori oranı 1.85'in altındaysa (ör. 1.65, 1.75), herkes oraya yüklendiği için büyük tuzaktır ve -%37 zarar yazar! Bu maçlarda 1. Favori yerine doğrudan 2. Favori baremi oynamak +%41.8 kâr (ROI) sağlamıştır.">
-                    <div class="info-strip-label">🚨 4. Kural: &lt;1.85 Aşırı Favori Tuzağı [?]</div>
+                     title="35. dakikada 1. Favori oranı 1.85'in altındaysa (ör. 1.65, 1.75), bu büyük bir tuzaktır ve zarar ettirir! Bu maçlarda 1. Favori yerine doğrudan 2. Favori baremi oynamak +%41.8 net kâr sağlamıştır.">
+                    <div class="info-strip-label">🚨 4. Kural: Oran 1.85 Altı İse Tuzaktır [?]</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
-                        1. Favori oranı <b>1.85 altındaysa</b> oynama (-%37 zarar)! Doğrudan <b>2. Favori</b> oyna (<b>+%41.8 ROI</b>).
+                        1. Favori oranı <b>1.85 altındaysa</b> oynama! Onun yerine doğrudan <b>2. Favori Baremi</b> oyna.
                     </div>
                 </div>
                 <div class="info-strip" style="cursor:help; border-left:4px solid #d97706;"
-                     title="35. dakikadan maç sonuna kadar ortalama 53.3 sayı atılır. Mevcut skora 53.3 eklediğimizde çıkan sayı favori baremin alt sınırına çok yakınsa (Alt Kenar), maçların %55.6'sı bir alt bareme (-1) düşer. Tam ortasındaysa 0 Merkez %56 tutar.">
-                    <div class="info-strip-label">📐 5. Kural: Barem İçi Kenar Konumu [?]</div>
+                     title="35. dakikadan maç sonuna kadar ortalama 53 sayı atılır. Şu anki toplam skorun son rakamı 1, 2, 3 veya 4 ise maç tam favori baremin ortasına düşer (%58 tutar). Son rakam 8, 9 veya 0 ise baremin en alt sınırında kalır, 1 Alt Bareme düşme riski yüksektir.">
+                    <div class="info-strip-label">🎯 5. Kural: Skorun Son Rakamı Kuralı [?]</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
-                        <b>35.Dk Skor + 53.3</b> favori baremin alt sınırındaysa <b>-1 Alt</b> riski %56'dır; tam ortasındaysa <b>0 Merkez</b> güvenlidir.
+                        35. dk toplam skorun sonu <b>1-2-3-4</b> ise tam barem ortasına düşer (<b>1. Favori</b> güçlü); <b>8-9-0</b> ise <b>1 Alt Barem</b> riski vardır.
                     </div>
                 </div>
             </div>
@@ -1432,47 +1432,47 @@ with tab_smart35:
         )
 
         st.markdown(
-            "###### 💰 Sanal Kasa: Hangi Strateji Ne Kadar Kazandırdı?",
-            help="Gerçek sonuçlanmış maçların tamamında bu 7 stratejiyi uygulasaydık kasamızın ne olacağını gösterir. ROI: Yatırılan toplam paraya göre yüzdelik net kâr oranıdır.",
+            "###### 💰 Sanal Kasa: Hangi Yöntem Ne Kadar Kazandırdı?",
+            help="Gerçek sonuçlanmış maçların tamamında bu yöntemleri uygulasaydık kasamızın ne olacağını gösterir. Kâr Oranı (%): Yatırılan toplam paraya göre yüzdelik net kazançtır.",
         )
         st.dataframe(
             pd.DataFrame(
                 [
                     {
-                        "Strateji": s["name"],
-                        "İsabet": f"{s['wins']} / {s['total']} (%{s['win_rate']})",
-                        "Toplam Yatırım": f"{s['cost']:.0f} TL",
-                        "Toplam Dönüş": f"{s['return']:.0f} TL",
+                        "Oynama Yöntemi (Strateji)": s["name"],
+                        "Tutma Oranı": f"{s['wins']} / {s['total']} (%{s['win_rate']})",
+                        "Toplam Yatırılan": f"{s['cost']:.0f} TL",
+                        "Toplam Geri Dönüş": f"{s['return']:.0f} TL",
                         "Net Kâr / Zarar": f"{s['net_profit']:+.0f} TL",
-                        "ROI": f"%{s['roi_pct']:+.1f}",
+                        "Kâr Oranı (%)": f"%{s['roi_pct']:+.1f}",
                     }
                     for s in sim35["strategies"]
                 ]
             ),
             column_config={
-                "Strateji": st.column_config.TextColumn(
-                    "Strateji",
-                    help="Test edilen bahis yöntemi. En üstteki 'v3 Seçici' yakın maçları (0-5 fark) pas geçip diğerlerine 1000 TL oynar.",
+                "Oynama Yöntemi (Strateji)": st.column_config.TextColumn(
+                    "Oynama Yöntemi (Strateji)",
+                    help="Test edilen bahis yöntemi. En üstteki yöntem başa baş maçları (0-5 fark) pas geçip diğerlerine 1000 TL oynar.",
                 ),
-                "İsabet": st.column_config.TextColumn(
-                    "İsabet",
+                "Tutma Oranı": st.column_config.TextColumn(
+                    "Tutma Oranı",
                     help="Oynanan toplam maç içinden kaç tanesinin kazandığı ve tutturma yüzdesi.",
                 ),
-                "Toplam Yatırım": st.column_config.TextColumn(
-                    "Toplam Yatırım",
+                "Toplam Yatırılan": st.column_config.TextColumn(
+                    "Toplam Yatırılan",
                     help="Oynanan tüm maçlar için cepten çıkan toplam bahis tutarı (Pas geçilen maçlarda para harcanmaz).",
                 ),
-                "Toplam Dönüş": st.column_config.TextColumn(
-                    "Toplam Dönüş",
-                    help="Tutan kuponlardan kasaya geri dönen brüt toplam para.",
+                "Toplam Geri Dönüş": st.column_config.TextColumn(
+                    "Toplam Geri Dönüş",
+                    help="Tutan kuponlardan kasaya geri dönen toplam para.",
                 ),
                 "Net Kâr / Zarar": st.column_config.TextColumn(
                     "Net Kâr / Zarar",
-                    help="Toplam Dönüş eksi Toplam Yatırım = Cebimize kalan net kâr veya zarar.",
+                    help="Toplam Geri Dönüş eksi Toplam Yatırılan = Cebimize kalan net kâr veya zarar.",
                 ),
-                "ROI": st.column_config.TextColumn(
-                    "ROI (Verim %)",
-                    help="Yatırılan her 100 TL başına elde edilen net yüzdelik kâr. Örneğin +%29.1 ROI, her 1000 TL yatırıma ortalama +291 TL net kâr demektir.",
+                "Kâr Oranı (%)": st.column_config.TextColumn(
+                    "Kâr Oranı (%)",
+                    help="Yatırılan her 100 TL başına elde edilen net yüzdelik kâr. Örneğin +%35.5 Kâr Oranı, her 1000 TL yatırıma ortalama +355 TL net kazanç demektir.",
                 ),
             },
             use_container_width=True,
@@ -1481,182 +1481,58 @@ with tab_smart35:
 
         if sim35.get("sec_dir_brackets"):
             st.markdown(
-                "###### 🧭 2. Favorinin Yönüne Göre Davranış (Piyasa Eğilimi: Üstte mi Altta mı?)",
-                help="1xBet'te 1. Favoriden sonra en düşük oranlı 2. baremin üstte (+1) mi yoksa altta (-1) mı durduğuna göre maçların nasıl bittiğini gösterir.",
+                "###### 🧭 2. Favori Üst Baremde mi Yoksa Alt Baremde mi Duruyor?",
+                help="1xBet'te 1. Favoriden sonra en düşük oranlı 2. baremin bir üst baremde mi yoksa bir alt baremde mi durduğuna göre maçların nasıl bittiğini gösterir.",
             )
-            st.dataframe(
-                pd.DataFrame(sim35["sec_dir_brackets"]),
-                column_config={
-                    "2. Favorinin Konumu (Piyasa Eğilimi)": st.column_config.TextColumn(
-                        help="2. Favori Üstte (+1): Piyasa sayıların yukarı gitmesini bekliyor. 2. Favori Altta (-1): Piyasa sayıların aşağı düşmesini bekliyor."
-                    ),
-                    "Maç Sayısı": st.column_config.NumberColumn(help="Bu koşula uyan tamamlanmış gerçek maç sayısı."),
-                    "🎯 0 Merkez (ROI)": st.column_config.TextColumn(
-                        help="35. dakikadaki 1. Favori (Merkez) baremin tutma oranı ve tek başına oynandığında bıraktığı yüzdelik kâr (ROI)."
-                    ),
-                    "📉 -1 Alt (ROI)": st.column_config.TextColumn(
-                        help="Favorinin 1 kademe altındaki baremin tutma oranı ve tek başına oynandığında bıraktığı yüzdelik kâr (ROI)."
-                    ),
-                    "❄️ -2 Alt": st.column_config.TextColumn(help="Favorinin 2 veya daha fazla kademe altında bitme oranı."),
-                    "📈 +1/+2 Üst": st.column_config.TextColumn(help="Favorinin 1 veya 2 kademe üstünde bitme oranı."),
-                    "💡 Ne İşe Yarar / Ne Oynanır?": st.column_config.TextColumn(
-                        help="Bu senaryo canlı maçta karşınıza çıktığında ne oynamanız gerektiğini özetler."
-                    ),
-                },
-                use_container_width=True,
-                hide_index=True,
-            )
+            st.dataframe(pd.DataFrame(sim35["sec_dir_brackets"]), use_container_width=True, hide_index=True)
 
         if sim35.get("margin_brackets"):
             st.markdown(
-                "###### ⚖️ 35. Dk Skor Farkına Göre Davranış (Yakın Maç Uzatma Tuzağı vs 18+ Fark Rölanti Freni)",
-                help="35. dakikada iki takım arasındaki skor farkının son çeyrekte atılan sayıya ve barem isabetine etkisini gösterir.",
+                "###### ⚖️ 35. Dakikadaki Skor Farkına Göre Maçlar Nasıl Bitiyor?",
+                help="35. dakikada iki takım arasındaki skor farkının kalan sürede atılan sayıya ve barem tutmasına etkisini gösterir.",
             )
-            st.dataframe(
-                pd.DataFrame(sim35["margin_brackets"]),
-                column_config={
-                    "35. Dk Skor Farkı Bandı": st.column_config.TextColumn(
-                        help="35. dakikada ev sahibi ile deplasman skoru arasındaki mutlak sayı farkı."
-                    ),
-                    "Maç Sayısı": st.column_config.NumberColumn(help="Bu fark aralığındaki gerçek maç sayısı."),
-                    "Son 13 Dk Ort. Atılan Sayı": st.column_config.TextColumn(
-                        help="35. dakikadan maç bitimine kadar atılan ortalama toplam sayı. Yakın maçta 59.0 sayı atılırken 18+ farkta 47.4 sayıya düşer!"
-                    ),
-                    "🎯 0 Merkez (ROI)": st.column_config.TextColumn(
-                        help="1. Favori (0 Merkez) baremin tutma yüzdesi ve net kâr oranı (ROI)."
-                    ),
-                    "📉 -1/-2 Alt Barem": st.column_config.TextColumn(help="Maçın favori baremin altında bitme oranı."),
-                    "📈 +1/+2 Üst Barem": st.column_config.TextColumn(help="Maçın favori baremin üstünde bitme oranı."),
-                    "💡 Ne İşe Yarar / Ne Oynanır?": st.column_config.TextColumn(
-                        help="Canlı maçta bu skor farkını gördüğünüzde uygulanacak kural."
-                    ),
-                },
-                use_container_width=True,
-                hide_index=True,
-            )
+            st.dataframe(pd.DataFrame(sim35["margin_brackets"]), use_container_width=True, hide_index=True)
 
         if sim35["odds_brackets"]:
             st.markdown(
-                "###### 🎚️ 35. Dk Favori Oran Bandına Göre Davranış (<1.85 Tuzağı & Altın Bant)",
+                "###### 🎚️ 35. Dakikadaki 1. Favori Oranına Göre Ne Oynanmalı?",
                 help="35. dakikadaki 1. Favori oranının büyüklüğüne göre maçların hangi baremde bittiğini gösterir.",
             )
-            st.dataframe(
-                pd.DataFrame(sim35["odds_brackets"]),
-                column_config={
-                    "35. Dk 1. Favori Oran Bandı": st.column_config.TextColumn(
-                        help="35. dakikada en düşük oranlı 1. Favori baremin 1xBet oranı."
-                    ),
-                    "🎯 0 (Merkez) İsabet & ROI": st.column_config.TextColumn(
-                        help="1. Favorinin doğrudan gelme yüzdesi ve yüzdelik net kârı (ROI)."
-                    ),
-                    "💡 Ne Yapmalı? (Kural Özeti)": st.column_config.TextColumn(
-                        help="Oran bu aralıktayken hangi seçeneğin kârlı olduğunu açıklar."
-                    ),
-                },
-                use_container_width=True,
-                hide_index=True,
-            )
+            st.dataframe(pd.DataFrame(sim35["odds_brackets"]), use_container_width=True, hide_index=True)
 
         if sim35.get("mod10_brackets"):
             st.markdown(
-                "###### 🔢 YENİ SİMETRİ 1: 35. Dk Toplam Skorun Son Rakamı (Mod-10) Barem Göbek vs Sınır Simetrisi",
-                help="Her barem 10 sayı genişliğindedir (Örn: 201-210, göbeği 205). 35. dakikadan sonra ortalama 53 sayı atıldığı için; 35. dakika skorunun son rakamı 1-2-3-4 ise maç tam barem göbeğine (X4-X7) düşer, 8-9-0 ise baremin en alt sınırına (X1-X3) düşer!",
+                "###### 🔢 SİMETRİ 1: 35. Dakika Toplam Skorunun Son Rakamına Göre Barem İçi Konum",
+                help="Her barem 10 sayı genişliğindedir (Örn: 201-210, ortası 205). 35. dakikadan sonra ortalama 53 sayı atıldığı için; 35. dakika skorunun son rakamı 1-2-3-4 ise maç tam barem ortasına düşer, 8-9-0 ise baremin en alt sınırında kalır!",
             )
-            st.dataframe(
-                pd.DataFrame(sim35["mod10_brackets"]),
-                column_config={
-                    "35. Dk Toplam Skorun Son Rakamı (Mod-10)": st.column_config.TextColumn(
-                        help="35. dakikadaki toplam skorun birler basamağı (Örn: 152 ise son rakamı 2'dir)."
-                    ),
-                    "Maç Sayısı": st.column_config.NumberColumn(help="Bu son rakam grubuna giren maç sayısı."),
-                    "🎯 Tam Favori (ROI)": st.column_config.TextColumn(
-                        help="1. Favori baremin doğrudan tutma oranı ve yüzdesel net kârı (ROI)."
-                    ),
-                    "📉 1/2 Alt Bareme Düşüş": st.column_config.TextColumn(help="Alt baremlere düşme yüzdesi."),
-                    "📈 1/2 Üst Bareme Çıkış": st.column_config.TextColumn(help="Üst baremlere çıkma yüzdesi."),
-                    "💡 Matematiksel Simetri Açıklaması": st.column_config.TextColumn(
-                        help="Son rakamın +53 sayı eklendiğinde baremin neresine denk geldiğini açıklar."
-                    ),
-                },
-                use_container_width=True,
-                hide_index=True,
-            )
+            st.dataframe(pd.DataFrame(sim35["mod10_brackets"]), use_container_width=True, hide_index=True)
 
         if sim35.get("twin_conc_brackets"):
             st.markdown(
-                "###### 👯 YENİ SİMETRİ 2: İkiz Oran Simetrisi, İlk-2 Favori Yoğunluğu & Çan Eğrisi Kanat Dengesi",
-                help="1. Favori ile 2. Favori oranlarının birbirine yakınlığı (İkiz Oran <=0.25), ilk 2 favorinin toplam olasılık yoğunluğu (>=%78) ve Alt-Üst komşu kanatların simetrisi.",
+                "###### 👯 SİMETRİ 2: 1. ve 2. Favori Oranları Birbirine Yakın Olduğunda Ne Olur?",
+                help="1. Favori ile 2. Favori oranlarının birbirine yakınlığı, ilk 2 favorinin toplam gücü ve alt-üst komşu baremlerin dengesi.",
             )
-            st.dataframe(
-                pd.DataFrame(sim35["twin_conc_brackets"]),
-                column_config={
-                    "Oran Simetrisi & Yoğunluk Grubu": st.column_config.TextColumn(
-                        help="1xBet kapanış oranlarının simetri ve yoğunluk yapısı."
-                    ),
-                    "Maç Sayısı": st.column_config.NumberColumn(help="Bu simetri yapısına giren maç sayısı."),
-                    "🎯 1. Favori (ROI)": st.column_config.TextColumn(help="1. Favori baremin tutma yüzdesi ve ROI kârı."),
-                    "🥈 2. Favori İsabeti": st.column_config.TextColumn(help="2. Favori baremin tutma yüzdesi."),
-                    "🛡️ 1. veya 2. Favori Toplam": st.column_config.TextColumn(
-                        help="1. veya 2. Favoriden en az birinin gelme yüzdesi (İkili Koruma başarısı)."
-                    ),
-                    "💡 Ne İşe Yarar?": st.column_config.TextColumn(help="Bu simetri sinyali görüldüğünde ne yapılması gerektiğini açıklar."),
-                },
-                use_container_width=True,
-                hide_index=True,
-            )
+            st.dataframe(pd.DataFrame(sim35["twin_conc_brackets"]), use_container_width=True, hide_index=True)
 
         if sim35.get("pendulum_brackets"):
             st.markdown(
-                "###### 🪃 YENİ SİMETRİ 3: Son 5 Dakika (30.Dk ➔ 35.Dk) Ters Sarkaç / Yay Gerilmesi Simetrisi",
-                help="30. dakikadaki favori barem ile 35. dakikadaki favori barem arasındaki değişimi inceler. Son 5 dakikada barem düştüyse yay aşağı gerilmiştir, daha fazla alta düşmez (%0)!",
+                "###### 🔄 SİMETRİ 3: Son 5 Dakikada (30.Dk ➔ 35.Dk) Barem Değiştiyse Ne Olur?",
+                help="30. dakikadaki favori barem ile 35. dakikadaki favori barem arasındaki değişimi inceler. Son 5 dakikada barem zaten düştüyse daha fazla alt bareme düşmez (%0)!",
             )
-            st.dataframe(
-                pd.DataFrame(sim35["pendulum_brackets"]),
-                column_config={
-                    "Son 5 Dakika (30➔35.Dk) Sarkaç Hareketi": st.column_config.TextColumn(
-                        help="30. dakikadan 35. dakikaya favori baremin sabit mi kaldığı, aşağı mı düştüğü, yukarı mı sıçradığı."
-                    ),
-                    "Maç Sayısı": st.column_config.NumberColumn(help="Bu gruptaki maç sayısı."),
-                    "🎯 Tam Favori (ROI)": st.column_config.TextColumn(help="35. dakika favorisinin tutma oranı ve ROI kârı."),
-                    "📉 1 Alt Bareme Düşüş": st.column_config.TextColumn(help="35. dakika favorisinin bir alt baremine düşme yüzdesi."),
-                    "📈 1/2 Üst Bareme Çıkış": st.column_config.TextColumn(help="35. dakika favorisinin üst baremlerine çıkma yüzdesi."),
-                    "💡 Sarkaç Simetrisi Kuralı": st.column_config.TextColumn(help="Yay gerilmesi / ters sarkaç kuralının açıklaması."),
-                },
-                use_container_width=True,
-                hide_index=True,
-            )
+            st.dataframe(pd.DataFrame(sim35["pendulum_brackets"]), use_container_width=True, hide_index=True)
 
         arc_sym = analyze_archive_4500_symmetry(df_completed_archive)
         if arc_sym.get("mod10_36m"):
             st.markdown(
-                f"###### 🏛️ YENİ SİMETRİ 4: {arc_sym['total_archive']} Gerçek Maçlık Arşivde 36. Dakika Skor Son Rakamı (`..0` – `..9`) Mod-10 Barem Simetrisi",
-                help="4.550'den fazla tamamlanmış CyberLeague maçında 3. çeyrek sonu (36. dk) toplam skorunun son rakamına göre maçın Merkez, Alt veya Üst baremde bitme simetrisi.",
+                f"###### 🏛️ SİMETRİ 4: {arc_sym['total_archive']} Maçlık Arşivde 3. Çeyrek Sonu (36.Dk) Skorun Son Rakamı (`..0` – `..9`) Analizi",
+                help="4.550'den fazla tamamlanmış maçta 3. çeyrek sonu (36. dk) toplam skorunun son rakamına göre maçın beklenen baremde, bir alt baremde veya bir üst baremde bitme oranları.",
             )
-            st.dataframe(
-                pd.DataFrame(arc_sym["mod10_36m"]),
-                column_config={
-                    "36.Dk Skor Son Rakamı": st.column_config.TextColumn(
-                        help="3. çeyrek bittiğinde (36. dk) toplam skorun birler basamağı (0'dan 9'a kadar)."
-                    ),
-                    "Maç Sayısı": st.column_config.NumberColumn(help="4.550+ arşiv içinde bu rakamla biten maç sayısı (~450 maç/rakam)."),
-                    "Beklenen Son Rakam (+52 Sayı)": st.column_config.TextColumn(
-                        help="4. çeyrekte ortalama 52 sayı atıldığında maç sonu toplamının hangi rakamla bitmesinin beklendiği."
-                    ),
-                    "📉 Alt Bareme Kayma": st.column_config.TextColumn(help="Beklenen baremin altına düşme oranı."),
-                    "🎯 Merkez Baremde Kalma": st.column_config.TextColumn(help="Beklenen baremin içinde kalma oranı."),
-                    "📈 Üst Bareme Çıkma": st.column_config.TextColumn(help="Beklenen baremin üstüne çıkma oranı."),
-                    "💡 4.550 Maçlık Simetri Kuralı": st.column_config.TextColumn(
-                        help="Sonu ..3 ile bitenlerin neden tam göbek simetrisi (%45.3 Merkez, %27.6 Alt = %27.1 Üst), ..8 ve ..9 ile bitenlerin neden sınır sıçraması yaptığını açıklar."
-                    ),
-                },
-                use_container_width=True,
-                hide_index=True,
-            )
+            st.dataframe(pd.DataFrame(arc_sym["mod10_36m"]), use_container_width=True, hide_index=True)
 
         if arc_sym.get("half_symmetry"):
             st.markdown(
-                f"###### 🪞 YENİ SİMETRİ 5: {arc_sym['total_archive']} Maçlık Arşivde İlk Yarı (`Q1+Q2`) ➔ İkinci Yarı (`Q3+Q4`) Ayna & Dengeleme Simetrisi",
-                help="İlk yarıda çok düşük veya çok yüksek sayı çıktığında 2. yarıda oyunun nasıl ters yönde tepki vererek toplam skoru dengelediğini gösterir.",
+                f"###### 🪞 SİMETRİ 5: {arc_sym['total_archive']} Maçlık Arşivde İlk Yarı ve İkinci Yarı Sayı Dengesi",
+                help="İlk yarıda çok az veya çok fazla sayı çıktığında 2. yarıda oyunun nasıl ters yönde tepki vererek toplam skoru dengelediğini gösterir.",
             )
             st.dataframe(
                 pd.DataFrame(arc_sym["half_symmetry"]),
@@ -1666,90 +1542,38 @@ with tab_smart35:
 
         if sim35.get("edge_brackets"):
             st.markdown(
-                "###### 📐 35. Dk Skorun Barem İçindeki Yeri (Mevcut Skor + 53.3 Kalan Sayı Hesabı)",
-                help="35. dakikadaki toplam skora ortalama kalan sayı (53.3) eklendiğinde favori baremin neresine (alt sınır, orta, üst sınır) düştüğünü analiz eder.",
+                "###### 📐 35. Dakika Skoru + 53 Sayı Eklendiğinde Baremin Neresine Düşüyor?",
+                help="35. dakikadaki toplam skora ortalama kalan sayı (53) eklendiğinde favori baremin neresine (alt sınır, orta, üst sınır) düştüğünü analiz eder.",
             )
-            st.dataframe(
-                pd.DataFrame(sim35["edge_brackets"]),
-                column_config={
-                    "35. Dk Skorun Barem İçindeki Yeri": st.column_config.TextColumn(
-                        help="Örn: Favori barem 201-210 (ortası 205.5) iken 35.dk skoru + 53.3 = 201 yapıyorsa 'Alt Kenarda' demektir."
-                    ),
-                    "📉 -1/-2 Alta Kayma": st.column_config.TextColumn(help="Alt baremlere düşme yüzdesi."),
-                    "🎯 0 Merkezde Kalma (ROI)": st.column_config.TextColumn(help="Favori baremde kalma yüzdesi ve ROI verimi."),
-                    "📈 +1/+2 Üste Çıkma": st.column_config.TextColumn(help="Üst baremlere çıkma yüzdesi."),
-                    "💡 Ne İşe Yarar?": st.column_config.TextColumn(help="Kenar konumuna göre nasıl aksiyon alınacağını açıklar."),
-                },
-                use_container_width=True,
-                hide_index=True,
-            )
+            st.dataframe(pd.DataFrame(sim35["edge_brackets"]), use_container_width=True, hide_index=True)
 
         if sim35.get("minute_windows"):
             st.markdown(
-                "###### ⏱️ Hangi Dakikada Bahis Alınmalı? (Dakika Penceresi İsabet & ROI Analizi)",
+                "###### ⏱️ Hangi Dakikada Bahis Alınmalı? (Dakika Karşılaştırması)",
                 help="Maçın 18., 24., 30., 32-33. ve 34-35. dakikalarında bahis alındığında hangisinin kârlı, hangisinin tuzak olduğunu gösterir.",
             )
-            st.dataframe(
-                pd.DataFrame(sim35["minute_windows"]),
-                column_config={
-                    "Bahis Giriş Dakikası": st.column_config.TextColumn(help="Bahsin alındığı maç dakikası."),
-                    "🎯 1. Favori İsabet & ROI": st.column_config.TextColumn(
-                        help="O dakikadaki 1. Favori bareme tekli bahis alındığında tutma yüzdesi ve ROI kârı."
-                    ),
-                    "🛡️ 1. & 2. Favori İkili Koruma": st.column_config.TextColumn(
-                        help="O dakikadaki 1. ve 2. Favori bareme ikili koruma (Dutching) yapıldığında tutma yüzdesi ve ROI kârı."
-                    ),
-                    "💡 Zamanlama Tavsiyesi": st.column_config.TextColumn(
-                        help="32-33. dakikalarda neden bahis alınmaması gerektiğini ve en doğru giriş dakikasını açıklar."
-                    ),
-                },
-                use_container_width=True,
-                hide_index=True,
-            )
+            st.dataframe(pd.DataFrame(sim35["minute_windows"]), use_container_width=True, hide_index=True)
 
         if sim35["drift_brackets"]:
             st.markdown(
-                "###### 📉 Maç İçi Barem Göçü (Q1 ➔ 35. Dk) Davranışı",
-                help="Maçın 1. çeyreğindeki favori barem ile 35. dakikadaki favori barem arasındaki yükseliş/düşüş farkına göre maç sonu davranışı.",
+                "###### 📉 Maç Başından 35. Dakikaya Barem Değiştiğinde Ne Olur?",
+                help="Maçın 1. çeyreğindeki favori barem ile 35. dakikadaki favori barem arasındaki yükseliş veya düşüşe göre maç sonu sonucu.",
             )
             st.dataframe(pd.DataFrame(sim35["drift_brackets"]), use_container_width=True, hide_index=True)
 
         if sim35["transitions"]:
             st.markdown(
-                "###### 🌊 Ardışık Maç Geçiş Matrisi (Önceki Maç ➔ Sıradaki Maç)",
-                help="Bir önceki biten maçın sonucuna (0 Merkez, -1 Alt, +1 Üst) göre sıradaki maçın nasıl bittiğini gösterir.",
+                "###### 🌊 Bir Önceki Maçın Sonucuna Göre Sıradaki Maç Nasıl Bitiyor?",
+                help="Bir önceki biten maçta favori mi geldi, alt barem mi geldi, üst barem mi geldi bilgisinin sıradaki maça etkisi.",
             )
             st.dataframe(pd.DataFrame(sim35["transitions"]), use_container_width=True, hide_index=True)
 
         st.markdown(
             "###### 📒 Maç Maç Sanal Kupon Defteri (Tüm Gerçek Maçlar)",
-            help="En son biten maç en üstte olacak şekilde her maçta v4 Seçici, Kademeli Kasa ve Akıllı İkili Koruma kuponlarının ne yaptığını tek tek gösterir.",
+            help="En son biten maç en üstte olacak şekilde her maçta sistemin hangi baremi önerdiğini ve kuponların ne yaptığını tek tek gösterir.",
         )
         st.dataframe(
             pd.DataFrame(sim35["ledger"]),
-            column_config={
-                "Maç": st.column_config.TextColumn(help="Karşılaşan takımlar."),
-                "Kapanış Dk & Fark": st.column_config.TextColumn(
-                    help="Kapanış oranının alındığı dakika, o andaki skor farkı ve toplam skorun son rakamı (Mod-10)."
-                ),
-                "35.Dk Favori (0)": st.column_config.TextColumn(help="35. dakikada 1xBet'in en düşük oranlı 1. Favori baremi."),
-                "2. Favori Yönü": st.column_config.TextColumn(
-                    help="2. Favorinin 1. Favoriye göre üstte mi (📈 Üst) yoksa altta mı (📉 Alt) durduğu ve oranı."
-                ),
-                "🤖 v3/v4 Akıllı Seçim": st.column_config.TextColumn(
-                    help="v4 Derin Simetri Motoru'nun bu maç için seçtiği barem ve hangi kuralı uyguladığı."
-                ),
-                "Biten Barem (Skor)": st.column_config.TextColumn(help="Maçın gerçekte bittiği barem ve maç sonu skoru."),
-                "v4 Seçici (1000 TL / Pas)": st.column_config.TextColumn(
-                    help="0-5 sayı fark olan yakın maçları PAS geçip diğerlerine 1000 TL oynayan v4 Derin Simetri stratejisinin bu maçtaki net sonucu."
-                ),
-                "Kademeli Kasa (0/1000/2000)": st.column_config.TextColumn(
-                    help="Yakın maça 0 TL, normal maça 1000 TL, Süper Sinyal maçına 2000 TL yatıran kademeli kasanın bu maçtaki sonucu."
-                ),
-                "Akıllı İkili Koruma": st.column_config.TextColumn(
-                    help="10+ farkta (Favori & 1 Alt), diğer maçlarda (1.Fav & 2.Fav) çifte şans oynayan İkili Koruma kuponunun sonucu."
-                ),
-            },
             use_container_width=True,
             hide_index=True,
             height=440,

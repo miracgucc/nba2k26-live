@@ -947,17 +947,17 @@ def analyze_smart_35m_decision(
     sec_b_clean = fav2_barem if (fav2_barem in barem_names and fav2_barem != base_b) else b_m1
 
     if sec_dir >= 1:
-        sec_dir_badge = f"📈 2.Favori Üst Baremi Gösteriyor ({sec_b_clean})"
+        sec_dir_badge = f"📈 2. Favori Bir Üst Baremde ({sec_b_clean})"
         sec_dir_tip = (
-            "1xBet'in en düşük oranlı 2. seçeneği şu anki favorinin BİR ÜST bareminde duruyor. "
-            "62 maçlık veride 2. favori üstteyken maçların alt bareme düşme ihtimali çok düşüktür (%7); "
-            "oran 2.10 üstüyse direkt 1. Favori Barem %61.1 isabet ve +%39.9 kâr (ROI) üretmiştir."
+            f"Şu an 1. Favori {base_b} iken, en düşük oranlı 2. Favori bir üst barem olan {sec_b_clean} aralığında duruyor. "
+            f"Geçmiş 62 maçta 2. favori üst baremdeyken maçların alt bareme ({b_m1}) düşme ihtimali çok düşüktür (%7); "
+            f"oran 2.10 üstüyse direkt {base_b} oynamak %61 tutturma ve +%39.9 net kâr sağlamıştır."
         )
     else:
-        sec_dir_badge = f"📉 2.Favori Alt Baremi Gösteriyor ({sec_b_clean})"
+        sec_dir_badge = f"📉 2. Favori Bir Alt Baremde ({sec_b_clean})"
         sec_dir_tip = (
-            "1xBet'in 2. favorisi şu anki favorinin BİR ALT bareminde duruyor. "
-            "Bu durumda maçların %48.5'i alt baremlere kaymış, üst bareme ise hiç (%0) gitmemiştir."
+            f"Şu an 1. Favori {base_b} iken, en düşük oranlı 2. Favori bir alt barem olan {sec_b_clean} aralığında duruyor. "
+            f"Bu durumda maçların neredeyse yarısı (%48.5) alt bareme ({b_m1}) kaymış, üst bareme ({b_p1}) ise hiç (%0) çıkmamıştır."
         )
 
     # Calculate in-game drift (Q1 -> Now) and Late 5m Pendulum (30m -> 35m) for this game_id
@@ -983,68 +983,69 @@ def analyze_smart_35m_decision(
                     late_jump = barem_names.index(base_b) - barem_names.index(b_30m)
 
     if drift > 0:
-        drift_badge = f"📈 Maç Başından Beri +{drift} Üste Çıktı ({open_b}➔{base_b})"
+        drift_badge = f"📈 Maç Başında {open_b} Bekleniyordu ➔ Şimdi {base_b} Oldu (Maç Hızlandı)"
     elif drift < 0:
-        drift_badge = f"📉 Maç Başından Beri {abs(drift)} Alta Düştü ({open_b}➔{base_b})"
+        drift_badge = f"📉 Maç Başında {open_b} Bekleniyordu ➔ Şimdi {base_b} Oldu (Maç Yavaşladı)"
     else:
-        drift_badge = f"⚖️ Maç Başıyla Aynı Barem ({base_b})"
+        drift_badge = f"⚖️ Maç Başından Beri Hep {base_b} Favori"
     drift_tip = (
-        f"Maçın 1. çeyrek başındaki favori baremi ({open_b}) ile şu anki favori baremi ({base_b}) arasındaki değişim. "
-        "Maç içinde aşağı düşen baremlerde (-1/-2 göç) daha da alta oynama tuzağına düşmeyin (-%63 ROI zarar); maçların %82'si merkezde kalır veya yukarı tepki verir."
+        f"Maç ilk başladığında favori barem {open_b} idi, şu an ise {base_b} oldu. "
+        f"Maç içinde beklenti yükseldiyse genelde yeni ulaştığı {base_b} bareminde veya başladığı {open_b} bareminde biter. "
+        f"Maç içinde beklenti zaten düştüyse daha da alt bareme oynama tuzağına düşmeyin; maçların %82'si {base_b} veya üstünde kalır."
     )
 
-    # Late 5-Min Pendulum Symmetry (30m -> 35m)
+    # Late 5-Min Change (30m -> 35m)
     if late_jump <= -1:
-        pendulum_badge = f"🪃 30➔35.Dk Ters Sarkaç: Barem Düştü ({b_30m}➔{base_b})"
+        pendulum_badge = f"🔄 Son 5 Dk'da Barem Düştü ({b_30m} ➔ {base_b} — Daha Fazla Düşmez!)"
         pendulum_tip = (
             f"30. dakikada favori {b_30m} iken 35. dakikada {base_b} baremine düştü. "
-            "62 maçlık veride son 5 dakikada baremi düşen maçların HİÇBİRİ (%0) bir alt bareme daha düşmemiştir! "
-            "%85.8 ihtimalle ya mevcut Favoride kalır ya da eski üst baremine geri seker."
+            f"62 maçlık veride son 5 dakikada baremi düşen maçların HİÇBİRİ (%0) bir alt barem olan {b_m1} aralığına düşmemiştir! "
+            f"%85.8 ihtimalle ya şu anki {base_b} bareminde kalır ya da eski {b_30m} baremine geri döner."
         )
     elif late_jump >= 1:
-        pendulum_badge = f"🪃 30➔35.Dk Ters Sarkaç: Barem Sıçradı ({b_30m}➔{base_b})"
+        pendulum_badge = f"🔄 Son 5 Dk'da Barem Yükseldi ({b_30m} ➔ {base_b} — Daha Fazla Çıkmaz!)"
         pendulum_tip = (
-            f"30. dakikada favori {b_30m} iken 35. dakikada {base_b} baremine sıçradı. "
-            "Yay yukarı gerildiği için buradan bir üst bareme daha (+1) gitme ihtimali sadece %8.3'e düşer (%75 Favori veya 1 Alt kalır)."
+            f"30. dakikada favori {b_30m} iken 35. dakikada {base_b} baremine yükseldi. "
+            f"Son 5 dakikada zaten yükseldiği için buradan bir üst bareme ({b_p1}) gitme ihtimali sadece %8.3'tür; maçların %75'i {base_b} veya {b_m1} aralığında kalır."
         )
     else:
-        pendulum_badge = f"⚖️ 30➔35.Dk Sabit Denge ({base_b})"
+        pendulum_badge = f"⚖️ Son 5 Dk'dır Barem Sabit ({base_b})"
         pendulum_tip = (
             f"30. dakikadan 35. dakikaya favori barem ({base_b}) hiç değişmedi. "
-            "Sabit dengeli maçlarda 1. Favori %53.5 isabet ve +%13.2 ROI üretir."
+            f"Böyle dengeli giden maçlarda direkt {base_b} baremi %53.5 oranında tutmaktadır."
         )
 
-    # Mod-10 Last Digit Barem Center Symmetry
+    # Last Digit of Score (Simple explanation)
     mod10 = int(cur_tot) % 10 if cur_tot > 0 else 2
     if cur_tot > 0 and float(elapsed_mins or 35.0) >= 30.0:
         if mod10 in (1, 2, 3, 4):
-            mod10_badge = f"🔢 Mod-10 Göbek Simetrisi (Skor Sonu: ..{mod10})"
+            mod10_badge = f"🎯 Skorun Son Rakamı Avantajlı ({cur_tot} ➔ Tam {base_b} Ortasına Düşüyor)"
             mod10_tip = (
-                f"Toplam skor ({cur_tot}) son rakamı '{mod10}' ile bitiyor. Standart ~53 sayı eklendiğinde maç sonu '..{(mod10+3)%10}' civarına, "
-                f"yani {base_b} bareminin TAM GÖBEĞİNE (ortasına) düşer! "
-                "62 maçta sonu 1-2-3-4 ile bitenlerde Favori Barem %57.6 isabet ve +%22.0 ROI üretmiş, Alt (%21.2) ve Üst (%21.2) kusursuz simetri göstermiştir."
+                f"Şu anki toplam skor ({cur_tot}) '{mod10}' rakamıyla bitiyor. Kalan sürede ortalama ~53 sayı atıldığında maç sonu skoru "
+                f"tam {base_b} bareminin ortasına (en güvenli yerine) denk geliyor! "
+                f"Skorun sonu 1, 2, 3 veya 4 ile biten maçlarda direkt {base_b} baremi %57.6 oranında tutmuştur."
             )
         elif mod10 in (8, 9, 0):
-            mod10_badge = f"⚠️ Mod-10 Alt Sınır Tuzağı (Skor Sonu: ..{mod10})"
+            mod10_badge = f"⚠️ Skorun Son Rakamı Sınırda ({cur_tot} ➔ {b_m1} Alt Barem Riski Var)"
             mod10_tip = (
-                f"Toplam skor ({cur_tot}) son rakamı '{mod10}' ile bitiyor. Standart ~53 sayı eklendiğinde maç sonu '..{(mod10+3)%10}' civarına, "
-                f"yani baremin en alt sınırına (bıçak sırtına) denk gelir; sadece 2 sayı eksik atılsa 1 Alt Bareme düşer! "
-                "62 maçta sonu 8-9-0 olanlarda 1. Favori %37.5'e düşmüş (-%21.6 ROI zarar), 1 Alt Barem ise %43.8'e çıkmıştır."
+                f"Şu anki toplam skor ({cur_tot}) '{mod10}' rakamıyla bitiyor. Kalan sürede ortalama ~53 sayı eklendiğinde maç sonu skoru "
+                f"{base_b} bareminin en alt sınırına (bıçak sırtına) denk geliyor; sadece 2 sayı eksik atılsa bir alt barem olan {b_m1} olur! "
+                f"Bu yüzden skor sonu 8, 9 veya 0 olan maçlarda alt barem ({b_m1}) %43.8 oranında gelmiştir."
             )
         else:
-            mod10_badge = f"📐 Mod-10 Üst Sınır Simetrisi (Skor Sonu: ..{mod10})"
+            mod10_badge = f"📐 Skorun Son Rakamı Normal ({cur_tot} ➔ {base_b} Üst Kısmına Yakın)"
             mod10_tip = (
-                f"Toplam skor ({cur_tot}) son rakamı '{mod10}' ile bitiyor. Standart ~53 sayı eklendiğinde baremin orta-üst sınırına denk gelir "
-                "(Favori %53.8 isabet, +%10.5 ROI)."
+                f"Şu anki toplam skor ({cur_tot}) '{mod10}' rakamıyla bitiyor. Ortalama ~53 sayı eklendiğinde {base_b} bareminin orta-üst kısmına denk gelir "
+                f"({base_b} tutma oranı %53.8)."
             )
     else:
-        mod10_badge = f"🔢 Skor Son Rakamı: ..{mod10} (32-35.Dk'da Aktifleşir)"
+        mod10_badge = f"🔢 Skorun Son Rakamı: ..{mod10} (30. Dakikadan Sonra Devreye Girer)"
         mod10_tip = (
-            "32-35. dakikaya gelindiğinde toplam skorun son rakamına (birler basamağına) göre maçın barem göbeğine mi (1-2-3-4) "
-            "yoksa alt sınır bıçak sırtına mı (8-9-0) düşeceğini hesaplar."
+            f"Maç 30-35. dakikaya geldiğinde toplam skorun son rakamına bakarak maç sonunun {base_b} bareminin tam ortasına mı "
+            f"yoksa {b_m1} alt sınırına mı düşeceğini otomatik hesaplar."
         )
 
-    # Twin Odds Symmetry & Top-2 Concentration + Bell-Curve Wing Symmetry
+    # Twin Odds & Wing Balance in Plain Turkish
     odd_val = float(fav1_odd or 0.0)
     odd2_val = float(fav2_odd or 99.0)
     odd_gap_12 = round(odd2_val - odd_val, 2) if (odd_val < 90 and odd2_val < 90) else 99.0
@@ -1063,84 +1064,83 @@ def analyze_smart_35m_decision(
         top2_conc = 75.0
 
     if odd_gap_12 <= 0.25:
-        twin_badge = f"👯 İkiz Oran Simetrisi (Fark: {odd_gap_12:.2f} | Yoğunluk: %{top2_conc:.0f})"
+        twin_badge = f"👯 İlk 2 Baremin Oranı Neredeyse Eşit ({base_b} ve {sec_b_clean} — İkisinden Biri %89 Gelir)"
         twin_tip = (
-            f"1. Favori ({odd_val:.2f}) ile 2. Favori ({odd2_val:.2f}) arasındaki oran farkı sadece {odd_gap_12:.2f} (İkiz Oran!). "
-            "62 maçta ikiz oranlı maçların %44.4'ü 1. Favori, %44.4'ü 2. Favori bitmiş (tam eşit simetri!) ve "
-            "ikisinden birinin tutma oranı %88.9 (8/9 maç) olmuştur."
+            f"1. Favori {base_b} ({odd_val:.2f}) ile 2. Favori {sec_b_clean} ({odd2_val:.2f}) arasındaki oran farkı çok az ({odd_gap_12:.2f}). "
+            f"Böyle maçların %44.4'ü {base_b}, %44.4'ü {sec_b_clean} bitmiştir; yani bu iki baremden birinin tutma ihtimali %88.9 (9 maçta 8)'dir!"
         )
     elif top2_conc >= 78.0:
-        twin_badge = f"🔒 Yüksek İlk-2 Simetri Yoğunluğu (%{top2_conc:.0f})"
+        twin_badge = f"🔒 İlk 2 Barem Çok Güçlü ({base_b} veya {sec_b_clean} %90 Gelir)"
         twin_tip = (
-            f"1xBet'in toplam olasılık dağılımının %{top2_conc:.1f}'i sadece 1. ve 2. Favori baremde toplanmış durumda. "
-            "Yoğunluk %78 üstündeyken ilk 2 favoriden birinin tutma oranı %90.5 (19/21 maç) olmuştur!"
+            f"1xBet ihtimallerinin %{top2_conc:.0f}'i sadece {base_b} ve {sec_b_clean} baremlerinde toplanmış durumda. "
+            f"Böyle maçlarda {base_b} veya {sec_b_clean} ikilisinden birinin tutma oranı %90.5 (21 maçta 19) olmuştur!"
         )
     else:
-        twin_badge = f"⚖️ Oran Makası: {odd_gap_12:.2f} (İlk-2 Yoğunluk: %{top2_conc:.0f})"
+        twin_badge = f"⚖️ 1. ve 2. Favori Oran Farkı: {odd_gap_12:.2f} ({base_b} vs {sec_b_clean})"
         twin_tip = (
-            f"1. ve 2. Favori arasındaki oran farkı {odd_gap_12:.2f}, ilk 2 baremin toplam piyasa yoğunluğu %{top2_conc:.1f}."
+            f"1. Favori ({base_b}: {odd_val:.2f}) ile 2. Favori ({sec_b_clean}: {odd2_val:.2f}) arasındaki oran farkı {odd_gap_12:.2f}."
         )
 
     if wing_diff <= 0.75:
-        wing_badge = f"🔔 Tam Çan Eğrisi Kanat Simetrisi (Alt:{odd_m1_live:.2f} ≈ Üst:{odd_p1_live:.2f})"
+        wing_badge = f"⚖️ Alt ({b_m1}) ve Üst ({b_p1}) Oranları Dengeli ({base_b} Çok Güçlü)"
         wing_tip = (
-            f"Favorinin 1 Alt ({b_m1}: {odd_m1_live:.2f}) ve 1 Üst ({b_p1}: {odd_p1_live:.2f}) komşu oranları birbirine çok yakın (fark <= 0.75). "
-            "Bu durum 1xBet'in maç sonu beklentisini tam favori baremin merkezine koyduğunu (Çan Eğrisi Simetrisi) gösterir; "
-            "Favori %53.8 tutarken 1 Alt bareme düşüş sadece %7.7'de kalmıştır."
+            f"Favorinin bir altındaki {b_m1} ({odd_m1_live:.2f}) ile bir üstündeki {b_p1} ({odd_p1_live:.2f}) oranları birbirine çok yakın. "
+            f"Bu durum beklentinin tam {base_b} ortasında toplandığını gösterir; {base_b} %53.8 tutarken alt barem ({b_m1}) sadece %7.7 gelmiştir."
         )
     elif odd_m1_live < 90 and odd_p1_live < 90:
-        wing_badge = f"📐 Kanat Oranları: 1Alt({odd_m1_live:.2f}) vs 1Üst({odd_p1_live:.2f})"
+        wing_badge = f"📐 Komşu Oranlar: Alt {b_m1} ({odd_m1_live:.2f}) | Üst {b_p1} ({odd_p1_live:.2f})"
         wing_tip = (
-            f"Komşu kanat oranları: 1 Alt Barem ({b_m1}) oranı {odd_m1_live:.2f}, 1 Üst Barem ({b_p1}) oranı {odd_p1_live:.2f}. "
-            "Hangi kanadın oranı daha düşükse piyasa o yöne doğru eğimlidir."
+            f"Favori {base_b} bareminin alt komşusu {b_m1} oranı {odd_m1_live:.2f}, üst komşusu {b_p1} oranı {odd_p1_live:.2f}. "
+            f"Hangisinin oranı daha düşükse maçın o tarafa kayma ihtimali daha yüksektir."
         )
     else:
-        wing_badge = "📐 Kanat Simetrisi: Tek Kanat Açık"
-        wing_tip = "Komşu kanatlardan biri kapalı veya uç baremde."
+        wing_badge = "📐 Komşu Baremlerden Biri Kapalı"
+        wing_tip = "Alt veya üst komşu baremlerden birine şu an oran açılmamış."
 
-    # Sequential 2-Deviation Snapback Symmetry
+    # Sequential Match History in Plain Turkish
     prev_shift = recent_chain[-1]["raw_shift"] if recent_chain else 0
     prev2_shift = recent_chain[-2]["raw_shift"] if len(recent_chain) >= 2 else 0
     if prev_shift != 0 and prev2_shift != 0:
-        seq_sym_badge = "🪞 Ardışık Sarkaç: Son 2 Maç Saptı ➔ Merkeze Dönüş (%57.1 | +%33.6 ROI)"
+        seq_sym_badge = f"🔄 Son 2 Maçta Favori Gelmedi ➔ Bu Maç Favori ({base_b}) Gelme İhtimali Yüksek (%57)"
         seq_sym_tip = (
-            f"Bundan önceki 2 maç üst üste favoriden saptı ({prev2_shift:+d} ve {prev_shift:+d}). "
-            "62 maçlık gerçek zincirde üst üste 2 sapmadan sonra 3. maçta Tam Favoriye (Merkeze) dönüş oranı %57.1 ve kârı +%33.6 ROI olmuştur!"
+            f"Bundan önceki 2 maçta üst üste 35. dakika favorisi tutmadı. "
+            f"Geçmiş 62 maçta üst üste 2 kez sürpriz olduktan sonra 3. maçta direkt Favori Baremin ({base_b}) gelme oranı %57.1 olmuştur!"
         )
     elif prev_shift == 0 and prev2_shift == 0:
-        seq_sym_badge = "⚖️ Ardışık Zincir: Son 2 Maç Tam Favori Geldi"
-        seq_sym_tip = "Son 2 maç üst üste Favori (0) geldi; 3. maçta %50 Favori, %25 1 Alt Barem dengesi görülür."
+        seq_sym_badge = "⚖️ Son 2 Maçta Üst Üste Favori Barem Geldi"
+        seq_sym_tip = f"Son 2 maçta üst üste 35. dakika favorisi kazandı; bu maçta %50 Favori ({base_b}), %25 Bir Alt Barem ({b_m1}) dengesi görülür."
     else:
-        seq_sym_badge = f"🌊 Önceki Maç Sapması: {'Tam Favori (0)' if prev_shift == 0 else f'{prev_shift:+d} Barem'}"
-        seq_sym_tip = "Bir önceki tamamlanan maçın 35. dakika favorisine göre nasıl sonuçlandığını gösterir."
+        prev_desc = "Favori Barem Geldi" if prev_shift == 0 else (f"{abs(prev_shift)} Alt Barem Geldi" if prev_shift < 0 else f"{prev_shift} Üst Barem Geldi")
+        seq_sym_badge = f"🌊 Bir Önceki Maç Sonucu: {prev_desc}"
+        seq_sym_tip = "Bundan hemen önce biten maçın 35. dakika favorisine göre nasıl sonuçlandığını gösterir."
 
     gap = abs(int(score_gap or 0))
     if gap <= 5:
         exp_rem_35 = 59.0
-        margin_badge = f"⚠️ {gap} Sayı Fark (Yakın Maç / Uzatma Riski)"
+        margin_badge = f"⚠️ Skor Çok Yakın: {gap} Sayı Fark (Faul & Uzatma Riski Var)"
         margin_tip = (
-            "Fark 0-5 sayı arasındayken maç başa baş gider. Son dakikalarda taktik fauller ve uzatma (OT) "
-            "ihtimali yüzünden 35. dakikadan sonra ortalama 59.0 sayı atılır (normalden +6 sayı fazla) ve "
-            "maçların %33'ü üst bareme patlar. Bu yüzden yakın maçları PAS GEÇMEK kârı +%17.6'dan +%29.1'e çıkarır."
+            f"İki takım arasındaki fark sadece {gap} sayı (0-5 arası başa baş maç). Son dakikalarda taktik fauller ve uzatma "
+            f"ihtimali yüzünden 35. dakikadan sonra ortalama 59 sayı atılır (normalden 6 sayı fazla) ve "
+            f"maçların üçte biri (%33) üst bareme ({b_p1}) kaçar. Bu yüzden başa baş maçlara BAHİS ALMAMAK (Pas Geçmek) en doğrusudur."
         )
     elif gap >= 18:
         exp_rem_35 = 47.4
-        margin_badge = f"🧊 {gap} Sayı Fark (Fark Açık / Rölanti Freni)"
+        margin_badge = f"🧊 Fark Çok Açıldı: {gap} Sayı Fark (Maç Yavaşlar / Rölanti)"
         margin_tip = (
-            "Fark 18+ sayı açıldığında takımlar son çeyrekte tempoyu düşürür (rölanti). "
-            "35. dakikadan sonra ortalama sadece 47.4 sayı atılır (yakın maçtan 11.6 sayı daha az!). "
-            "Üst bareme kaçma ihtimali %5'tir; 1. Favori (0 Merkez) %60 isabetle +%27.5 ROI kazandırır."
+            f"Skor farkı {gap} sayıya (18+ sayı) çıktığında takımlar son çeyrekte tempoyu düşürür. "
+            f"35. dakikadan sonra ortalama sadece 47.4 sayı atılır (yakın maçtan 11.6 sayı daha az!). "
+            f"Üst bareme ({b_p1}) kaçma ihtimali sadece %5'tir; direkt {base_b} baremi %60 oranında tutar."
         )
     elif gap >= 10:
         exp_rem_35 = 53.5
-        margin_badge = f"🛡️ {gap} Sayı Fark (Kontrollü Fark)"
-        margin_tip = "Fark 10-17 sayı bandında; uzatma riski düşük, İkili Korumada 0 Merkez + -1 Alt Barem birlikte çalışır."
+        margin_badge = f"🛡️ Fark Kontrollü: {gap} Sayı Fark (Uzatma Riski Düşük)"
+        margin_tip = f"Skor farkı {gap} sayı (10-17 arası); uzatma riski düşüktür. İki barem kapatılacaksa {base_b} ve bir alt barem {b_m1} birlikte çok güçlüdür."
     else:
         exp_rem_35 = 53.0
-        margin_badge = f"⚖️ {gap} Sayı Fark (Normal Fark)"
-        margin_tip = "Fark 6-9 sayı bandında; standart son çeyrek temposu (~53 sayı) beklenir."
+        margin_badge = f"⚖️ Normal Skor Farkı: {gap} Sayı Fark"
+        margin_tip = f"Skor farkı {gap} sayı (6-9 arası); kalan sürede normal tempo (~53 sayı) beklenir."
 
-    # Barem interior edge position (when match is near 30-36m or anytime using remaining pace)
+    # Barem interior edge position
     fav_lo, fav_hi = barem_bounds.get(base_b, (201, 210))
     fav_mid = (fav_lo + min(fav_hi, 240)) / 2.0
     rem_mins_est = max(0.0, 48.0 - float(elapsed_mins or 35.0))
@@ -1150,124 +1150,131 @@ def analyze_smart_35m_decision(
 
     if cur_tot > 0 and 28.0 <= float(elapsed_mins or 35.0) <= 36.5:
         if edge_offset < -3.0:
-            edge_badge = f"📐 Alt Kenarda (Tahmini: ~{proj_tot_edge:.0f} | {base_b} Alt Sınırı)"
+            edge_badge = f"📐 Beklenen Bitiş: ~{proj_tot_edge:.0f} Sayı ({base_b} Alt Sınırında ➔ {b_m1} Riski Var)"
             edge_tip = (
-                f"Mevcut skor ({cur_tot}) + farka göre beklenen kalan sayı (~{scaled_rem:.0f}) = ~{proj_tot_edge:.0f} sayı yapıyor. "
-                f"Bu değer {base_b} bareminin alt sınırına çok yakın olduğu için maçların %55.6'sı bir alt bareme (-1) kaymaktadır."
+                f"Şu anki skor ({cur_tot}) + kalan sürede beklenen sayı (~{scaled_rem:.0f}) = ~{proj_tot_edge:.0f} sayı yapıyor. "
+                f"Bu sayı {base_b} bareminin en alt sınırında kaldığı için maçların %55.6'sı bir alt barem olan {b_m1} aralığına düşmektedir."
             )
         elif edge_offset > 3.0:
-            edge_badge = f"📐 Üst Kenarda (Tahmini: ~{proj_tot_edge:.0f} | {base_b} Üst Sınırı)"
+            edge_badge = f"📐 Beklenen Bitiş: ~{proj_tot_edge:.0f} Sayı ({base_b} Üst Kısmında)"
             edge_tip = (
-                f"Mevcut skor ({cur_tot}) + beklenen kalan sayı (~{scaled_rem:.0f}) = ~{proj_tot_edge:.0f} sayı yapıyor. "
-                f"{base_b} bareminin orta-üst kısmında güçlü duruyor (%56 Merkez isabeti, +%22.2 ROI)."
+                f"Şu anki skor ({cur_tot}) + kalan sürede beklenen sayı (~{scaled_rem:.0f}) = ~{proj_tot_edge:.0f} sayı yapıyor. "
+                f"{base_b} bareminin orta-üst kısmında güçlü duruyor (%56 ihtimalle {base_b} tutar)."
             )
         else:
-            edge_badge = f"🎯 Barem Tam Ortasında (Tahmini: ~{proj_tot_edge:.0f})"
+            edge_badge = f"🎯 Beklenen Bitiş: ~{proj_tot_edge:.0f} Sayı (Tam {base_b} Ortasında)"
             edge_tip = (
-                f"Mevcut skor ({cur_tot}) + beklenen kalan sayı (~{scaled_rem:.0f}) = ~{proj_tot_edge:.0f} sayı ile "
-                f"tam {base_b} bareminin merkezinde (%55.6 Merkez isabeti, +%17.8 ROI)."
+                f"Şu anki skor ({cur_tot}) + kalan sürede beklenen sayı (~{scaled_rem:.0f}) = ~{proj_tot_edge:.0f} sayı ile "
+                f"tam {base_b} bareminin ortasına denk geliyor (%55.6 ihtimalle {base_b} tutar)."
             )
     else:
-        edge_badge = f"⏱️ 35.Dk Kalan Sayı Standardı: Ort. 53.3 Sayı (Bu farkta ~{exp_rem_35:.0f})"
+        edge_badge = f"⏱️ 35.Dk'dan Sonra Ortalama 53 Sayı Atılır (Bu Maçta Beklenen: ~{exp_rem_35:.0f} Sayı)"
         edge_tip = (
-            "62 maçlık gerçek veride 35. dakikadan maç sonuna kadar ortalama 53.3 sayı atılmıştır "
-            "(0-5 farkta 59.0 sayı, 18+ farkta 47.4 sayı). 30-35. dakikaya gelindiğinde burası tam kenar hesabını gösterir."
+            "Geçmiş 62 maçta 35. dakikadan maç bitimine kadar ortalama 53.3 sayı atılmıştır "
+            "(yakın maçlarda 59 sayı, fark açık maçlarda 47.4 sayı). Maç 30-35. dakikaya geldiğinde burada tahmini maç sonu toplamı görünür."
         )
 
     prev_shift = recent_chain[-1]["raw_shift"] if recent_chain else 0
     odd_val = float(fav1_odd or 0.0)
     reasons = []
 
-    # Smart Dutching v2 recommendation: 10+ gap -> 0 & -1; otherwise -> 0 & 2ndFav
+    # Two-barem cover recommendation
     if gap >= 10:
-        dutch_pick = f"🛡️ {b_0} (Favori) ile {b_m1} (1 Alt Barem) İkisini Kapat"
+        dutch_pick = f"🛡️ {b_0} ile {b_m1} İkisini Birden Kapat"
+        dutch_short = f"{b_0} ve {b_m1}"
     else:
-        dutch_pick = f"🛡️ {b_0} (1. Favori) ile {sec_b_clean} (2. Favori) İkisini Kapat"
+        dutch_pick = f"🛡️ {b_0} ile {sec_b_clean} İkisini Birden Kapat"
+        dutch_short = f"{b_0} ve {sec_b_clean}"
 
-    # V4.0 Deep Symmetry Decision Engine
+    # Plain-Turkish Decision Engine
     if gap <= 5 and float(elapsed_mins or 35.0) >= 30.0:
-        zone_badge = f"⛔ PAS GEÇ / YAKIN MAÇ TUZAĞI (Fark: {gap} Sayı)"
+        zone_badge = f"⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: {gap} Sayı Fark)"
         zone_type = "PASS_CLUTCH"
-        stake_badge = "0 TL (PAS GEÇ — Uzatma/Faul Riski)"
+        stake_badge = "0 TL (Pas Geç — Uzatma ve Faul Riski)"
         primary_pick = f"⛔ Bahis Alma (İlla Oynanacaksa: {b_0} veya {b_p1})"
         backup_pick = dutch_pick
         conf_pct = 38.0
         reasons.append(
-            f"35.dk civarı fark {gap} sayı (0-5 arası) olduğunda son bölümde ort. 59 sayı atılıyor ve maçların %33'ü üst bareme patlıyor (Favori Barem ROI: -%10.8)"
+            f"Maç başa baş gidiyor (fark sadece {gap} sayı). Son dakikalarda taktik fauller ve uzatma yüzünden normalden çok fazla sayı (ort. 59 sayı) atılıyor ve maçların %33'ü üst barem olan {b_p1} aralığına kaçıyor. Bu yüzden bu maça bahis almamak en güvenli karardır"
         )
     elif odd_val > 1.0 and odd_val < 1.85:
-        zone_badge = f"⚠️ <1.85 AŞIRI DÜŞÜK ORAN TUZAĞI ({odd_val:.2f})"
+        zone_badge = f"⚠️ 1. FAVORİ ORANI ÇOK DÜŞÜK TUZAĞI ({b_0} Oranı: {odd_val:.2f})"
         zone_type = "TRAP_EXTREME"
-        stake_badge = "1000 TL (Standart Bahis — 2. Favoriye)"
-        primary_pick = f"🥈 2. Favori Baremi Oyna: {sec_b_clean} (Oran: {fav2_odd:.2f})"
-        backup_pick = f"🎯 1. Favori Barem: {b_0}"
+        stake_badge = f"1000 TL ({sec_b_clean} Baremine Oyna)"
+        primary_pick = f"🥈 {sec_b_clean} Baremini Oyna (2. Favori — Oran: {fav2_odd:.2f})"
+        backup_pick = f"🛡️ {b_0} ile {sec_b_clean} İkisini Birden Kapat"
         conf_pct = 74.0
         reasons.append(
-            f"1. Favori oranı 1.85 altındayken ({odd_val:.2f}) 1. Favori -%37.1 zarar yazıyor; doğrudan 2. Favori ({sec_b_clean}) oynamak +%41.8 ROI kazandırdı"
+            f"Şu an 1. Favori olan {b_0} bareminin oranı 1.85'in altında ({odd_val:.2f}). Geçmiş maçlarda bu kadar düşük oranlı favoriler %37 zarar ettirirken, onun yerine 2. Favori olan {sec_b_clean} baremini oynamak +%41.8 net kâr sağladı"
         )
     elif odd_val >= 2.10 and sec_dir >= 1:
-        zone_badge = f"🔥 SÜPER SİNYAL: 2.FAVORİ ÜSTTE + ORAN {odd_val:.2f}"
+        zone_badge = f"🔥 ÇOK GÜÇLÜ SİNYAL: {b_0} BAREMİ ÖNDE (Oran: {odd_val:.2f})"
         zone_type = "SUPER_SIGNAL"
-        stake_badge = "2000 TL (Kademeli Kasa: Güçlü Sinyal)"
-        primary_pick = f"🎯 Direkt 1. Favori Baremi Oyna: {b_0} (Oran: {odd_val:.2f})"
+        stake_badge = f"2000 TL (Güçlü Sinyal — {b_0} Baremine)"
+        primary_pick = f"🎯 Direkt {b_0} Baremini Oyna (Oran: {odd_val:.2f})"
         backup_pick = dutch_pick
         conf_pct = 88.0
         reasons.append(
-            f"2. Favori üstte ({sec_b_clean}) ve oran >=2.10 ({odd_val:.2f}): 62 maçta %61.1 doğrudan 1. Favori ({b_0}) tuttu (+%39.9 ROI) ve hiç alt bareme düşmedi (%0)"
+            f"Şu an en güçlü aday {b_0} baremi (Oran: {odd_val:.2f}) ve 2. favori üst barem olan {sec_b_clean} aralığında duruyor. Geçmişte bu durumdaki maçların %61'i direkt {b_0} aralığında bitti ve hiçbiri alt bareme ({b_m1}) düşmedi. İki barem kapatmak isterseniz {dutch_short} ikilisini seçebilirsiniz"
         )
     elif gap >= 18 and odd_val >= 1.85:
-        zone_badge = f"🔥 FARK AÇIK (RÖLANTİ) SİNYALİ (Fark: {gap} | Oran: {odd_val:.2f})"
+        zone_badge = f"🔥 FARK AÇIK / MAÇ YAVAŞLADI SİNYALİ ({b_0} — Fark: {gap} Sayı)"
         zone_type = "SUPER_SIGNAL"
-        stake_badge = "2000 TL (Kademeli Kasa: Rölanti Sinyali)"
-        primary_pick = f"🎯 Direkt 1. Favori Baremi Oyna: {b_0} (Oran: {odd_val:.2f})"
-        backup_pick = f"🛡️ {b_0} (Favori) ile {b_m1} (1 Alt) İkisini Kapat (%95 Tutma)"
+        stake_badge = f"2000 TL (Güçlü Sinyal — {b_0} Baremine)"
+        primary_pick = f"🎯 Direkt {b_0} Baremini Oyna (Oran: {odd_val:.2f})"
+        backup_pick = f"🛡️ {b_0} ile {b_m1} İkisini Birden Kapat (%95 Tutar)"
         conf_pct = 86.0
         reasons.append(
-            f"18+ sayı farkta ({gap}) son çeyrek rölantiye girer (ort. 47.4 sayı); maçların %95'i Favori ({b_0}) veya 1 Alt ({b_m1}) biter, 1. Favori tek başına %60 isabet ve +%27.5 ROI üretir"
+            f"Skor farkı {gap} sayıya çıktığı için takımlar tempoyu düşürdü (kalan sürede ort. 47 sayı atılıyor). Bu durumdaki maçların %60'ı direkt {b_0} aralığında, %95'i ise {b_0} veya {b_m1} aralığında bitiyor"
         )
     elif odd_val > 1.0 and odd_val < 2.10 and sec_dir <= -1 and late_jump >= 0:
-        zone_badge = f"⚠️ DÜŞÜK ORAN + ALT BAREM BASKISI ({odd_val:.2f})"
+        zone_badge = f"⚠️ ALT BAREME KAYMA EĞİLİMİ ({b_m1} Daha Avantajlı)"
         zone_type = "TRAP_LOW"
-        stake_badge = "1000 TL (Standart Bahis — 1 Alt Bareme)"
-        primary_pick = f"📉 1 Alt Baremi Oyna: {b_m1} (Favori {b_0} Yerine)"
-        backup_pick = f"🎯 1. Favori Barem: {b_0}"
+        stake_badge = f"1000 TL ({b_m1} Baremine Oyna)"
+        primary_pick = f"📉 Bir Alt Barem Olan {b_m1} Aralığını Oyna ({b_0} Yerine)"
+        backup_pick = f"🛡️ {b_0} ile {b_m1} İkisini Birden Kapat"
         conf_pct = 76.0
         reasons.append(
-            f"Oran <2.10 ({odd_val:.2f}) ve 2. Favori altta ({b_m1}) olduğunda 1. Favori ({b_0}) -%16.6 zarar ederken 1 Alt Barem ({b_m1}) +%16.6 ROI sağlıyor"
+            f"1. Favori olan {b_0} oranı 2.10'un altında ({odd_val:.2f}) ve 2. Favori alt baremde ({b_m1}) duruyor. Böyle maçlarda {b_0} zarar ettirirken, bir alt barem olan {b_m1} aralığını oynamak düzenli kâr (+%16.6) sağladı"
         )
     elif cur_tot > 0 and float(elapsed_mins or 35.0) >= 30.0 and (mod10 in (8, 9, 0)) and sec_dir <= -1 and odd_val < 2.25 and late_jump >= 0:
-        zone_badge = f"🔢 MOD-10 ALT SINIR SİMETRİSİ (Skor ..{mod10} | Oran: {odd_val:.2f})"
+        zone_badge = f"📉 SKOR SINIRDA: {b_m1} ALT BAREME YAKIN (Skor: {cur_tot})"
         zone_type = "TRAP_LOW"
-        stake_badge = "1000 TL (Standart Bahis — 1 Alt Bareme)"
-        primary_pick = f"📉 1 Alt Baremi Oyna: {b_m1} (Mod-10 Alt Sınır Kuralı)"
-        backup_pick = f"🛡️ {b_0} ile {b_m1} İkisini Kapat"
+        stake_badge = f"1000 TL ({b_m1} Baremine Oyna)"
+        primary_pick = f"📉 Bir Alt Barem Olan {b_m1} Aralığını Oyna"
+        backup_pick = f"🛡️ {b_0} ile {b_m1} İkisini Birden Kapat"
         conf_pct = 75.0
         reasons.append(
-            f"Skorun son rakamı ..{mod10} (8-9-0 Alt Sınır Tuzağı) ve 2. Favori altta ({b_m1}): Standart ~53 sayı eklendiğinde baremin en alt ucuna düşüyor (%43.8 ihtimalle 1 Alt Bareme kayar)"
+            f"Şu anki toplam skor ({cur_tot}) son rakamı nedeniyle kalan ~53 sayı eklendiğinde {b_0} bareminin en alt sınırında kalıyor ve piyasa da {b_m1} alt baremini işaret ediyor (%44 ihtimalle {b_m1} aralığına kayar)"
         )
     elif 1.85 <= odd_val <= 2.79:
-        zone_badge = f"💎 İDEAL ORAN & GÖBEK SİMETRİSİ ({odd_val:.2f})"
+        zone_badge = f"💎 İDEAL ORAN: {b_0} BAREMİ ÖNDE (Oran: {odd_val:.2f})"
         zone_type = "GOLDEN"
-        stake_badge = "1000 TL (Standart Bahis — 1. Favoriye)"
-        primary_pick = f"🎯 Direkt 1. Favori Baremi Oyna: {b_0}"
+        stake_badge = f"1000 TL ({b_0} Baremine Oyna)"
+        primary_pick = f"🎯 Direkt {b_0} Baremini Oyna (Oran: {odd_val:.2f})"
         backup_pick = dutch_pick
         conf_pct = 82.0 if mod10 in (1, 2, 3, 4) else 79.0
         reasons.append(
-            f"Oran {odd_val:.2f} dengeli bölgede; 1. Favori ({b_0}) doğrudan ~%55 isabet (+%22 ROI), İkili Koruma ({dutch_pick}) %82+ isabet sağlıyor"
+            f"Şu an en güçlü aday {b_0} baremi (Oran: {odd_val:.2f}). Benzer maçların %55'i direkt {b_0} aralığında bitti. Garantiye almak için iki barem kapatmak isterseniz {dutch_short} ikilisini seçin (10 maçın 8'inde bu ikisinden biri tuttu)"
         )
     else:
         zone_badge = f"⚖️ YÜKSEK ORAN / KARARSIZ MAÇ ({odd_val:.2f})" if odd_val < 90 else "⏳ Oran Bekleniyor"
         zone_type = "WIDE"
-        stake_badge = "1000 TL (İkili Koruma Önerilir)"
-        primary_pick = f"🎯 1. Favori Barem: {b_0}"
+        stake_badge = f"1000 TL ({dutch_short} İkisini Kapat)"
+        primary_pick = f"🎯 {b_0} Baremi"
         backup_pick = dutch_pick
         conf_pct = 68.0
-        reasons.append("Oran >=2.80 kararsız bölgede; tek barem yerine 1. ve 2. Favori İkili Koruma (Çifte Şans) daha güvenlidir")
+        reasons.append(f"Oranlar yüksek ({odd_val:.2f}) ve maç kararsız; tek barem yerine {dutch_short} ikilisini birden kapatmak çok daha güvenlidir")
+
+    if drift > 0:
+        reasons.append(f"Maç başında {open_b} bekleniyordu, maç hızlı gittiği için beklenti {base_b} baremine yükseldi (genelde {base_b} veya {open_b} aralığında biter)")
+    elif drift < 0:
+        reasons.append(f"Maç başında {open_b} bekleniyordu, maç yavaşladığı için beklenti {base_b} baremine düştü")
 
     if prev_shift != 0 and prev2_shift != 0:
-        reasons.append("Son 2 maç üst üste favoriden saptı ➔ 3. maçta Tam Favoriye (Merkeze) dönüş simetrisi %57.1 (+%33.6 ROI)")
+        reasons.append(f"Son 2 maçta üst üste sürpriz olduğu için bu maçta direkt favori baremin ({b_0}) gelme ihtimali yüksektir (%57)")
     elif prev_shift >= 1:
-        reasons.append(f"Önceki maç {prev_shift} Üst Baremde bitti (Üst bittikten sonra sıradaki maçta %69 ihtimalle Favori veya 1 Alt Barem gelir)")
+        reasons.append(f"Bir önceki maç üst baremde bittiği için bu maçta %69 ihtimalle {b_0} veya bir alt barem olan {b_m1} gelir")
 
     return {
         "zone_badge": zone_badge,
@@ -1447,20 +1454,20 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
         if odd_0 < 1.85:
             v3_b = sec_b
             v3_odd = sec_odd
-            v3_rule_lbl = "⚠️ <1.85 Tuzağı ➔ 2.Fav"
+            v3_rule_lbl = "⚠️ Oran <1.85 Tuzağı ➔ 2. Favori"
         elif odd_0 < 2.10 and sec_dir <= -1:
             v3_b = m1_b
             v3_odd = odd_m1
-            v3_rule_lbl = "📉 <2.10 & 2.Fav Altta ➔ 1 Alt"
+            v3_rule_lbl = "📉 Oran <2.10 & 2.Fav Altta ➔ 1 Alt Barem"
         else:
             v3_b = fav_b
             v3_odd = odd_0
             if sec_dir >= 1 and odd_0 >= 2.10:
-                v3_rule_lbl = "🔥 Süper Sinyal (2.Fav Üstte) ➔ Favori"
+                v3_rule_lbl = "🔥 Güçlü Sinyal (2.Fav Üstte) ➔ 1. Favori"
             elif margin35 >= 18:
-                v3_rule_lbl = "🧊 18+ Fark Rölanti ➔ Favori"
+                v3_rule_lbl = "🧊 18+ Fark (Maç Yavaşladı) ➔ 1. Favori"
             else:
-                v3_rule_lbl = "💎 Standart ➔ Favori"
+                v3_rule_lbl = "💎 İdeal Oran ➔ 1. Favori"
 
         hit_v3_all = act_b == v3_b
         ret_v3_all = round(stake * v3_odd, 1) if hit_v3_all else 0.0
@@ -1474,6 +1481,7 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             v4_b, v4_odd = m1_b, odd_m1
         elif (mod10 in (8, 9, 0)) and sec_dir <= -1 and odd_0 < 2.25 and late_jump >= 0:
             v4_b, v4_odd = m1_b, odd_m1
+            v3_rule_lbl = "📉 Skor Sınırda (..8/9/0) ➔ 1 Alt Barem"
         else:
             v4_b, v4_odd = fav_b, odd_0
         hit_v4 = act_b == v4_b
@@ -1564,9 +1572,9 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             }
         )
 
-        sec_arrow = f"📈 Üst ({sec_b})" if sec_dir >= 1 else f"📉 Alt ({sec_b})"
+        sec_arrow = f"📈 Üstte ({sec_b})" if sec_dir >= 1 else f"📉 Altta ({sec_b})"
         if is_clutch_pass:
-            sel_status = f"⛔ PAS (Fark {margin35})"
+            sel_status = f"⛔ Pas Geçildi (Fark {margin35})"
             tiered_status = "⛔ 0 TL (Pas Geçildi)"
         else:
             sel_status = f"✅ +{ret_v4 - stake:.0f} TL" if hit_v4 else "❌ -1000 TL"
@@ -1580,13 +1588,13 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             {
                 "Maç": str(last_r.get("game_name", "")).replace(" (cyber)", ""),
                 "Kapanış Dk & Fark": f"{last_r.get('check_time', '')} ({margin35} Sayı Fark | Sonu ..{mod10})",
-                "35.Dk Favori (0)": f"{fav_b} ({odd_0:.2f})",
-                "2. Favori Yönü": f"{sec_arrow} ({sec_odd:.2f})",
-                "🤖 v3/v4 Akıllı Seçim": f"{v4_b} ({v4_odd:.2f}) [{v3_rule_lbl}]",
-                "Biten Barem (Skor)": f"{act_b} ({last_r.get('actual_score', '')})",
-                "v4 Seçici (1000 TL / Pas)": sel_status,
+                "35.Dk 1. Favori": f"{fav_b} ({odd_0:.2f})",
+                "2. Favori Nerede?": f"{sec_arrow} ({sec_odd:.2f})",
+                "🤖 Sistemin Önerdiği Barem": f"{v4_b} ({v4_odd:.2f}) [{v3_rule_lbl}]",
+                "Maçın Bittiği Barem": f"{act_b} ({last_r.get('actual_score', '')})",
+                "En İyi Seçici Strateji (1000 TL / Pas)": sel_status,
                 "Kademeli Kasa (0/1000/2000)": tiered_status,
-                "Akıllı İkili Koruma": f"✅ +{ret_dutch_v2 - stake:.0f} TL ({dutch_v2_odd:.2f})" if hit_dutch_v2 else "❌ -1000 TL",
+                "İki Baremi Birden Kapatma": f"✅ +{ret_dutch_v2 - stake:.0f} TL ({dutch_v2_odd:.2f})" if hit_dutch_v2 else "❌ -1000 TL",
             }
         )
 
@@ -1597,7 +1605,7 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
     tot_cost = tot_m * stake
     strategies = [
         {
-            "name": "👑 v4 Derin Simetri + Seçici Strateji (0-5 Fark Pas + Mod10 Göbek/Sınır & Sarkaç Kuralı)",
+            "name": "👑 En Gelişmiş Seçici Strateji (0-5 Sayı Farklı Yakın Maçları Pas Geç + Skor & Oran Kuralı)",
             "wins": s_v4_sel_wins,
             "total": s_v4_sel_cnt,
             "win_rate": round(s_v4_sel_wins / max(1, s_v4_sel_cnt) * 100.0, 1),
@@ -1607,7 +1615,7 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             "roi_pct": round((s_v4_sel_ret / max(1.0, s_v4_sel_cost) - 1.0) * 100.0, 1),
         },
         {
-            "name": "🔥 v3 Seçici Akıllı Strateji (0-5 Fark Yakın Maçları Pas Geç + v3 Kural)",
+            "name": "🔥 Seçici Akıllı Strateji (0-5 Sayı Farklı Yakın Maçları Pas Geç + Oran Kuralı)",
             "wins": s_v3_sel_wins,
             "total": s_v3_sel_cnt,
             "win_rate": round(s_v3_sel_wins / max(1, s_v3_sel_cnt) * 100.0, 1),
@@ -1617,7 +1625,7 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             "roi_pct": round((s_v3_sel_ret / max(1.0, s_v3_sel_cost) - 1.0) * 100.0, 1),
         },
         {
-            "name": "💰 Kademeli Güven Kasası (Yakın Maç: 0 TL | Normal: 1000 TL | Süper Sinyal: 2000 TL)",
+            "name": "💰 Kademeli Kasa (Yakın Maç: 0 TL Pas | Normal Maç: 1000 TL | Güçlü Sinyal: 2000 TL)",
             "wins": s_tiered_wins,
             "total": s_tiered_cnt,
             "win_rate": round(s_tiered_wins / max(1, s_tiered_cnt) * 100.0, 1),
@@ -1627,7 +1635,7 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             "roi_pct": round((s_tiered_ret / max(1.0, s_tiered_cost) - 1.0) * 100.0, 1),
         },
         {
-            "name": "🤖 v3 Akıllı Hibrit (Tüm Maçlar: <1.85➔2.Fav | <2.10&Alt➔1 Alt | Diğer➔Favori)",
+            "name": "🤖 Tüm Maçlara Akıllı Tek Barem (Oran <1.85➔2.Fav | Oran <2.10&Alt➔1 Alt | Diğer➔1.Fav)",
             "wins": s_v3_all_wins,
             "total": tot_m,
             "win_rate": round(s_v3_all_wins / tot_m * 100.0, 1),
@@ -1637,7 +1645,7 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             "roi_pct": round((s_v3_all_ret / tot_cost - 1.0) * 100.0, 1),
         },
         {
-            "name": "🤖 v2 Eski Akıllı Hibrit (<2.10 ise 1 Alt / >=2.10 ise Favori)",
+            "name": "🤖 Eski Basit Kural (Oran <2.10 ise 1 Alt Barem / Oran >=2.10 ise 1. Favori Barem)",
             "wins": s_smart_wins,
             "total": tot_m,
             "win_rate": round(s_smart_wins / tot_m * 100.0, 1),
@@ -1647,7 +1655,7 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             "roi_pct": round((s_smart_ret / tot_cost - 1.0) * 100.0, 1),
         },
         {
-            "name": "🎯 Sabit Favori (Her Maç Sadece 32-35.Dk 1. Favori Barem)",
+            "name": "🎯 Her Maç Sadece 1. Favori Baremi Oynamak (Hiç Kural Kullanmadan)",
             "wins": s_0_wins,
             "total": tot_m,
             "win_rate": round(s_0_wins / tot_m * 100.0, 1),
@@ -1657,7 +1665,7 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             "roi_pct": round((s_0_ret / tot_cost - 1.0) * 100.0, 1),
         },
         {
-            "name": "🛡️ Akıllı İkili Koruma (Dutching v2: 10+ Farkta Fav&1Alt / Diğerlerinde 1.&2.Fav)",
+            "name": "🛡️ Akıllı İki Barem Kapatma (Fark 10+ ise Favori & 1 Alt / Diğerlerinde 1. & 2. Favori)",
             "wins": s_dutch_v2_wins,
             "total": tot_m,
             "win_rate": round(s_dutch_v2_wins / tot_m * 100.0, 1),
@@ -1667,7 +1675,7 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             "roi_pct": round((s_dutch_v2_ret / tot_cost - 1.0) * 100.0, 1),
         },
         {
-            "name": "🛡️ Sabit İkili Koruma (Eski Dutching: Her Maç Favori + 1 Alt)",
+            "name": "🛡️ Sabit İki Barem Kapatma (Her Maç 1. Favori + 1 Alt Baremi Kapatmak)",
             "wins": s_dutch_wins,
             "total": tot_m,
             "win_rate": round(s_dutch_wins / tot_m * 100.0, 1),
@@ -1678,12 +1686,12 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
         },
     ]
 
-    # NEW SYMMETRY TABLE A: Mod-10 Last Digit Barem Center Symmetry
+    # NEW SYMMETRY TABLE A: Last Digit of Score
     mod10_brackets = []
     for digits, lbl, advice in [
-        ((1, 2, 3, 4), "🎯 Son Rakam 1 - 2 - 3 - 4 (Barem Göbek Simetrisi)", "💎 +53 sayı eklenince X4-X7 barem göbeğine düşer: Favori %57.6 tutar (+%22.0 ROI), Alt (%21.2) = Üst (%21.2) tam simetri!"),
-        ((5, 6, 7), "📐 Son Rakam 5 - 6 - 7 (Barem Orta-Üst Sınır Simetrisi)", "⚖️ +53 sayı eklenince X8-X0 üst sınıra yaklaşır: Favori %53.8 tutar (+%10.5 ROI)"),
-        ((8, 9, 0), "⚠️ Son Rakam 8 - 9 - 0 (Barem Alt Sınır / Bıçak Sırtı Tuzağı)", "📉 +53 sayı eklenince X1-X3 alt sınıra düşer (2 sayı az atılsa 1 Alt olur!): Favori %37.5 (-%21.6 ROI), Alt Barem %43.8!"),
+        ((1, 2, 3, 4), "🎯 Skorun Son Rakamı 1 - 2 - 3 - 4 (Tam Barem Ortasına Düşer)", "💎 Kalan sürede ~53 sayı atılınca tam barem ortasına denk gelir: 1. Favori %57.6 tutar (+%22 net kâr)"),
+        ((5, 6, 7), "📐 Skorun Son Rakamı 5 - 6 - 7 (Barem Üst Kısmına Yakın)", "⚖️ Kalan sürede ~53 sayı atılınca baremin orta-üst kısmına denk gelir: 1. Favori %53.8 tutar (+%10.5 net kâr)"),
+        ((8, 9, 0), "⚠️ Skorun Son Rakamı 8 - 9 - 0 (Alt Sınırda Kalır / 1 Alt Barem Riski)", "📉 Kalan sürede ~53 sayı atılınca baremin en alt sınırında kalır (2 sayı az atılsa 1 Alt Barem olur!): 1 Alt Barem %43.8 gelir"),
     ]:
         sub = [x for x in raw_records if x["mod10"] in digits]
         if sub:
@@ -1694,22 +1702,22 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             roi_0 = ((sum(x["odd_0"] for x in sub if x["shift"] == 0) - n_s) / n_s) * 100.0
             mod10_brackets.append(
                 {
-                    "35. Dk Toplam Skorun Son Rakamı (Mod-10)": lbl,
+                    "35. Dk Toplam Skorun Son Rakamı": lbl,
                     "Maç Sayısı": n_s,
-                    "🎯 Tam Favori (ROI)": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | ROI: %{roi_0:+.1f}",
-                    "📉 1/2 Alt Bareme Düşüş": f"%{c_down/n_s*100:.1f} ({c_down}/{n_s})",
-                    "📈 1/2 Üst Bareme Çıkış": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
-                    "💡 Matematiksel Simetri Açıklaması": advice,
+                    "🎯 1. Favori Tutma & Kâr": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | Kâr: %{roi_0:+.1f}",
+                    "📉 Alt Bareme Düşme": f"%{c_down/n_s*100:.1f} ({c_down}/{n_s})",
+                    "📈 Üst Bareme Çıkma": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
+                    "💡 Ne Anlama Geliyor?": advice,
                 }
             )
 
-    # NEW SYMMETRY TABLE B: Twin Odds Symmetry & Top-2 Concentration + Bell-Curve Wings
+    # NEW SYMMETRY TABLE B: Twin Odds & Top-2 Concentration
     twin_conc_brackets = []
     for cond_fn, lbl, advice in [
-        (lambda x: x["odd_gap_12"] <= 0.25, "👯 İkiz Oran Simetrisi (2.Fav - 1.Fav Farkı <= 0.25)", "⚖️ 1.Fav (%44.4) = 2.Fav (%44.4) tam eşit! İkisinden birinin gelme oranı %88.9 (8/9 maç), 2.Fav tekli +%14.0 ROI"),
-        (lambda x: x["top2_conc"] >= 78.0, "🔒 Yüksek İlk-2 Favori Yoğunluğu (Toplam İhtimal >= %78)", "🛡️ Piyasa 2 bareme kilitlenmiştir: 1. veya 2. Favoriden birinin tutma oranı %90.5 (19/21 maç)!"),
-        (lambda x: x["wing_diff"] <= 0.75, "🔔 Tam Çan Eğrisi Kanat Simetrisi (|Oran(+1) - Oran(-1)| <= 0.75)", "🎯 Alt ve Üst komşu oranları eşit dengededir: Favori %53.8 tutar (+%10.1 ROI), 1 Alt sadece %7.7 gelir"),
-        (lambda x: x["top2_conc"] < 70.0, "⚠️ Dağınık 3'lü Barem Simetrisi (İlk-2 İhtimali < %70)", "⚠️ Oranlar 3 bareme dağılmıştır; İlk 2 favori tutma oranı %69.2'ye düşer, dikkatli olunmalı"),
+        (lambda x: x["odd_gap_12"] <= 0.25, "👯 1. ve 2. Favori Oranları Neredeyse Eşit (Fark <= 0.25)", "⚖️ 1. Favori (%44.4) ve 2. Favori (%44.4) eşit sıklıkta gelir! İkisinden birinin tutma oranı %88.9 (9 maçta 8)"),
+        (lambda x: x["top2_conc"] >= 78.0, "🔒 İlk 2 Barem Çok Güçlü (Toplam İhtimal >= %78)", "🛡️ Maç neredeyse kesin ilk 2 baremden birinde biter: İkisinden birinin tutma oranı %90.5 (21 maçta 19)!"),
+        (lambda x: x["wing_diff"] <= 0.75, "⚖️ Alt ve Üst Komşu Barem Oranları Birbirine Eşit (Fark <= 0.75)", "🎯 Beklenti tam 1. Favorinin ortasındadır: 1. Favori %53.8 tutar, 1 Alt Barem sadece %7.7 gelir"),
+        (lambda x: x["top2_conc"] < 70.0, "⚠️ Oranlar 3 Bareme Dağılmış / Kararsız Maç (İlk 2 İhtimali < %70)", "⚠️ Maç kararsızdır; ilk 2 baremin tutma oranı %69.2'ye düşer, dikkatli olunmalı"),
     ]:
         sub = [x for x in raw_records if cond_fn(x)]
         if sub:
@@ -1720,21 +1728,21 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             roi_0 = ((sum(x["odd_0"] for x in sub if x["shift"] == 0) - n_s) / n_s) * 100.0
             twin_conc_brackets.append(
                 {
-                    "Oran Simetrisi & Yoğunluk Grubu": lbl,
+                    "Oranların Durumu": lbl,
                     "Maç Sayısı": n_s,
-                    "🎯 1. Favori (ROI)": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | %{roi_0:+.1f}",
-                    "🥈 2. Favori İsabeti": f"%{c_sec/n_s*100:.1f} ({c_sec}/{n_s})",
+                    "🎯 1. Favori Tutma & Kâr": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | %{roi_0:+.1f}",
+                    "🥈 2. Favori Tutma": f"%{c_sec/n_s*100:.1f} ({c_sec}/{n_s})",
                     "🛡️ 1. veya 2. Favori Toplam": f"%{c_top2/n_s*100:.1f} ({c_top2}/{n_s})",
                     "💡 Ne İşe Yarar?": advice,
                 }
             )
 
-    # NEW SYMMETRY TABLE C: Late 5-Min (30m -> 35m) Pendulum & Sequential 2-Deviation Snapback
+    # NEW SYMMETRY TABLE C: Late 5-Min (30m -> 35m) Change
     pendulum_brackets = []
     for cond_fn, lbl, advice in [
-        (lambda x: x["late_jump"] == 0, "⚖️ 30.Dk ➔ 35.Dk Barem Sabit Kaldı (Dengeli Akış)", "🎯 Son 5 dakikada barem değişmediyse 1. Favori %53.5 tutar ve +%13.2 ROI üretir"),
-        (lambda x: x["late_jump"] <= -1, "🪃 30.Dk ➔ 35.Dk Barem Aşağı Düştü (Aşağı Gerilen Yay)", "🚫 Hiçbir maç (%0) 1 Alt bareme daha düşmedi! %85.8 ihtimalle Favori veya eski üst baremine geri seker"),
-        (lambda x: x["late_jump"] >= 1, "🪃 30.Dk ➔ 35.Dk Barem Yukarı Sıçradı (Yukarı Gerilen Yay)", "🧊 Daha üste (+1) kaçma ihtimali %8.3'e düşer; %75 ihtimalle Favori veya 1 Alt kalır"),
+        (lambda x: x["late_jump"] == 0, "⚖️ Son 5 Dakikada (30➔35.Dk) Favori Barem Değişmedi", "🎯 Barem sabit kaldıysa 1. Favori %53.5 tutar ve +%13.2 net kâr bırakır"),
+        (lambda x: x["late_jump"] <= -1, "🔄 Son 5 Dakikada (30➔35.Dk) Favori Barem Aşağı Düştü", "🚫 Hiçbir maç (%0) bir alt bareme daha düşmedi! %85.8 ihtimalle yeni Favoride kalır veya eski üst baremine döner"),
+        (lambda x: x["late_jump"] >= 1, "🔄 Son 5 Dakikada (30➔35.Dk) Favori Barem Yukarı Çıktı", "🧊 Daha da üst bareme kaçma ihtimali %8.3'e düşer; %75 ihtimalle yeni Favoride veya 1 Alt Baremde kalır"),
     ]:
         sub = [x for x in raw_records if cond_fn(x)]
         if sub:
@@ -1745,22 +1753,22 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             roi_0 = ((sum(x["odd_0"] for x in sub if x["shift"] == 0) - n_s) / n_s) * 100.0
             pendulum_brackets.append(
                 {
-                    "Son 5 Dakika (30➔35.Dk) Sarkaç Hareketi": lbl,
+                    "Son 5 Dakikadaki (30➔35.Dk) Barem Değişimi": lbl,
                     "Maç Sayısı": n_s,
-                    "🎯 Tam Favori (ROI)": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | %{roi_0:+.1f}",
-                    "📉 1 Alt Bareme Düşüş": f"%{c_m1/n_s*100:.1f} ({c_m1}/{n_s})",
-                    "📈 1/2 Üst Bareme Çıkış": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
-                    "💡 Sarkaç Simetrisi Kuralı": advice,
+                    "🎯 1. Favori Tutma & Kâr": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | %{roi_0:+.1f}",
+                    "📉 1 Alt Bareme Düşme": f"%{c_m1/n_s*100:.1f} ({c_m1}/{n_s})",
+                    "📈 Üst Bareme Çıkma": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
+                    "💡 Ne Yapmalı?": advice,
                 }
             )
 
     # 1. Odds Bracket Breakdown (with <1.85 separated!)
     odds_brackets = []
     for low_o, high_o, lbl, advice in [
-        (1.0, 1.85, "🚨 Aşırı Düşük Oran Tuzağı (< 1.85)", "🥈 1. Favori Zarar Yazar (-%37 ROI) ➔ Doğrudan 2. Favori Oyna (+%41.8 ROI)"),
-        (1.85, 2.10, "⚠️ Düşük Oran Bandı (1.85 - 2.09)", "📉 2.Favori Alttaysa -1 Alt (+%22.5 ROI), Üstteyse 0 Merkez Oyna"),
-        (2.10, 2.35, "💎 Altın Oran Bandı (2.10 - 2.34)", "🎯 0 Merkez Oyna (%52 İsabet, +%15.6 ROI; 2.Fav Üstteyse +%39.9 ROI)"),
-        (2.35, 99.0, "⚖️ Yüksek Oran Bandı (>= 2.35)", "🎯 2.35-2.79 Arası 0 Merkez (+%21.6 ROI) veya 1.&2. Favori İkili Koruma"),
+        (1.0, 1.85, "🚨 Oran Çok Düşük Tuzağı (1.85 Altı)", "🥈 1. Favori Zarar Ettirir (-%37) ➔ Onun Yerine 2. Favoriyi Oyna (+%41.8 Kâr)"),
+        (1.85, 2.10, "⚠️ Düşük Oran Aralığı (1.85 - 2.09)", "📉 2. Favori Alttaysa 1 Alt Baremi Oyna (+%22.5 Kâr), Üstteyse 1. Favoriyi Oyna"),
+        (2.10, 2.35, "💎 İdeal Oran Aralığı (2.10 - 2.34)", "🎯 Direkt 1. Favoriyi Oyna (%52 Tutar, +%15.6 Kâr; 2. Favori Üstteyse +%39.9 Kâr)"),
+        (2.35, 99.0, "⚖️ Yüksek Oran Aralığı (2.35 ve Üstü)", "🎯 1. Favoriyi Oyna (+%21.6 Kâr) veya 1. ve 2. Favori İkisini Birden Kapat"),
     ]:
         sub = [x for x in raw_records if low_o <= x["odd_0"] < high_o]
         if sub:
@@ -1772,23 +1780,23 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             roi_0 = ((sum(x["odd_0"] for x in sub if x["shift"] == 0) - n_s) / n_s) * 100.0
             odds_brackets.append(
                 {
-                    "35. Dk 1. Favori Oran Bandı": lbl,
+                    "35. Dk 1. Favori Oran Aralığı": lbl,
                     "Maç Sayısı": n_s,
-                    "🎯 0 (Merkez) İsabet & ROI": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | ROI: %{roi_0:+.1f}",
-                    "📉 -1 Alt Barem": f"%{c_m1/n_s*100:.1f} ({c_m1}/{n_s})",
-                    "❄️ -2 Alt Barem": f"%{c_m2/n_s*100:.1f} ({c_m2}/{n_s})",
-                    "📈 +1/+2 Üst Barem": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
-                    "💡 Ne Yapmalı? (Kural Özeti)": advice,
+                    "🎯 1. Favori Tutma & Kâr": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | Kâr: %{roi_0:+.1f}",
+                    "📉 1 Alt Barem": f"%{c_m1/n_s*100:.1f} ({c_m1}/{n_s})",
+                    "❄️ 2 Alt Barem": f"%{c_m2/n_s*100:.1f} ({c_m2}/{n_s})",
+                    "📈 1 veya 2 Üst Barem": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
+                    "💡 Ne Yapmalı?": advice,
                 }
             )
 
     # 2. 2nd Favorite Direction Breakdown (-1 Lower vs +1 Upper)
     sec_dir_brackets = []
     for cond_fn, lbl, advice in [
-        (lambda x: x["sec_dir"] >= 1 and x["odd_0"] >= 2.10, "🔥 2. Favori Üstte (+1) VE Oran >= 2.10", "🎯 SÜPER SİNYAL: 0 Merkez %61.1 Tutar (+%39.9 ROI), -1 Alt Hiç Gelmez (%0)!"),
-        (lambda x: x["sec_dir"] >= 1 and x["odd_0"] < 2.10, "📈 2. Favori Üstte (+1) VE Oran < 2.10", "🎯 0 Merkez (%55.6 İsabet) veya 0 & +1 İkili Koruma"),
-        (lambda x: x["sec_dir"] <= -1 and x["odd_0"] < 2.10, "📉 2. Favori Altta (-1) VE Oran < 2.10", "📉 0 Merkez Zarar Eder (-%16.6) ➔ -1 Alt Barem Oyna (+%16.6 ROI)!"),
-        (lambda x: x["sec_dir"] <= -1 and x["odd_0"] >= 2.10, "⚖️ 2. Favori Altta (-1) VE Oran >= 2.10", "🛡️ Yarı Yarıya 0 Merkez ve -1 Alt Gelir (+1 Üst %0!) ➔ 0 & -1 İkili Koruma"),
+        (lambda x: x["sec_dir"] >= 1 and x["odd_0"] >= 2.10, "🔥 2. Favori Üst Baremde VE Oran >= 2.10", "🎯 ÇOK GÜÇLÜ SİNYAL: 1. Favori %61.1 Tutar (+%39.9 Kâr), 1 Alt Barem Hiç Gelmez (%0)!"),
+        (lambda x: x["sec_dir"] >= 1 and x["odd_0"] < 2.10, "📈 2. Favori Üst Baremde VE Oran < 2.10", "🎯 1. Favori (%55.6 Tutar) veya 1. Favori ile 1 Üst Baremi Kapat"),
+        (lambda x: x["sec_dir"] <= -1 and x["odd_0"] < 2.10, "📉 2. Favori Alt Baremde VE Oran < 2.10", "📉 1. Favori Zarar Ettirir (-%16.6) ➔ 1 Alt Baremi Oyna (+%16.6 Kâr)!"),
+        (lambda x: x["sec_dir"] <= -1 and x["odd_0"] >= 2.10, "⚖️ 2. Favori Alt Baremde VE Oran >= 2.10", "🛡️ Yarı Yarıya 1. Favori ve 1 Alt Barem Gelir (Üst Barem %0!) ➔ İkisini Birden Kapat"),
     ]:
         sub = [x for x in raw_records if cond_fn(x)]
         if sub:
@@ -1801,23 +1809,23 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             roi_m1 = ((sum(x["odd_m1"] for x in sub if x["shift"] == -1) - n_s) / n_s) * 100.0
             sec_dir_brackets.append(
                 {
-                    "2. Favorinin Konumu (Piyasa Eğilimi)": lbl,
+                    "2. Favori Hangi Baremde Duruyor?": lbl,
                     "Maç Sayısı": n_s,
-                    "🎯 0 Merkez (ROI)": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | %{roi_0:+.1f}",
-                    "📉 -1 Alt (ROI)": f"%{c_m1/n_s*100:.1f} ({c_m1}/{n_s}) | %{roi_m1:+.1f}",
-                    "❄️ -2 Alt": f"%{c_m2/n_s*100:.1f} ({c_m2}/{n_s})",
-                    "📈 +1/+2 Üst": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
-                    "💡 Ne İşe Yarar / Ne Oynanır?": advice,
+                    "🎯 1. Favori Tutma & Kâr": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | %{roi_0:+.1f}",
+                    "📉 1 Alt Barem Tutma & Kâr": f"%{c_m1/n_s*100:.1f} ({c_m1}/{n_s}) | %{roi_m1:+.1f}",
+                    "❄️ 2 Alt Barem": f"%{c_m2/n_s*100:.1f} ({c_m2}/{n_s})",
+                    "📈 1 veya 2 Üst Barem": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
+                    "💡 Ne Oynanmalı?": advice,
                 }
             )
 
-    # 3. Score Margin at 35m Breakdown (Clutch vs Blowout)
+    # 3. Score Margin at 35m Breakdown
     margin_brackets = []
     for lo_m, hi_m, lbl, advice in [
-        (0, 6, "⛔ 0 - 5 Sayı Fark (Baş Başa / Uzatma & Faul Tuzağı)", "⛔ PAS GEÇ! Son 13 dk'da ort. 59 sayı atılır, %33 üst bareme patlar (Zarar Bölgesi)"),
-        (6, 12, "⚖️ 6 - 11 Sayı Fark (Normal Rekabet)", "🛡️ Standart Tempo (~53 sayı) ➔ 1. ve 2. Favori İkili Koruma veya v3 Kuralı"),
-        (12, 18, "🛡️ 12 - 17 Sayı Fark (Açık Fark)", "🛡️ Uzatma Riski Yok ➔ 0 Merkez veya 0 & -1 İkili Koruma"),
-        (18, 999, "🧊 18+ Sayı Fark (Blowout / Rölanti Freni)", "🔥 GÜÇLÜ MERKEZ: Son bölümde ort. 47.4 sayı atılır; 0 Merkez %60 Tutar (+%27.5 ROI)!"),
+        (0, 6, "⛔ 0 - 5 Sayı Fark (Başa Baş Maç / Uzatma ve Faul Riski)", "⛔ PAS GEÇ (Bahis Alma)! Kalan sürede ort. 59 sayı atılır, maçların %33'ü üst bareme kaçar"),
+        (6, 12, "⚖️ 6 - 11 Sayı Fark (Normal Skor Farkı)", "🛡️ Normal Tempo (~53 sayı) ➔ 1. ve 2. Favori İkisini Kapat veya Sistemin Önerisini Oyna"),
+        (12, 18, "🛡️ 12 - 17 Sayı Fark (Rahat Fark)", "🛡️ Uzatma Riski Yok ➔ 1. Favori Oyna veya 1. Favori ile 1 Alt Baremi Kapat"),
+        (18, 999, "🧊 18+ Sayı Fark (Fark Çok Açıldı / Maç Yavaşlar)", "🔥 GÜÇLÜ FAVORİ: Kalan sürede ort. sadece 47.4 sayı atılır; 1. Favori %60 Tutar (+%27.5 Kâr)!"),
     ]:
         sub = [x for x in raw_records if lo_m <= x["margin35"] < hi_m]
         if sub:
@@ -1830,23 +1838,23 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             avg_rem = f"{sum(rems)/len(rems):.1f} Sayı" if rems else "~53 Sayı"
             margin_brackets.append(
                 {
-                    "35. Dk Skor Farkı Bandı": lbl,
+                    "35. Dk Skor Farkı": lbl,
                     "Maç Sayısı": n_s,
-                    "Son 13 Dk Ort. Atılan Sayı": avg_rem,
-                    "🎯 0 Merkez (ROI)": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | %{roi_0:+.1f}",
-                    "📉 -1/-2 Alt Barem": f"%{c_down/n_s*100:.1f} ({c_down}/{n_s})",
-                    "📈 +1/+2 Üst Barem": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
-                    "💡 Ne İşe Yarar / Ne Oynanır?": advice,
+                    "Kalan Sürede Ort. Atılan Sayı": avg_rem,
+                    "🎯 1. Favori Tutma & Kâr": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | %{roi_0:+.1f}",
+                    "📉 Alt Bareme Düşme": f"%{c_down/n_s*100:.1f} ({c_down}/{n_s})",
+                    "📈 Üst Bareme Çıkma": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
+                    "💡 Ne Oynanmalı?": advice,
                 }
             )
 
-    # 4. Barem Interior Edge Position (Score at 35m + 53.3 vs Barem Midpoint)
+    # 4. Barem Interior Edge Position
     edge_brackets = []
     sub_35only = [x for x in raw_records if x["min35"] == 35]
     for cond_fn, lbl, advice in [
-        (lambda x: x["edge_offset"] < -3.0, "📐 Alt Kenarda (35.Dk Skor + 53.3 < Barem Ortası - 3)", "📉 DİKKAT: Maçların %55.6'sı -1/-2 Alt Bareme Düşer (0 Merkez -%24.6 Zarar Eder!)"),
-        (lambda x: -3.0 <= x["edge_offset"] <= 3.0, "🎯 Tam Merkezde (35.Dk Skor + 53.3 ≈ Barem Ortası)", "💎 GÜVENLİ MERKEZ: Maçların %55.6'sı Tam 0 Merkezde Kalır (+%17.8 ROI)"),
-        (lambda x: x["edge_offset"] > 3.0, "📐 Üst Kenarda (35.Dk Skor + 53.3 > Barem Ortası + 3)", "📈 GÜÇLÜ MERKEZ / ÜST: %56.3 Merkez (+%22.2 ROI), %31.3 +1 Üst Bareme Çıkar"),
+        (lambda x: x["edge_offset"] < -3.0, "📐 Baremin Alt Sınırında Kalıyor (Skor + 53 Sayı = Alt Sınırda)", "📉 DİKKAT: Maçların %55.6'sı 1 Alt Bareme Düşer (1. Favori -%24.6 Zarar Ettirir!)"),
+        (lambda x: -3.0 <= x["edge_offset"] <= 3.0, "🎯 Baremin Tam Ortasında (Skor + 53 Sayı = Tam Ortada)", "💎 GÜVENLİ BÖLGE: Maçların %55.6'sı Direkt 1. Favoride Biter (+%17.8 Kâr)"),
+        (lambda x: x["edge_offset"] > 3.0, "📐 Baremin Üst Kısmında (Skor + 53 Sayı = Üst Sınıra Yakın)", "📈 GÜÇLÜ FAVORİ: %56.3 Oranında 1. Favori Tutar (+%22.2 Kâr), %31.3 Üst Bareme Çıkar"),
     ]:
         sub = [x for x in sub_35only if cond_fn(x)]
         if sub:
@@ -1857,11 +1865,11 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             roi_0 = ((sum(x["odd_0"] for x in sub if x["shift"] == 0) - n_s) / n_s) * 100.0
             edge_brackets.append(
                 {
-                    "35. Dk Skorun Barem İçindeki Yeri": lbl,
+                    "Tahmini Maç Sonu Baremde Nereye Düşüyor?": lbl,
                     "Maç Sayısı": n_s,
-                    "📉 -1/-2 Alta Kayma": f"%{c_down/n_s*100:.1f} ({c_down}/{n_s})",
-                    "🎯 0 Merkezde Kalma (ROI)": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | %{roi_0:+.1f}",
-                    "📈 +1/+2 Üste Çıkma": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
+                    "📉 Alt Bareme Düşme": f"%{c_down/n_s*100:.1f} ({c_down}/{n_s})",
+                    "🎯 1. Favoride Kalma & Kâr": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | %{roi_0:+.1f}",
+                    "📈 Üst Bareme Çıkma": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
                     "💡 Ne İşe Yarar?": advice,
                 }
             )
@@ -1869,11 +1877,11 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
     # 5. Minute-by-Minute Optimal Entry Window
     minute_windows = []
     for m_target, m_lbl, m_advice in [
-        (18, "⚡ 18. Dakika (2. Çeyrek Ortası — Erken Değer)", "💎 Erken girişte en kârlı pencere: Tekli 0 (+%16.8 ROI) ve 1.&2.Fav İkili (+%14.3 ROI)"),
-        (24, "⏸️ 24. Dakika (Devre Arası)", "⚖️ Tekli 0 Merkez pozitif (+%11.4 ROI), devre arası tempo analizi için uygun"),
-        (30, "🕒 30. Dakika (3. Çeyrek Ortası)", "⚖️ Oranlar oturmaya başlar (%45.9 Merkez isabeti, +%5.8 ROI)"),
-        (33, "🚨 32 - 33. Dakika (Q3 Sonu Öncesi — TUZAK PENCERE)", "⛔ BAHİS ALMA! Barem geçiş anı olduğu için en yüksek yanılma ve zarar (-%17.1 ROI) buradadır"),
-        (35, "🔥 34 - 35. Dakika (Kapanış — EN YÜKSEK İSABET)", "🎯 Ana Karar Anı: Tekli 0 (%50.8 İsabet), 1.&2.Fav İkili Koruma (%83.6 İsabet, +%1.5 ROI)"),
+        (18, "⚡ 18. Dakika (2. Çeyrek Ortası — Erken Bahis)", "💎 Erken bahiste en kârlı dakika: 1. Favori (+%16.8 Kâr) ve İlk 2 Favori İkilisi (+%14.3 Kâr)"),
+        (24, "⏸️ 24. Dakika (Devre Arası)", "⚖️ 1. Favori kârlı (+%11.4 Kâr), devre arası tempo analizi için uygun"),
+        (30, "🕒 30. Dakika (3. Çeyrek Ortası)", "⚖️ Oranlar şekillenmeye başlar (%45.9 1. Favori tutma, +%5.8 Kâr)"),
+        (33, "🚨 32 - 33. Dakika (3. Çeyrek Sonu — TUZAK DAKİKA)", "⛔ BAHİS ALMA! Barem değişim anı olduğu için en çok yanılma ve zarar (-%17.1) bu dakikadadır"),
+        (35, "🔥 34 - 35. Dakika (Kapanış — EN YÜKSEK İSABET)", "🎯 Ana Karar Anı: 1. Favori (%50.8 Tutar), İlk 2 Favori İkilisi (%83.6 Tutar)"),
     ]:
         m_hits0, m_ret0, m_hits_d, m_ret_d, m_n = 0, 0.0, 0, 0.0, 0
         for gid, grp in comp.groupby("game_id", sort=False):
@@ -1901,21 +1909,21 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
         if m_n > 0:
             minute_windows.append(
                 {
-                    "Bahis Giriş Dakikası": m_lbl,
+                    "Bahis Alınan Dakika": m_lbl,
                     "Maç Sayısı": m_n,
-                    "🎯 1. Favori İsabet & ROI": f"%{m_hits0/m_n*100:.1f} ({m_hits0}/{m_n}) | ROI: %{(m_ret0-m_n)/m_n*100:+.1f}",
-                    "🛡️ 1. & 2. Favori İkili Koruma": f"%{m_hits_d/m_n*100:.1f} ({m_hits_d}/{m_n}) | ROI: %{(m_ret_d-m_n)/m_n*100:+.1f}",
-                    "💡 Zamanlama Tavsiyesi": m_advice,
+                    "🎯 1. Favori Tutma & Kâr": f"%{m_hits0/m_n*100:.1f} ({m_hits0}/{m_n}) | Kâr: %{(m_ret0-m_n)/m_n*100:+.1f}",
+                    "🛡️ 1. ve 2. Favori İkisini Kapatma": f"%{m_hits_d/m_n*100:.1f} ({m_hits_d}/{m_n}) | Kâr: %{(m_ret_d-m_n)/m_n*100:+.1f}",
+                    "💡 Hangi Dakika Daha İyi?": m_advice,
                 }
             )
 
-    # 6. Drift (Q1 -> 35m Barem Migration) Breakdown
+    # 6. Drift (Opening -> 35m Barem Change) Breakdown
     drift_brackets = []
     for cond_fn, lbl, advice in [
-        (lambda d: d >= 1, "📈 Barem Yükseldi (Q1 ➔ 35.Dk +1/+3)", "🎯 Maç Hızlandı: 0 Merkez %58 Tutar (+%26.1 ROI), Alta Nadiren Düşer"),
-        (lambda d: d == 0, "⚖️ Barem Sabit Kaldı (Q1 ➔ 35.Dk 0)", "📉 Maçların %43'ü -1/-2 Alta Kayar ➔ 0 & -1 İkili Koruma Önerilir"),
-        (lambda d: d == -1, "📉 Barem 1 Kademe Düştü (Q1 ➔ 35.Dk -1)", "⚖️ %43 Merkezde Kalır, %43 Tekrar +1 Üste Tepki Verir"),
-        (lambda d: d <= -2, "❄️ Barem Çöktü (Q1 ➔ 35.Dk -2/-3)", "🎯 Fazla Düştüğü İçin Yeni Merkezde (0) Dengelenir (+%14.1 ROI)"),
+        (lambda d: d >= 1, "📈 Maç Başından 35. Dakikaya Barem Yükseldi", "🎯 Maç Hızlı Gitti: 35. Dk Favorisi %58 Tutar (+%26.1 Kâr), Alt Bareme Nadiren Düşer"),
+        (lambda d: d == 0, "⚖️ Maç Başından 35. Dakikaya Barem Aynı Kaldı", "📉 Maçların %43'ü Alt Bareme Kayar ➔ 1. Favori ile 1 Alt Baremi Birlikte Kapatmak Güvenlidir"),
+        (lambda d: d == -1, "📉 Maç Başından 35. Dakikaya Barem 1 Kademe Düştü", "⚖️ %43 Yeni Favoride Kalır, %43 Tekrar Eski Üst Baremine Çıkar"),
+        (lambda d: d <= -2, "❄️ Maç Başından 35. Dakikaya Barem Çok Düştü (2-3 Kademe)", "🎯 Zaten Çok Düştüğü İçin Daha Fazla Düşmez; Yeni Favoride Dengelenir (+%14.1 Kâr)"),
     ]:
         sub = [x for x in raw_records if cond_fn(x["drift"])]
         if sub:
@@ -1926,22 +1934,22 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             c_up = sum(1 for x in sub if x["shift"] >= 1)
             drift_brackets.append(
                 {
-                    "Maç İçi Barem Göçü (Q1 ➔ 35. Dk)": lbl,
+                    "Maç Başından 35. Dakikaya Barem Değişimi": lbl,
                     "Maç Sayısı": n_s,
-                    "🎯 0 (Merkez)": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s})",
-                    "📉 -1 Alt Barem": f"%{c_m1/n_s*100:.1f} ({c_m1}/{n_s})",
-                    "❄️ -2 Alt Barem": f"%{c_m2/n_s*100:.1f} ({c_m2}/{n_s})",
-                    "📈 +1/+2 Üst": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
-                    "💡 Davranış Özeti": advice,
+                    "🎯 1. Favori Barem": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s})",
+                    "📉 1 Alt Barem": f"%{c_m1/n_s*100:.1f} ({c_m1}/{n_s})",
+                    "❄️ 2 Alt Barem": f"%{c_m2/n_s*100:.1f} ({c_m2}/{n_s})",
+                    "📈 1 veya 2 Üst Barem": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
+                    "💡 Ne Anlama Geliyor?": advice,
                 }
             )
 
     # 7. Sequential Match-to-Match Transitions (Real Tracked Chain)
     transitions = []
     for cond_fn, lbl in [
-        (lambda s: s == 0, "🎯 Önceki Maç 0 (Merkez) Bittiğinde ➔ Sıradaki Maç"),
-        (lambda s: s <= -1, "📉 Önceki Maç -1 / -2 (Alt Barem) Bittiğinde ➔ Sıradaki Maç"),
-        (lambda s: s >= 1, "📈 Önceki Maç +1 / +2 (Üst Barem) Bittiğinde ➔ Sıradaki Maç"),
+        (lambda s: s == 0, "🎯 Önceki Maçta 1. Favori Barem Tuttuysa ➔ Sıradaki Maç"),
+        (lambda s: s <= -1, "📉 Önceki Maç Alt Baremde Bittiyse ➔ Sıradaki Maç"),
+        (lambda s: s >= 1, "📈 Önceki Maç Üst Baremde Bittiyse ➔ Sıradaki Maç"),
     ]:
         nxt = [raw_records[i + 1] for i in range(len(raw_records) - 1) if cond_fn(raw_records[i]["shift"])]
         if nxt:
@@ -1952,13 +1960,13 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             c_up = sum(1 for x in nxt if x["shift"] >= 1)
             transitions.append(
                 {
-                    "Ardışık Maç Geçiş Durumu": lbl,
-                    "Örneklem": n_s,
-                    "🎯 Sıradaki 0 (Merkez)": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s})",
-                    "📉 Sıradaki -1 Alt": f"%{c_m1/n_s*100:.1f} ({c_m1}/{n_s})",
-                    "❄️ Sıradaki -2 Alt": f"%{c_m2/n_s*100:.1f} ({c_m2}/{n_s})",
-                    "📈 Sıradaki +1/+2 Üst": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
-                    "🛡️ (0 veya -1) Oranı": f"%{(c_0+c_m1)/n_s*100:.1f} ({c_0+c_m1}/{n_s})",
+                    "Önceki Maçın Sonucu": lbl,
+                    "Maç Sayısı": n_s,
+                    "🎯 Sıradaki Maç 1. Favori": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s})",
+                    "📉 Sıradaki Maç 1 Alt Barem": f"%{c_m1/n_s*100:.1f} ({c_m1}/{n_s})",
+                    "❄️ Sıradaki Maç 2 Alt Barem": f"%{c_m2/n_s*100:.1f} ({c_m2}/{n_s})",
+                    "📈 Sıradaki Maç Üst Barem": f"%{c_up/n_s*100:.1f} ({c_up}/{n_s})",
+                    "🛡️ Favori veya 1 Alt Gelme Oranı": f"%{(c_0+c_m1)/n_s*100:.1f} ({c_0+c_m1}/{n_s})",
                 }
             )
 
@@ -1981,9 +1989,7 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
 
 def analyze_archive_4500_symmetry(df_hist: pd.DataFrame) -> dict:
     """
-    Analyzes 4,550+ completed CyberLeague matches for deep mathematical symmetries:
-    1. 36th-minute (End of Q3) Score Last Digit (Mod-10) Barem Center vs Boundary Symmetry.
-    2. First Half (Q1+Q2) vs Second Half (Q3+Q4) Mirror & Mean-Reversion Symmetry.
+    Analyzes 4,550+ completed CyberLeague matches for deep mathematical symmetries in plain Turkish.
     """
     if df_hist is None or df_hist.empty:
         return {"total_archive": 0, "mod10_36m": [], "half_symmetry": []}
@@ -2009,16 +2015,16 @@ def analyze_archive_4500_symmetry(df_hist: pd.DataFrame) -> dict:
     df_h["s36_mod10"] = (df_h["S36"].astype(int)) % 10
     mod10_rows = []
     digit_notes = {
-        0: "⚖️ +52 eklenince ..2 (Barem alt-orta kısmı): Merkez %40.3, Alt %39.7 dengeli",
-        1: "📉 +52 eklenince ..3 (Alt kenara yakın): Alt (%38.7) ve Merkez (%36.9) başa baş",
-        2: "⚖️ +52 eklenince ..4 (Merkeze yakın): Üç yön dengeli (%36 Merkez / %31 Alt / %32 Üst)",
-        3: "🎯 TAM GÖBEK SİMETRİSİ (+52 eklenince ..5 Barem Ortası): Merkez %45.3 (En Yüksek!), Alt %27.6 = Üst %27.1 Kusursuz Ayna!",
-        4: "🎯 +52 eklenince ..6 (Barem Göbeği): Merkez %40.0, Üst %33.8",
-        5: "📈 +52 eklenince ..7 (Orta-Üst): Merkez %40.7, Üst %37.3",
-        6: "📈 +52 eklenince ..8 (Üst Kenar): Merkez %41.1 = Üst %40.9 İkiz Üst Simetrisi!",
-        7: "🔥 +52 eklenince ..9 (Üst Sınır): Üst Barem %46.0 ile öne geçer!",
-        8: "🔥 ÜST SINIR SIÇRAMASI (+52 eklenince ..0 Barem Tavanı): 1 sayı fazla atılsa Üst olur ➔ %51.6 Üst Barem!",
-        9: "❄️ ALT SINIR DÜŞÜŞÜ (+52 eklenince ..1 Barem Tabanı): 1 sayı az atılsa Alt olur ➔ %48.5 Alt Barem!",
+        0: "⚖️ +52 sayı eklenince sonu ..2 olur (Baremin alt-orta kısmı): Beklenen Barem %40.3, 1 Alt Barem %39.7 başa baş",
+        1: "📉 +52 sayı eklenince sonu ..3 olur (Alt sınıra yakın): 1 Alt Barem (%38.7) ve Beklenen Barem (%36.9) dengeli",
+        2: "⚖️ +52 sayı eklenince sonu ..4 olur (Barem ortasına yakın): Üç yön dengeli (%36 Beklenen / %31 Alt / %32 Üst)",
+        3: "🎯 EN GÜVENLİ SON RAKAM (+52 eklenince sonu ..5 tam barem ortası olur): Beklenen Barem %45.3 (En Yüksek!), Alt %27.6 = Üst %27.1 eşit!",
+        4: "🎯 +52 sayı eklenince sonu ..6 olur (Barem ortası): Beklenen Barem %40.0, Üst Barem %33.8",
+        5: "📈 +52 sayı eklenince sonu ..7 olur (Orta-üst kısım): Beklenen Barem %40.7, Üst Barem %37.3",
+        6: "📈 +52 sayı eklenince sonu ..8 olur (Üst sınıra yakın): Beklenen Barem %41.1 ve Üst Barem %40.9 eşit!",
+        7: "🔥 +52 sayı eklenince sonu ..9 olur (Üst sınırda): 1 Üst Barem %46.0 ile öne geçer!",
+        8: "🔥 ÜST BAREME GEÇİŞ (+52 eklenince sonu ..0 barem tavanı olur): 1 sayı bile fazla atılsa Üst Bareme geçer (%51.6 Üst Barem!)",
+        9: "❄️ ALT BAREME DÜŞÜŞ (+52 eklenince sonu ..1 barem tabanı olur): 1 sayı bile az atılsa Alt Bareme düşer (%48.5 Alt Barem!)",
     }
     for d in range(10):
         sub = df_h[df_h["s36_mod10"] == d]
@@ -2032,34 +2038,34 @@ def analyze_archive_4500_symmetry(df_hist: pd.DataFrame) -> dict:
         up_b = (act_b_idx > exp_b_idx).mean() * 100.0
         mod10_rows.append(
             {
-                "36.Dk Skor Son Rakamı": f"Sonu ..{d} (Örn: 15{d})",
+                "3. Çeyrek Sonu (36.Dk) Skorun Son Rakamı": f"Sonu ..{d} ile bitenler (Örn: 15{d})",
                 "Maç Sayısı": len(sub),
-                "Beklenen Son Rakam (+52 Sayı)": f"..{(d + 2) % 10}",
-                "📉 Alt Bareme Kayma": f"%{down_b:.1f}",
-                "🎯 Merkez Baremde Kalma": f"%{same_b:.1f}",
+                "Maç Sonu Beklenen Son Rakam (+52 Sayı)": f"..{(d + 2) % 10}",
+                "📉 Alt Bareme Düşme": f"%{down_b:.1f}",
+                "🎯 Beklenen Baremde Kalma": f"%{same_b:.1f}",
                 "📈 Üst Bareme Çıkma": f"%{up_b:.1f}",
-                "💡 4.550 Maçlık Simetri Kuralı": digit_notes.get(d, ""),
+                "💡 4.550 Maçlık İstatistik Özeti": digit_notes.get(d, ""),
             }
         )
 
     half_rows = []
     for lbl, cond, note in [
-        ("❄️ Düşük İlk Yarı (Q1+Q2 <= 98 Sayı)", df_h["H1"] <= 98, "📈 Ters Sarkaç Tepkisi: 2. yarıda oyun hızlanır ve ilk yarıdan ortalama +12.6 sayı DAHA FAZLA atılır!"),
-        ("⚖️ Dengeli İlk Yarı (Q1+Q2: 99 - 107 Sayı)", (df_h["H1"] >= 99) & (df_h["H1"] <= 107), "🪞 Ayna Simetrisi: 1. Yarı (103.0) ile 2. Yarı (105.4) neredeyse birebir aynı sayıda biter"),
-        ("🔥 Yüksek İlk Yarı (Q1+Q2 >= 108 Sayı)", df_h["H1"] >= 108, "🧊 Rölanti / Denge Freni: 2. yarıda tempo düşer ve ilk yarıdan ortalama -8.4 sayı DAHA AZ atılır!"),
+        ("❄️ İlk Yarı Az Sayı Çıktı (98 Sayı ve Altı)", df_h["H1"] <= 98, "📈 İkinci Yarı Hızlanır: 2. yarıda oyun açılır ve ilk yarıdan ortalama +12.6 sayı DAHA FAZLA atılır!"),
+        ("⚖️ İlk Yarı Normal Bitti (99 - 107 Sayı Arası)", (df_h["H1"] >= 99) & (df_h["H1"] <= 107), "🪞 İki Yarı Eşit Gider: 1. Yarı (103.0) ile 2. Yarı (105.4) neredeyse birebir aynı sayıda biter"),
+        ("🔥 İlk Yarı Çok Sayı Çıktı (108 Sayı ve Üstü)", df_h["H1"] >= 108, "🧊 İkinci Yarı Yavaşlar: 2. yarıda tempo düşer ve ilk yarıdan ortalama -8.4 sayı DAHA AZ atılır!"),
     ]:
         sub = df_h[cond]
         if sub.empty:
             continue
         half_rows.append(
             {
-                "İlk Yarı (Q1+Q2) Tempo Grubu": lbl,
+                "İlk Yarı (1. + 2. Çeyrek) Toplam Sayı": lbl,
                 "Maç Sayısı": len(sub),
                 "1. Yarı Ortalaması": f"{sub['H1'].mean():.1f} Sayı",
-                "2. Yarı (Q3+Q4) Ortalaması": f"{sub['H2'].mean():.1f} Sayı",
-                "4. Çeyrek (Q4) Ortalaması": f"{sub['Q4'].mean():.1f} Sayı",
+                "2. Yarı Ortalaması": f"{sub['H2'].mean():.1f} Sayı",
+                "Son Çeyrek (4. Çeyrek) Ortalaması": f"{sub['Q4'].mean():.1f} Sayı",
                 "Maç Sonu Toplam Ort.": f"{sub['total_score'].mean():.1f} Sayı",
-                "💡 Yarılar Arası Simetri Kuralı": note,
+                "💡 İkinci Yarıda Ne Olur?": note,
             }
         )
 
