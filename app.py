@@ -75,7 +75,7 @@ IS_DARK = st.session_state.ui_theme == "matte_dark"
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v4.3-smart-value"
+ENGINE_VERSION = "v4.4-clean-card"
 
 
 def _ensure_clean_git_tracked_files():
@@ -1021,40 +1021,44 @@ def render_live_dashboard():
                 "TRAP_EXTREME": "#e11d48",
                 "TRAP_LOW": "#d97706",
             }.get(smart["zone_type"], "var(--text-secondary)")
+            main_reason_short = str(smart.get("reasoning", "")).split(" • ")[0]
             smart_html = (
-                f'<div class="info-strip" style="grid-column: 1 / -1; border-left:4px solid {smart_color};" '
-                f'title="Fareyi aşağıdaki kutucukların üstüne getirerek her bilginin ne anlama geldiğini sade Türkçe ile okuyabilirsiniz.">'
-                f'<div class="info-strip-label">👑 35. Dakika Ne Oynamalı? (Akıllı Karar & Simetri Özeti) '
-                f'<span style="font-weight:500; opacity:0.8;">(Detaylı açıklama için yazıların üstüne fareyle gelin ℹ️)</span></div>'
-                f'<div class="info-strip-val" style="font-size:0.84rem; line-height:1.58;">'
-                f'<span title="{smart["reasoning"]}" style="cursor:help; border-bottom:1px dotted currentColor;">'
-                f'<b style="color:{smart_color};">{smart["zone_badge"]} [?]</b></span> &nbsp;&bull;&nbsp; '
-                f'<span title="{smart["sec_dir_tip"]}" style="cursor:help; border-bottom:1px dotted var(--text-muted);">'
-                f'{smart["sec_dir_badge"]} [?]</span> &nbsp;&bull;&nbsp; '
-                f'<span title="{smart["margin_tip"]}" style="cursor:help; border-bottom:1px dotted var(--text-muted);">'
-                f'{smart["margin_badge"]} [?]</span> &nbsp;&bull;&nbsp; '
-                f'<span title="{smart["drift_tip"]}" style="cursor:help; border-bottom:1px dotted var(--text-muted);">'
-                f'{smart["drift_badge"]} [?]</span><br>'
-                f'<span title="{smart["mod10_tip"]}" style="cursor:help; border-bottom:1px dotted var(--text-muted);">'
-                f'{smart["mod10_badge"]} [?]</span> &nbsp;&bull;&nbsp; '
-                f'<span title="{smart["twin_tip"]}" style="cursor:help; border-bottom:1px dotted var(--text-muted);">'
-                f'{smart["twin_badge"]} [?]</span> &nbsp;&bull;&nbsp; '
-                f'<span title="{smart["wing_tip"]}" style="cursor:help; border-bottom:1px dotted var(--text-muted);">'
-                f'{smart["wing_badge"]} [?]</span> &nbsp;&bull;&nbsp; '
-                f'<span title="{smart["pendulum_tip"]}" style="cursor:help; border-bottom:1px dotted var(--text-muted);">'
-                f'{smart["pendulum_badge"]} [?]</span> &nbsp;&bull;&nbsp; '
-                f'<span title="{smart["seq_sym_tip"]}" style="cursor:help; border-bottom:1px dotted var(--text-muted);">'
-                f'{smart["seq_sym_badge"]} [?]</span><br>'
-                f'<span title="Tek bir barem oynayacaksanız sistemin geçmiş maçlara bakarak önerdiği 1 numaralı barem." style="cursor:help;">'
-                f'🎯 Tek Barem Önerisi: <b>{smart["primary_pick"]}</b></span> &nbsp;&bull;&nbsp; '
-                f'<span title="Garantiye almak için iki bareme birden bahis bölerek ikisinden biri tuttuğunda kâr etme yöntemi." style="cursor:help;">'
-                f'🛡️ İki Barem Kapatma Önerisi: <b>{smart["backup_pick"]}</b></span> &nbsp;&bull;&nbsp; '
-                f'<span title="Bu maça ne kadar yatırılmalı? Yakın maçta (0-5 fark) 0 TL Pas, normal maçta 1000 TL, çok güçlü sinyalde 2000 TL." style="cursor:help;">'
-                f'💰 Önerilen Tutar: <b>{smart["stake_badge"]}</b></span> &nbsp;&bull;&nbsp; '
-                f'<span title="{smart["edge_tip"]}" style="cursor:help; border-bottom:1px dotted var(--text-muted);">'
-                f'{smart["edge_badge"]} [?]</span>'
-                f'<div style="font-size:0.75rem; color:var(--text-primary); background:var(--bg-subtle); padding:0.35rem 0.6rem; border-radius:6px; margin-top:0.28rem;">💬 <b>Neden Bu Tercih?</b> {smart["reasoning"]}</div>'
-                f"</div></div>"
+                f'<div class="info-strip" style="grid-column: 1 / -1; border-left:4px solid {smart_color}; padding:0.75rem 0.95rem;">'
+                f'<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.55rem;">'
+                f'<div class="info-strip-label" style="font-size:0.84rem; margin:0;">👑 35. Dakika Ne Oynamalı? (Net Karar Özeti)</div>'
+                f'<span style="background:var(--bg-subtle); border:1px solid {smart_color}; color:{smart_color}; padding:0.18rem 0.65rem; border-radius:999px; font-size:0.76rem; font-weight:800;">{smart["zone_badge"]}</span>'
+                f'</div>'
+                f'<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap:0.55rem; margin-bottom:0.5rem;">'
+                f'<div style="background:var(--bg-subtle); border:1px solid var(--border-subtle); border-left:3px solid #059669; border-radius:8px; padding:0.5rem 0.7rem;" title="Tek bir barem oynayacaksanız sistemin geçmiş 63 maça bakarak önerdiği 1 numaralı barem.">'
+                f'<div style="font-size:0.68rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">🎯 1. Tercih (Tek Barem Oyna)</div>'
+                f'<div style="font-size:0.9rem; font-weight:800; color:var(--text-primary); margin-top:0.15rem;">{smart["primary_pick"]}</div>'
+                f'</div>'
+                f'<div style="background:var(--bg-subtle); border:1px solid var(--border-subtle); border-left:3px solid #2563eb; border-radius:8px; padding:0.5rem 0.7rem;" title="İşi garantiye almak için iki bareme birden bahis bölerek ikisinden biri tuttuğunda kâr etme yöntemi.">'
+                f'<div style="font-size:0.68rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">🛡️ 2. Tercih (Garanti İkili Kapat)</div>'
+                f'<div style="font-size:0.9rem; font-weight:800; color:var(--text-primary); margin-top:0.15rem;">{smart["backup_pick"]}</div>'
+                f'</div>'
+                f'<div style="background:var(--bg-subtle); border:1px solid var(--border-subtle); border-left:3px solid {smart_color}; border-radius:8px; padding:0.5rem 0.7rem;" title="Yakın maçta (0-5 fark) 0 TL Pas Geç, normal maçta 1000 TL, çok güçlü sinyalde 2000 TL önerilir.">'
+                f'<div style="font-size:0.68rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">💰 Ne Kadar Oynanmalı?</div>'
+                f'<div style="font-size:0.9rem; font-weight:800; color:{smart_color}; margin-top:0.15rem;">{smart["stake_badge"]}</div>'
+                f'</div>'
+                f'</div>'
+                f'<div style="font-size:0.8rem; color:var(--text-primary); background:var(--bg-subtle); padding:0.42rem 0.7rem; border-radius:6px; line-height:1.45;">'
+                f'💬 <b>Kısa Özet:</b> {main_reason_short}.'
+                f'</div>'
+                f'<details style="margin-top:0.45rem; font-size:0.76rem; color:var(--text-secondary); cursor:pointer;">'
+                f'<summary style="font-weight:700; color:var(--text-muted); user-select:none;">🔍 Detaylı Simetri Kontrollerini Göster (İsteğe Bağlı — 8 Kriter)</summary>'
+                f'<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap:0.35rem; margin-top:0.45rem; padding:0.45rem; background:var(--bg-subtle); border-radius:8px;">'
+                f'<div title="{smart["sec_dir_tip"]}">• {smart["sec_dir_badge"]}</div>'
+                f'<div title="{smart["margin_tip"]}">• {smart["margin_badge"]}</div>'
+                f'<div title="{smart["edge_tip"]}">• {smart["edge_badge"]}</div>'
+                f'<div title="{smart["drift_tip"]}">• {smart["drift_badge"]}</div>'
+                f'<div title="{smart["twin_tip"]}">• {smart["twin_badge"]}</div>'
+                f'<div title="{smart["wing_tip"]}">• {smart["wing_badge"]}</div>'
+                f'<div title="{smart["mod10_tip"]}">• {smart["mod10_badge"]}</div>'
+                f'<div title="{smart["pendulum_tip"]}">• {smart["pendulum_badge"]}</div>'
+                f'</div>'
+                f'</details>'
+                f'</div>'
             )
 
             odds_map = m.get("odds", {})
