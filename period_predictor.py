@@ -1219,8 +1219,10 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
     raw_records = []
     for gid, grp in comp.groupby("game_id", sort=False):
         first_r = grp.iloc[0]
-        cands = grp[grp["_min"] >= 30]
-        last_r = cands.iloc[-1] if not cands.empty else grp.iloc[-1]
+        cands = grp[grp["_min"] >= 32]
+        if cands.empty:
+            continue
+        last_r = cands.iloc[-1]
         act_b = str(last_r.get("actual_range", "")).strip()
         open_b = str(first_r.get("highest_prob_range", "")).strip()
         if act_b not in barem_names:

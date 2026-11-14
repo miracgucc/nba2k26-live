@@ -74,7 +74,7 @@ IS_DARK = st.session_state.ui_theme == "matte_dark"
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v3.2-smart-62m"
+ENGINE_VERSION = "v3.3-smart-32m"
 
 
 class BackgroundEngineState:
@@ -709,20 +709,36 @@ def render_live_dashboard():
     pend_count = len(df_pend)
 
     if comp_count > 0:
+        df_comp_kpi = df_comp.copy()
+        df_comp_kpi["_min_num"] = (
+            df_comp_kpi["check_time"]
+            .astype(str)
+            .str.extract(r"Minute\s+(\d+)", expand=False)
+            .astype(float)
+            .fillna(0)
+        )
+        df_comp_32 = df_comp_kpi[df_comp_kpi["_min_num"] >= 32].copy()
+        if not df_comp_32.empty and "game_id" in df_comp_32.columns:
+            df_eval_kpi = df_comp_32.sort_values("_min_num").groupby("game_id", as_index=False).last()
+        elif not df_comp_32.empty:
+            df_eval_kpi = df_comp_32
+        else:
+            df_eval_kpi = df_comp_kpi
+        eval_n = len(df_eval_kpi)
         fav_wins = sum(
-            1 for _, r in df_comp.iterrows() if str(r.get("actual_range")) == str(r.get("highest_prob_range"))
+            1 for _, r in df_eval_kpi.iterrows() if str(r.get("actual_range")) == str(r.get("highest_prob_range"))
         )
         val_wins = sum(
-            1 for _, r in df_comp.iterrows() if str(r.get("actual_range")) == str(r.get("value_range"))
+            1 for _, r in df_eval_kpi.iterrows() if str(r.get("actual_range")) == str(r.get("value_range"))
         )
         clu_wins = sum(
-            1 for _, r in df_comp.iterrows() if check_cluster_hit(r.get("best_cluster_name"), r.get("actual_range"))
+            1 for _, r in df_eval_kpi.iterrows() if check_cluster_hit(r.get("best_cluster_name"), r.get("actual_range"))
         )
-        fav_rate = (fav_wins / comp_count) * 100.0
-        val_rate = (val_wins / comp_count) * 100.0
-        clu_rate = (clu_wins / comp_count) * 100.0
+        fav_rate = (fav_wins / eval_n) * 100.0 if eval_n > 0 else 0.0
+        val_rate = (val_wins / eval_n) * 100.0 if eval_n > 0 else 0.0
+        clu_rate = (clu_wins / eval_n) * 100.0 if eval_n > 0 else 0.0
     else:
-        fav_wins = val_wins = clu_wins = 0
+        eval_n = fav_wins = val_wins = clu_wins = 0
         fav_rate = val_rate = clu_rate = 0.0
 
     # KPI Row
@@ -730,7 +746,7 @@ def render_live_dashboard():
     with k1:
         st.markdown(
             f"""
-        <div class="kpi-card">
+        <div class="kpi-card" title="Şu an oynanan canlı CyberLeague maç sayısı ve geçmiş arşivdeki toplam maç sayısı.">
             <div class="kpi-label">🔴 Canlı CyberLeague Maçı</div>
             <div class="kpi-val">{active_count} Maç</div>
             <div class="kpi-sub">{open_barem_count} Maçta Barem Açık &bull; {hist_count} Geçmiş Arşiv</div>
@@ -741,10 +757,10 @@ def render_live_dashboard():
     with k2:
         st.markdown(
             f"""
-        <div class="kpi-card">
-            <div class="kpi-label">📋 Barem Kayıt Akışı</div>
-            <div class="kpi-val">{total_logs}</div>
-            <div class="kpi-sub">{pend_count} Bekleyen &bull; {comp_count} Sonuçlanan</div>
+        <div class="kpi-card" title="32. dakika ve sonrasında kapanış oranı kaydedilmiş {eval_n} tamamlanmış maç ve toplam {total_logs} dakikalık kayıt.">
+            <div class="kpi-label">📋 32+ Dk Kapanış Maçı</div>
+            <div class="kpi-val">{eval_n} Maç</div>
+            <div class="kpi-sub">{pend_count} Canlı Kayıt &bull; {comp_count} Toplam Dakika Kaydı</div>
         </div>
         """,
             unsafe_allow_html=True,
@@ -752,10 +768,10 @@ def render_live_dashboard():
     with k3:
         st.markdown(
             f"""
-        <div class="kpi-card">
-            <div class="kpi-label">⭐ 1xBet Favori Barem</div>
+        <div class="kpi-card" title="Sadece 32. dakika ve sonrasındaki kapanış kayıtlarında (her maça 1 kupon baz alınarak) 1xBet'in 1. Favori bareminin tutma oranı.">
+            <div class="kpi-label">⭐ 1xBet Favori (32+ Dk)</div>
             <div class="kpi-val" style="color:#059669;">%{fav_rate:.1f}</div>
-            <div class="kpi-sub">{fav_wins} / {comp_count} İsabet (En Düşük Oran)</div>
+            <div class="kpi-sub">{fav_wins} / {eval_n} Maç İsabet (32+ Dk Kapanış)</div>
         </div>
         """,
             unsafe_allow_html=True,
@@ -763,10 +779,10 @@ def render_live_dashboard():
     with k4:
         st.markdown(
             f"""
-        <div class="kpi-card">
-            <div class="kpi-label">🔥 Model Value Barem</div>
+        <div class="kpi-card" title="32. dakika ve sonrasında Model olasılığının 1xBet oranına göre değerli (Value) bulduğu baremin tutma oranı.">
+            <div class="kpi-label">🔥 Model Value (32+ Dk)</div>
             <div class="kpi-val" style="color:#d97706;">%{val_rate:.1f}</div>
-            <div class="kpi-sub">{val_wins} / {comp_count} İsabet (Pozitif EV)</div>
+            <div class="kpi-sub">{val_wins} / {eval_n} Maç İsabet (32+ Dk Kapanış)</div>
         </div>
         """,
             unsafe_allow_html=True,
@@ -774,10 +790,10 @@ def render_live_dashboard():
     with k5:
         st.markdown(
             f"""
-        <div class="kpi-card">
-            <div class="kpi-label">🛡️ 20-Sayı Küme (Çifte Barem)</div>
+        <div class="kpi-card" title="32. dakika ve sonrasında yan yana en güçlü iki baremin (20-Sayı Kümesi) tutma oranı.">
+            <div class="kpi-label">🛡️ 20-Sayı Küme (32+ Dk)</div>
             <div class="kpi-val" style="color:#2563eb;">%{clu_rate:.1f}</div>
-            <div class="kpi-sub">{clu_wins} / {comp_count} İsabet (İkili Blok)</div>
+            <div class="kpi-sub">{clu_wins} / {eval_n} Maç İsabet (32+ Dk Kapanış)</div>
         </div>
         """,
             unsafe_allow_html=True,
@@ -1856,7 +1872,7 @@ with tab_sym:
 
     st.markdown("---")
     st.markdown(
-        "##### ⚖️ 1xBet Kapanış Oranı (30-36. Dk) Simetri Tuzağı & Komşu Bareme (`-2 / -1 / 0 / +1 / +2`) Kayma Analizi"
+        "##### ⚖️ 1xBet Kapanış Oranı (32-36. Dk) Simetri Tuzağı & Komşu Bareme (`2 Alt / 1 Alt / Favori / 1 Üst / 2 Üst`) Kayma Analizi"
     )
     df_comp_sym = (
         df_sym_all[df_sym_all["status"] == "COMPLETED"].copy()
@@ -1867,8 +1883,7 @@ with tab_sym:
     if df_comp_sym.empty:
         st.info(
             "Şu an `symmetry_analysis_log.csv` içinde sonuçlanmış (COMPLETED) canlı barem kaydı bekleniyor. "
-            "Canlı maçlar bittikçe burada **-2 Alt, -1 Alt, 0 Favori, +1 Üst, +2 Üst İsabet Oranları**, **Simetri Tuzağı (`Fark <= 0.65`) Kayma Oranı** "
-            "ve **Dakika Penceresi (`0-24 dk`, `24-30 dk`, `30-36 dk`)** istatistikleri otomatik hesaplanır."
+            "Canlı maçlar bittikçe burada **32-36. Dk Kapanış İsabet Oranları** ve **Dakika Penceresi** istatistikleri otomatik hesaplanır."
         )
     else:
         sym_records = []
@@ -1891,10 +1906,10 @@ with tab_sym:
 
             m_match = re.search(r"Minute\s+(\d+)", str(r.get("check_time", "")))
             el_min = int(m_match.group(1)) if m_match else 18
-            if el_min >= 30:
-                win_bucket = "30-36. Dk (Kapanış)"
+            if el_min >= 32:
+                win_bucket = "32-36. Dk (Kapanış Bölgesi)"
             elif el_min >= 24:
-                win_bucket = "24-29. Dk (Q3 Başı/Ortası)"
+                win_bucket = "24-31. Dk (Q3 Ortası / Sonu)"
             else:
                 win_bucket = "0-23. Dk (İlk Yarı)"
 
@@ -1928,8 +1943,10 @@ with tab_sym:
 
         df_sr = pd.DataFrame(sym_records)
         if not df_sr.empty:
-            # Her maçın SON (35-36. Dk Kapanış) kaydını baz alarak Maç Bazlı Kapanış Simetrisini hesapla
-            df_closing = df_sr.sort_values("el_min").groupby("game_id", as_index=False).last()
+            # Sadece 32. dakika ve sonrasındaki kapanış kayıtlarını (her maça 1 kapanış) baz al
+            df_sr_32 = df_sr[df_sr["el_min"] >= 32].copy()
+            base_closing = df_sr_32 if not df_sr_32.empty else df_sr
+            df_closing = base_closing.sort_values("el_min").groupby("game_id", as_index=False).last()
             tot_n = len(df_closing)
             m2_pct = df_closing["hit_m2"].mean() * 100.0
             m1_pct = df_closing["hit_m1"].mean() * 100.0
@@ -1939,19 +1956,19 @@ with tab_sym:
             both_pct = df_closing["either_fav_hit"].mean() * 100.0
 
             s1, s2, s3, s4, s5, s6 = st.columns(6)
-            s1.metric("❄️ -2 Alt Bareme Kayma", f"%{m2_pct:.1f}", f"{int(df_closing['hit_m2'].sum())} / {tot_n} Maç")
-            s2.metric("📉 -1 Alt Bareme Kayma", f"%{m1_pct:.1f}", f"{int(df_closing['hit_m1'].sum())} / {tot_n} Maç")
-            s3.metric("🎯 0 (1. Favori Merkez)", f"%{f0_pct:.1f}", f"{int(df_closing['hit_0'].sum())} / {tot_n} Maç")
-            s4.metric("📈 +1 Üst Bareme Kayma", f"%{p1_pct:.1f}", f"{int(df_closing['hit_p1'].sum())} / {tot_n} Maç")
-            s5.metric("🔥 +2 Üst Bareme Kayma", f"%{p2_pct:.1f}", f"{int(df_closing['hit_p2'].sum())} / {tot_n} Maç")
+            s1.metric("❄️ 2 Alt Bareme Düştü", f"%{m2_pct:.1f}", f"{int(df_closing['hit_m2'].sum())} / {tot_n} Maç (32+ Dk)")
+            s2.metric("📉 1 Alt Bareme Düştü", f"%{m1_pct:.1f}", f"{int(df_closing['hit_m1'].sum())} / {tot_n} Maç (32+ Dk)")
+            s3.metric("🎯 Tam Favori Geldi", f"%{f0_pct:.1f}", f"{int(df_closing['hit_0'].sum())} / {tot_n} Maç (32+ Dk)")
+            s4.metric("📈 1 Üst Bareme Çıktı", f"%{p1_pct:.1f}", f"{int(df_closing['hit_p1'].sum())} / {tot_n} Maç (32+ Dk)")
+            s5.metric("🔥 2 Üst Bareme Çıktı", f"%{p2_pct:.1f}", f"{int(df_closing['hit_p2'].sum())} / {tot_n} Maç (32+ Dk)")
             s6.metric(
                 "🛡️ 1. veya 2. Favori",
                 f"%{both_pct:.1f}",
-                f"{int(df_closing['either_fav_hit'].sum())} / {tot_n} Maç",
+                f"{int(df_closing['either_fav_hit'].sum())} / {tot_n} Maç (32+ Dk)",
             )
 
             win_rows = []
-            for w_name in ["0-23. Dk (İlk Yarı)", "24-29. Dk (Q3 Başı/Ortası)", "30-36. Dk (Kapanış)"]:
+            for w_name in ["0-23. Dk (İlk Yarı)", "24-31. Dk (Q3 Ortası / Sonu)", "32-36. Dk (Kapanış Bölgesi)"]:
                 w_sub = df_sr[df_sr["window"] == w_name]
                 if w_sub.empty:
                     continue
@@ -1959,11 +1976,11 @@ with tab_sym:
                     {
                         "Dakika Penceresi": w_name,
                         "Kayıt Sayısı": len(w_sub),
-                        "❄️ -2 Alt Barem (%)": f"%{w_sub['hit_m2'].mean()*100:.1f}",
-                        "📉 -1 Alt Barem (%)": f"%{w_sub['hit_m1'].mean()*100:.1f}",
-                        "🎯 0 (1. Favori) (%)": f"%{w_sub['hit_0'].mean()*100:.1f}",
-                        "📈 +1 Üst Barem (%)": f"%{w_sub['hit_p1'].mean()*100:.1f}",
-                        "🔥 +2 Üst Barem (%)": f"%{w_sub['hit_p2'].mean()*100:.1f}",
+                        "❄️ 2 Alt Barem (%)": f"%{w_sub['hit_m2'].mean()*100:.1f}",
+                        "📉 1 Alt Barem (%)": f"%{w_sub['hit_m1'].mean()*100:.1f}",
+                        "🎯 Tam Favori (%)": f"%{w_sub['hit_0'].mean()*100:.1f}",
+                        "📈 1 Üst Barem (%)": f"%{w_sub['hit_p1'].mean()*100:.1f}",
+                        "🔥 2 Üst Barem (%)": f"%{w_sub['hit_p2'].mean()*100:.1f}",
                         "🥈 2. Favori (%)": f"%{w_sub['fav2_hit'].mean()*100:.1f}",
                         "🛡️ 20-Sayı Küme (%)": f"%{w_sub['clu_hit'].mean()*100:.1f}",
                     }
@@ -2095,9 +2112,20 @@ with tab_bankroll:
         )
 
     with d_col2:
-        st.markdown("##### 📈 Strateji Bazlı Gerçek Kasa (Bankroll) & ROI Performansı")
-        st.caption(
-            "Sonuçlanan (`COMPLETED`) her canlı barem kaydına sabit **1.000 TL** yatırıldığında 3 ana stratejinin gerçek net kâr/zarar tablosu:"
+        st.markdown(
+            "##### 📈 Strateji Bazlı Gerçek Kasa (Bankroll) & ROI Performansı (32+ Dk Kapanış Odaklı)",
+            help="Erken dakikaların (18-31. dk) yanıltıcı gürültüsünü temizlemek için varsayılan olarak sadece 32. dakika ve sonrasındaki kapanış verilerini baz alır.",
+        )
+        roi_scope = st.selectbox(
+            "⏱️ Kasa & ROI Hesaplama Bazı (Dakika Filtresi)",
+            [
+                "🎯 32-36. Dk Kapanış: Her Maça 1 Kupon (Son Kapanış Kaydı) [Önerilen]",
+                "🔥 34-36. Dk Tam Kapanış: Sadece 34-35. Dk Son Kayıtlar (Her Maça 1 Kupon)",
+                "⏱️ 32-36. Dk Arası Tüm Kapanış Kayıtları (32, 33, 34, 35. Dk)",
+                "📊 Tüm Dakikalar (18-36. Dk Ham Kayıtlar — Erken Dakikalar Dahil / Önerilmez)",
+            ],
+            index=0,
+            help="Gerçek bahis stratejisinde kuponlar 32. dakikadan sonraki kapanış bölgesinde ve maç başına 1 kez oynandığı için ilk seçenek en sağlıklı sonucu verir.",
         )
         df_comp_roi = (
             df_sym_all[df_sym_all["status"] == "COMPLETED"].copy()
@@ -2107,37 +2135,126 @@ with tab_bankroll:
         if df_comp_roi.empty:
             st.info(
                 "Henüz sonuçlanmış (`COMPLETED`) canlı barem kaydı yok. Takip edilen canlı maçlar sonuçlandıkça "
-                "burada **1xBet Favori**, **Model Value** ve **20-Sayı Kümesi Dutching** stratejilerinin net TL kârı ve ROI yüzdesi listelenir."
+                "burada **32+ Dk Kapanış** stratejilerinin net TL kârı ve ROI yüzdesi listelenir."
             )
         else:
-            unit_bet = 1000.0
-            fav_pnl = 0.0
-            val_pnl = 0.0
-            clu_pnl = 0.0
-            n_bets = len(df_comp_roi)
+            df_comp_roi["_min_num"] = (
+                df_comp_roi["check_time"]
+                .astype(str)
+                .str.extract(r"Minute\s+(\d+)", expand=False)
+                .astype(float)
+                .fillna(0)
+            )
+            if roi_scope.startswith("🎯 32-36"):
+                df_eval_roi = df_comp_roi[df_comp_roi["_min_num"] >= 32].copy()
+                if not df_eval_roi.empty and "game_id" in df_eval_roi.columns:
+                    df_eval_roi = df_eval_roi.sort_values("_min_num").groupby("game_id", as_index=False).last()
+            elif roi_scope.startswith("🔥 34-36"):
+                df_eval_roi = df_comp_roi[df_comp_roi["_min_num"] >= 34].copy()
+                if not df_eval_roi.empty and "game_id" in df_eval_roi.columns:
+                    df_eval_roi = df_eval_roi.sort_values("_min_num").groupby("game_id", as_index=False).last()
+            elif roi_scope.startswith("⏱️ 32-36"):
+                df_eval_roi = df_comp_roi[df_comp_roi["_min_num"] >= 32].copy()
+            else:
+                df_eval_roi = df_comp_roi.copy()
 
-            for _, r in df_comp_roi.iterrows():
+            unit_bet = 1000.0
+            fav_pnl, fav_hits = 0.0, 0
+            val_pnl, val_hits = 0.0, 0
+            clu_pnl, clu_hits = 0.0, 0
+            v3_all_pnl, v3_all_hits = 0.0, 0
+            v3_sel_pnl, v3_sel_hits, v3_sel_bets = 0.0, 0, 0
+            dutch_v2_pnl, dutch_v2_hits = 0.0, 0
+            n_bets = len(df_eval_roi)
+            b_names_roi = [b[0] for b in BAREM_RANGES]
+
+            for _, r in df_eval_roi.iterrows():
                 act_b = str(r.get("actual_range", "")).strip()
                 fav_b = str(r.get("highest_prob_range", "")).strip()
                 val_b = str(r.get("value_range", "")).strip()
                 clu_b = str(r.get("best_cluster_name", "")).strip()
 
-                fav_odd = float(r.get(BAREM_TO_ODD_COL.get(fav_b, ""), 4.3) or 4.3)
-                if fav_odd >= 90.0:
-                    fav_odd = 4.3
-                val_odd = float(r.get(BAREM_TO_ODD_COL.get(val_b, ""), 4.8) or 4.8)
+                # Gather valid odds for this row
+                row_odds = {}
+                for b_n, col_n in BAREM_TO_ODD_COL.items():
+                    ov = float(r.get(col_n, 99.0) or 99.0)
+                    if 1.0 < ov < 90.0:
+                        row_odds[b_n] = ov
+                sorted_ro = sorted(row_odds.items(), key=lambda x: x[1])
+                if sorted_ro:
+                    fav_b, fav_odd = sorted_ro[0]
+                    sec_b, sec_odd = sorted_ro[1] if len(sorted_ro) > 1 else sorted_ro[0]
+                else:
+                    fav_odd = float(r.get(BAREM_TO_ODD_COL.get(fav_b, ""), 2.25) or 2.25)
+                    if fav_odd >= 90.0:
+                        fav_odd = 2.25
+                    sec_b, sec_odd = fav_b, 2.50
+
+                val_odd = float(r.get(BAREM_TO_ODD_COL.get(val_b, ""), 3.20) or 3.20)
                 if val_odd >= 90.0:
-                    val_odd = 4.8
+                    val_odd = 3.20
+
+                # Parse live score gap
+                sc_str = str(r.get("current_score", ""))
+                try:
+                    sp = sc_str.strip().split("-")
+                    sc_gap = abs(int(sp[0]) - int(sp[1]))
+                except Exception:
+                    sc_gap = 8
+
+                idx_fav_r = b_names_roi.index(fav_b) if fav_b in b_names_roi else 4
+                idx_sec_r = b_names_roi.index(sec_b) if sec_b in b_names_roi else max(0, idx_fav_r - 1)
+                sec_dir_r = idx_sec_r - idx_fav_r
+                m1_b_r = b_names_roi[max(0, idx_fav_r - 1)]
+                odd_m1_r = row_odds.get(m1_b_r, 3.20)
+
+                # v3 Smart Hybrid choice
+                if fav_odd < 1.85:
+                    v3_pick_b, v3_pick_o = sec_b, sec_odd
+                elif fav_odd < 2.10 and sec_dir_r <= -1:
+                    v3_pick_b, v3_pick_o = m1_b_r, odd_m1_r
+                else:
+                    v3_pick_b, v3_pick_o = fav_b, fav_odd
+
+                if act_b == v3_pick_b:
+                    v3_all_pnl += unit_bet * (v3_pick_o - 1.0)
+                    v3_all_hits += 1
+                else:
+                    v3_all_pnl -= unit_bet
+
+                if sc_gap >= 6:
+                    v3_sel_bets += 1
+                    if act_b == v3_pick_b:
+                        v3_sel_pnl += unit_bet * (v3_pick_o - 1.0)
+                        v3_sel_hits += 1
+                    else:
+                        v3_sel_pnl -= unit_bet
+
+                # Smart Dutching v2 (10+ gap -> Fav & 1 Alt; <10 gap -> 1.Fav & 2.Fav)
+                if sc_gap >= 10:
+                    db1, do1 = fav_b, fav_odd
+                    db2, do2 = m1_b_r, odd_m1_r
+                else:
+                    db1, do1 = fav_b, fav_odd
+                    db2, do2 = sec_b, sec_odd
+                eff_dv2 = 1.0 / ((1.0 / do1) + (1.0 / do2)) if (do1 > 0 and do2 > 0 and db1 != db2) else do1
+                if act_b in (db1, db2):
+                    dutch_v2_pnl += unit_bet * (eff_dv2 - 1.0)
+                    dutch_v2_hits += 1
+                else:
+                    dutch_v2_pnl -= unit_bet
 
                 # 1. Fav Strategy
                 if act_b == fav_b:
                     fav_pnl += unit_bet * (fav_odd - 1.0)
+                    fav_hits += 1
                 else:
                     fav_pnl -= unit_bet
 
                 # 2. Value Strategy
                 if act_b == val_b:
                     val_pnl += unit_bet * (val_odd - 1.0)
+                    val_hits += 1
                 else:
                     val_pnl -= unit_bet
 
@@ -2148,46 +2265,99 @@ with tab_bankroll:
                         c_members = list(mems)
                         break
                 if len(c_members) == 2:
-                    o1 = float(r.get(BAREM_TO_ODD_COL.get(c_members[0], ""), 4.5) or 4.5)
-                    o2 = float(r.get(BAREM_TO_ODD_COL.get(c_members[1], ""), 4.5) or 4.5)
+                    o1 = float(r.get(BAREM_TO_ODD_COL.get(c_members[0], ""), 2.6) or 2.6)
+                    o2 = float(r.get(BAREM_TO_ODD_COL.get(c_members[1], ""), 2.6) or 2.6)
                     if o1 >= 90.0:
-                        o1 = 4.5
+                        o1 = 2.6
                     if o2 >= 90.0:
-                        o2 = 4.5
+                        o2 = 2.6
                     eff_o = 1.0 / ((1.0 / o1) + (1.0 / o2))
                 else:
-                    eff_o = 2.25
+                    eff_o = 1.35
 
                 if check_cluster_hit(clu_b, act_b):
                     clu_pnl += unit_bet * (eff_o - 1.0)
+                    clu_hits += 1
                 else:
                     clu_pnl -= unit_bet
 
-            tot_wagered = n_bets * unit_bet
+            tot_wagered = max(1.0, n_bets * unit_bet)
+            sel_wagered = max(1.0, v3_sel_bets * unit_bet)
             roi_rows = [
                 {
-                    "Strateji": "⭐ 1xBet 1. Favori Tekli Barem",
+                    "Strateji": "🔥 v3 Seçici Akıllı Strateji (0-5 Fark Pas + 32-36.Dk Kural)",
+                    "Kupon Sayısı": v3_sel_bets,
+                    "İsabet Oranı": f"{v3_sel_hits} / {v3_sel_bets} (%{(v3_sel_hits/max(1,v3_sel_bets))*100:.1f})",
+                    "Toplam Yatırım": f"{sel_wagered:,.0f} TL",
+                    "Net Kâr / Zarar": f"{v3_sel_pnl:+,.0f} TL",
+                    "ROI (%)": f"%{(v3_sel_pnl / sel_wagered)*100:+.1f}",
+                },
+                {
+                    "Strateji": "🤖 v3 Akıllı Hibrit (Tüm Maçlar: <1.85➔2.Fav | <2.10&Alt➔1 Alt | Diğer➔Favori)",
                     "Kupon Sayısı": n_bets,
+                    "İsabet Oranı": f"{v3_all_hits} / {n_bets} (%{(v3_all_hits/max(1,n_bets))*100:.1f})",
+                    "Toplam Yatırım": f"{tot_wagered:,.0f} TL",
+                    "Net Kâr / Zarar": f"{v3_all_pnl:+,.0f} TL",
+                    "ROI (%)": f"%{(v3_all_pnl / tot_wagered)*100:+.1f}",
+                },
+                {
+                    "Strateji": "⭐ 1xBet 1. Favori Tekli Barem (32+ Dk Kapanış)",
+                    "Kupon Sayısı": n_bets,
+                    "İsabet Oranı": f"{fav_hits} / {n_bets} (%{(fav_hits/max(1,n_bets))*100:.1f})",
                     "Toplam Yatırım": f"{tot_wagered:,.0f} TL",
                     "Net Kâr / Zarar": f"{fav_pnl:+,.0f} TL",
                     "ROI (%)": f"%{(fav_pnl / tot_wagered)*100:+.1f}",
                 },
                 {
-                    "Strateji": "🔥 Model Value (Pozitif EV) Tekli Barem",
+                    "Strateji": "🛡️ Akıllı İkili Koruma (Dutching v2: 10+ Farkta Fav&1Alt / Diğerlerinde 1.&2.Fav)",
                     "Kupon Sayısı": n_bets,
+                    "İsabet Oranı": f"{dutch_v2_hits} / {n_bets} (%{(dutch_v2_hits/max(1,n_bets))*100:.1f})",
                     "Toplam Yatırım": f"{tot_wagered:,.0f} TL",
-                    "Net Kâr / Zarar": f"{val_pnl:+,.0f} TL",
-                    "ROI (%)": f"%{(val_pnl / tot_wagered)*100:+.1f}",
+                    "Net Kâr / Zarar": f"{dutch_v2_pnl:+,.0f} TL",
+                    "ROI (%)": f"%{(dutch_v2_pnl / tot_wagered)*100:+.1f}",
                 },
                 {
-                    "Strateji": "🛡️ 20-Sayı Kümesi (Çifte Barem Dutching)",
+                    "Strateji": "🛡️ 20-Sayı Kümesi (Model Çifte Barem Dutching)",
                     "Kupon Sayısı": n_bets,
+                    "İsabet Oranı": f"{clu_hits} / {n_bets} (%{(clu_hits/max(1,n_bets))*100:.1f})",
                     "Toplam Yatırım": f"{tot_wagered:,.0f} TL",
                     "Net Kâr / Zarar": f"{clu_pnl:+,.0f} TL",
                     "ROI (%)": f"%{(clu_pnl / tot_wagered)*100:+.1f}",
                 },
+                {
+                    "Strateji": "🔥 Model Value (Pozitif EV) Tekli Barem",
+                    "Kupon Sayısı": n_bets,
+                    "İsabet Oranı": f"{val_hits} / {n_bets} (%{(val_hits/max(1,n_bets))*100:.1f})",
+                    "Toplam Yatırım": f"{tot_wagered:,.0f} TL",
+                    "Net Kâr / Zarar": f"{val_pnl:+,.0f} TL",
+                    "ROI (%)": f"%{(val_pnl / tot_wagered)*100:+.1f}",
+                },
             ]
-            st.dataframe(pd.DataFrame(roi_rows), use_container_width=True, hide_index=True)
+            st.dataframe(
+                pd.DataFrame(roi_rows),
+                column_config={
+                    "Strateji": st.column_config.TextColumn(
+                        help="Test edilen bahis stratejisi (32. dakika ve sonrası gerçek kapanış oranlarıyla hesaplanır)."
+                    ),
+                    "Kupon Sayısı": st.column_config.NumberColumn(
+                        help="Seçilen dakika filtresine giren toplam maç / kupon sayısı."
+                    ),
+                    "İsabet Oranı": st.column_config.TextColumn(
+                        help="Tutan kupon sayısı ve yüzdesi."
+                    ),
+                    "Toplam Yatırım": st.column_config.TextColumn(
+                        help="Her kupona sabit 1.000 TL yatırıldığında kasadan çıkan toplam tutar."
+                    ),
+                    "Net Kâr / Zarar": st.column_config.TextColumn(
+                        help="Tüm kuponlar sonuçlandıktan sonra kasada kalan net kâr veya zarar."
+                    ),
+                    "ROI (%)": st.column_config.TextColumn(
+                        help="Yatırılan toplam paraya göre yüzdesel net kâr oranı."
+                    ),
+                },
+                use_container_width=True,
+                hide_index=True,
+            )
 
 # ═════════════════════════════════════════════════════════════════════════════
 # MODULE 5: MANUAL LIVE TEMPO & MONTE CARLO SIMULATOR
