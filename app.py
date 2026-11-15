@@ -76,7 +76,7 @@ IS_DARK = st.session_state.ui_theme == "matte_dark"
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v4.6-94m-calibrated"
+ENGINE_VERSION = "v4.7-all-matches-view"
 
 
 def _ensure_clean_git_tracked_files():
@@ -1272,7 +1272,20 @@ def render_live_dashboard():
             "Henüz kaydedilmiş barem akış verisi bulunmuyor. Canlı bir maçta barem açıkken (0-36. dk) her maç kendi bağımsız kutusunda buraya eklenecektir."
         )
     else:
-        f_col1, f_col2, f_col3, f_col4 = st.columns([1.15, 1.35, 1.25, 1.25])
+        # Build ordered unique game_id catalog (chronological #1 .. #N, displayed newest first)
+        all_gids_chrono = list(df_log["game_id"].dropna().unique())
+        gid_to_seq = {gid: idx + 1 for idx, gid in enumerate(all_gids_chrono)}
+        gid_label_map = {}
+        for gid in reversed(all_gids_chrono):
+            g_rows = df_log[df_log["game_id"] == gid]
+            g_nm = str(g_rows.iloc[-1].get("game_name", gid)).replace(" (cyber)", "")
+            g_st_icon = "⏳" if (g_rows["status"] == "PENDING").any() else "✅"
+            g_sc = str(g_rows.iloc[-1].get("actual_score", "")).replace("nan", "").strip()
+            sc_txt = f" ({g_sc})" if g_sc else ""
+            seq_no = gid_to_seq.get(gid, 0)
+            gid_label_map[f"#{seq_no} {g_st_icon} {g_nm}{sc_txt} [{gid}]"] = gid
+
+        f_col1, f_col2, f_col3, f_col4, f_col5 = st.columns([1.05, 1.65, 1.15, 1.15, 1.15])
         with f_col1:
             status_filter = st.selectbox(
                 "Durum Filtresi",
@@ -1280,8 +1293,8 @@ def render_live_dashboard():
                 index=0,
             )
         with f_col2:
-            unique_games = ["Tüm Maçlar (Her Maç Ayrı Tabloda)"] + list(df_log["game_name"].dropna().unique())[::-1]
-            game_filter = st.selectbox("Maç Filtresi", unique_games, index=0)
+            unique_game_options = [f"Tüm Maçlar ({len(all_gids_chrono)} Maç Ayrı Tabloda)"] + list(gid_label_map.keys())
+            game_filter = st.selectbox("Maç Filtresi (Maç No & ID)", unique_game_options, index=0)
         with f_col3:
             min_filter = st.selectbox(
                 "Dakika Aralığı",
@@ -1291,9 +1304,12 @@ def render_live_dashboard():
         with f_col4:
             layout_mode = st.selectbox(
                 "Görünüm Modu",
-                ["🗂️ Her Maç Ayrı Kutuda (Alt Alta)", "📑 Her Maç Ayrı Sekmede (Tab)"],
-                index=1,
+                ["📑 Her Maç Ayrı Sekmede (Tab)", "🗂️ Her Maç Ayrı Kutuda (Alt Alta)"],
+                index=0,
             )
+        with f_col5:
+            page_options = ["Tüm Maçları Göster (Sınırsız)", "Son 25 Maç", "26 - 50. Maçlar", "51 - 75. Maçlar", "76 - 100. Maçlar", "101+ Maçlar"]
+            page_filter = st.selectbox("Sayfa / Grup Seçimi", page_options, index=0)
 
         df_view = df_log.copy()
         if "PENDING" in status_filter:
@@ -1302,7 +1318,9 @@ def render_live_dashboard():
             df_view = df_view[df_view["status"] == "COMPLETED"]
 
         if not game_filter.startswith("Tüm Maçlar"):
-            df_view = df_view[df_view["game_name"] == game_filter]
+            selected_gid = gid_label_map.get(game_filter)
+            if selected_gid:
+                df_view = df_view[df_view["game_id"] == selected_gid]
 
         if "30-36" in min_filter:
             df_view = df_view[
@@ -1337,7 +1355,25 @@ def render_live_dashboard():
                 gid for gid in game_ids_ordered if (df_view[df_view["game_id"] == gid]["status"] == "PENDING").any()
             ]
             completed_gids = [gid for gid in game_ids_ordered if gid not in pending_gids]
-            sorted_gids = pending_gids + completed_gids
+            sorted_gids_all = pending_gids + completed_gids
+
+            if page_filter == "Son 25 Maç":
+                sorted_gids = sorted_gids_all[:25]
+            elif page_filter == "26 - 50. Maçlar":
+                sorted_gids = sorted_gids_all[25:50]
+            elif page_filter == "51 - 75. Maçlar":
+                sorted_gids = sorted_gids_all[50:75]
+            elif page_filter == "76 - 100. Maçlar":
+                sorted_gids = sorted_gids_all[75:100]
+            elif page_filter == "101+ Maçlar":
+                sorted_gids = sorted_gids_all[100:]
+            else:
+                sorted_gids = sorted_gids_all
+
+            st.caption(
+                f"📋 **Gösterilen Maç Sayısı:** `{len(sorted_gids)}` / Toplam `{len(sorted_gids_all)}` Maç "
+                f"(Sekme sınırı kaldırıldı — sağa kaydırarak veya üstteki **Maç Filtresi** / **Alt Alta Görünüm** ile tüm maçları inceleyebilirsiniz)."
+            )
 
             def _build_single_match_df(sub_df: pd.DataFrame) -> pd.DataFrame:
                 sub_copy = sub_df.copy()
@@ -1410,6 +1446,7 @@ def render_live_dashboard():
                 g_status = str(g_sub.iloc[-1].get("status", "PENDING"))
                 act_sc = str(g_sub.iloc[-1].get("actual_score", "")).replace("nan", "").strip()
                 act_rng = str(g_sub.iloc[-1].get("actual_range", "")).replace("nan", "").strip()
+                seq_no = gid_to_seq.get(gid, 0)
 
                 first_fav = str(df_m.iloc[0]["⭐ 1xBet Fav"])
                 last_fav = str(df_m.iloc[-1]["⭐ 1xBet Fav"])
@@ -1433,7 +1470,7 @@ def render_live_dashboard():
                     f"""
                     <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-left:4px solid var(--score-text); border-radius:10px; padding:0.75rem 1.1rem; margin-top:0.65rem; margin-bottom:0.35rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; box-shadow:var(--shadow-card);">
                         <div>
-                            <span style="font-size:1.0rem; font-weight:800; color:var(--text-primary);">🏀 {g_name}</span>
+                            <span style="font-size:1.0rem; font-weight:800; color:var(--text-primary);">🏀 #{seq_no} &bull; {g_name}</span>
                             <span style="font-size:0.76rem; color:var(--text-muted); margin-left:0.6rem; font-family:'JetBrains Mono',monospace;">[{gid}] &bull; {len(df_m)} Dakika Kaydı</span>
                             <div style="font-size:0.78rem; color:var(--text-secondary); margin-top:0.2rem;">
                                 📈 <b>Favori Barem Akışı:</b> {first_fav} ➔ <b>{last_fav}</b> &nbsp;&bull;&nbsp; 🛡️ <b>Son Küme:</b> {last_clu}
@@ -1451,15 +1488,18 @@ def render_live_dashboard():
                     height=min(340, 52 + 35 * len(df_m)),
                 )
 
-            if "Sekmede" in layout_mode and len(sorted_gids) > 1:
+            if not sorted_gids:
+                st.info("Seçilen sayfa aralığında maç bulunmuyor.")
+            elif "Sekmede" in layout_mode and len(sorted_gids) > 1:
                 tab_labels = []
-                for gid in sorted_gids[:12]:
+                for gid in sorted_gids:
                     g_sub = df_view[df_view["game_id"] == gid]
                     g_name = str(g_sub.iloc[-1].get("game_name", gid)).replace(" (cyber)", "")
                     g_st = "⏳" if (g_sub["status"] == "PENDING").any() else "✅"
-                    tab_labels.append(f"{g_st} {g_name} ({len(g_sub)})")
+                    seq_no = gid_to_seq.get(gid, 0)
+                    tab_labels.append(f"#{seq_no} {g_st} {g_name} ({len(g_sub)})")
                 m_tabs = st.tabs(tab_labels)
-                for idx_t, gid in enumerate(sorted_gids[:12]):
+                for idx_t, gid in enumerate(sorted_gids):
                     with m_tabs[idx_t]:
                         _render_match_flow_card(gid)
             else:
