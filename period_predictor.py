@@ -527,23 +527,70 @@ def predict_live_inplay(
     }
 
 
+def resolve_effective_barem_odds(odds_dict: dict, barem_probs: dict = None) -> tuple[dict, str]:
+    """
+    Detects when 1xBet has locked (99.0 / closed) an extreme barem ('231+' or '160 Or Less')
+    because it has become virtually certain (< 1.04 odd, 'Banko Kapandı'), preventing the system
+    from falsely mistaking the remaining high-odd neighbor (e.g. '221-230' at 9.67 or 20.00)
+    for the 1st Favorite.
+    Returns (effective_valid_odds, locked_fav_barem).
+    """
+    barem_names = [b[0] for b in BAREM_RANGES]
+    raw = {}
+    for k, v in (odds_dict or {}).items():
+        try:
+            raw[k] = float(v) if v is not None else 99.0
+        except Exception:
+            raw[k] = 99.0
+
+    valid = {k: v for k, v in raw.items() if 1.001 <= v < 85.0}
+    probs = {}
+    for k, v in (barem_probs or {}).items():
+        try:
+            probs[k] = float(v or 0.0)
+        except Exception:
+            probs[k] = 0.0
+
+    locked_fav = None
+
+    # 1) Upper Extreme Lock ('231+' closed because match is guaranteed 231+):
+    # All barems <= 201-210 are closed (>=85.0), '231+' is closed (>=85.0),
+    # and either '221-230' is open at a longshot odd (>=3.80) with '211-220' higher/closed,
+    # or Monte Carlo model probability for '231+' is >= 60%.
+    o_231 = raw.get("231+", 99.0)
+    o_221 = raw.get("221-230", 99.0)
+    o_211 = raw.get("211-220", 99.0)
+    lower_open = [raw.get(b, 99.0) for b in barem_names[:6] if 1.001 <= raw.get(b, 99.0) < 85.0]
+    if o_231 >= 85.0 and not lower_open:
+        if (1.001 <= o_221 < 85.0 and (o_211 >= 85.0 or o_211 > o_221) and o_221 >= 3.80) or probs.get("231+", 0.0) >= 60.0:
+            imp_odd = round(max(1.01, min(1.06, 1.0 / max(0.94, 1.06 - (1.0 / max(o_221, 4.0))))), 3) if o_221 < 85.0 else 1.01
+            valid["231+"] = imp_odd
+            locked_fav = "231+"
+
+    # 2) Lower Extreme Lock ('160 Or Less' closed because match is guaranteed <=160):
+    o_160 = raw.get("160 Or Less", 99.0)
+    o_161 = raw.get("161-170", 99.0)
+    o_171 = raw.get("171-180", 99.0)
+    upper_open = [raw.get(b, 99.0) for b in barem_names[3:] if 1.001 <= raw.get(b, 99.0) < 85.0]
+    if o_160 >= 85.0 and not upper_open:
+        if (1.001 <= o_161 < 85.0 and (o_171 >= 85.0 or o_171 > o_161) and o_161 >= 3.80) or probs.get("160 Or Less", 0.0) >= 60.0:
+            imp_odd = round(max(1.01, min(1.06, 1.0 / max(0.94, 1.06 - (1.0 / max(o_161, 4.0))))), 3) if o_161 < 85.0 else 1.01
+            valid["160 Or Less"] = imp_odd
+            locked_fav = "160 Or Less"
+
+    return valid, locked_fav
+
+
 def analyze_barem_symmetry(odds_dict: dict, barem_probs: dict) -> dict:
     """
-    Analyze 1xBet Barem Odds vs Model Probabilities (v4.3 Smart Symmetry Value Engine):
-    - Identifies Bookmaker 1st & 2nd Favorites
+    Analyze 1xBet Barem Odds vs Model Probabilities (v4.8 Locked-Favorite & Smart Symmetry Engine):
+    - Detects locked extreme favorites ('231+' or '160 Or Less' closed by 1xBet because odd < 1.04)
+    - Identifies Bookmaker 1st & 2nd Favorites accurately without ever mistaking a 9.67/20.00 neighbor for the favorite
     - Calculates Symmetry Ratio (gap between top 2 favorite barem odds)
-    - Calculates Smart Value Range (Simetri + Piyasa + Model Hibrit Değerli Barem):
-      * Filters out unrealistic longshot traps (> 3.65 odd or > 1 barem step away from favorites)
-      * Blends 80% normalized 1xBet Market Probability + 20% Monte Carlo Model Probability
-      * Applies 4 empirical 63-match symmetry adjustments:
-        1) Golden Band (2.08-2.45) + Upper (+1) 2nd Favorite -> Boosts 1st Favorite (+18%)
-        2) Compressed Favorite (<2.08) + Lower (-1) 2nd Favorite -> Shifts value to 2nd Favorite (+12%)
-        3) Twin Odds (gap <= 0.35) -> Boosts 2nd Favorite (+8%) when Model agrees or -1 lower
-        4) Model #1 Barem Confirmation (>= 22%) -> Boosts confirmed barem (+5%)
-      * Maximizes hybrid Value Score = TrueProb + 0.55 * ExpectedValue
+    - Calculates Smart Value Range (Simetri + Piyasa + Model Hibrit Değerli Barem)
     - Calculates Best Dutching (Çifte Barem) combined odd
     """
-    valid_odds = {k: float(v) for k, v in (odds_dict or {}).items() if v and 1.01 < float(v) < 85.0}
+    valid_odds, locked_fav = resolve_effective_barem_odds(odds_dict, barem_probs)
     sorted_by_odds = sorted(valid_odds.items(), key=lambda x: x[1])
 
     bookie_fav_1 = sorted_by_odds[0][0] if len(sorted_by_odds) >= 1 else None
@@ -571,14 +618,23 @@ def analyze_barem_symmetry(odds_dict: dict, barem_probs: dict) -> dict:
         inv_sum = sum(1.0 / o for o in valid_odds.values())
         mkt_probs = {b: (1.0 / o) / inv_sum * 100.0 for b, o in valid_odds.items()} if inv_sum > 0 else {}
 
-        # v4.6 94-Match Empirical Calibration:
-        # 1) Extreme Low Favorite Trap (< 1.88): 1st Favorite went 0/8 (0%) while 2nd Favorite earned +9.21u (+115% ROI)!
-        if bookie_fav_2 and bookie_fav_1_odd < 1.88 and bookie_fav_2_odd <= 3.80:
-            best_value_range = bookie_fav_2
-            best_ev = 0.42 * bookie_fav_2_odd - 1.0
+        # v4.8 96-Match Empirical Calibration:
+        # 0) Locked / Runaway Favorite (locked_fav or odd < 1.18 with 2nd fav >= 4.50):
+        #    1st Favorite hits 80%-100% (4/4 when locked!), while longshot 2nd Favorite (5.00-20.00) went 0/5 (0%)!
+        if locked_fav or bookie_fav_1_odd < 1.18 or bookie_fav_2_odd >= 4.50:
+            best_value_range = bookie_fav_1
+            best_ev = 0.90 * bookie_fav_1_odd - 1.0
             value_reason = (
-                f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): 1. Favori oranı ({bookie_fav_1_odd:.2f}) 1.88 altında tuzak bölgede "
-                f"(94 maçta %0 tuttu, 2. Favori +%115 kâr sağladı)"
+                f"{bookie_fav_1} ({'🔒 Banko Kilit' if locked_fav else f'{bookie_fav_1_odd:.2f}'}): "
+                f"1xBet {bookie_fav_1} baremini kesin favori olarak kilitledi (%80-%100 isabet; yan barem tuzaktır)"
+            )
+        # 1) Low Favorite Trap (1.18 <= odd < 1.85 and 2nd Favorite <= 4.20): 2nd Favorite hits 50% (+72.2% ROI)!
+        elif bookie_fav_2 and 1.18 <= bookie_fav_1_odd < 1.88 and bookie_fav_2_odd <= 4.20:
+            best_value_range = bookie_fav_2
+            best_ev = 0.45 * bookie_fav_2_odd - 1.0
+            value_reason = (
+                f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): 1. Favori oranı ({bookie_fav_1_odd:.2f}) 1.18-1.85 tuzak bölgesinde "
+                f"(2. Favori %50 isabet ve +%72.2 net kâr sağladı)"
             )
         # 2) 2nd Favorite is LOWER (-1) and 1st Favorite < 2.10: Downward shift hits 47.4% (+9.11u profit)
         elif bookie_fav_2 and fav2_idx < fav1_idx and bookie_fav_1_odd < 2.10 and bookie_fav_2_odd <= 3.40:
@@ -642,6 +698,7 @@ def analyze_barem_symmetry(odds_dict: dict, barem_probs: dict) -> dict:
         "bookie_fav_1_odd": bookie_fav_1_odd,
         "bookie_fav_2": bookie_fav_2,
         "bookie_fav_2_odd": bookie_fav_2_odd,
+        "is_locked_fav": bool(locked_fav),
         "symmetry_gap": symmetry_gap,
         "is_symmetric_trap": is_symmetric_trap,
         "dutch_odd": dutch_odd,
@@ -705,23 +762,56 @@ def analyze_sequential_barem_wave(
         "221-230": "odds_221_230",
         "231+": "odds_231_plus",
     }
+    barem_to_prob_col = {
+        "160 Or Less": "model_prob_160_or_less",
+        "161-170": "model_prob_161_170",
+        "171-180": "model_prob_171_180",
+        "181-190": "model_prob_181_190",
+        "191-200": "model_prob_191_200",
+        "201-210": "model_prob_201_210",
+        "211-220": "model_prob_211_220",
+        "221-230": "model_prob_221_230",
+        "231+": "model_prob_231_plus",
+    }
     logged_closing_fav = {}
     logged_closing_odd = {}
     logged_closing_min = {}
+    logged_closing_locked = {}
     logged_opening_fav = {}
     if df_log is not None and not df_log.empty and "game_id" in df_log.columns:
         for gid, grp in df_log.groupby("game_id"):
             first_r = grp.iloc[0]
             last_r = grp.iloc[-1]
-            first_fav = str(first_r.get("highest_prob_range", "")).strip()
-            fav_val = str(last_r.get("highest_prob_range", "")).strip()
+
+            o_first = {b: float(first_r.get(barem_to_col[b], 99.0) or 99.0) for b in barem_names}
+            p_first = {b: float(first_r.get(barem_to_prob_col[b], 0.0) or 0.0) for b in barem_names}
+            eff_first, _ = resolve_effective_barem_odds(o_first, p_first)
+            first_fav = min(eff_first, key=eff_first.get) if eff_first else str(first_r.get("highest_prob_range", "")).strip()
+
+            o_last = {b: float(last_r.get(barem_to_col[b], 99.0) or 99.0) for b in barem_names}
+            p_last = {b: float(last_r.get(barem_to_prob_col[b], 0.0) or 0.0) for b in barem_names}
+            eff_last, locked_b = resolve_effective_barem_odds(o_last, p_last)
+            fav_val = min(eff_last, key=eff_last.get) if eff_last else str(last_r.get("highest_prob_range", "")).strip()
+
             if fav_val in barem_names:
                 gid_clean = str(gid).strip()
                 logged_closing_fav[gid_clean] = fav_val
                 logged_opening_fav[gid_clean] = first_fav if first_fav in barem_names else fav_val
                 odd_col = barem_to_col.get(fav_val, "")
                 odd_val = float(last_r.get(odd_col, 0.0) or 0.0) if odd_col else 0.0
-                logged_closing_odd[gid_clean] = round(odd_val, 2) if 1.0 < odd_val < 90.0 else 0.0
+                if locked_b == fav_val or odd_val >= 85.0:
+                    logged_closing_locked[gid_clean] = True
+                    # Look back in earlier rows of the match for the last open odd before lock
+                    last_open_o = eff_last.get(fav_val, 1.04)
+                    for _, prev_r in grp.iloc[::-1].iterrows():
+                        po = float(prev_r.get(odd_col, 99.0) or 99.0)
+                        if 1.001 <= po < 85.0:
+                            last_open_o = po
+                            break
+                    logged_closing_odd[gid_clean] = round(last_open_o, 2)
+                else:
+                    logged_closing_locked[gid_clean] = False
+                    logged_closing_odd[gid_clean] = round(odd_val, 2) if 1.0 < odd_val < 90.0 else 0.0
                 logged_closing_min[gid_clean] = str(last_r.get("check_time", "")).strip()
 
     req_cols = ["home_q1", "away_q1", "home_q2", "away_q2", "home_q3", "away_q3", "home_q4", "away_q4", "total_score"]
@@ -750,8 +840,14 @@ def analyze_sequential_barem_wave(
             exp_barems.append(logged_closing_fav[gid_s])
             o_v = logged_closing_odd.get(gid_s, 0.0)
             c_m = logged_closing_min.get(gid_s, "35.Dk")
+            is_lck = logged_closing_locked.get(gid_s, False)
             exp_odds.append(o_v)
-            sources.append(f"✅ Gerçek 1xBet Oranı ({c_m}: {o_v:.2f})" if o_v > 0 else f"✅ Gerçek 1xBet Oranı ({c_m})")
+            if is_lck:
+                sources.append(f"🔒 Banko Kilit — Oran Kapandı ({c_m} | Son Açık Oran: {o_v:.2f})")
+            elif o_v > 0:
+                sources.append(f"✅ Gerçek 1xBet Oranı ({c_m}: {o_v:.2f})")
+            else:
+                sources.append(f"✅ Gerçek 1xBet Oranı ({c_m})")
         else:
             exp_barems.append(get_range_from_score(r["exp_tot_36"]))
             exp_odds.append(0.0)
@@ -1319,7 +1415,18 @@ def analyze_smart_35m_decision(
         dutch_split_tip = "Canlı oranlar açıldığında 1000 TL için hangi bareme kaç TL yatırılacağı burada otomatik hesaplanır."
 
     # Plain-Turkish Decision Engine
-    if gap <= 5 and float(elapsed_mins or 35.0) >= 30.0:
+    if odd_val > 1.0 and (odd_val < 1.18 or (odd_val < 1.85 and odd2_val >= 4.50)):
+        zone_badge = f"🔒 BANKO KİLİT: {b_0} KESİN FAVORİ (Yan Barem Tuzaktır!)"
+        zone_type = "SUPER_SIGNAL"
+        stake_badge = f"🔒 {b_0} Banko Kilit (Oran Açık İse {b_0} / Kapandıysa Pas Geç)"
+        primary_pick = f"🎯 Sadece {b_0} Baremi (Oran Kapandıysa Bahis Alma)"
+        backup_pick = f"⛔ {sec_b_clean} ({fav2_odd:.2f}) Tuzak Orandır — Asla Oynanmaz"
+        conf_pct = 92.0
+        reasons.append(
+            f"1xBet {b_0} baremini kesin favori olarak fiyatladı veya kapattı (2. Favori {sec_b_clean} oranı {fav2_odd:.2f} seviyesinde). "
+            f"Geçmiş maçlarda bu durumda {b_0} baremi %80-%100 oranında tutarken, açık kalan {sec_b_clean} baremi %0 (hiç tutmadı) ile tam bir tuzak olmuştur"
+        )
+    elif gap <= 5 and float(elapsed_mins or 35.0) >= 30.0:
         zone_badge = f"⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: {gap} Sayı Fark)"
         zone_type = "PASS_CLUTCH"
         stake_badge = "0 TL (Pas Geç — Uzatma ve Faul Riski)"
@@ -1329,7 +1436,7 @@ def analyze_smart_35m_decision(
         reasons.append(
             f"Maç başa baş gidiyor (fark sadece {gap} sayı). Son dakikalarda taktik fauller ve uzatma yüzünden normalden çok fazla sayı (ort. 59 sayı) atılıyor ve maçların %33'ü üst barem olan {b_p1} aralığına kaçıyor. Bu yüzden bu maça bahis almamak en güvenli karardır"
         )
-    elif odd_val > 1.0 and odd_val < 1.85:
+    elif odd_val >= 1.18 and odd_val < 1.85 and odd2_val < 4.50:
         zone_badge = f"⚠️ 1. FAVORİ ORANI ÇOK DÜŞÜK TUZAĞI ({b_0} Oranı: {odd_val:.2f})"
         zone_type = "TRAP_EXTREME"
         stake_badge = f"1000 TL ({sec_b_clean} Baremine Oyna)"
@@ -1337,7 +1444,7 @@ def analyze_smart_35m_decision(
         backup_pick = f"🛡️ {b_0} ile {sec_b_clean} İkisini Birden Kapat"
         conf_pct = 74.0
         reasons.append(
-            f"Şu an 1. Favori olan {b_0} bareminin oranı 1.85'in altında ({odd_val:.2f}). Geçmiş maçlarda bu kadar düşük oranlı favoriler %37 zarar ettirirken, onun yerine 2. Favori olan {sec_b_clean} baremini oynamak +%41.8 net kâr sağladı"
+            f"Şu an 1. Favori olan {b_0} bareminin oranı 1.18-1.85 tuzak aralığında ({odd_val:.2f}) ve 2. Favori {sec_b_clean} ({fav2_odd:.2f}) hemen yanında duruyor. Geçmiş maçlarda bu durumda 2. Favori olan {sec_b_clean} baremini oynamak %50 isabet ve +%72.2 net kâr sağladı"
         )
     elif odd_val >= 2.10 and sec_dir >= 1:
         zone_badge = f"🔥 ÇOK GÜÇLÜ SİNYAL: {b_0} BAREMİ ÖNDE (Oran: {odd_val:.2f})"
@@ -1549,6 +1656,17 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
         "221-230": "odds_221_230",
         "231+": "odds_231_plus",
     }
+    p_cols = {
+        "160 Or Less": "model_prob_160_or_less",
+        "161-170": "model_prob_161_170",
+        "171-180": "model_prob_171_180",
+        "181-190": "model_prob_181_190",
+        "191-200": "model_prob_191_200",
+        "201-210": "model_prob_201_210",
+        "211-220": "model_prob_211_220",
+        "221-230": "model_prob_221_230",
+        "231+": "model_prob_231_plus",
+    }
 
     empty_res = {
         "total_matches": 0,
@@ -1611,20 +1729,33 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
                 break
         cands30 = grp[(grp["_min"] >= 27) & (grp["_min"] <= 31)]
         r30 = cands30.iloc[-1] if not cands30.empty else first_r
-        b30 = str(r30.get("highest_prob_range", "")).strip()
+        o30_raw = {b_n: float(r30.get(b_cols[b_n], 99.0) or 99.0) for b_n in barem_names}
+        p30_raw = {b_n: float(r30.get(p_cols[b_n], 0.0) or 0.0) for b_n in barem_names}
+        eff30, _ = resolve_effective_barem_odds(o30_raw, p30_raw)
+        b30 = min(eff30, key=eff30.get) if eff30 else str(r30.get("highest_prob_range", "")).strip()
 
         act_b = str(last_r.get("actual_range", "")).strip()
-        open_b = str(first_r.get("highest_prob_range", "")).strip()
+        o_open_raw = {b_n: float(first_r.get(b_cols[b_n], 99.0) or 99.0) for b_n in barem_names}
+        p_open_raw = {b_n: float(first_r.get(p_cols[b_n], 0.0) or 0.0) for b_n in barem_names}
+        eff_open, _ = resolve_effective_barem_odds(o_open_raw, p_open_raw)
+        open_b = min(eff_open, key=eff_open.get) if eff_open else str(first_r.get("highest_prob_range", "")).strip()
         if act_b not in barem_names:
             continue
 
-        odds_map = {}
-        for b_n in barem_names:
-            v = float(last_r.get(b_cols[b_n], 0.0) or 0.0)
-            if 1.0 < v < 90.0:
-                odds_map[b_n] = v
+        o_last_raw = {b_n: float(last_r.get(b_cols[b_n], 99.0) or 99.0) for b_n in barem_names}
+        p_last_raw = {b_n: float(last_r.get(p_cols[b_n], 0.0) or 0.0) for b_n in barem_names}
+        odds_map, locked_fav_b = resolve_effective_barem_odds(o_last_raw, p_last_raw)
         if not odds_map:
             continue
+
+        # If the favorite barem was locked at Minute 35 (e.g. #47 at 33-35m, #67 at 35m),
+        # check if there was a real open odd for that barem in 32-34m rows right before lock
+        if locked_fav_b:
+            for _, cr in cands.iloc[::-1].iterrows():
+                co = float(cr.get(b_cols[locked_fav_b], 99.0) or 99.0)
+                if 1.001 <= co < 85.0:
+                    odds_map[locked_fav_b] = co
+                    break
 
         sorted_odds = sorted(odds_map.items(), key=lambda x: x[1])
         fav_b, odd_0 = sorted_odds[0]
@@ -1660,8 +1791,10 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
         proj_35 = cur_tot35 + 53.3 if cur_tot35 > 0 else fav_mid
         edge_offset = proj_35 - fav_mid
 
-        # 1) Legacy v2 rule (<2.10 -> -1 Alt, else 0 Merkez)
-        if odd_0 < 2.10 or drift <= -3:
+        is_locked_or_runaway = bool(locked_fav_b) or odd_0 < 1.18 or (odd_0 < 1.85 and sec_odd >= 4.50)
+
+        # 1) Legacy v2 rule (<2.10 -> -1 Alt, else 0 Merkez; except when locked runaway)
+        if not is_locked_or_runaway and (odd_0 < 2.10 or drift <= -3):
             v2_b = m1_b
             v2_odd = odd_m1
         else:
@@ -1672,8 +1805,12 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
         s_smart_ret += ret_v2
         s_smart_wins += int(hit_v2)
 
-        # 2) v3 rule (<1.85 -> 2nd Fav | <2.10 & sec_dir==-1 -> -1 Alt | else 0 Merkez)
-        if odd_0 < 1.85:
+        # 2) v3 rule (Locked/Runaway -> 1.Fav | 1.18<=odd_0<1.85 & sec_odd<4.50 -> 2nd Fav | <2.10 & sec_dir==-1 -> -1 Alt | else 0 Merkez)
+        if is_locked_or_runaway:
+            v3_b = fav_b
+            v3_odd = odd_0
+            v3_rule_lbl = "🔒 Banko Kilit / Kesin Favori ➔ 1. Favori"
+        elif odd_0 < 1.85:
             v3_b = sec_b
             v3_odd = sec_odd
             v3_rule_lbl = "⚠️ Oran <1.85 Tuzağı ➔ 2. Favori"
@@ -1697,7 +1834,9 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
         s_v3_all_wins += int(hit_v3_all)
 
         # 2b) v4 Deep Symmetry rule (adds Mod-10 Alt Sınır [8,9,0] + Late-Jump Pendulum guard)
-        if odd_0 < 1.85:
+        if is_locked_or_runaway:
+            v4_b, v4_odd = fav_b, odd_0
+        elif odd_0 < 1.85:
             v4_b, v4_odd = sec_b, sec_odd
         elif odd_0 < 2.10 and sec_dir <= -1 and late_jump >= 0:
             v4_b, v4_odd = m1_b, odd_m1
@@ -1814,11 +1953,12 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
                 else f"❌ -{t_stake:.0f} TL"
             )
 
+        fav_disp_lbl = f"{fav_b} (🔒 Kilit / {odd_0:.2f})" if locked_fav_b else f"{fav_b} ({odd_0:.2f})"
         ledger.append(
             {
                 "Maç": str(last_r.get("game_name", "")).replace(" (cyber)", ""),
                 "Kapanış Dk & Fark": f"{last_r.get('check_time', '')} ({margin35} Sayı Fark | Sonu ..{mod10})",
-                "35.Dk 1. Favori": f"{fav_b} ({odd_0:.2f})",
+                "35.Dk 1. Favori": fav_disp_lbl,
                 "2. Favori Nerede?": f"{sec_arrow} ({sec_odd:.2f})",
                 "🤖 Sistemin Önerdiği Barem": f"{v4_b} ({v4_odd:.2f}) [{v3_rule_lbl}]",
                 "Maçın Bittiği Barem": f"{act_b} ({last_r.get('actual_score', '')})",
@@ -2002,15 +2142,36 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
                 }
             )
 
-    # 1. Odds Bracket Breakdown (with <1.85 separated!)
+    # 1. Odds Bracket Breakdown (separating Banko Kilit <1.18 from Normal Low-Odd Trap 1.18-1.84!)
     odds_brackets = []
-    for low_o, high_o, lbl, advice in [
-        (1.0, 1.85, "🚨 Oran Çok Düşük Tuzağı (1.85 Altı)", "🥈 1. Favori Zarar Ettirir (-%37) ➔ Onun Yerine 2. Favoriyi Oyna (+%41.8 Kâr)"),
-        (1.85, 2.10, "⚠️ Düşük Oran Aralığı (1.85 - 2.09)", "📉 2. Favori Alttaysa 1 Alt Baremi Oyna (+%22.5 Kâr), Üstteyse 1. Favoriyi Oyna"),
-        (2.10, 2.35, "💎 İdeal Oran Aralığı (2.10 - 2.34)", "🎯 Direkt 1. Favoriyi Oyna (%52 Tutar, +%15.6 Kâr; 2. Favori Üstteyse +%39.9 Kâr)"),
-        (2.35, 99.0, "⚖️ Yüksek Oran Aralığı (2.35 ve Üstü)", "🎯 1. Favoriyi Oyna (+%21.6 Kâr) veya 1. ve 2. Favori İkisini Birden Kapat"),
+    for cond_fn, lbl, advice in [
+        (
+            lambda x: x["odd_0"] < 1.18 or x.get("is_locked_fav") or x["sec_odd"] >= 4.50,
+            "🔒 Banko Kilit / Kesin Favori (Oran < 1.18 veya Oran Kapandı)",
+            "🔒 1. Favori Neredeyse Kesindir (%75-%100 Tutar)! Yanındaki 9.67-20.00 Tuzak Orana ASLA Kayma",
+        ),
+        (
+            lambda x: 1.18 <= x["odd_0"] < 1.85 and not x.get("is_locked_fav") and x["sec_odd"] < 4.50,
+            "🚨 Düşük Oran Tuzağı (1.18 - 1.84 Arası Normal Açık Oran)",
+            "🥈 1. Favori Zarar Ettirir (-%53.9) ➔ Onun Yerine 2. Favoriyi Oyna (%50 Tutar, +%72.2 Kâr)",
+        ),
+        (
+            lambda x: 1.85 <= x["odd_0"] < 2.10,
+            "⚠️ Düşük Oran Aralığı (1.85 - 2.09)",
+            "📉 2. Favori Alttaysa 1 Alt Baremi Oyna (+%22.5 Kâr), Üstteyse 1. Favoriyi Oyna",
+        ),
+        (
+            lambda x: 2.10 <= x["odd_0"] < 2.35,
+            "💎 İdeal Oran Aralığı (2.10 - 2.34)",
+            "🎯 Direkt 1. Favoriyi Oyna (%52 Tutar, +%15.6 Kâr; 2. Favori Üstteyse +%39.9 Kâr)",
+        ),
+        (
+            lambda x: x["odd_0"] >= 2.35,
+            "⚖️ Yüksek Oran Aralığı (2.35 ve Üstü)",
+            "🎯 1. Favoriyi Oyna (+%21.6 Kâr) veya 1. ve 2. Favori İkisini Birden Kapat",
+        ),
     ]:
-        sub = [x for x in raw_records if low_o <= x["odd_0"] < high_o]
+        sub = [x for x in raw_records if cond_fn(x)]
         if sub:
             n_s = len(sub)
             c_0 = sum(1 for x in sub if x["shift"] == 0)
@@ -2132,8 +2293,12 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             a_b = str(r_m.get("actual_range", "")).strip()
             if a_b not in barem_names:
                 continue
-            om = {b_n: float(r_m.get(b_cols[b_n], 0.0) or 0.0) for b_n in barem_names}
-            om = {k: v for k, v in om.items() if 1.0 < v < 90.0}
+            om_raw = {b_n: float(r_m.get(b_cols[b_n], 0.0) or 0.0) for b_n in barem_names}
+            pm_raw = {
+                b_n: float(r_m.get(b_cols[b_n].replace("odds_", "model_prob_"), 0.0) or 0.0)
+                for b_n in barem_names
+            }
+            om, _ = resolve_effective_barem_odds(om_raw, pm_raw)
             if not om:
                 continue
             sb = sorted(om.items(), key=lambda x: x[1])

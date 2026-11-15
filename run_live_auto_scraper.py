@@ -729,7 +729,6 @@ def run_auto_scraper(force_manual=False):
                     pass
 
         full_odds = {b[0]: odds_dict.get(b[0], 99.0) for b in BAREM_RANGES}
-        is_barem_open = any(v < 90.0 for v in full_odds.values()) and total_match_elapsed < 36.0
 
         # Run Monte Carlo & Symmetry Analysis
         res_pred = predict_live_inplay(
@@ -745,6 +744,9 @@ def run_auto_scraper(force_manual=False):
         )
         barem_probs = res_pred.get("barem_probs", {})
         sym_info = analyze_barem_symmetry(full_odds, barem_probs)
+        is_barem_open = (
+            any(v < 90.0 for v in full_odds.values()) or bool(sym_info.get("is_locked_fav", False))
+        ) and total_match_elapsed < 36.0
 
         # Q3 -> Q4 Burst / Collapse Signal
         if len(completed_quarters) >= 3:

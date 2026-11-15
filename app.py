@@ -246,6 +246,7 @@ def load_symmetry_log() -> pd.DataFrame:
         ("221-230", "odds_221_230", "model_prob_221_230"),
         ("231+", "odds_231_plus", "model_prob_231_plus"),
     ]
+    smart_favs = []
     smart_vals = []
     for _, r in df.iterrows():
         o_d = {}
@@ -260,7 +261,9 @@ def load_symmetry_log() -> pd.DataFrame:
             except Exception:
                 p_d[b_lbl] = 0.0
         sym_r = analyze_barem_symmetry(o_d, p_d)
+        smart_favs.append(sym_r.get("highest_prob_range") or str(r.get("highest_prob_range", "")))
         smart_vals.append(sym_r.get("value_range") or str(r.get("value_range", "")))
+    df["highest_prob_range"] = smart_favs
     df["value_range"] = smart_vals
     return df
 
@@ -1408,27 +1411,33 @@ def render_live_dashboard():
                     else:
                         outcome_badge = "⏳ Bekliyor"
 
-                    def _fmt_cell(odd_col, prob_col):
+                    def _fmt_cell(odd_col, prob_col, b_lbl=""):
                         o_v = float(r.get(odd_col, 99.0) or 99.0)
                         p_v = float(r.get(prob_col, 0.0) or 0.0)
                         if o_v >= 90.0:
+                            if b_lbl and b_lbl == fav_rng:
+                                return f"🔒 Kilit (%{p_v:.0f})"
                             return f"- (%{p_v:.0f})"
                         return f"{o_v:.2f} (%{p_v:.0f})"
+
+                    fav_col_name = BAREM_TO_ODD_COL.get(fav_rng, "")
+                    fav_raw_odd = float(r.get(fav_col_name, 0.0) or 0.0) if fav_col_name else 0.0
+                    fav_cell_disp = f"{fav_rng} (🔒 Kilit)" if fav_raw_odd >= 90.0 else fav_rng
 
                     rows.append(
                         {
                             "Dakika": r.get("check_time", ""),
                             "Anlık Skor": r.get("current_score", ""),
-                            "160-": _fmt_cell("odds_160_or_less", "model_prob_160_or_less"),
-                            "161-170": _fmt_cell("odds_161_170", "model_prob_161_170"),
-                            "171-180": _fmt_cell("odds_171_180", "model_prob_171_180"),
-                            "181-190": _fmt_cell("odds_181_190", "model_prob_181_190"),
-                            "191-200": _fmt_cell("odds_191_200", "model_prob_191_200"),
-                            "201-210": _fmt_cell("odds_201_210", "model_prob_201_210"),
-                            "211-220": _fmt_cell("odds_211_220", "model_prob_211_220"),
-                            "221-230": _fmt_cell("odds_221_230", "model_prob_221_230"),
-                            "231+": _fmt_cell("odds_231_plus", "model_prob_231_plus"),
-                            "⭐ 1xBet Fav": fav_rng,
+                            "160-": _fmt_cell("odds_160_or_less", "model_prob_160_or_less", "160 Or Less"),
+                            "161-170": _fmt_cell("odds_161_170", "model_prob_161_170", "161-170"),
+                            "171-180": _fmt_cell("odds_171_180", "model_prob_171_180", "171-180"),
+                            "181-190": _fmt_cell("odds_181_190", "model_prob_181_190", "181-190"),
+                            "191-200": _fmt_cell("odds_191_200", "model_prob_191_200", "191-200"),
+                            "201-210": _fmt_cell("odds_201_210", "model_prob_201_210", "201-210"),
+                            "211-220": _fmt_cell("odds_211_220", "model_prob_211_220", "211-220"),
+                            "221-230": _fmt_cell("odds_221_230", "model_prob_221_230", "221-230"),
+                            "231+": _fmt_cell("odds_231_plus", "model_prob_231_plus", "231+"),
+                            "⭐ 1xBet Fav": fav_cell_disp,
                             "🔥 Value Barem": val_rng,
                             "🛡️ 20-Sayı Kümesi": f"{clu_rng} (%{float(clu_prb or 0):.0f})",
                             "Maç Sonu": f"{act_sc} ({act_rng})" if act_sc else "-",
