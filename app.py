@@ -22,28 +22,27 @@ importlib.reload(_ptr_mod)
 importlib.reload(_rlas_mod)
 
 from period_predictor import (
-    BAREM_RANGES,
-    CLUSTER_RANGES,
     analyze_archive_4500_symmetry,
     analyze_barem_symmetry,
-    analyze_sequential_barem_wave,
     analyze_matchup_live_summary,
+    analyze_sequential_barem_wave,
     analyze_smart_35m_decision,
+    analyze_team_pair_history,
     build_q3_q4_streak_signal,
+    build_team_pair_table,
     get_cluster_from_score,
+    get_csv_headers,
+    get_league_config,
     get_range_from_score,
     predict_live_inplay,
     predict_period_scores,
     simulate_35m_strategies,
+    validate_symmetry_log,
 )
 from pull_today_results import discover_active_domain, pull_today_results
 from run_live_auto_scraper import (
     CACHE_FILE,
-    CSV_HEADERS,
-    CSV_PATH,
-    LIVE_STATE_FILE,
-    MATCHES_CSV_PATH,
-    TS_FILE,
+    _get_scraper_paths,
     init_csv,
     merge_cloud_backups,
     run_auto_scraper,
@@ -54,7 +53,7 @@ TR_TZ = timezone(timedelta(hours=3))
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 st.set_page_config(
-    page_title="NBA 2K26 CyberLeague Pro v2.0",
+    page_title="NBA 2K26 CyberLeague & Euro Pro",
     page_icon="🏀",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -63,12 +62,46 @@ st.set_page_config(
 if "ui_theme" not in st.session_state:
     st.session_state.ui_theme = "soft_light"
 
+if "active_league" not in st.session_state:
+    st.session_state.active_league = "nba"
+
 
 def toggle_ui_theme():
     st.session_state.ui_theme = "matte_dark" if st.session_state.ui_theme == "soft_light" else "soft_light"
 
 
+def set_active_league(league_key: str):
+    st.session_state.active_league = "euro" if str(league_key).lower() == "euro" else "nba"
+
+
 IS_DARK = st.session_state.ui_theme == "matte_dark"
+ACTIVE_LEAGUE = st.session_state.active_league
+IS_EURO = ACTIVE_LEAGUE == "euro"
+LEAGUE_CFG = get_league_config(ACTIVE_LEAGUE)
+BAREM_RANGES = LEAGUE_CFG["barem_ranges"]
+CLUSTER_RANGES = LEAGUE_CFG["cluster_ranges"]
+BAREM_TO_ODD_COL = LEAGUE_CFG["barem_odd_cols"]
+BAREM_TO_PROB_COL = LEAGUE_CFG["barem_prob_cols"]
+CSV_HEADERS = get_csv_headers(ACTIVE_LEAGUE)
+
+_LEAGUE_PATHS = _get_scraper_paths(ACTIVE_LEAGUE)
+CSV_PATH = _LEAGUE_PATHS["csv_path"]
+MATCHES_CSV_PATH = _LEAGUE_PATHS["matches_path"]
+LIVE_STATE_FILE = _LEAGUE_PATHS["state_file"]
+TS_FILE = _LEAGUE_PATHS["ts_file"]
+
+LEAGUE_BAREM_N = len(BAREM_RANGES)
+Q_LEN = float(LEAGUE_CFG["quarter_length"])
+CLOSE_MIN = float(LEAGUE_CFG["close_min"])
+CLOSE_MIN_INT = int(LEAGUE_CFG["close_min_int"])
+DEC_MIN = int(LEAGUE_CFG["decision_min"])
+CLOSING_START = int(LEAGUE_CFG["closing_start_min"])
+FINAL_WIN_START = int(LEAGUE_CFG["final_win_start"])
+MID_Q3_MIN = int(LEAGUE_CFG["mid_q3_min"])
+HALFTIME_MIN = int(LEAGUE_CFG["halftime_min"])
+EARLY_Q2_MIN = int(LEAGUE_CFG["early_q2_min"])
+EXP_REM_CLOSE = int(LEAGUE_CFG["exp_rem_close"])
+EXP_REM_DEC = float(LEAGUE_CFG["exp_rem_decision"])
 
 # ─────────────────────────────────────────────────────────────────────────────
 # SINGLETON BACKGROUND DAEMON THREAD (24/7 ZERO-CRASH AUTO SCRAPER)
@@ -76,16 +109,26 @@ IS_DARK = st.session_state.ui_theme == "matte_dark"
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v4.8-wave-color-coded"
+ENGINE_VERSION = "v5.0-dual-league-euro"
 
 
 def _ensure_clean_git_tracked_files():
-    """Keep git-tracked CSV/JSON files clean on Streamlit Cloud so git pull never blocks."""
+    """Keep git-tracked seed CSV/JSON files clean on Streamlit Cloud so git pull never blocks."""
     try:
         import subprocess
-        if os.environ.get("GITHUB_ACTIONS") != "true":
+        if os.environ.get("GITHUB_ACTIONS") != "true" and os.environ.get("HOME", "").startswith("/home/appuser"):
             subprocess.run(
-                ["git", "checkout", "--", "symmetry_analysis_log.csv", "matches_data.csv", "live_matches_state.json"],
+                [
+                    "git",
+                    "checkout",
+                    "--",
+                    "symmetry_analysis_log.csv",
+                    "matches_data.csv",
+                    "live_matches_state.json",
+                    "euro_symmetry_log.csv",
+                    "euro_matches_data.csv",
+                    "euro_live_matches_state.json",
+                ],
                 cwd=BASE_DIR,
                 timeout=3,
                 stdout=subprocess.DEVNULL,
@@ -145,24 +188,28 @@ bg_engine = get_background_engine(ENGINE_VERSION)
 # ─────────────────────────────────────────────────────────────────────────────
 # DATA LOADERS & ANALYTICS HELPERS
 # ─────────────────────────────────────────────────────────────────────────────
-def reset_all_data_clean_slate():
+def reset_all_data_clean_slate(league: str = ACTIVE_LEAGUE):
+    paths = _get_scraper_paths(league)
+    headers = get_csv_headers(league)
     with SCRAPE_LOCK:
-        with open(CSV_PATH, "w", encoding="utf-8") as f:
-            f.write(",".join(CSV_HEADERS) + "\n")
+        with open(paths["csv_path"], "w", encoding="utf-8") as f:
+            f.write(",".join(headers) + "\n")
         matches_headers = (
             "game_id,date,home_team,away_team,home_q1,away_q1,home_q2,away_q2,"
             "home_q3,away_q3,home_q4,away_q4,ot_home,ot_away,home_total,away_total,"
             "winner,total_score,margin,is_ot,top_scorer,top_scorer_points\n"
         )
-        with open(MATCHES_CSV_PATH, "w", encoding="utf-8") as f:
+        with open(paths["matches_path"], "w", encoding="utf-8") as f:
             f.write(matches_headers)
-        for jf in [CACHE_FILE, TS_FILE, LIVE_STATE_FILE]:
+        for jf in [paths["ts_file"], paths["state_file"]]:
             with open(jf, "w", encoding="utf-8") as f:
                 json.dump({}, f)
 
 
-def load_live_state() -> dict:
-    for candidate in (LIVE_STATE_FILE, os.path.join(BASE_DIR, "live_matches_state.json")):
+def load_live_state(league: str = ACTIVE_LEAGUE) -> dict:
+    cfg = get_league_config(league)
+    paths = _get_scraper_paths(league)
+    for candidate in (paths["state_file"], os.path.join(BASE_DIR, cfg["files"]["state_file"])):
         if os.path.exists(candidate) and os.path.getsize(candidate) > 0:
             try:
                 with open(candidate, "r", encoding="utf-8") as f:
@@ -207,44 +254,41 @@ def _fetch_github_csv(filename: str) -> pd.DataFrame:
     return pd.DataFrame()
 
 
-def load_symmetry_log() -> pd.DataFrame:
+def load_symmetry_log(league: str = ACTIVE_LEAGUE) -> pd.DataFrame:
     """
-    Stateless loader: combines local runtime log, git seed log, local backup, AND live GitHub Raw cloud-bot backup.
-    Never writes files, so no thread race / stale-file / redeploy-overwrite can ever hide matches.
-    COMPLETED rows always win over PENDING rows for the same (game_id, check_time).
+    Stateless loader: combines local runtime log, git seed log, local backup, AND live GitHub Raw cloud-bot backup
+    for the selected league. COMPLETED rows always win over PENDING rows for the same (game_id, check_time).
     """
-    init_csv()
+    cfg = get_league_config(league)
+    paths = _get_scraper_paths(league)
+    headers = get_csv_headers(league)
+    files = cfg["files"]
+    min_gid = int(cfg.get("min_clean_gid", 0)) if cfg["key"] == "nba" else 770000000
+
+    init_csv(league)
     frames = [
-        _read_csv_safe(CSV_PATH),
-        _read_csv_safe(os.path.join(BASE_DIR, "symmetry_analysis_log.csv")),
-        _read_csv_safe(os.path.join(BASE_DIR, "cloud_symmetry_backup.csv")),
-        _fetch_github_csv("cloud_symmetry_backup.csv"),
+        _read_csv_safe(paths["csv_path"]),
+        _read_csv_safe(os.path.join(BASE_DIR, files["log_seed"])),
+        _read_csv_safe(os.path.join(BASE_DIR, files["log_cloud"])),
+        _fetch_github_csv(files["log_cloud"]),
     ]
     frames = [f for f in frames if not f.empty and "game_id" in f.columns and "check_time" in f.columns]
     if not frames:
-        return pd.DataFrame(columns=CSV_HEADERS)
+        return pd.DataFrame(columns=headers)
     df = pd.concat(frames, ignore_index=True)
     df["game_id"] = df["game_id"].astype(str).str.strip()
     df["_gnum"] = df["game_id"].str.extract(r"(\d+)")[0].fillna(0).astype(int)
-    df = df[df["_gnum"] >= 770265000].copy()
+    df = df[df["_gnum"] >= min_gid].copy()
     if df.empty:
-        return pd.DataFrame(columns=CSV_HEADERS)
+        return pd.DataFrame(columns=headers)
     df["_done"] = (df["status"].astype(str) == "COMPLETED").astype(int)
     df = df.sort_values("_done", kind="stable").drop_duplicates(subset=["game_id", "check_time"], keep="last")
     df["_min"] = df["check_time"].astype(str).str.extract(r"Minute\s+(\d+)")[0].fillna(0).astype(int)
     df = df.sort_values(["_gnum", "_min"], kind="stable").drop(columns=["_gnum", "_done", "_min"]).reset_index(drop=True)
 
-    # Dynamically upgrade value_range with v4.3 Smart Symmetry Value Engine for all historical rows
     _b_cols = [
-        ("160 Or Less", "odds_160_or_less", "model_prob_160_or_less"),
-        ("161-170", "odds_161_170", "model_prob_161_170"),
-        ("171-180", "odds_171_180", "model_prob_171_180"),
-        ("181-190", "odds_181_190", "model_prob_181_190"),
-        ("191-200", "odds_191_200", "model_prob_191_200"),
-        ("201-210", "odds_201_210", "model_prob_201_210"),
-        ("211-220", "odds_211_220", "model_prob_211_220"),
-        ("221-230", "odds_221_230", "model_prob_221_230"),
-        ("231+", "odds_231_plus", "model_prob_231_plus"),
+        (b_name, cfg["barem_odd_cols"][b_name], cfg["barem_prob_cols"][b_name])
+        for b_name, _, _ in cfg["barem_ranges"]
     ]
     smart_favs = []
     smart_vals = []
@@ -260,7 +304,7 @@ def load_symmetry_log() -> pd.DataFrame:
                 p_d[b_lbl] = float(r.get(pc, 0.0) or 0.0)
             except Exception:
                 p_d[b_lbl] = 0.0
-        sym_r = analyze_barem_symmetry(o_d, p_d)
+        sym_r = analyze_barem_symmetry(o_d, p_d, league=league)
         smart_favs.append(sym_r.get("highest_prob_range") or str(r.get("highest_prob_range", "")))
         smart_vals.append(sym_r.get("value_range") or str(r.get("value_range", "")))
     df["highest_prob_range"] = smart_favs
@@ -268,12 +312,15 @@ def load_symmetry_log() -> pd.DataFrame:
     return df
 
 
-def load_completed_matches() -> pd.DataFrame:
+def load_completed_matches(league: str = ACTIVE_LEAGUE) -> pd.DataFrame:
+    cfg = get_league_config(league)
+    paths = _get_scraper_paths(league)
+    files = cfg["files"]
     frames = [
-        _read_csv_safe(MATCHES_CSV_PATH),
-        _read_csv_safe(os.path.join(BASE_DIR, "matches_data.csv")),
-        _read_csv_safe(os.path.join(BASE_DIR, "cloud_matches_backup.csv")),
-        _fetch_github_csv("cloud_matches_backup.csv"),
+        _read_csv_safe(paths["matches_path"]),
+        _read_csv_safe(os.path.join(BASE_DIR, files["matches_seed"])),
+        _read_csv_safe(os.path.join(BASE_DIR, files["matches_cloud"])),
+        _fetch_github_csv(files["matches_cloud"]),
     ]
     frames = [f for f in frames if not f.empty and "game_id" in f.columns]
     if not frames:
@@ -283,33 +330,22 @@ def load_completed_matches() -> pd.DataFrame:
     return df.drop_duplicates(subset=["game_id"], keep="last").reset_index(drop=True)
 
 
-def check_cluster_hit(cluster_name: str, actual_range: str) -> bool:
+def check_cluster_hit(cluster_name: str, actual_range: str, league: str = ACTIVE_LEAGUE) -> bool:
     if not cluster_name or not actual_range or pd.isna(cluster_name) or pd.isna(actual_range):
         return False
     c_str = str(cluster_name).strip()
     a_str = str(actual_range).strip()
-    for name, _, _, member_tuple in CLUSTER_RANGES:
+    for name, _, _, member_tuple in get_league_config(league)["cluster_ranges"]:
         if name == c_str:
             return a_str in member_tuple
     return False
 
 
-BAREM_TO_ODD_COL = {
-    "160 Or Less": "odds_160_or_less",
-    "161-170": "odds_161_170",
-    "171-180": "odds_171_180",
-    "181-190": "odds_181_190",
-    "191-200": "odds_191_200",
-    "201-210": "odds_201_210",
-    "211-220": "odds_211_220",
-    "221-230": "odds_221_230",
-    "231+": "odds_231_plus",
-}
-
-
-def compute_team_dna_table(df_matches: pd.DataFrame) -> pd.DataFrame:
+def compute_team_dna_table(df_matches: pd.DataFrame, league: str = ACTIVE_LEAGUE) -> pd.DataFrame:
     if df_matches is None or df_matches.empty:
         return pd.DataFrame()
+    cfg = get_league_config(league)
+    over_thr = int(cfg.get("high_over_threshold", 211))
     teams = sorted(
         set(df_matches["home_team"].dropna().unique()).union(set(df_matches["away_team"].dropna().unique()))
     )
@@ -325,13 +361,13 @@ def compute_team_dna_table(df_matches: pd.DataFrame) -> pd.DataFrame:
         q3_tot = (sub["home_q3"].astype(float) + sub["away_q3"].astype(float)).mean()
         q4_tot = (sub["home_q4"].astype(float) + sub["away_q4"].astype(float)).mean()
 
-        barems = tot_scores.apply(get_range_from_score)
-        clusters = tot_scores.apply(get_cluster_from_score)
+        barems = tot_scores.apply(lambda v: get_range_from_score(v, league=league))
+        clusters = tot_scores.apply(lambda v: get_cluster_from_score(v, league=league))
         top_barem = barems.mode().iloc[0] if not barems.mode().empty else "-"
         top_barem_pct = (barems == top_barem).mean() * 100.0
         top_cluster = clusters.mode().iloc[0] if not clusters.mode().empty else "-"
         top_cluster_pct = (clusters == top_cluster).mean() * 100.0
-        over_210_pct = (tot_scores >= 211).mean() * 100.0
+        over_pct = (tot_scores >= over_thr).mean() * 100.0
 
         rows.append(
             {
@@ -345,7 +381,7 @@ def compute_team_dna_table(df_matches: pd.DataFrame) -> pd.DataFrame:
                 "Q4 Ort.": round(q4_tot, 1),
                 "En Çok Çıkan Barem": f"{top_barem} (%{top_barem_pct:.0f})",
                 "En Güçlü 20'li Küme": f"{top_cluster} (%{top_cluster_pct:.0f})",
-                "211+ Üst Oranı": f"%{over_210_pct:.1f}",
+                f"{over_thr}+ Üst Oranı": f"%{over_pct:.1f}",
             }
         )
     df_dna = pd.DataFrame(rows)
@@ -607,7 +643,7 @@ st.markdown(
     margin-top: 0.15rem;
 }}
 
-/* 9-Column Barem Grid */
+/* 9-Column / 6-Column Barem Grids */
 .barem-grid {{
     display: grid;
     grid-template-columns: repeat(9, 1fr);
@@ -615,8 +651,15 @@ st.markdown(
     margin-top: 0.8rem;
 }}
 
+.barem-grid-6 {{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+}}
+
 @media (max-width: 1100px) {{
-    .barem-grid {{
+    .barem-grid, .barem-grid-6 {{
         grid-template-columns: repeat(3, 1fr);
     }}
 }}
@@ -699,9 +742,9 @@ div.stButton > button {{
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# TOP COMMAND BAR & CONTROLS
+# TOP LEAGUE SWITCHER, COMMAND BAR & CONTROLS
 # ─────────────────────────────────────────────────────────────────────────────
-live_state = load_live_state()
+live_state = load_live_state(ACTIVE_LEAGUE)
 active_domain = live_state.get("domain") or "https://1xbet.global"
 last_update_str = live_state.get("updated_at") or bg_engine.last_run_str
 scan_dur = live_state.get("duration_sec", 0.0)
@@ -711,12 +754,35 @@ next_in = (
     else 5
 )
 
+sw_c1, sw_c2 = st.columns(2)
+with sw_c1:
+    st.button(
+        "🏀 NBA 2K26 CyberLeague (4x12 Dk • 9 Barem)",
+        key="btn_league_nba",
+        on_click=set_active_league,
+        args=("nba",),
+        type="primary" if not IS_EURO else "secondary",
+        use_container_width=True,
+    )
+with sw_c2:
+    st.button(
+        "🇪🇺 NBA 2K26 Cyber Euro League (4x10 Dk • 6 Barem)",
+        key="btn_league_euro",
+        on_click=set_active_league,
+        args=("euro",),
+        type="primary" if IS_EURO else "secondary",
+        use_container_width=True,
+    )
+
+_title_icon = "🇪🇺" if IS_EURO else "🏀"
+_barem_desc = f"{LEAGUE_BAREM_N}'{'lı' if LEAGUE_BAREM_N == 6 else 'lu'} Barem • 4x{int(Q_LEN)} Dk • Kapanış {CLOSE_MIN_INT}. Dk"
+
 st.markdown(
     f"""
 <div class="cmd-header">
     <div>
-        <div class="cmd-title">🏀 NBA 2K26 CyberLeague Pro</div>
-        <div class="cmd-sub">Canlı Barem (Exact Points), Kapanış Simetrisi, Takım Barem DNA'sı & Kasa/Dutching Terminali</div>
+        <div class="cmd-title">{_title_icon} {LEAGUE_CFG['title']}</div>
+        <div class="cmd-sub">Canlı Barem ({_barem_desc}), Kapanış Simetrisi, Takım Barem DNA'sı & Kasa/Dutching Terminali</div>
     </div>
     <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
         <div class="status-pill">
@@ -733,38 +799,39 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-ctrl_c1, ctrl_c2, ctrl_c3, ctrl_c4, ctrl_c5, ctrl_c6 = st.columns([1.25, 1.25, 1.3, 1.0, 0.85, 0.9])
+ctrl_c1, ctrl_c2, ctrl_c3, ctrl_c4, ctrl_c5, ctrl_c6 = st.columns([1.25, 1.25, 1.35, 1.0, 0.85, 0.9])
 
 with ctrl_c1:
     if st.button("⚡ Anlık Canlı Barem Çek", use_container_width=True, type="primary"):
-        with st.spinner("1xBet / Mirror üzerinden canlı maçlar ve baremler çekiliyor (~2 sn)..."):
+        with st.spinner(f"1xBet / Mirror üzerinden canlı {LEAGUE_CFG['short_name']} maçları çekiliyor (~2 sn)..."):
             with SCRAPE_LOCK:
-                run_auto_scraper(force_manual=True)
+                run_auto_scraper(force_manual=True, league=ACTIVE_LEAGUE)
                 bg_engine.last_run_ts = time.time()
                 bg_engine.last_run_str = datetime.now().strftime("%H:%M:%S")
-        st.toast("✅ Canlı maçlar ve barem oranları güncellendi!", icon="🏀")
+        st.toast(f"✅ {LEAGUE_CFG['short_name']} canlı maçları ve barem oranları güncellendi!", icon="🏀")
         st.rerun()
 
 with ctrl_c2:
     if st.button("🔄 Bitmiş Maçları Sonuçlandır", use_container_width=True):
-        with st.spinner("Bitmiş maç sonuçları kontrol ediliyor..."):
-            pull_today_results(only_tracked=True)
-            settled = auto_settle_checkpoints()
+        with st.spinner(f"Bitmiş {LEAGUE_CFG['short_name']} maç sonuçları kontrol ediliyor..."):
+            pull_today_results(only_tracked=True, league=ACTIVE_LEAGUE)
+            settled = auto_settle_checkpoints(league=ACTIVE_LEAGUE)
         st.toast(f"✅ {settled} barem kaydı sonuçlandırıldı!", icon="🎯")
         st.rerun()
 
 with ctrl_c3:
-    if st.button("📥 Son 4 Ay Arşivini Güncelle (120 Gün)", use_container_width=True):
-        with st.spinner("Son 4 aydaki (120 gün) tüm tamamlanmış CyberLeague maçları çekiliyor..."):
-            added = pull_today_results(only_tracked=False, days_back=125)
-            auto_settle_checkpoints()
-        st.toast(f"📥 {added} yeni tamamlanmış maç 4 aylık geçmiş arşivine eklendi!", icon="📊")
+    if st.button(LEAGUE_CFG["archive_btn_label"], use_container_width=True):
+        _days = int(LEAGUE_CFG["archive_days"])
+        with st.spinner(f"Son {_days} günlük tüm tamamlanmış {LEAGUE_CFG['short_name']} maçları çekiliyor..."):
+            added = pull_today_results(only_tracked=False, days_back=_days + 5, league=ACTIVE_LEAGUE)
+            auto_settle_checkpoints(league=ACTIVE_LEAGUE)
+        st.toast(f"📥 {added} yeni tamamlanmış maç {LEAGUE_CFG['short_name']} arşivine eklendi!", icon="📊")
         st.rerun()
 
 with ctrl_c4:
     if st.button("🗑️ Verileri Sıfırla", use_container_width=True):
-        reset_all_data_clean_slate()
-        st.toast("🧹 Tüm kayıtlar sıfırlandı (0 kayıt). Temiz sayfa hazır!", icon="✨")
+        reset_all_data_clean_slate(ACTIVE_LEAGUE)
+        st.toast(f"🧹 {LEAGUE_CFG['short_name']} kayıtları sıfırlandı (0 kayıt). Temiz sayfa hazır!", icon="✨")
         st.rerun()
 
 with ctrl_c5:
@@ -780,9 +847,9 @@ with ctrl_c6:
 # ─────────────────────────────────────────────────────────────────────────────
 @st.fragment(run_every="15s" if auto_ui_refresh else None)
 def render_live_dashboard():
-    state = load_live_state()
-    df_log = load_symmetry_log()
-    df_hist = load_completed_matches()
+    state = load_live_state(ACTIVE_LEAGUE)
+    df_log = load_symmetry_log(ACTIVE_LEAGUE)
+    df_hist = load_completed_matches(ACTIVE_LEAGUE)
     live_matches = state.get("live_matches", [])
 
     active_count = len(live_matches)
@@ -813,7 +880,7 @@ def render_live_dashboard():
             .astype(float)
             .fillna(0)
         )
-        df_comp_32 = df_comp_kpi[df_comp_kpi["_min_num"] >= 32].copy()
+        df_comp_32 = df_comp_kpi[df_comp_kpi["_min_num"] >= CLOSING_START].copy()
         if not df_comp_32.empty and "game_id" in df_comp_32.columns:
             df_eval_kpi = df_comp_32.sort_values("_min_num").groupby("game_id", as_index=False).last()
         elif not df_comp_32.empty:
@@ -828,7 +895,9 @@ def render_live_dashboard():
             1 for _, r in df_eval_kpi.iterrows() if str(r.get("actual_range")) == str(r.get("value_range"))
         )
         clu_wins = sum(
-            1 for _, r in df_eval_kpi.iterrows() if check_cluster_hit(r.get("best_cluster_name"), r.get("actual_range"))
+            1
+            for _, r in df_eval_kpi.iterrows()
+            if check_cluster_hit(r.get("best_cluster_name"), r.get("actual_range"), league=ACTIVE_LEAGUE)
         )
         fav_rate = (fav_wins / eval_n) * 100.0 if eval_n > 0 else 0.0
         val_rate = (val_wins / eval_n) * 100.0 if eval_n > 0 else 0.0
@@ -842,8 +911,8 @@ def render_live_dashboard():
     with k1:
         st.markdown(
             f"""
-        <div class="kpi-card" title="Şu an oynanan canlı CyberLeague maç sayısı ve geçmiş arşivdeki toplam maç sayısı.">
-            <div class="kpi-label">🔴 Canlı CyberLeague Maçı</div>
+        <div class="kpi-card" title="Şu an oynanan canlı {LEAGUE_CFG['short_name']} maç sayısı ve geçmiş arşivdeki toplam maç sayısı.">
+            <div class="kpi-label">🔴 Canlı {LEAGUE_CFG['short_name']}</div>
             <div class="kpi-val">{active_count} Maç</div>
             <div class="kpi-sub">{open_barem_count} Maçta Barem Açık &bull; {hist_count} Geçmiş Arşiv</div>
         </div>
@@ -853,8 +922,8 @@ def render_live_dashboard():
     with k2:
         st.markdown(
             f"""
-        <div class="kpi-card" title="32. dakika ve sonrasında kapanış oranı kaydedilmiş {eval_n} tamamlanmış maç ve toplam {total_logs} dakikalık kayıt.">
-            <div class="kpi-label">📋 32+ Dk Kapanış Maçı</div>
+        <div class="kpi-card" title="{CLOSING_START}. dakika ve sonrasında kapanış oranı kaydedilmiş {eval_n} tamamlanmış maç ve toplam {total_logs} dakikalık kayıt.">
+            <div class="kpi-label">📋 {CLOSING_START}+ Dk Kapanış Maçı</div>
             <div class="kpi-val">{eval_n} Maç</div>
             <div class="kpi-sub">{pend_count} Canlı Kayıt &bull; {comp_count} Toplam Dakika Kaydı</div>
         </div>
@@ -864,10 +933,10 @@ def render_live_dashboard():
     with k3:
         st.markdown(
             f"""
-        <div class="kpi-card" title="Sadece 32. dakika ve sonrasındaki kapanış kayıtlarında (her maça 1 kupon baz alınarak) 1xBet'in 1. Favori bareminin tutma oranı.">
-            <div class="kpi-label">⭐ 1xBet Favori (32+ Dk)</div>
+        <div class="kpi-card" title="Sadece {CLOSING_START}. dakika ve sonrasındaki kapanış kayıtlarında (her maça 1 kupon baz alınarak) 1xBet'in 1. Favori bareminin tutma oranı.">
+            <div class="kpi-label">⭐ 1xBet Favori ({CLOSING_START}+ Dk)</div>
             <div class="kpi-val" style="color:#059669;">%{fav_rate:.1f}</div>
-            <div class="kpi-sub">{fav_wins} / {eval_n} Maç İsabet (32+ Dk Kapanış)</div>
+            <div class="kpi-sub">{fav_wins} / {eval_n} Maç İsabet ({CLOSING_START}+ Dk Kapanış)</div>
         </div>
         """,
             unsafe_allow_html=True,
@@ -875,10 +944,10 @@ def render_live_dashboard():
     with k4:
         st.markdown(
             f"""
-        <div class="kpi-card" title="Akıllı Değerli Barem (Smart Value): 1xBet piyasa olasılığı (%80), Monte Carlo model olasılığı (%20) ve 4 simetri kuralını (Altın Bant, 2.Favori Yönü, İkiz Oran, Model Teyidi) birleştirerek 3.65 oran altındaki en kârlı tek baremi seçer.">
-            <div class="kpi-label">🔥 Akıllı Value (32+ Dk)</div>
+        <div class="kpi-card" title="Akıllı Değerli Barem (Smart Value): 1xBet piyasa olasılığı (%80), Monte Carlo model olasılığı (%20) ve simetri kurallarını birleştirerek en kârlı tek baremi seçer.">
+            <div class="kpi-label">🔥 Akıllı Value ({CLOSING_START}+ Dk)</div>
             <div class="kpi-val" style="color:#d97706;">%{val_rate:.1f}</div>
-            <div class="kpi-sub">{val_wins} / {eval_n} Maç İsabet (32+ Dk Kapanış)</div>
+            <div class="kpi-sub">{val_wins} / {eval_n} Maç İsabet ({CLOSING_START}+ Dk Kapanış)</div>
         </div>
         """,
             unsafe_allow_html=True,
@@ -886,19 +955,19 @@ def render_live_dashboard():
     with k5:
         st.markdown(
             f"""
-        <div class="kpi-card" title="32. dakika ve sonrasında yan yana en güçlü iki baremin (20-Sayı Kümesi) tutma oranı.">
-            <div class="kpi-label">🛡️ 20-Sayı Küme (32+ Dk)</div>
+        <div class="kpi-card" title="{CLOSING_START}. dakika ve sonrasında yan yana en güçlü iki baremin (20-Sayı Kümesi) tutma oranı.">
+            <div class="kpi-label">🛡️ 20-Sayı Küme ({CLOSING_START}+ Dk)</div>
             <div class="kpi-val" style="color:#2563eb;">%{clu_rate:.1f}</div>
-            <div class="kpi-sub">{clu_wins} / {eval_n} Maç İsabet (32+ Dk Kapanış)</div>
+            <div class="kpi-sub">{clu_wins} / {eval_n} Maç İsabet ({CLOSING_START}+ Dk Kapanış)</div>
         </div>
         """,
             unsafe_allow_html=True,
         )
 
     # ─────────────────────────────────────────────────────────────────────────
-    # SEQUENTIAL BAREM WAVE STRIP (LAST 8 MATCHES: 0, -1, +1 WAVE DETECTOR)
+    # SEQUENTIAL BAREM WAVE STRIP (LAST MATCHES: 0, -1, +1 WAVE DETECTOR)
     # ─────────────────────────────────────────────────────────────────────────
-    wave_global = analyze_sequential_barem_wave(df_hist, df_log)
+    wave_global = analyze_sequential_barem_wave(df_hist, df_log, league=ACTIVE_LEAGUE)
     recent_chain = wave_global.get("recent_chain", [])
     if recent_chain:
         pills_html = ""
@@ -952,11 +1021,11 @@ def render_live_dashboard():
             odd_36_val = float(item.get("exp_odd_36", 0.0) or 0.0)
             src_txt = str(item.get("source", ""))
             if "Banko Kilit" in src_txt:
-                ref_line = f'📊 36.Dk Favori: <b>{item["exp_barem_36"]} (🔒 Kilit)</b> ➔ Biten: <b>{item["act_barem"]}</b>'
+                ref_line = f'📊 {CLOSE_MIN_INT}.Dk Favori: <b>{item["exp_barem_36"]} (🔒 Kilit)</b> ➔ Biten: <b>{item["act_barem"]}</b>'
             elif odd_36_val > 0:
-                ref_line = f'📊 36.Dk Favori: <b>{item["exp_barem_36"]} ({odd_36_val:.2f})</b> ➔ Biten: <b>{item["act_barem"]}</b>'
+                ref_line = f'📊 {CLOSE_MIN_INT}.Dk Favori: <b>{item["exp_barem_36"]} ({odd_36_val:.2f})</b> ➔ Biten: <b>{item["act_barem"]}</b>'
             else:
-                ref_line = f'🧮 36.Dk Tahmin: <b>{item["exp_barem_36"]}</b> ➔ Biten: <b>{item["act_barem"]}</b>'
+                ref_line = f'🧮 {CLOSE_MIN_INT}.Dk Tahmin: <b>{item["exp_barem_36"]}</b> ➔ Biten: <b>{item["act_barem"]}</b>'
             drift_line = item.get("drift_label", "")
 
             pills_html += (
@@ -996,7 +1065,7 @@ def render_live_dashboard():
             form_badge_html = (
                 f'<span style="font-size:0.78rem; font-weight:800; color:#059669; background:rgba(5,150,105,0.1); '
                 f'border:1px solid rgba(5,150,105,0.3); padding:0.24rem 0.7rem; border-radius:999px;" '
-                f'title="Son {l10_n} maçın {l10_near_hits} tanesinde 36. dakika favorisi veya hemen 1 komşu baremi geldi. Piyasa şu an düzenli ve öngörülebilir ilerliyor.">'
+                f'title="Son {l10_n} maçın {l10_near_hits} tanesinde {CLOSE_MIN_INT}. dakika favorisi veya hemen 1 komşu baremi geldi. Piyasa şu an düzenli ve öngörülebilir ilerliyor.">'
                 f'🔥 Son {l10_n} Maç Sistem Formu: {l10_fav_hits}/{l10_n} Tam Favori &bull; {l10_near_hits}/{l10_n} Komşu İkili (🟢 Piyasa Düzenli)</span>'
             )
         else:
@@ -1012,7 +1081,7 @@ def render_live_dashboard():
             <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:13px; padding:0.9rem 1.2rem; margin-top:0.9rem; box-shadow:var(--shadow-card);">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.55rem;">
                     <div style="font-size:0.92rem; font-weight:800; color:var(--text-primary); display:flex; align-items:center; flex-wrap:wrap; gap:0.35rem;">
-                        <span>🌊 Son Biten Maçlarda 36. Dakika Favorisi Tuttu mu, Kaydı mı? (Toplam {len(recent_chain)} Maç)</span>
+                        <span>🌊 Son Biten Maçlarda {CLOSE_MIN_INT}. Dakika Favorisi Tuttu mu, Kaydı mı? (Toplam {len(recent_chain)} Maç)</span>
                         <span style="margin-left:0.25rem;">Son 5 Maç: {last5_chain_html}</span>
                     </div>
                     <div style="display:flex; gap:0.45rem; flex-wrap:wrap; align-items:center;">
@@ -1042,31 +1111,32 @@ def render_live_dashboard():
         )
 
     # ─────────────────────────────────────────────────────────────────────────
-    # SECTION 1: LIVE MATCH CARDS & 9-BAREM MATRIX
+    # SECTION 1: LIVE MATCH CARDS & BAREM MATRIX
     # ─────────────────────────────────────────────────────────────────────────
+    _sec1_lbl = "6'lı" if LEAGUE_BAREM_N == 6 else "9'lu"
     st.markdown(
-        '<div class="section-hdr">🔴 Canlı Maç Kartları & Anlık 9\'lu Barem Matrisi (0 - 36. Dakika)</div>',
+        f'<div class="section-hdr">🔴 Canlı Maç Kartları & Anlık {_sec1_lbl} Barem Matrisi (0 - {CLOSE_MIN_INT}. Dakika)</div>',
         unsafe_allow_html=True,
     )
 
     if not live_matches:
         st.info(
-            "Şu an aktif canlı maç bekleniyor veya tarama yapılıyor. "
+            f"Şu an aktif canlı {LEAGUE_CFG['short_name']} maçı bekleniyor veya tarama yapılıyor. "
             "Yukarıdaki **'⚡ Anlık Canlı Barem Çek'** butonuna basarak anında kontrol edebilirsiniz."
         )
     else:
-        # 30-36m Closing Decision Alert Banner at the very top of Live Matches
+        # Closing Decision Alert Banner at the very top of Live Matches
         closing_alerts_html = ""
         for m_al in live_matches:
             el_al = float(m_al.get("elapsed_mins", 0.0) or 0.0)
             f1_al = m_al.get("bookie_fav_1") or "-"
             f1_odd_al = float(m_al.get("bookie_fav_1_odd", 99.0) or 99.0)
-            if 30.0 <= el_al <= 36.2 and m_al.get("is_barem_open", False) and f1_odd_al < 90.0:
+            if MID_Q3_MIN <= el_al <= CLOSE_MIN + 0.2 and m_al.get("is_barem_open", False) and f1_odd_al < 90.0:
                 th_al = str(m_al.get("team_home", "")).replace(" (cyber)", "")
                 ta_al = str(m_al.get("team_away", "")).replace(" (cyber)", "")
                 hsc_al = int(m_al.get("home_score", 0) or 0)
                 asc_al = int(m_al.get("away_score", 0) or 0)
-                rem_lock = max(0.0, 36.0 - el_al)
+                rem_lock = max(0.0, CLOSE_MIN - el_al)
                 sm_al = analyze_smart_35m_decision(
                     fav1_barem=f1_al,
                     fav1_odd=f1_odd_al,
@@ -1079,6 +1149,7 @@ def render_live_dashboard():
                     cur_tot=hsc_al + asc_al,
                     elapsed_mins=el_al,
                     odds_map=m_al.get("odds", {}),
+                    league=ACTIVE_LEAGUE,
                 )
                 closing_alerts_html += (
                     f'<div style="background:rgba(5,150,105,0.12); border:2px solid #059669; border-radius:12px; padding:0.75rem 1.1rem; margin-bottom:0.75rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; box-shadow:var(--shadow-card);">'
@@ -1103,7 +1174,7 @@ def render_live_dashboard():
             tot_sc = h_sc + a_sc
             q_num = m.get("quarter", 1)
             el_m = m.get("elapsed_mins", 0.0)
-            rem_q = m.get("remaining_mins", 12.0)
+            rem_q = m.get("remaining_mins", Q_LEN)
             is_open = m.get("is_barem_open", False)
             status_code = m.get("status", "")
             h2h_n = m.get("h2h_sample_size", 0)
@@ -1120,26 +1191,26 @@ def render_live_dashboard():
                     "⏳ MAÇ BAŞLAMADI</span>"
                 )
             elif is_open:
-                rem_to_36 = max(0.0, 36.0 - el_m)
+                rem_to_close = max(0.0, CLOSE_MIN - el_m)
                 badge_html = (
                     '<span style="background:var(--pill-bg); border:1px solid var(--pill-border); '
                     'color:var(--pill-text); padding:0.28rem 0.75rem; border-radius:8px; font-size:0.76rem; font-weight:700;">'
-                    f"🟢 BAREM AÇIK (Kapanışa {rem_to_36:.1f} dk)</span>"
+                    f"🟢 BAREM AÇIK (Kapanışa {rem_to_close:.1f} dk)</span>"
                 )
             else:
                 badge_html = (
                     '<span style="background:rgba(225,29,72,0.1); border:1px solid rgba(225,29,72,0.28); '
                     'color:#e11d48; padding:0.28rem 0.75rem; border-radius:8px; font-size:0.76rem; font-weight:700;">'
-                    "🔒 36+ DK BAREM KAPANDI — Maç Sonucu Bekleniyor</span>"
+                    f"🔒 {CLOSE_MIN_INT}+ DK BAREM KAPANDI — Maç Sonucu Bekleniyor</span>"
                 )
 
-            pred_tot = m.get("predicted_total", 212.0)
-            pred_h = m.get("predicted_home_final", 106.0)
-            pred_a = m.get("predicted_away_final", 106.0)
+            pred_tot = m.get("predicted_total", round(LEAGUE_CFG["prior_q"] * 4.0, 1))
+            pred_h = m.get("predicted_home_final", round(LEAGUE_CFG["prior_q"] * 2.0, 1))
+            pred_a = m.get("predicted_away_final", round(LEAGUE_CFG["prior_q"] * 2.0, 1))
             fav1 = m.get("bookie_fav_1") or "-"
             fav1_odd = m.get("bookie_fav_1_odd", 99.0)
             fav2 = m.get("bookie_fav_2") or "-"
-            sym_live = analyze_barem_symmetry(m.get("odds", {}), m.get("barem_probs", {}))
+            sym_live = analyze_barem_symmetry(m.get("odds", {}), m.get("barem_probs", {}), league=ACTIVE_LEAGUE)
             val_rng = sym_live.get("value_range") or m.get("value_range") or "-"
             val_reason = sym_live.get("value_reason") or "Piyasa ve model simetrisine göre en yüksek beklenen değerli barem."
             clu_name = m.get("best_cluster_name") or "-"
@@ -1152,7 +1223,7 @@ def render_live_dashboard():
             q4_burst_p = q3_sig.get("burst_prob", 35.0)
             q4_coll_p = q3_sig.get("collapse_prob", 25.0)
 
-            match_wave = analyze_sequential_barem_wave(df_hist, df_log, current_fav_barem=fav1)
+            match_wave = analyze_sequential_barem_wave(df_hist, df_log, current_fav_barem=fav1, league=ACTIVE_LEAGUE)
             w_b0 = match_wave["target_0_barem"]
             w_bm1 = match_wave["target_minus_1_barem"]
             w_bp1 = match_wave["target_plus_1_barem"]
@@ -1173,6 +1244,7 @@ def render_live_dashboard():
                 cur_tot=int(tot_sc),
                 elapsed_mins=float(el_m),
                 odds_map=m.get("odds", {}),
+                league=ACTIVE_LEAGUE,
             )
             smart_color = {
                 "SUPER_SIGNAL": "#059669",
@@ -1181,16 +1253,22 @@ def render_live_dashboard():
                 "TRAP_EXTREME": "#e11d48",
                 "TRAP_LOW": "#d97706",
             }.get(smart["zone_type"], "var(--text-secondary)")
-            h2h_live = analyze_matchup_live_summary(df_hist, t_home, t_away)
+            h2h_live = analyze_matchup_live_summary(df_hist, t_home, t_away, league=ACTIVE_LEAGUE)
+            pair_h2h = analyze_team_pair_history(df_hist, t_home, t_away, last_n=5, league=ACTIVE_LEAGUE)
+            pair_live_line = (
+                f'<div style="font-size:0.72rem; color:var(--fav1-text); margin-top:0.1rem;">🤝 Direkt Çift ({pair_h2h.get("n", 0)} Maç): Ort. <b>{pair_h2h.get("avg_total", 0.0)}</b> &bull; En Sık: <b>{pair_h2h.get("top_barem", "-")}</b></div>'
+                if pair_h2h.get("n", 0) > 0
+                else ""
+            )
             main_reason_short = str(smart.get("reasoning", "")).split(" • ")[0]
             smart_html = (
                 f'<div class="info-strip" style="grid-column: 1 / -1; border-left:4px solid {smart_color}; padding:0.75rem 0.95rem;">'
                 f'<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.55rem;">'
-                f'<div class="info-strip-label" style="font-size:0.84rem; margin:0;">👑 35. Dakika Ne Oynamalı? (Net Karar Özeti)</div>'
+                f'<div class="info-strip-label" style="font-size:0.84rem; margin:0;">👑 {DEC_MIN}. Dakika Ne Oynamalı? (Net Karar Özeti)</div>'
                 f'<span style="background:var(--bg-subtle); border:1px solid {smart_color}; color:{smart_color}; padding:0.18rem 0.65rem; border-radius:999px; font-size:0.76rem; font-weight:800;">{smart["zone_badge"]}</span>'
                 f'</div>'
                 f'<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:0.55rem; margin-bottom:0.5rem;">'
-                f'<div style="background:var(--bg-subtle); border:1px solid var(--border-subtle); border-left:3px solid #059669; border-radius:8px; padding:0.5rem 0.7rem;" title="Tek bir barem oynayacaksanız sistemin geçmiş 63 maça bakarak önerdiği 1 numaralı barem.">'
+                f'<div style="background:var(--bg-subtle); border:1px solid var(--border-subtle); border-left:3px solid #059669; border-radius:8px; padding:0.5rem 0.7rem;" title="Tek bir barem oynayacaksanız sistemin geçmiş kapanış analizine göre önerdiği 1 numaralı barem.">'
                 f'<div style="font-size:0.68rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">🎯 1. Tercih (Tek Barem Oyna)</div>'
                 f'<div style="font-size:0.9rem; font-weight:800; color:var(--text-primary); margin-top:0.15rem;">{smart["primary_pick"]}</div>'
                 f'</div>'
@@ -1290,6 +1368,7 @@ def render_live_dashboard():
                 if sym_gap < 2.0 and fav1_odd < 90
                 else f"1. Favori Barem: {fav1} ({fav1_odd if fav1_odd < 90 else '-'})"
             )
+            barem_grid_cls = "barem-grid-6" if LEAGUE_BAREM_N == 6 else "barem-grid"
 
             st.markdown(
                 f"""
@@ -1330,6 +1409,7 @@ def render_live_dashboard():
                         <div class="info-strip-label">🤝 İki Takım Geçmişi & 4. Çeyrek Karakteri [?]</div>
                         <div class="info-strip-val" style="font-size:0.8rem; line-height:1.4;">
                             Son 5 Maç: <b>{h2h_live['last5_str']}</b> &bull; En Çok: <b>{h2h_live['top_cluster_str']}</b>
+                            {pair_live_line}
                             <div style="font-size:0.74rem; color:var(--text-secondary); margin-top:0.12rem;">{h2h_live['q4_pace_badge']}</div>
                         </div>
                     </div>
@@ -1348,7 +1428,7 @@ def render_live_dashboard():
                     </div>
                     {smart_html}
                 </div>
-                <div class="barem-grid">
+                <div class="{barem_grid_cls}">
                     {boxes_html}
                 </div>
             </div>
@@ -1357,19 +1437,18 @@ def render_live_dashboard():
             )
 
     # ─────────────────────────────────────────────────────────────────────────
-    # SECTION 2: MATCH-ISOLATED BAREM FLOW & CLOSING SYMMETRY TABLES (0 - 36m)
+    # SECTION 2: MATCH-ISOLATED BAREM FLOW & CLOSING SYMMETRY TABLES (0 - close)
     # ─────────────────────────────────────────────────────────────────────────
     st.markdown(
-        '<div class="section-hdr">📊 Maç Bazlı Ayrıştırılmış Barem & Simetri Akış Tablosu (0 - 36. Dakika)</div>',
+        f'<div class="section-hdr">📊 Maç Bazlı Ayrıştırılmış Barem & Simetri Akış Tablosu (0 - {CLOSE_MIN_INT}. Dakika)</div>',
         unsafe_allow_html=True,
     )
 
     if df_log.empty:
         st.info(
-            "Henüz kaydedilmiş barem akış verisi bulunmuyor. Canlı bir maçta barem açıkken (0-36. dk) her maç kendi bağımsız kutusunda buraya eklenecektir."
+            f"Henüz kaydedilmiş {LEAGUE_CFG['short_name']} barem akış verisi bulunmuyor. Canlı bir maçta barem açıkken (0-{CLOSE_MIN_INT}. dk) her maç kendi bağımsız kutusunda buraya eklenecektir."
         )
     else:
-        # Build ordered unique game_id catalog (chronological #1 .. #N, displayed newest first)
         all_gids_chrono = list(df_log["game_id"].dropna().unique())
         gid_to_seq = {gid: idx + 1 for idx, gid in enumerate(all_gids_chrono)}
         gid_label_map = {}
@@ -1388,25 +1467,31 @@ def render_live_dashboard():
                 "Durum Filtresi",
                 ["Tümü", "⏳ Canlı / Bekleyen (PENDING)", "✅ Sonuçlanan (COMPLETED)"],
                 index=0,
+                key=f"s2_st_{ACTIVE_LEAGUE}",
             )
         with f_col2:
             unique_game_options = [f"Tüm Maçlar ({len(all_gids_chrono)} Maç Ayrı Tabloda)"] + list(gid_label_map.keys())
-            game_filter = st.selectbox("Maç Filtresi (Maç No & ID)", unique_game_options, index=0)
+            game_filter = st.selectbox("Maç Filtresi (Maç No & ID)", unique_game_options, index=0, key=f"s2_gm_{ACTIVE_LEAGUE}")
         with f_col3:
+            _min_opt_all = f"Tüm Dakikalar (0-{CLOSE_MIN_INT}. dk)"
+            _min_opt_close = f"🔥 Kapanış Bölgesi ({MID_Q3_MIN}-{CLOSE_MIN_INT}. dk)"
+            _min_opt_early = f"⚡ Erken/Orta Periyot (0-{MID_Q3_MIN - 1}. dk)"
             min_filter = st.selectbox(
                 "Dakika Aralığı",
-                ["Tüm Dakikalar (0-36. dk)", "🔥 Kapanış Bölgesi (30-36. dk)", "⚡ Erken/Orta Periyot (0-29. dk)"],
+                [_min_opt_all, _min_opt_close, _min_opt_early],
                 index=0,
+                key=f"s2_mn_{ACTIVE_LEAGUE}",
             )
         with f_col4:
             layout_mode = st.selectbox(
                 "Görünüm Modu",
                 ["📑 Her Maç Ayrı Sekmede (Tab)", "🗂️ Her Maç Ayrı Kutuda (Alt Alta)"],
                 index=0,
+                key=f"s2_ly_{ACTIVE_LEAGUE}",
             )
         with f_col5:
             page_options = ["Tüm Maçları Göster (Sınırsız)", "Son 25 Maç", "26 - 50. Maçlar", "51 - 75. Maçlar", "76 - 100. Maçlar", "101+ Maçlar"]
-            page_filter = st.selectbox("Sayfa / Grup Seçimi", page_options, index=0)
+            page_filter = st.selectbox("Sayfa / Grup Seçimi", page_options, index=0, key=f"s2_pg_{ACTIVE_LEAGUE}")
 
         df_view = df_log.copy()
         if "PENDING" in status_filter:
@@ -1419,30 +1504,28 @@ def render_live_dashboard():
             if selected_gid:
                 df_view = df_view[df_view["game_id"] == selected_gid]
 
-        if "30-36" in min_filter:
+        if min_filter == _min_opt_close:
             df_view = df_view[
                 df_view["check_time"]
                 .astype(str)
                 .str.extract(r"Minute\s+(\d+)", expand=False)
                 .astype(float)
                 .fillna(0)
-                >= 30
+                >= MID_Q3_MIN
             ]
-        elif "0-29" in min_filter:
+        elif min_filter == _min_opt_early:
             df_view = df_view[
                 df_view["check_time"]
                 .astype(str)
                 .str.extract(r"Minute\s+(\d+)", expand=False)
                 .astype(float)
                 .fillna(0)
-                < 30
+                < MID_Q3_MIN
             ]
 
         if df_view.empty:
             st.info("Seçilen filtreye uygun barem kaydı bulunamadı.")
         else:
-            # Group strictly by game_id so simultaneous games NEVER mix in a single table!
-            # Order games so PENDING (active live) games appear first, then most recent games.
             game_ids_ordered = []
             for gid in df_view["game_id"].dropna().unique()[::-1]:
                 if gid not in game_ids_ordered:
@@ -1499,7 +1582,7 @@ def render_live_dashboard():
                             hits.append("⭐ FAV TUTTU")
                         if act_rng == val_rng:
                             hits.append("🔥 VALUE TUTTU")
-                        if check_cluster_hit(clu_rng, act_rng):
+                        if check_cluster_hit(clu_rng, act_rng, league=ACTIVE_LEAGUE):
                             hits.append("🛡️ KÜME TUTTU")
                         outcome_badge = " | ".join(hits) if hits else f"❌ ({act_rng})"
                     else:
@@ -1518,19 +1601,15 @@ def render_live_dashboard():
                     fav_raw_odd = float(r.get(fav_col_name, 0.0) or 0.0) if fav_col_name else 0.0
                     fav_cell_disp = f"{fav_rng} (🔒 Kilit)" if fav_raw_odd >= 90.0 else fav_rng
 
-                    rows.append(
+                    row_dict = {
+                        "Dakika": r.get("check_time", ""),
+                        "Anlık Skor": r.get("current_score", ""),
+                    }
+                    for b_name, _, _ in BAREM_RANGES:
+                        short_b = LEAGUE_CFG["short_labels"].get(b_name, b_name)
+                        row_dict[short_b] = _fmt_cell(BAREM_TO_ODD_COL[b_name], BAREM_TO_PROB_COL[b_name], b_name)
+                    row_dict.update(
                         {
-                            "Dakika": r.get("check_time", ""),
-                            "Anlık Skor": r.get("current_score", ""),
-                            "160-": _fmt_cell("odds_160_or_less", "model_prob_160_or_less", "160 Or Less"),
-                            "161-170": _fmt_cell("odds_161_170", "model_prob_161_170", "161-170"),
-                            "171-180": _fmt_cell("odds_171_180", "model_prob_171_180", "171-180"),
-                            "181-190": _fmt_cell("odds_181_190", "model_prob_181_190", "181-190"),
-                            "191-200": _fmt_cell("odds_191_200", "model_prob_191_200", "191-200"),
-                            "201-210": _fmt_cell("odds_201_210", "model_prob_201_210", "201-210"),
-                            "211-220": _fmt_cell("odds_211_220", "model_prob_211_220", "211-220"),
-                            "221-230": _fmt_cell("odds_221_230", "model_prob_221_230", "221-230"),
-                            "231+": _fmt_cell("odds_231_plus", "model_prob_231_plus", "231+"),
                             "⭐ 1xBet Fav": fav_cell_disp,
                             "🔥 Value Barem": val_rng,
                             "🛡️ 20-Sayı Kümesi": f"{clu_rng} (%{float(clu_prb or 0):.0f})",
@@ -1538,6 +1617,7 @@ def render_live_dashboard():
                             "Sonuç Analizi": outcome_badge,
                         }
                     )
+                    rows.append(row_dict)
                 return pd.DataFrame(rows)
 
             def _render_match_flow_card(gid: str):
@@ -1614,38 +1694,40 @@ render_live_dashboard()
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# SECTION 3: ADVANCED ANALYTICS & HISTORICAL ARCHIVE (ALL 4 MODULES)
+# SECTION 3: ADVANCED ANALYTICS & HISTORICAL ARCHIVE (ALL 8 MODULES)
 # ─────────────────────────────────────────────────────────────────────────────
 st.markdown(
-    '<div class="section-hdr">🧠 Gelişmiş İstatistik, Geçmiş Tüm Maçlar Arşivi & Kasa/Dutching Merkezi</div>',
+    f'<div class="section-hdr">🧠 {LEAGUE_CFG["short_name"]} — Gelişmiş İstatistik, Geçmiş Maçlar & Kasa/Doğrulama Merkezi</div>',
     unsafe_allow_html=True,
 )
 
-df_completed_archive = load_completed_matches()
-df_sym_all = load_symmetry_log()
-live_state_now = load_live_state()
+df_completed_archive = load_completed_matches(ACTIVE_LEAGUE)
+df_sym_all = load_symmetry_log(ACTIVE_LEAGUE)
+live_state_now = load_live_state(ACTIVE_LEAGUE)
 live_matches_now = live_state_now.get("live_matches", [])
 
-tab_dna, tab_sym, tab_q3q4, tab_bankroll, tab_sim, tab_smart35 = st.tabs(
+tab_dna, tab_sym, tab_q3q4, tab_bankroll, tab_sim, tab_smart35, tab_pair, tab_guard = st.tabs(
     [
         f"🏆 1. Geçmiş Maçlar & Takım Barem DNA ({len(df_completed_archive)} Maç)",
-        "⚖️ 2. Kapanış Oranı (30-36. Dk) Simetri & Tuzak Analizi",
+        f"⚖️ 2. Kapanış Oranı ({MID_Q3_MIN}-{CLOSE_MIN_INT}. Dk) Simetri & Tuzak Analizi",
         "⚡ 3. Q3 ➔ Q4 Patlama / Çöküş Dedektörü",
         "💰 4. Canlı Kupon, Kasa (ROI) & Çifte Barem (Dutching) Hesaplayıcı",
         "🧮 5. Manuel Canlı Tempo Simülatörü",
-        "🤖 6. 35. Dk Akıllı Kural & Sanal Kasa Simülatörü",
+        f"🤖 6. {DEC_MIN}. Dk Akıllı Kural & Sanal Kasa Simülatörü",
+        "🤝 7. Takım Çifti Geçmişi (H2H)",
+        "🛡️ 8. Veri Doğrulama — Hata Bekçisi",
     ]
 )
 
 # ═════════════════════════════════════════════════════════════════════════════
-# MODULE 6: 35th-MINUTE SMART RULES, TRANSITIONS & VIRTUAL BANKROLL SIMULATOR
+# MODULE 6: DECISION-MINUTE SMART RULES, TRANSITIONS & VIRTUAL BANKROLL SIMULATOR
 # ═════════════════════════════════════════════════════════════════════════════
 with tab_smart35:
     st.markdown(
-        "##### 🤖 35. Dakika Ne Oynamalı? — Gerçek Maçlardan Çıkarılan Sade Kurallar & Kasa Tablosu",
-        help="Bu sekmedeki tüm tablolar ve kasa sonuçları, canlı takip edilip tamamlanmış gerçek maçların 35. dakika 1xBet kapanış oranlarından otomatik hesaplanır.",
+        f"##### 🤖 {DEC_MIN}. Dakika Ne Oynamalı? — Gerçek Maçlardan Çıkarılan Sade Kurallar & Kasa Tablosu",
+        help=f"Bu sekmedeki tüm tablolar ve kasa sonuçları, {LEAGUE_CFG['short_name']} maçlarının {DEC_MIN}. dakika 1xBet kapanış oranlarından otomatik hesaplanır.",
     )
-    sim35 = simulate_35m_strategies(df_sym_all)
+    sim35 = simulate_35m_strategies(df_sym_all, league=ACTIVE_LEAGUE)
     if sim35["total_matches"] == 0:
         st.info("Sonuçlanmış canlı kapanış kaydı bekleniyor. Maçlar bittikçe bu sekme otomatik dolar.")
     else:
@@ -1661,42 +1743,50 @@ with tab_smart35:
         )
         st.caption(f"🔎 Veri kaynağı: {len(df_sym_all)} dakika kaydı • {_n_games} maç • {_n_done} sonuçlanmış • sürüm {ENGINE_VERSION}")
 
+        _gap_thr = int(LEAGUE_CFG["blowout_brake_gap"]) if IS_EURO else 18
+        _slow_q4_avg = 35 if IS_EURO else 47
+        _exp_rem_d = int(round(EXP_REM_DEC))
+        _m10_center_str = "-".join(str(x) for x in LEAGUE_CFG["mod10_center_digits"])
+        _m10_risk_str = "-".join(str(x) for x in LEAGUE_CFG["mod10_risk_digits"])
+        _ex_fav1 = LEAGUE_CFG["default_barem"]
+        _ex_fav2 = LEAGUE_CFG["default_backup_barem"]
+
         st.markdown(
-            """
+            f"""
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:0.55rem; margin:0.5rem 0 0.85rem 0;">
                 <div class="info-strip" style="cursor:help; border-left:4px solid #059669;"
-                     title="1xBet'te en düşük oranlı 1. Favori baremin yanında 2. Favori vardır. Eğer 2. Favori BİR ÜST baremdeyse (ör. 1.Favori 201-210 iken 2.Favori 211-220 ise) ve 1.Favori oranı 2.10 üstüyse, maç hiç alt bareme düşmez (%0) ve direkt 1. Favori %61 oranında tutar!">
+                     title="1xBet'te en düşük oranlı 1. Favori baremin yanında 2. Favori vardır. Eğer 2. Favori BİR ÜST baremdeyse (ör. 1.Favori {_ex_fav1} iken 2.Favori {_ex_fav2} ise) ve 1.Favori oranı 2.10 üstüyse, maç alta kolay kolay düşmez; direkt 1. Favori güçlüdür!">
                     <div class="info-strip-label">🔥 1. Kural: 2. Favori Nerede Duruyor? [?]</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
                         <b>2. Favori üst baremdeyse</b> maç alta düşmez, direkt <b>1. Favoriyi</b> oyna. <b>Alt baremdeyse</b> ve oran 2.10 altındaysa <b>1 Alt Baremi</b> oyna.
                     </div>
                 </div>
                 <div class="info-strip" style="cursor:help; border-left:4px solid #dc2626;"
-                     title="35. dakikada iki takım arasındaki skor farkı 0 ile 5 sayı arasındaysa maç başa baş demektir. Son dakikalarda taktik fauller ve uzatma yüzünden normalden 6 sayı fazla (ort. 59 sayı) atılır ve maç üst bareme kaçar. Bu maçlara bahis almamak (Pas Geçmek) seni zarardan korur!">
+                     title="{DEC_MIN}. dakikada iki takım arasındaki skor farkı 0 ile 5 sayı arasındaysa maç başa baş demektir. Son dakikalarda taktik fauller ve uzatma yüzünden beklenenden fazla sayı atılır ve maç üst bareme kaçabilir. Bu maçları pas geçmek seni zarardan korur!">
                     <div class="info-strip-label">⛔ 2. Kural: Fark 0-5 Sayı İse Pas Geç [?]</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
-                        35. dk'da fark <b>0-5 sayı</b> ise faul ve uzatma yüzünden çok sayı atılır. <b>Bahis Alma (Pas Geç)</b>.
+                        {DEC_MIN}. dk'da fark <b>0-5 sayı</b> ise faul ve uzatma yüzünden çok sayı atılır. <b>Bahis Alma (Pas Geç)</b>.
                     </div>
                 </div>
                 <div class="info-strip" style="cursor:help; border-left:4px solid #2563eb;"
-                     title="35. dakikada fark 18 sayı veya daha fazlaysa maç kopmuş demektir. Takımlar son çeyrekte tempoyu düşürür, ortalama sadece 47 sayı atılır. Üst bareme kaçma ihtimali %5'tir; direkt 1. Favori Barem %60 oranında tutar.">
-                    <div class="info-strip-label">🧊 3. Kural: Fark 18+ Sayı İse Maç Yavaşlar [?]</div>
+                     title="{DEC_MIN}. dakikada fark {_gap_thr} sayı veya daha fazlaysa maç kopmuş demektir. Takımlar son çeyrekte tempoyu düşürür, kalan sürede ortalama ~{_slow_q4_avg} sayı atılır ve üst bareme kolay kaçmaz.">
+                    <div class="info-strip-label">🧊 3. Kural: Fark {_gap_thr}+ Sayı İse Maç Yavaşlar [?]</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
-                        Fark <b>18+ sayı</b> olduğunda son çeyrek yavaşlar (ort. 47 sayı). Üst bareme kaçmaz; <b>1. Favori %60</b> tutar.
+                        Fark <b>{_gap_thr}+ sayı</b> olduğunda son çeyrek yavaşlar (kalan ~{_slow_q4_avg} sayı). Üst bareme kaçmaz; <b>1. Favori</b> güçlüdür.
                     </div>
                 </div>
                 <div class="info-strip" style="cursor:help; border-left:4px solid #e11d48;"
-                     title="35. dakikada 1. Favori oranı 1.85'in altındaysa (ör. 1.65, 1.75), bu büyük bir tuzaktır ve zarar ettirir! Bu maçlarda 1. Favori yerine doğrudan 2. Favori baremi oynamak +%41.8 net kâr sağlamıştır.">
+                     title="{DEC_MIN}. dakikada 1. Favori oranı 1.85'in altındaysa (ör. 1.65, 1.75), değer kaybolmuş demektir; böyle durumlarda 2. Favori / komşu barem alternatifi değer taşır.">
                     <div class="info-strip-label">🚨 4. Kural: Oran 1.85 Altı İse Tuzaktır [?]</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
-                        1. Favori oranı <b>1.85 altındaysa</b> oynama! Onun yerine doğrudan <b>2. Favori Baremi</b> oyna.
+                        1. Favori oranı <b>1.85 altındaysa</b> dikkat! Onun yerine doğrudan <b>2. Favori Baremi</b> incele.
                     </div>
                 </div>
                 <div class="info-strip" style="cursor:help; border-left:4px solid #d97706;"
-                     title="35. dakikadan maç sonuna kadar ortalama 53 sayı atılır. Şu anki toplam skorun son rakamı 1, 2, 3 veya 4 ise maç tam favori baremin ortasına düşer (%58 tutar). Son rakam 8, 9 veya 0 ise baremin en alt sınırında kalır, 1 Alt Bareme düşme riski yüksektir.">
+                     title="{DEC_MIN}. dakikadan maç sonuna kadar ortalama {_exp_rem_d} sayı atılır. Toplam skorun son rakamı {_m10_center_str} ise maç tam barem ortasına düşer; {_m10_risk_str} ise alt sınırda kalıp 1 Alt Bareme düşme riski artar.">
                     <div class="info-strip-label">🎯 5. Kural: Skorun Son Rakamı Kuralı [?]</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
-                        35. dk toplam skorun sonu <b>1-2-3-4</b> ise tam barem ortasına düşer (<b>1. Favori</b> güçlü); <b>8-9-0</b> ise <b>1 Alt Barem</b> riski vardır.
+                        {DEC_MIN}. dk toplam skorun sonu <b>{_m10_center_str}</b> ise tam barem ortasına düşer (<b>1. Favori</b> güçlü); <b>{_m10_risk_str}</b> ise <b>1 Alt Barem</b> riski vardır.
                     </div>
                 </div>
             </div>
@@ -1745,7 +1835,7 @@ with tab_smart35:
                 ),
                 "Kâr Oranı (%)": st.column_config.TextColumn(
                     "Kâr Oranı (%)",
-                    help="Yatırılan her 100 TL başına elde edilen net yüzdelik kâr. Örneğin +%35.5 Kâr Oranı, her 1000 TL yatırıma ortalama +355 TL net kazanç demektir.",
+                    help="Yatırılan her 100 TL başına elde edilen net yüzdelik kâr.",
                 ),
             },
             use_container_width=True,
@@ -1761,22 +1851,22 @@ with tab_smart35:
 
         if sim35.get("margin_brackets"):
             st.markdown(
-                "###### ⚖️ 35. Dakikadaki Skor Farkına Göre Maçlar Nasıl Bitiyor?",
-                help="35. dakikada iki takım arasındaki skor farkının kalan sürede atılan sayıya ve barem tutmasına etkisini gösterir.",
+                f"###### ⚖️ {DEC_MIN}. Dakikadaki Skor Farkına Göre Maçlar Nasıl Bitiyor?",
+                help=f"{DEC_MIN}. dakikada iki takım arasındaki skor farkının kalan sürede atılan sayıya ve barem tutmasına etkisini gösterir.",
             )
             st.dataframe(pd.DataFrame(sim35["margin_brackets"]), use_container_width=True, hide_index=True)
 
         if sim35["odds_brackets"]:
             st.markdown(
-                "###### 🎚️ 35. Dakikadaki 1. Favori Oranına Göre Ne Oynanmalı?",
-                help="35. dakikadaki 1. Favori oranının büyüklüğüne göre maçların hangi baremde bittiğini gösterir.",
+                f"###### 🎚️ {DEC_MIN}. Dakikadaki 1. Favori Oranına Göre Ne Oynanmalı?",
+                help=f"{DEC_MIN}. dakikadaki 1. Favori oranının büyüklüğüne göre maçların hangi baremde bittiğini gösterir.",
             )
             st.dataframe(pd.DataFrame(sim35["odds_brackets"]), use_container_width=True, hide_index=True)
 
         if sim35.get("mod10_brackets"):
             st.markdown(
-                "###### 🔢 SİMETRİ 1: 35. Dakika Toplam Skorunun Son Rakamına Göre Barem İçi Konum",
-                help="Her barem 10 sayı genişliğindedir (Örn: 201-210, ortası 205). 35. dakikadan sonra ortalama 53 sayı atıldığı için; 35. dakika skorunun son rakamı 1-2-3-4 ise maç tam barem ortasına düşer, 8-9-0 ise baremin en alt sınırında kalır!",
+                f"###### 🔢 SİMETRİ 1: {DEC_MIN}. Dakika Toplam Skorunun Son Rakamına Göre Barem İçi Konum",
+                help=f"{DEC_MIN}. dakikadan sonra ortalama {_exp_rem_d} sayı atıldığı için; son rakam {_m10_center_str} ise tam barem ortasına, {_m10_risk_str} ise baremin alt sınırına yaklaşır.",
             )
             st.dataframe(pd.DataFrame(sim35["mod10_brackets"]), use_container_width=True, hide_index=True)
 
@@ -1789,23 +1879,23 @@ with tab_smart35:
 
         if sim35.get("pendulum_brackets"):
             st.markdown(
-                "###### 🔄 SİMETRİ 3: Son 5 Dakikada (30.Dk ➔ 35.Dk) Barem Değiştiyse Ne Olur?",
-                help="30. dakikadaki favori barem ile 35. dakikadaki favori barem arasındaki değişimi inceler. Son 5 dakikada barem zaten düştüyse daha fazla alt bareme düşmez (%0)!",
+                f"###### 🔄 SİMETRİ 3: Son Çeyrek Öncesi ({MID_Q3_MIN}.Dk ➔ {DEC_MIN}.Dk) Barem Değiştiyse Ne Olur?",
+                help=f"{MID_Q3_MIN}. dakikadaki favori barem ile {DEC_MIN}. dakikadaki favori barem arasındaki değişimi inceler.",
             )
             st.dataframe(pd.DataFrame(sim35["pendulum_brackets"]), use_container_width=True, hide_index=True)
 
-        arc_sym = analyze_archive_4500_symmetry(df_completed_archive)
+        arc_sym = analyze_archive_4500_symmetry(df_completed_archive, league=ACTIVE_LEAGUE)
         if arc_sym.get("mod10_36m"):
             st.markdown(
-                f"###### 🏛️ SİMETRİ 4: {arc_sym['total_archive']} Maçlık Arşivde 3. Çeyrek Sonu (36.Dk) Skorun Son Rakamı (`..0` – `..9`) Analizi",
-                help="4.550'den fazla tamamlanmış maçta 3. çeyrek sonu (36. dk) toplam skorunun son rakamına göre maçın beklenen baremde, bir alt baremde veya bir üst baremde bitme oranları.",
+                f"###### 🏛️ SİMETRİ 4: {arc_sym['total_archive']} Maçlık Arşivde 3. Çeyrek Sonu ({CLOSE_MIN_INT}.Dk) Skorun Son Rakamı (`..0` – `..9`) Analizi",
+                help=f"{arc_sym['total_archive']} tamamlanmış maçta 3. çeyrek sonu ({CLOSE_MIN_INT}. dk) toplam skorunun son rakamına göre beklenen barem, 1 alt veya 1 üst barem oranları.",
             )
             st.dataframe(pd.DataFrame(arc_sym["mod10_36m"]), use_container_width=True, hide_index=True)
 
         if arc_sym.get("half_symmetry"):
             st.markdown(
                 f"###### 🪞 SİMETRİ 5: {arc_sym['total_archive']} Maçlık Arşivde İlk Yarı ve İkinci Yarı Sayı Dengesi",
-                help="İlk yarıda çok az veya çok fazla sayı çıktığında 2. yarıda oyunun nasıl ters yönde tepki vererek toplam skoru dengelediğini gösterir.",
+                help="İlk yarıda çok az veya çok fazla sayı çıktığında 2. yarıda oyunun nasıl tepki vererek toplam skoru dengelediğini gösterir.",
             )
             st.dataframe(
                 pd.DataFrame(arc_sym["half_symmetry"]),
@@ -1815,22 +1905,22 @@ with tab_smart35:
 
         if sim35.get("edge_brackets"):
             st.markdown(
-                "###### 📐 35. Dakika Skoru + 53 Sayı Eklendiğinde Baremin Neresine Düşüyor?",
-                help="35. dakikadaki toplam skora ortalama kalan sayı (53) eklendiğinde favori baremin neresine (alt sınır, orta, üst sınır) düştüğünü analiz eder.",
+                f"###### 📐 {DEC_MIN}. Dakika Skoru + {_exp_rem_d} Sayı Eklendiğinde Baremin Neresine Düşüyor?",
+                help=f"{DEC_MIN}. dakikadaki toplam skora ortalama kalan sayı ({_exp_rem_d}) eklendiğinde favori baremin neresine düştüğünü analiz eder.",
             )
             st.dataframe(pd.DataFrame(sim35["edge_brackets"]), use_container_width=True, hide_index=True)
 
         if sim35.get("minute_windows"):
             st.markdown(
                 "###### ⏱️ Hangi Dakikada Bahis Alınmalı? (Dakika Karşılaştırması)",
-                help="Maçın 18., 24., 30., 32-33. ve 34-35. dakikalarında bahis alındığında hangisinin kârlı, hangisinin tuzak olduğunu gösterir.",
+                help="Maçın erken, orta ve kapanış dakikalarında bahis alındığında hangisinin kârlı, hangisinin tuzak olduğunu gösterir.",
             )
             st.dataframe(pd.DataFrame(sim35["minute_windows"]), use_container_width=True, hide_index=True)
 
         if sim35["drift_brackets"]:
             st.markdown(
-                "###### 📉 Maç Başından 35. Dakikaya Barem Değiştiğinde Ne Olur?",
-                help="Maçın 1. çeyreğindeki favori barem ile 35. dakikadaki favori barem arasındaki yükseliş veya düşüşe göre maç sonu sonucu.",
+                f"###### 📉 Maç Başından {DEC_MIN}. Dakikaya Barem Değiştiğinde Ne Olur?",
+                help=f"Maçın başındaki favori barem ile {DEC_MIN}. dakikadaki favori barem arasındaki yükseliş veya düşüşe göre maç sonu sonucu.",
             )
             st.dataframe(pd.DataFrame(sim35["drift_brackets"]), use_container_width=True, hide_index=True)
 
@@ -1862,13 +1952,13 @@ with tab_smart35:
 with tab_dna:
     if df_completed_archive.empty:
         st.info(
-            "Şu an geçmiş maç arşivi boş. Yukarıdaki **'📥 Son 4 Ay Arşivini Güncelle (120 Gün)'** butonuna basarak "
-            "son 4 ayın tamamlanmış tüm CyberLeague maçlarını saniyeler içinde yükleyebilirsiniz."
+            f"Şu an {LEAGUE_CFG['short_name']} geçmiş maç arşivi boş. Yukarıdaki **'{LEAGUE_CFG['archive_btn_label']}'** "
+            "butonuna basarak tamamlanmış maçları saniyeler içinde yükleyebilirsiniz."
         )
     else:
         df_arc = df_completed_archive.copy()
-        df_arc["Kazanan Barem"] = df_arc["total_score"].apply(get_range_from_score)
-        df_arc["20'li Küme"] = df_arc["total_score"].apply(get_cluster_from_score)
+        df_arc["Kazanan Barem"] = df_arc["total_score"].apply(lambda v: get_range_from_score(v, league=ACTIVE_LEAGUE))
+        df_arc["20'li Küme"] = df_arc["total_score"].apply(lambda v: get_cluster_from_score(v, league=ACTIVE_LEAGUE))
         df_arc["Q1 Toplam"] = df_arc["home_q1"].astype(int) + df_arc["away_q1"].astype(int)
         df_arc["Q2 Toplam"] = df_arc["home_q2"].astype(int) + df_arc["away_q2"].astype(int)
         df_arc["Q3 Toplam"] = df_arc["home_q3"].astype(int) + df_arc["away_q3"].astype(int)
@@ -1880,14 +1970,15 @@ with tab_dna:
 
         flt1, flt2, flt3 = st.columns([1.3, 1.3, 1.1])
         with flt1:
-            sel_t1 = st.selectbox("1. Takım Filtresi (H2H veya Tek Takım)", ["Tüm Takımlar"] + all_teams, index=0)
+            sel_t1 = st.selectbox("1. Takım Filtresi (H2H veya Tek Takım)", ["Tüm Takımlar"] + all_teams, index=0, key=f"dna_t1_{ACTIVE_LEAGUE}")
         with flt2:
-            sel_t2 = st.selectbox("2. Takım Filtresi (Rakip / H2H)", ["Tüm Takımlar"] + all_teams, index=0)
+            sel_t2 = st.selectbox("2. Takım Filtresi (Rakip / H2H)", ["Tüm Takımlar"] + all_teams, index=0, key=f"dna_t2_{ACTIVE_LEAGUE}")
         with flt3:
             sel_barem_flt = st.selectbox(
                 "Barem Filtresi",
                 ["Tüm Baremler"] + [b[0] for b in BAREM_RANGES],
                 index=0,
+                key=f"dna_b_{ACTIVE_LEAGUE}",
             )
 
         df_filtered = df_arc.copy()
@@ -1908,7 +1999,6 @@ with tab_dna:
         if sel_barem_flt != "Tüm Baremler":
             df_filtered = df_filtered[df_filtered["Kazanan Barem"] == sel_barem_flt]
 
-        # Summary metrics for filtered historical matches
         m_c1, m_c2, m_c3, m_c4 = st.columns(4)
         n_flt = len(df_filtered)
         avg_tot = df_filtered["total_score"].mean() if n_flt > 0 else 0.0
@@ -1924,12 +2014,13 @@ with tab_dna:
         )
         m_c1.metric("📚 Filtrelenen Maç Sayısı", f"{n_flt} Maç")
         m_c2.metric("🏀 Ortalama Toplam Sayı", f"{avg_tot:.1f} Sayı")
-        m_c3.metric("🎯 En Çok Çıkan 10'lu Barem", modal_b)
+        m_c3.metric("🎯 En Çok Çıkan Barem", modal_b)
         m_c4.metric("🛡️ En Çok Çıkan 20'li Küme", modal_c)
 
         ch_col, dna_col = st.columns([1.05, 1.35])
         with ch_col:
-            st.markdown("##### 📊 Geçmiş Maçların 9'lu Barem Dağılım Grafiği")
+            _ch_lbl = "6'lı" if LEAGUE_BAREM_N == 6 else "9'lu"
+            st.markdown(f"##### 📊 Geçmiş Maçların {_ch_lbl} Barem Dağılım Grafiği")
             barem_order = [b[0] for b in BAREM_RANGES]
             b_counts = [int((df_filtered["Kazanan Barem"] == b).sum()) for b in barem_order]
             b_pcts = [(c / n_flt * 100.0) if n_flt > 0 else 0.0 for c in b_counts]
@@ -1953,8 +2044,8 @@ with tab_dna:
             st.plotly_chart(fig_hist_b, use_container_width=True)
 
         with dna_col:
-            st.markdown("##### 🧬 Takım Bazlı Barem DNA Tablosu (Tüm CyberLeague Takımları)")
-            df_dna_table = compute_team_dna_table(df_arc)
+            st.markdown(f"##### 🧬 Takım Bazlı Barem DNA Tablosu ({LEAGUE_CFG['short_name']})")
+            df_dna_table = compute_team_dna_table(df_arc, league=ACTIVE_LEAGUE)
             st.dataframe(df_dna_table, use_container_width=True, hide_index=True, height=310)
 
         st.markdown("##### 📜 Tamamlanmış Tüm Maçların Detaylı Barem & Periyot Arşivi")
@@ -1976,15 +2067,15 @@ with tab_dna:
         st.dataframe(df_filtered[avail_cols].iloc[::-1], use_container_width=True, hide_index=True, height=340)
 
 # ═════════════════════════════════════════════════════════════════════════════
-# MODULE 2: CLOSING ODDS (30-36 MIN) SYMMETRY & SEQUENTIAL WAVE BACKTEST
+# MODULE 2: CLOSING ODDS SYMMETRY & SEQUENTIAL WAVE BACKTEST
 # ═════════════════════════════════════════════════════════════════════════════
 with tab_sym:
     st.markdown(
-        "##### 🌊 Ardışık Maçlarda 36. Dakika Favorisi Tuttu mu, Komşu Bareme mi Kaydı? (`2 Alt / 1 Alt / Favori / 1 Üst / 2 Üst`)"
+        f"##### 🌊 Ardışık Maçlarda {CLOSE_MIN_INT}. Dakika Favorisi Tuttu mu, Komşu Bareme mi Kaydı? (`2 Alt / 1 Alt / Favori / 1 Üst / 2 Üst`)"
     )
     st.caption(
-        "Son 4 maçın nasıl bittiğini seçerek (Örn: Favori geldi, 1 Alt Barem geldi, 1 Üst Barem geldi) "
-        "4.550+ gerçek maç üzerinde sıradaki maçın hangi baremde biteceğini test edebilirsiniz."
+        f"Son 4 maçın nasıl bittiğini seçerek ({len(df_completed_archive)} gerçek {LEAGUE_CFG['short_name']} maçı üzerinde) "
+        "sıradaki maçın hangi baremde biteceğini test edebilirsiniz."
     )
 
     w_col1, w_col2, w_col3, w_col4, w_col5 = st.columns([1, 1, 1, 1, 1.2])
@@ -1997,30 +2088,33 @@ with tab_sym:
     }
     rev_map = {v: k for k, v in seq_map.items()}
 
-    default_wave = analyze_sequential_barem_wave(df_completed_archive, df_sym_all)
+    default_wave = analyze_sequential_barem_wave(df_completed_archive, df_sym_all, league=ACTIVE_LEAGUE)
     act_pat = default_wave.get("active_pattern", [0, -1, -1, 0])
     while len(act_pat) < 4:
         act_pat = [0] + act_pat
 
     opts_list = list(seq_map.keys())
     with w_col1:
-        s_m1 = st.selectbox("1. Önceki Maç", opts_list, index=opts_list.index(rev_map.get(act_pat[0], opts_list[2])))
+        s_m1 = st.selectbox("1. Önceki Maç", opts_list, index=opts_list.index(rev_map.get(act_pat[0], opts_list[2])), key=f"sym_m1_{ACTIVE_LEAGUE}")
     with w_col2:
-        s_m2 = st.selectbox("2. Önceki Maç", opts_list, index=opts_list.index(rev_map.get(act_pat[1], opts_list[1])))
+        s_m2 = st.selectbox("2. Önceki Maç", opts_list, index=opts_list.index(rev_map.get(act_pat[1], opts_list[1])), key=f"sym_m2_{ACTIVE_LEAGUE}")
     with w_col3:
-        s_m3 = st.selectbox("3. Önceki Maç", opts_list, index=opts_list.index(rev_map.get(act_pat[2], opts_list[1])))
+        s_m3 = st.selectbox("3. Önceki Maç", opts_list, index=opts_list.index(rev_map.get(act_pat[2], opts_list[1])), key=f"sym_m3_{ACTIVE_LEAGUE}")
     with w_col4:
-        s_m4 = st.selectbox("4. (Son Bitmiş) Maç", opts_list, index=opts_list.index(rev_map.get(act_pat[3], opts_list[2])))
+        s_m4 = st.selectbox("4. (Son Bitmiş) Maç", opts_list, index=opts_list.index(rev_map.get(act_pat[3], opts_list[2])), key=f"sym_m4_{ACTIVE_LEAGUE}")
     with w_col5:
+        _b_opts_sym = [b[0] for b in BAREM_RANGES]
+        _def_b_idx = _b_opts_sym.index(LEAGUE_CFG["default_barem"]) if LEAGUE_CFG["default_barem"] in _b_opts_sym else 0
         test_fav_b = st.selectbox(
-            "Canlı Maçın 36.Dk Favori Baremi",
-            [b[0] for b in BAREM_RANGES],
-            index=5,
+            f"Canlı Maçın {CLOSE_MIN_INT}.Dk Favori Baremi",
+            _b_opts_sym,
+            index=_def_b_idx,
+            key=f"sym_favb_{ACTIVE_LEAGUE}",
         )
 
     custom_pattern = [seq_map[s_m1], seq_map[s_m2], seq_map[s_m3], seq_map[s_m4]]
     sim_wave = analyze_sequential_barem_wave(
-        df_completed_archive, df_sym_all, current_fav_barem=test_fav_b, custom_seq=custom_pattern
+        df_completed_archive, df_sym_all, current_fav_barem=test_fav_b, custom_seq=custom_pattern, league=ACTIVE_LEAGUE
     )
 
     wk_m2, wk_m1, wk_0, wk_p1, wk_p2, wk_pair = st.columns(6)
@@ -2064,7 +2158,7 @@ with tab_sym:
         return barem_names_list[n_idx]
 
     if default_wave.get("recent_chain"):
-        st.markdown("###### 📜 Canlı Takip Edilip Tamamlanan Maçların `36. Dakika Favori Barem vs Biten Barem` Tablosu")
+        st.markdown(f"###### 📜 Canlı Takip Edilip Tamamlanan Maçların `{CLOSE_MIN_INT}. Dakika Favori Barem vs Biten Barem` Tablosu")
         rc_rows = []
         for item in default_wave["recent_chain"][::-1]:
             eb = item["exp_barem_36"]
@@ -2072,11 +2166,11 @@ with tab_sym:
                 {
                     "Tarih / Saat": item["date"],
                     "Maç": f"{item['home_team']} vs {item['away_team']}",
-                    "36. Dk Skor": item["s36"],
+                    f"{CLOSE_MIN_INT}. Dk Skor": item["s36"],
                     "Maç Sonu Toplam": f"{item['home_total']}:{item['away_total']} ({item['total_score']})",
                     "❄️ 2 Alt Barem": _get_shifted_b(eb, -2),
                     "📉 1 Alt Barem": _get_shifted_b(eb, -1),
-                    "🎯 36.Dk Favori Barem": eb,
+                    f"🎯 {CLOSE_MIN_INT}.Dk Favori Barem": eb,
                     "📈 1 Üst Barem": _get_shifted_b(eb, 1),
                     "🔥 2 Üst Barem": _get_shifted_b(eb, 2),
                     "Biten Gerçek Barem": item["act_barem"],
@@ -2088,7 +2182,7 @@ with tab_sym:
 
     st.markdown("---")
     st.markdown(
-        "##### ⚖️ 1xBet Kapanış Oranı (32-36. Dk) Simetri Tuzağı & Komşu Bareme (`2 Alt / 1 Alt / Favori / 1 Üst / 2 Üst`) Kayma Analizi"
+        f"##### ⚖️ 1xBet Kapanış Oranı ({CLOSING_START}-{CLOSE_MIN_INT}. Dk) Simetri Tuzağı & Komşu Bareme (`2 Alt / 1 Alt / Favori / 1 Üst / 2 Üst`) Kayma Analizi"
     )
     df_comp_sym = (
         df_sym_all[df_sym_all["status"] == "COMPLETED"].copy()
@@ -2098,10 +2192,13 @@ with tab_sym:
 
     if df_comp_sym.empty:
         st.info(
-            "Şu an `symmetry_analysis_log.csv` içinde sonuçlanmış (COMPLETED) canlı barem kaydı bekleniyor. "
-            "Canlı maçlar bittikçe burada **32-36. Dk Kapanış İsabet Oranları** ve **Dakika Penceresi** istatistikleri otomatik hesaplanır."
+            f"Şu an {LEAGUE_CFG['short_name']} logunda sonuçlanmış (COMPLETED) canlı barem kaydı bekleniyor. "
+            f"Canlı maçlar bittikçe burada **{CLOSING_START}-{CLOSE_MIN_INT}. Dk Kapanış İsabet Oranları** ve **Dakika Penceresi** istatistikleri otomatik hesaplanır."
         )
     else:
+        _win_close = f"{CLOSING_START}-{CLOSE_MIN_INT}. Dk (Kapanış Bölgesi)"
+        _win_mid = f"{HALFTIME_MIN}-{CLOSING_START - 1}. Dk (Q3 Ortası / Sonu)"
+        _win_early = f"0-{HALFTIME_MIN - 1}. Dk (İlk Yarı)"
         sym_records = []
         for _, r in df_comp_sym.iterrows():
             odds_row = {b: float(r.get(col, 99.0) or 99.0) for b, col in BAREM_TO_ODD_COL.items()}
@@ -2121,13 +2218,13 @@ with tab_sym:
                 b_shift = 99
 
             m_match = re.search(r"Minute\s+(\d+)", str(r.get("check_time", "")))
-            el_min = int(m_match.group(1)) if m_match else 18
-            if el_min >= 32:
-                win_bucket = "32-36. Dk (Kapanış Bölgesi)"
-            elif el_min >= 24:
-                win_bucket = "24-31. Dk (Q3 Ortası / Sonu)"
+            el_min = int(m_match.group(1)) if m_match else EARLY_Q2_MIN
+            if el_min >= CLOSING_START:
+                win_bucket = _win_close
+            elif el_min >= HALFTIME_MIN:
+                win_bucket = _win_mid
             else:
-                win_bucket = "0-23. Dk (İlk Yarı)"
+                win_bucket = _win_early
 
             sym_records.append(
                 {
@@ -2153,14 +2250,13 @@ with tab_sym:
                     "fav2_hit": act_b == fav2_b,
                     "either_fav_hit": act_b in (fav1_b, fav2_b),
                     "val_hit": act_b == val_b,
-                    "clu_hit": check_cluster_hit(clu_b, act_b),
+                    "clu_hit": check_cluster_hit(clu_b, act_b, league=ACTIVE_LEAGUE),
                 }
             )
 
         df_sr = pd.DataFrame(sym_records)
         if not df_sr.empty:
-            # Sadece 32. dakika ve sonrasındaki kapanış kayıtlarını (her maça 1 kapanış) baz al
-            df_sr_32 = df_sr[df_sr["el_min"] >= 32].copy()
+            df_sr_32 = df_sr[df_sr["el_min"] >= CLOSING_START].copy()
             base_closing = df_sr_32 if not df_sr_32.empty else df_sr
             df_closing = base_closing.sort_values("el_min").groupby("game_id", as_index=False).last()
             tot_n = len(df_closing)
@@ -2172,19 +2268,19 @@ with tab_sym:
             both_pct = df_closing["either_fav_hit"].mean() * 100.0
 
             s1, s2, s3, s4, s5, s6 = st.columns(6)
-            s1.metric("❄️ 2 Alt Bareme Düştü", f"%{m2_pct:.1f}", f"{int(df_closing['hit_m2'].sum())} / {tot_n} Maç (32+ Dk)")
-            s2.metric("📉 1 Alt Bareme Düştü", f"%{m1_pct:.1f}", f"{int(df_closing['hit_m1'].sum())} / {tot_n} Maç (32+ Dk)")
-            s3.metric("🎯 Tam Favori Geldi", f"%{f0_pct:.1f}", f"{int(df_closing['hit_0'].sum())} / {tot_n} Maç (32+ Dk)")
-            s4.metric("📈 1 Üst Bareme Çıktı", f"%{p1_pct:.1f}", f"{int(df_closing['hit_p1'].sum())} / {tot_n} Maç (32+ Dk)")
-            s5.metric("🔥 2 Üst Bareme Çıktı", f"%{p2_pct:.1f}", f"{int(df_closing['hit_p2'].sum())} / {tot_n} Maç (32+ Dk)")
+            s1.metric("❄️ 2 Alt Bareme Düştü", f"%{m2_pct:.1f}", f"{int(df_closing['hit_m2'].sum())} / {tot_n} Maç ({CLOSING_START}+ Dk)")
+            s2.metric("📉 1 Alt Bareme Düştü", f"%{m1_pct:.1f}", f"{int(df_closing['hit_m1'].sum())} / {tot_n} Maç ({CLOSING_START}+ Dk)")
+            s3.metric("🎯 Tam Favori Geldi", f"%{f0_pct:.1f}", f"{int(df_closing['hit_0'].sum())} / {tot_n} Maç ({CLOSING_START}+ Dk)")
+            s4.metric("📈 1 Üst Bareme Çıktı", f"%{p1_pct:.1f}", f"{int(df_closing['hit_p1'].sum())} / {tot_n} Maç ({CLOSING_START}+ Dk)")
+            s5.metric("🔥 2 Üst Bareme Çıktı", f"%{p2_pct:.1f}", f"{int(df_closing['hit_p2'].sum())} / {tot_n} Maç ({CLOSING_START}+ Dk)")
             s6.metric(
                 "🛡️ 1. veya 2. Favori",
                 f"%{both_pct:.1f}",
-                f"{int(df_closing['either_fav_hit'].sum())} / {tot_n} Maç (32+ Dk)",
+                f"{int(df_closing['either_fav_hit'].sum())} / {tot_n} Maç ({CLOSING_START}+ Dk)",
             )
 
             win_rows = []
-            for w_name in ["0-23. Dk (İlk Yarı)", "24-31. Dk (Q3 Ortası / Sonu)", "32-36. Dk (Kapanış Bölgesi)"]:
+            for w_name in [_win_early, _win_mid, _win_close]:
                 w_sub = df_sr[df_sr["window"] == w_name]
                 if w_sub.empty:
                     continue
@@ -2218,27 +2314,36 @@ with tab_q3q4:
                 set(df_completed_archive["away_team"].dropna().unique())
             )
         )
+        _q3_c_disp = int(LEAGUE_CFG["q3_collapse_disp"])
+        _q3_n_lo = int(LEAGUE_CFG["q3_norm_lo"])
+        _q3_n_hi = int(LEAGUE_CFG["q3_norm_hi"])
+        _q3_b_disp = int(LEAGUE_CFG["q3_burst_disp"])
+        _q3_max_c = float(LEAGUE_CFG["q3_collapse_max"])
+        _q3_min_b = float(LEAGUE_CFG["q3_burst_min"])
+
         qc1, qc2, qc3 = st.columns([1.3, 1.3, 1.2])
         with qc1:
-            q_t1 = st.selectbox("Ev Sahibi / 1. Takım", q_teams, index=0, key="q3_t1")
+            q_t1 = st.selectbox("Ev Sahibi / 1. Takım", q_teams, index=0, key=f"q3_t1_{ACTIVE_LEAGUE}")
         with qc2:
-            q_t2 = st.selectbox("Deplasman / 2. Takım", q_teams, index=0, key="q3_t2")
+            q_t2 = st.selectbox("Deplasman / 2. Takım", q_teams, index=0, key=f"q3_t2_{ACTIVE_LEAGUE}")
         with qc3:
-            q3_test_score = st.slider("3. Çeyrek (Q3) Toplam Sayısı", 35, 72, 56, 1)
+            _sl_min = 20 if IS_EURO else 35
+            _sl_max = 60 if IS_EURO else 72
+            _sl_def = int(round(LEAGUE_CFG["prior_q"])) if IS_EURO else 56
+            q3_test_score = st.slider("3. Çeyrek (Q3) Toplam Sayısı", _sl_min, _sl_max, _sl_def, 1, key=f"q3_sl_{ACTIVE_LEAGUE}")
 
         t1_arg = "" if q_t1 == "Tüm Takımlar" else q_t1
         t2_arg = "" if q_t2 == "Tüm Takımlar" else q_t2
-        sig_res = build_q3_q4_streak_signal(df_completed_archive, t1_arg, t2_arg, q3_score=q3_test_score)
+        sig_res = build_q3_q4_streak_signal(df_completed_archive, t1_arg, t2_arg, q3_score=q3_test_score, league=ACTIVE_LEAGUE)
 
         k_q1, k_q2, k_q3, k_q4 = st.columns(4)
         k_q1.metric("🔔 Tespit Edilen Q4 Sinyali", sig_res["signal"])
-        k_q2.metric("🔥 Q4 Sayı Patlaması (56+ Sayı)", f"%{sig_res['burst_prob']:.1f}")
-        k_q3.metric("⚖️ Q4 Normal Tempo (49-55 Sayı)", f"%{sig_res['normal_prob']:.1f}")
-        k_q4.metric("❄️ Q4 Sayı Çöküşü (≤ 48 Sayı)", f"%{sig_res['collapse_prob']:.1f}")
+        k_q2.metric(f"🔥 Q4 Sayı Patlaması ({_q3_b_disp}+ Sayı)", f"%{sig_res['burst_prob']:.1f}")
+        k_q3.metric(f"⚖️ Q4 Normal Tempo ({_q3_n_lo}-{_q3_n_hi} Sayı)", f"%{sig_res['normal_prob']:.1f}")
+        k_q4.metric(f"❄️ Q4 Sayı Çöküşü (≤ {_q3_c_disp} Sayı)", f"%{sig_res['collapse_prob']:.1f}")
 
         st.info(f"📌 **Analiz Özeti ({sig_res['sample_size']} Benzer Maç):** {sig_res['detail']}")
 
-        # Show actual Q3 vs Q4 scatter/distribution from archive
         df_q_arc = df_completed_archive.copy()
         df_q_arc["Q3_Tot"] = df_q_arc["home_q3"].astype(float) + df_q_arc["away_q3"].astype(float)
         df_q_arc["Q4_Tot"] = df_q_arc["home_q4"].astype(float) + df_q_arc["away_q4"].astype(float)
@@ -2248,9 +2353,9 @@ with tab_q3q4:
             df_q_arc = df_q_arc[(df_q_arc["home_team"] == t2_arg) | (df_q_arc["away_team"] == t2_arg)]
 
         q_buckets = [
-            ("Düşük Q3 (≤ 48 Sayı)", df_q_arc[df_q_arc["Q3_Tot"] <= 48]),
-            ("Orta Q3 (49 - 54 Sayı)", df_q_arc[(df_q_arc["Q3_Tot"] >= 49) & (df_q_arc["Q3_Tot"] <= 54)]),
-            ("Yüksek Q3 (55+ Sayı)", df_q_arc[df_q_arc["Q3_Tot"] >= 55]),
+            (f"Düşük Q3 (≤ {_q3_c_disp} Sayı)", df_q_arc[df_q_arc["Q3_Tot"] <= _q3_max_c]),
+            (f"Orta Q3 ({_q3_n_lo} - {_q3_n_hi} Sayı)", df_q_arc[(df_q_arc["Q3_Tot"] > _q3_max_c) & (df_q_arc["Q3_Tot"] < _q3_min_b)]),
+            (f"Yüksek Q3 ({_q3_b_disp}+ Sayı)", df_q_arc[df_q_arc["Q3_Tot"] >= _q3_min_b]),
         ]
         q_table_rows = []
         for b_label, sub_q in q_buckets:
@@ -2262,8 +2367,8 @@ with tab_q3q4:
                     "Maç Sayısı": len(sub_q),
                     "Q3 Ortalaması": round(sub_q["Q3_Tot"].mean(), 1),
                     "Takip Eden Q4 Ortalaması": round(sub_q["Q4_Tot"].mean(), 1),
-                    "🔥 Q4 Patlama (≥56 Sayı) %": f"%{(sub_q['Q4_Tot'] >= 56).mean()*100:.1f}",
-                    "❄️ Q4 Çöküş (≤48 Sayı) %": f"%{(sub_q['Q4_Tot'] <= 48).mean()*100:.1f}",
+                    f"🔥 Q4 Patlama (≥{_q3_b_disp} Sayı) %": f"%{(sub_q['Q4_Tot'] >= _q3_b_disp).mean()*100:.1f}",
+                    f"❄️ Q4 Çöküş (≤{_q3_c_disp} Sayı) %": f"%{(sub_q['Q4_Tot'] <= _q3_c_disp).mean()*100:.1f}",
                     "Maç Sonu Toplam Ort.": round(sub_q["total_score"].mean(), 1),
                 }
             )
@@ -2286,16 +2391,17 @@ with tab_bankroll:
             f"{m['team_home']} vs {m['team_away']} ({m.get('bookie_fav_1')} & {m.get('bookie_fav_2')})"
             for m in open_live_list
         ]
-        sel_preset = st.selectbox("Canlı Maçtan Otomatik Doldur", preset_options, index=0)
+        sel_preset = st.selectbox("Canlı Maçtan Otomatik Doldur", preset_options, index=0, key=f"bk_preset_{ACTIVE_LEAGUE}")
 
-        def_b1_name, def_b2_name = "201-210", "211-220"
+        def_b1_name = LEAGUE_CFG["default_barem"]
+        def_b2_name = LEAGUE_CFG["default_backup_barem"]
         def_o1, def_o2 = 4.50, 4.50
         if sel_preset != "Manuel Oran Girişi":
             idx_m = preset_options.index(sel_preset) - 1
             if 0 <= idx_m < len(open_live_list):
                 m_sel = open_live_list[idx_m]
-                def_b1_name = m_sel.get("bookie_fav_1") or "201-210"
-                def_b2_name = m_sel.get("bookie_fav_2") or "211-220"
+                def_b1_name = m_sel.get("bookie_fav_1") or def_b1_name
+                def_b2_name = m_sel.get("bookie_fav_2") or def_b2_name
                 o_1 = float(m_sel.get("bookie_fav_1_odd", 4.5))
                 o_2 = float(m_sel.get("bookie_fav_2_odd", 4.5))
                 if o_1 < 90.0:
@@ -2305,11 +2411,11 @@ with tab_bankroll:
 
         dc1, dc2, dc3 = st.columns(3)
         with dc1:
-            total_stake = st.number_input("Toplam Kupon Tutarı (TL)", min_value=10.0, max_value=100000.0, value=1000.0, step=100.0)
+            total_stake = st.number_input("Toplam Kupon Tutarı (TL)", min_value=10.0, max_value=100000.0, value=1000.0, step=100.0, key=f"bk_stk_{ACTIVE_LEAGUE}")
         with dc2:
-            odd_1 = st.number_input(f"1. Barem Oranı ({def_b1_name})", min_value=1.50, max_value=50.0, value=float(def_o1), step=0.10)
+            odd_1 = st.number_input(f"1. Barem Oranı ({def_b1_name})", min_value=1.50, max_value=50.0, value=float(def_o1), step=0.10, key=f"bk_o1_{ACTIVE_LEAGUE}")
         with dc3:
-            odd_2 = st.number_input(f"2. Barem Oranı ({def_b2_name})", min_value=1.50, max_value=50.0, value=float(def_o2), step=0.10)
+            odd_2 = st.number_input(f"2. Barem Oranı ({def_b2_name})", min_value=1.50, max_value=50.0, value=float(def_o2), step=0.10, key=f"bk_o2_{ACTIVE_LEAGUE}")
 
         inv_sum = (1.0 / odd_1) + (1.0 / odd_2)
         eff_dutch_odd = 1.0 / inv_sum if inv_sum > 0 else 0.0
@@ -2329,19 +2435,19 @@ with tab_bankroll:
 
     with d_col2:
         st.markdown(
-            "##### 📈 Strateji Bazlı Gerçek Kasa (Bankroll) & ROI Performansı (32+ Dk Kapanış Odaklı)",
-            help="Erken dakikaların (18-31. dk) yanıltıcı gürültüsünü temizlemek için varsayılan olarak sadece 32. dakika ve sonrasındaki kapanış verilerini baz alır.",
+            f"##### 📈 Strateji Bazlı Gerçek Kasa (Bankroll) & ROI Performansı ({CLOSING_START}+ Dk Kapanış Odaklı)",
+            help=f"Erken dakikaların yanıltıcı gürültüsünü temizlemek için varsayılan olarak sadece {CLOSING_START}. dakika ve sonrasındaki kapanış verilerini baz alır.",
         )
+        _roi_opt_1 = f"🎯 {CLOSING_START}-{CLOSE_MIN_INT}. Dk Kapanış: Her Maça 1 Kupon (Son Kapanış Kaydı) [Önerilen]"
+        _roi_opt_2 = f"🔥 {FINAL_WIN_START}-{CLOSE_MIN_INT}. Dk Tam Kapanış: Sadece {FINAL_WIN_START}-{DEC_MIN}. Dk Son Kayıtlar (Her Maça 1 Kupon)"
+        _roi_opt_3 = f"⏱️ {CLOSING_START}-{CLOSE_MIN_INT}. Dk Arası Tüm Kapanış Kayıtları"
+        _roi_opt_4 = f"📊 Tüm Dakikalar (0-{CLOSE_MIN_INT}. Dk Ham Kayıtlar — Erken Dakikalar Dahil / Önerilmez)"
         roi_scope = st.selectbox(
             "⏱️ Kasa & ROI Hesaplama Bazı (Dakika Filtresi)",
-            [
-                "🎯 32-36. Dk Kapanış: Her Maça 1 Kupon (Son Kapanış Kaydı) [Önerilen]",
-                "🔥 34-36. Dk Tam Kapanış: Sadece 34-35. Dk Son Kayıtlar (Her Maça 1 Kupon)",
-                "⏱️ 32-36. Dk Arası Tüm Kapanış Kayıtları (32, 33, 34, 35. Dk)",
-                "📊 Tüm Dakikalar (18-36. Dk Ham Kayıtlar — Erken Dakikalar Dahil / Önerilmez)",
-            ],
+            [_roi_opt_1, _roi_opt_2, _roi_opt_3, _roi_opt_4],
             index=0,
-            help="Gerçek bahis stratejisinde kuponlar 32. dakikadan sonraki kapanış bölgesinde ve maç başına 1 kez oynandığı için ilk seçenek en sağlıklı sonucu verir.",
+            key=f"bk_scope_{ACTIVE_LEAGUE}",
+            help=f"Gerçek bahis stratejisinde kuponlar {CLOSING_START}. dakikadan sonraki kapanış bölgesinde ve maç başına 1 kez oynandığı için ilk seçenek en sağlıklı sonucu verir.",
         )
         df_comp_roi = (
             df_sym_all[df_sym_all["status"] == "COMPLETED"].copy()
@@ -2351,7 +2457,7 @@ with tab_bankroll:
         if df_comp_roi.empty:
             st.info(
                 "Henüz sonuçlanmış (`COMPLETED`) canlı barem kaydı yok. Takip edilen canlı maçlar sonuçlandıkça "
-                "burada **32+ Dk Kapanış** stratejilerinin net TL kârı ve ROI yüzdesi listelenir."
+                f"burada **{CLOSING_START}+ Dk Kapanış** stratejilerinin net TL kârı ve ROI yüzdesi listelenir."
             )
         else:
             df_comp_roi["_min_num"] = (
@@ -2361,16 +2467,16 @@ with tab_bankroll:
                 .astype(float)
                 .fillna(0)
             )
-            if roi_scope.startswith("🎯 32-36"):
-                df_eval_roi = df_comp_roi[df_comp_roi["_min_num"] >= 32].copy()
+            if roi_scope == _roi_opt_1:
+                df_eval_roi = df_comp_roi[df_comp_roi["_min_num"] >= CLOSING_START].copy()
                 if not df_eval_roi.empty and "game_id" in df_eval_roi.columns:
                     df_eval_roi = df_eval_roi.sort_values("_min_num").groupby("game_id", as_index=False).last()
-            elif roi_scope.startswith("🔥 34-36"):
-                df_eval_roi = df_comp_roi[df_comp_roi["_min_num"] >= 34].copy()
+            elif roi_scope == _roi_opt_2:
+                df_eval_roi = df_comp_roi[df_comp_roi["_min_num"] >= FINAL_WIN_START].copy()
                 if not df_eval_roi.empty and "game_id" in df_eval_roi.columns:
                     df_eval_roi = df_eval_roi.sort_values("_min_num").groupby("game_id", as_index=False).last()
-            elif roi_scope.startswith("⏱️ 32-36"):
-                df_eval_roi = df_comp_roi[df_comp_roi["_min_num"] >= 32].copy()
+            elif roi_scope == _roi_opt_3:
+                df_eval_roi = df_comp_roi[df_comp_roi["_min_num"] >= CLOSING_START].copy()
             else:
                 df_eval_roi = df_comp_roi.copy()
 
@@ -2391,7 +2497,6 @@ with tab_bankroll:
                 val_b = str(r.get("value_range", "")).strip()
                 clu_b = str(r.get("best_cluster_name", "")).strip()
 
-                # Gather valid odds for this row
                 row_odds = {}
                 for b_n, col_n in BAREM_TO_ODD_COL.items():
                     ov = float(r.get(col_n, 99.0) or 99.0)
@@ -2411,7 +2516,6 @@ with tab_bankroll:
                 if val_odd >= 90.0:
                     val_odd = 3.20
 
-                # Parse live score gap
                 sc_str = str(r.get("current_score", ""))
                 try:
                     sp = sc_str.strip().split("-")
@@ -2419,13 +2523,12 @@ with tab_bankroll:
                 except Exception:
                     sc_gap = 8
 
-                idx_fav_r = b_names_roi.index(fav_b) if fav_b in b_names_roi else 4
+                idx_fav_r = b_names_roi.index(fav_b) if fav_b in b_names_roi else min(4, len(b_names_roi) // 2)
                 idx_sec_r = b_names_roi.index(sec_b) if sec_b in b_names_roi else max(0, idx_fav_r - 1)
                 sec_dir_r = idx_sec_r - idx_fav_r
                 m1_b_r = b_names_roi[max(0, idx_fav_r - 1)]
                 odd_m1_r = row_odds.get(m1_b_r, 3.20)
 
-                # v3 Smart Hybrid choice
                 if fav_odd < 1.85:
                     v3_pick_b, v3_pick_o = sec_b, sec_odd
                 elif fav_odd < 2.10 and sec_dir_r <= -1:
@@ -2447,8 +2550,7 @@ with tab_bankroll:
                     else:
                         v3_sel_pnl -= unit_bet
 
-                # Smart Dutching v2 (20+ gap -> Fav & 1 Alt; else -> 1.Fav & 2.Fav)
-                if sc_gap >= 20:
+                if sc_gap >= int(LEAGUE_CFG["blowout_brake_gap"]):
                     db1, do1 = fav_b, fav_odd
                     db2, do2 = m1_b_r, odd_m1_r
                 else:
@@ -2468,21 +2570,18 @@ with tab_bankroll:
                     else:
                         dutch_sel_pnl -= unit_bet
 
-                # 1. Fav Strategy
                 if act_b == fav_b:
                     fav_pnl += unit_bet * (fav_odd - 1.0)
                     fav_hits += 1
                 else:
                     fav_pnl -= unit_bet
 
-                # 2. Value Strategy
                 if act_b == val_b:
                     val_pnl += unit_bet * (val_odd - 1.0)
                     val_hits += 1
                 else:
                     val_pnl -= unit_bet
 
-                # 3. 20-Point Cluster Dutching Strategy
                 c_members = []
                 for c_name, _, _, mems in CLUSTER_RANGES:
                     if c_name == clu_b:
@@ -2499,7 +2598,7 @@ with tab_bankroll:
                 else:
                     eff_o = 1.35
 
-                if check_cluster_hit(clu_b, act_b):
+                if check_cluster_hit(clu_b, act_b, league=ACTIVE_LEAGUE):
                     clu_pnl += unit_bet * (eff_o - 1.0)
                     clu_hits += 1
                 else:
@@ -2510,11 +2609,11 @@ with tab_bankroll:
             raw_comp_cnt = len(df_comp_roi)
             st.caption(
                 f"✅ **Hesaplanan Kapanış Maç Sayısı: {n_bets} Maç** "
-                f"*(Toplam {raw_comp_cnt} ham dakika kaydından erken dakikalardaki {max(0, raw_comp_cnt - n_bets)} kayıt temizlendi; sadece 32. dakika ve sonrası baz alındı)*"
+                f"*(Toplam {raw_comp_cnt} ham dakika kaydından erken dakikalardaki {max(0, raw_comp_cnt - n_bets)} kayıt temizlendi; sadece {CLOSING_START}+ dk kapanışlar baz alındı)*"
             )
             roi_rows = [
                 {
-                    "Oynama Yöntemi (Strateji)": "🔥 Seçici Akıllı Strateji (0-5 Sayı Farklı Yakın Maçları Pas Geç + 32-36.Dk Kural)",
+                    "Oynama Yöntemi (Strateji)": f"🔥 Seçici Akıllı Strateji (0-5 Sayı Farklı Yakın Maçları Pas Geç + {CLOSING_START}-{CLOSE_MIN_INT}.Dk Kural)",
                     "Oynanan Maç": v3_sel_bets,
                     "Tutma Oranı": f"{v3_sel_hits} / {v3_sel_bets} (%{(v3_sel_hits/max(1,v3_sel_bets))*100:.1f})",
                     "Toplam Yatırılan": f"{sel_wagered:,.0f} TL",
@@ -2522,7 +2621,7 @@ with tab_bankroll:
                     "Kâr Oranı (%)": f"%{(v3_sel_pnl / sel_wagered)*100:+.1f}",
                 },
                 {
-                    "Oynama Yöntemi (Strateji)": "🔥 Akıllı Value Barem (94 Maç Simetri + Piyasa + Model Hibrit Değerli Tek Barem)",
+                    "Oynama Yöntemi (Strateji)": "🔥 Akıllı Value Barem (Simetri + Piyasa + Model Hibrit Değerli Tek Barem)",
                     "Oynanan Maç": n_bets,
                     "Tutma Oranı": f"{val_hits} / {n_bets} (%{(val_hits/max(1,n_bets))*100:.1f})",
                     "Toplam Yatırılan": f"{tot_wagered:,.0f} TL",
@@ -2546,7 +2645,7 @@ with tab_bankroll:
                     "Kâr Oranı (%)": f"%{(dutch_sel_pnl / sel_wagered)*100:+.1f}",
                 },
                 {
-                    "Oynama Yöntemi (Strateji)": "⭐ Her Maç 1xBet 1. Favori Baremi Oynamak (32+ Dk Kapanış)",
+                    "Oynama Yöntemi (Strateji)": f"⭐ Her Maç 1xBet 1. Favori Baremi Oynamak ({CLOSING_START}+ Dk Kapanış)",
                     "Oynanan Maç": n_bets,
                     "Tutma Oranı": f"{fav_hits} / {n_bets} (%{(fav_hits/max(1,n_bets))*100:.1f})",
                     "Toplam Yatırılan": f"{tot_wagered:,.0f} TL",
@@ -2554,7 +2653,7 @@ with tab_bankroll:
                     "Kâr Oranı (%)": f"%{(fav_pnl / tot_wagered)*100:+.1f}",
                 },
                 {
-                    "Oynama Yöntemi (Strateji)": "🛡️ Tüm Maçlara İki Barem Kapatma (1. & 2. Favori İkilisi / 20+ Farkta Favori & 1 Alt)",
+                    "Oynama Yöntemi (Strateji)": "🛡️ Tüm Maçlara İki Barem Kapatma (1. & 2. Favori İkilisi / Farkta Favori & 1 Alt)",
                     "Oynanan Maç": n_bets,
                     "Tutma Oranı": f"{dutch_v2_hits} / {n_bets} (%{(dutch_v2_hits/max(1,n_bets))*100:.1f})",
                     "Toplam Yatırılan": f"{tot_wagered:,.0f} TL",
@@ -2574,23 +2673,15 @@ with tab_bankroll:
                 pd.DataFrame(roi_rows),
                 column_config={
                     "Oynama Yöntemi (Strateji)": st.column_config.TextColumn(
-                        help="Test edilen bahis yöntemi (Sadece 32. dakika ve sonrası gerçek kapanış oranlarıyla hesaplanır)."
+                        help=f"Test edilen bahis yöntemi (Sadece {CLOSING_START}. dakika ve sonrası gerçek kapanış oranlarıyla hesaplanır)."
                     ),
                     "Oynanan Maç": st.column_config.NumberColumn(
-                        help="32. dakika ve sonrasında kapanış kaydı bulunan toplam maç sayısı (her maça 1 kupon)."
+                        help=f"{CLOSING_START}. dakika ve sonrasında kapanış kaydı bulunan toplam maç sayısı (her maça 1 kupon)."
                     ),
-                    "Tutma Oranı": st.column_config.TextColumn(
-                        help="Tutan kupon sayısı ve yüzdesi."
-                    ),
-                    "Toplam Yatırılan": st.column_config.TextColumn(
-                        help="Her maça sabit 1.000 TL yatırıldığında kasadan çıkan toplam tutar."
-                    ),
-                    "Net Kâr / Zarar": st.column_config.TextColumn(
-                        help="Tüm kuponlar sonuçlandıktan sonra cebimizde kalan net kâr veya zarar."
-                    ),
-                    "Kâr Oranı (%)": st.column_config.TextColumn(
-                        help="Yatırılan toplam paraya göre yüzdesel net kâr oranı."
-                    ),
+                    "Tutma Oranı": st.column_config.TextColumn(help="Tutan kupon sayısı ve yüzdesi."),
+                    "Toplam Yatırılan": st.column_config.TextColumn(help="Her maça sabit 1.000 TL yatırıldığında kasadan çıkan toplam tutar."),
+                    "Net Kâr / Zarar": st.column_config.TextColumn(help="Tüm kuponlar sonuçlandıktan sonra cebimizde kalan net kâr veya zarar."),
+                    "Kâr Oranı (%)": st.column_config.TextColumn(help="Yatırılan toplam paraya göre yüzdesel net kâr oranı."),
                 },
                 use_container_width=True,
                 hide_index=True,
@@ -2600,18 +2691,21 @@ with tab_bankroll:
 # MODULE 5: MANUAL LIVE TEMPO & MONTE CARLO SIMULATOR
 # ═════════════════════════════════════════════════════════════════════════════
 with tab_sim:
+    _def_q = 18 if IS_EURO else 26
+    _def_q3 = 13 if IS_EURO else 18
+    _def_rem_s = round(Q_LEN * 0.4, 1) if IS_EURO else 4.5
     s_c1, s_c2, s_c3 = st.columns(3)
     with s_c1:
-        sim_q = st.selectbox("Aktif Çeyrek", [1, 2, 3, 4], index=2)
-        sim_rem = st.slider("Çeyrekte Kalan Dakika", 0.0, 12.0, 4.5, 0.5)
+        sim_q = st.selectbox("Aktif Çeyrek", [1, 2, 3, 4], index=2, key=f"sim_q_{ACTIVE_LEAGUE}")
+        sim_rem = st.slider("Çeyrekte Kalan Dakika", 0.0, Q_LEN, _def_rem_s, 0.5, key=f"sim_rem_{ACTIVE_LEAGUE}")
     with s_c2:
-        sim_hq1 = st.number_input("Ev Q1", 0, 60, 26)
-        sim_hq2 = st.number_input("Ev Q2", 0, 60, 27)
-        sim_hq3 = st.number_input("Ev Q3 (veya Canlı)", 0, 60, 18)
+        sim_hq1 = st.number_input("Ev Q1", 0, 60, _def_q, key=f"sim_hq1_{ACTIVE_LEAGUE}")
+        sim_hq2 = st.number_input("Ev Q2", 0, 60, _def_q, key=f"sim_hq2_{ACTIVE_LEAGUE}")
+        sim_hq3 = st.number_input("Ev Q3 (veya Canlı)", 0, 60, _def_q3, key=f"sim_hq3_{ACTIVE_LEAGUE}")
     with s_c3:
-        sim_aq1 = st.number_input("Dep Q1", 0, 60, 25)
-        sim_aq2 = st.number_input("Dep Q2", 0, 60, 26)
-        sim_aq3 = st.number_input("Dep Q3 (veya Canlı)", 0, 60, 19)
+        sim_aq1 = st.number_input("Dep Q1", 0, 60, _def_q, key=f"sim_aq1_{ACTIVE_LEAGUE}")
+        sim_aq2 = st.number_input("Dep Q2", 0, 60, _def_q, key=f"sim_aq2_{ACTIVE_LEAGUE}")
+        sim_aq3 = st.number_input("Dep Q3 (veya Canlı)", 0, 60, _def_q3, key=f"sim_aq3_{ACTIVE_LEAGUE}")
 
     comp_q_list = []
     if sim_q == 1:
@@ -2624,7 +2718,7 @@ with tab_sim:
         h_live, a_live = sim_hq3, sim_aq3
     else:
         comp_q_list = [(sim_hq1, sim_aq1), (sim_hq2, sim_aq2), (sim_hq3, sim_aq3)]
-        h_live, a_live = 15, 15
+        h_live, a_live = (10, 10) if IS_EURO else (15, 15)
 
     sim_res = predict_live_inplay(
         df=df_completed_archive,
@@ -2635,7 +2729,8 @@ with tab_sim:
         away_live_score=a_live,
         remaining_mins=sim_rem,
         completed_quarters=comp_q_list,
-        quarter_length=12.0,
+        quarter_length=Q_LEN,
+        league=ACTIVE_LEAGUE,
     )
     st.success(
         f"🎯 **Tahmini Maç Sonu:** {sim_res['predicted_home_final']:.0f} - {sim_res['predicted_away_final']:.0f} "
@@ -2661,3 +2756,80 @@ with tab_sim:
         yaxis=dict(title="Olasılık (%)", range=[0, max(list(b_probs.values()) + [35]) * 1.2]),
     )
     st.plotly_chart(fig_sim, use_container_width=True)
+
+# ═════════════════════════════════════════════════════════════════════════════
+# MODULE 7: TEAM PAIR H2H HISTORY ("TAKIM ÇİFTİ GEÇMİŞİ")
+# ═════════════════════════════════════════════════════════════════════════════
+with tab_pair:
+    st.markdown(
+        f"##### 🤝 Takım Çifti Bazlı Birebir Geçmiş (H2H) — {LEAGUE_CFG['short_name']}",
+        help="İki takımın kendi aralarındaki gerçek karşılaşmalarda çıkan barem, tempo ve uzatma eğilimini inceler.",
+    )
+    if df_completed_archive.empty:
+        st.info("Takım çifti analizi için tamamlanmış geçmiş maç arşivi bekleniyor.")
+    else:
+        pair_teams_all = sorted(
+            set(df_completed_archive["home_team"].dropna().unique()).union(
+                set(df_completed_archive["away_team"].dropna().unique())
+            )
+        )
+        live_pair_presets = ["Canlı Maç Seç (Opsiyonel)"] + [
+            f"{m.get('team_home', '')} vs {m.get('team_away', '')}" for m in live_matches_now
+        ]
+        sel_live_pair = st.selectbox("Canlı Maçtan Takım Çifti Getir", live_pair_presets, index=0, key=f"pair_live_preset_{ACTIVE_LEAGUE}")
+        def_p1_idx = 0
+        def_p2_idx = min(1, max(0, len(pair_teams_all) - 1))
+        if sel_live_pair != "Canlı Maç Seç (Opsiyonel)" and " vs " in sel_live_pair:
+            pt_h, pt_a = sel_live_pair.split(" vs ", 1)
+            if pt_h in pair_teams_all:
+                def_p1_idx = pair_teams_all.index(pt_h)
+            if pt_a in pair_teams_all:
+                def_p2_idx = pair_teams_all.index(pt_a)
+
+        pc1, pc2 = st.columns(2)
+        with pc1:
+            pair_t1 = st.selectbox("1. Takım", pair_teams_all, index=def_p1_idx, key=f"pair_t1_{ACTIVE_LEAGUE}")
+        with pc2:
+            pair_t2 = st.selectbox("2. Takım", pair_teams_all, index=def_p2_idx, key=f"pair_t2_{ACTIVE_LEAGUE}")
+
+        pair_res = analyze_team_pair_history(df_completed_archive, pair_t1, pair_t2, last_n=10, league=ACTIVE_LEAGUE)
+        if pair_res.get("n", 0) == 0:
+            st.warning("Seçilen iki takım arasında geçmiş arşivde tamamlanmış karşılaşma bulunamadı.")
+        else:
+            pm1, pm2, pm3, pm4 = st.columns(4)
+            pm1.metric("🤝 Karşılaşma Sayısı", f"{pair_res['n']} Maç", pair_res.get("confidence", "").upper())
+            pm2.metric("🏀 Ort. Toplam Sayı", f"{pair_res['avg_total']} Sayı", f"Lig Ort. Fark: {pair_res['diff_vs_league']:+.1f}")
+            pm3.metric("🎯 En Sık Barem", f"{pair_res['top_barem']} (%{pair_res['top_barem_pct']:.0f})", f"2. En Sık: {pair_res['second_barem']}")
+            pm4.metric("⚡ Q4 Ort. / Uzatma", f"{pair_res['avg_q4']} Sayı", f"OT: %{pair_res['ot_rate']} • Ort. Fark: {pair_res['avg_margin']}")
+            st.info(f"📌 **Takım Çifti Özeti:** {pair_res['hint']}")
+            if pair_res.get("last_games"):
+                st.dataframe(pd.DataFrame(pair_res["last_games"]), use_container_width=True, hide_index=True)
+
+        st.markdown("---")
+        st.markdown(f"###### 📚 Tüm {LEAGUE_CFG['short_name']} Takım Çiftleri Barem & Tempo Tablosu")
+        df_pairs_all = build_team_pair_table(df_completed_archive, min_games=2, league=ACTIVE_LEAGUE)
+        if not df_pairs_all.empty:
+            st.dataframe(df_pairs_all, use_container_width=True, hide_index=True, height=340)
+
+# ═════════════════════════════════════════════════════════════════════════════
+# MODULE 8: DATA VALIDATION GUARD ("VERİ DOĞRULAMA — HATA BEKÇİSİ")
+# ═════════════════════════════════════════════════════════════════════════════
+with tab_guard:
+    st.markdown(
+        f"##### 🛡️ Veri Doğrulama — Hata Bekçisi ({LEAGUE_CFG['short_name']})",
+        help="Canlı barem kayıtlarındaki favori uyuşmazlıkları, kilitli oran tuzakları, skor geri gitmeleri ve eksik sonuçları otomatik denetler.",
+    )
+    guard_res = validate_symmetry_log(df_sym_all, league=ACTIVE_LEAGUE)
+    gc1, gc2, gc3, gc4 = st.columns(4)
+    gc1.metric("📋 Taranan Satır", f"{guard_res['n_rows']} Kayıt", f"{guard_res['n_games']} Maç")
+    gc2.metric("🔴 Kritik Hata", f"{guard_res['counts'].get('🔴 Hata', 0)}")
+    gc3.metric("🟠 Uyarı", f"{guard_res['counts'].get('🟠 Uyarı', 0)}")
+    gc4.metric("🔵 Bilgi Notu", f"{guard_res['counts'].get('🔵 Bilgi', 0)}")
+
+    issues_list = guard_res.get("issues", [])
+    if guard_res["n_rows"] == 0:
+        st.info(f"{LEAGUE_CFG['short_name']} için taranacak barem kaydı henüz yok; canlı veriler geldikçe otomatik denetlenecektir.")
+    elif not issues_list:
+        st.success(f"✅ Tüm {guard_res['n_rows']} kayıt ({guard_res['n_games']} maç) temiz! Hiçbir veri hatası veya oran anomalisi tespit edilmedi.")
+    else:
+        st.dataframe(pd.DataFrame(issues_list), use_container_width=True, hide_index=True, height=380)

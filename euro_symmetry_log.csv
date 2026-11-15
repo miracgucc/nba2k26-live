@@ -1,0 +1,1 @@
+game_id,game_name,date,check_time,current_score,odds_130_or_less,odds_131_140,odds_141_150,odds_151_160,odds_161_170,odds_171_plus,model_prob_130_or_less,model_prob_131_140,model_prob_141_150,model_prob_151_160,model_prob_161_170,model_prob_171_plus,highest_prob_range,value_range,best_cluster_name,best_cluster_prob,actual_score,actual_range,status

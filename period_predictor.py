@@ -5,20 +5,27 @@ import pandas as pd
 __all__ = [
     "BAREM_RANGES",
     "CLUSTER_RANGES",
+    "LEAGUE_CONFIGS",
+    "get_league_config",
+    "get_csv_headers",
     "get_range_from_score",
     "get_cluster_from_score",
     "build_q3_q4_streak_signal",
     "predict_period_scores",
     "predict_live_inplay",
+    "resolve_effective_barem_odds",
     "analyze_barem_symmetry",
     "analyze_sequential_barem_wave",
     "analyze_smart_35m_decision",
     "analyze_matchup_live_summary",
     "analyze_archive_4500_symmetry",
     "simulate_35m_strategies",
+    "analyze_team_pair_history",
+    "build_team_pair_table",
+    "validate_symmetry_log",
 ]
 
-BAREM_RANGES = [
+NBA_BAREM_RANGES = [
     ("160 Or Less", 0.0, 160.5),
     ("161-170", 160.5, 170.5),
     ("171-180", 170.5, 180.5),
@@ -30,7 +37,7 @@ BAREM_RANGES = [
     ("231+", 230.5, 999.0),
 ]
 
-CLUSTER_RANGES = [
+NBA_CLUSTER_RANGES = [
     ("161-180", 160.5, 180.5, ("161-170", "171-180")),
     ("171-190", 170.5, 190.5, ("171-180", "181-190")),
     ("181-200", 180.5, 200.5, ("181-190", "191-200")),
@@ -40,63 +47,283 @@ CLUSTER_RANGES = [
     ("221-240", 220.5, 240.5, ("221-230", "231+")),
 ]
 
+EURO_BAREM_RANGES = [
+    ("131'den Az", 0.0, 130.5),
+    ("131-140", 130.5, 140.5),
+    ("141-150", 140.5, 150.5),
+    ("151-160", 150.5, 160.5),
+    ("161-170", 160.5, 170.5),
+    ("170'den Fazla", 170.5, 999.0),
+]
 
-def get_range_from_score(total: float) -> str:
+EURO_CLUSTER_RANGES = [
+    ("121-140", 0.0, 140.5, ("131'den Az", "131-140")),
+    ("131-150", 130.5, 150.5, ("131-140", "141-150")),
+    ("141-160", 140.5, 160.5, ("141-150", "151-160")),
+    ("151-170", 150.5, 170.5, ("151-160", "161-170")),
+    ("161+", 160.5, 999.0, ("161-170", "170'den Fazla")),
+]
+
+BAREM_RANGES = NBA_BAREM_RANGES
+CLUSTER_RANGES = NBA_CLUSTER_RANGES
+
+LEAGUE_CONFIGS = {
+    "nba": {
+        "key": "nba",
+        "champ_id": "2935701",
+        "title": "NBA 2K26 CyberLeague Pro",
+        "short_name": "NBA 2K26 CyberLeague",
+        "btn_label": "🏀 NBA 2K26 CyberLeague",
+        "quarter_length": 12.0,
+        "total_minutes": 48.0,
+        "close_min": 36.0,
+        "close_min_int": 36,
+        "decision_min": 35,
+        "closing_start_min": 32,
+        "final_win_start": 34,
+        "trap_min": 33,
+        "mid_q3_min": 30,
+        "halftime_min": 24,
+        "early_q2_min": 18,
+        "q3_pre_low": 27,
+        "q3_pre_high": 31,
+        "rem_span_decision": 13.0,
+        "prior_q": 53.0,
+        "exp_rem_close": 52,
+        "exp_rem_decision": 53.3,
+        "exp_rem_clutch": 59.0,
+        "exp_rem_blowout": 47.4,
+        "exp_rem_ctrl": 53.5,
+        "avg_q4_sum": 52.4,
+        "q4_slow_max": 51.6,
+        "q4_fast_min": 53.6,
+        "q4_half_default": 26.2,
+        "q3_collapse_max": 48.5,
+        "q3_burst_min": 55.5,
+        "q3_collapse_disp": 48,
+        "q3_burst_disp": 56,
+        "q3_norm_lo": 49,
+        "q3_norm_hi": 55,
+        "blowout_brake_gap": 28,
+        "team_std_dev": 8.5,
+        "pace_pts_per_min": 4.4,
+        "min_clean_gid": 770265000,
+        "min_total_valid": 100,
+        "archive_min_total": 140,
+        "archive_min_s3": 100,
+        "archive_days": 120,
+        "archive_btn_label": "📥 Son 4 Ay Arşivini Güncelle (120 Gün)",
+        "default_barem": "201-210",
+        "default_backup_barem": "211-220",
+        "high_over_threshold": 211,
+        "bar_lower_floor": 150,
+        "bar_upper_cap": 240,
+        "archive_h1_slow_max": 98,
+        "archive_h1_fast_min": 108,
+        "mod10_center_digits": (1, 2, 3, 4),
+        "mod10_mid_digits": (5, 6, 7),
+        "mod10_risk_digits": (8, 9, 0),
+        "default_wave_probs": (41.7, 24.0, 21.7, 6.2, 6.4),
+        "barem_ranges": NBA_BAREM_RANGES,
+        "cluster_ranges": NBA_CLUSTER_RANGES,
+        "barem_odd_cols": {
+            "160 Or Less": "odds_160_or_less",
+            "161-170": "odds_161_170",
+            "171-180": "odds_171_180",
+            "181-190": "odds_181_190",
+            "191-200": "odds_191_200",
+            "201-210": "odds_201_210",
+            "211-220": "odds_211_220",
+            "221-230": "odds_221_230",
+            "231+": "odds_231_plus",
+        },
+        "barem_prob_cols": {
+            "160 Or Less": "model_prob_160_or_less",
+            "161-170": "model_prob_161_170",
+            "171-180": "model_prob_171_180",
+            "181-190": "model_prob_181_190",
+            "191-200": "model_prob_191_200",
+            "201-210": "model_prob_201_210",
+            "211-220": "model_prob_211_220",
+            "221-230": "model_prob_221_230",
+            "231+": "model_prob_231_plus",
+        },
+        "short_labels": {
+            "160 Or Less": "160-",
+            "161-170": "161-170",
+            "171-180": "171-180",
+            "181-190": "181-190",
+            "191-200": "191-200",
+            "201-210": "201-210",
+            "211-220": "211-220",
+            "221-230": "221-230",
+            "231+": "231+",
+        },
+        "files": {
+            "log_seed": "symmetry_analysis_log.csv",
+            "log_runtime": "runtime_symmetry_log.csv",
+            "log_cloud": "cloud_symmetry_backup.csv",
+            "matches_seed": "matches_data.csv",
+            "matches_runtime": "runtime_matches_data.csv",
+            "matches_cloud": "cloud_matches_backup.csv",
+            "state_file": "live_matches_state.json",
+            "ts_file": "last_log_timestamps.json",
+        },
+    },
+    "euro": {
+        "key": "euro",
+        "champ_id": "2983166",
+        "title": "NBA 2K26 Cyber Euro League Pro",
+        "short_name": "NBA 2K26 Cyber Euro League",
+        "btn_label": "🇪🇺 NBA 2K26 Cyber Euro League",
+        "quarter_length": 10.0,
+        "total_minutes": 40.0,
+        "close_min": 30.0,
+        "close_min_int": 30,
+        "decision_min": 29,
+        "closing_start_min": 26,
+        "final_win_start": 28,
+        "trap_min": 27,
+        "mid_q3_min": 25,
+        "halftime_min": 20,
+        "early_q2_min": 15,
+        "q3_pre_low": 22,
+        "q3_pre_high": 25,
+        "rem_span_decision": 11.0,
+        "prior_q": 36.3,
+        "exp_rem_close": 37,
+        "exp_rem_decision": 40.9,
+        "exp_rem_clutch": 44.0,
+        "exp_rem_blowout": 38.3,
+        "exp_rem_ctrl": 40.5,
+        "avg_q4_sum": 36.7,
+        "q4_slow_max": 35.9,
+        "q4_fast_min": 37.5,
+        "q4_half_default": 18.4,
+        "q3_collapse_max": 32.5,
+        "q3_burst_min": 39.5,
+        "q3_collapse_disp": 32,
+        "q3_burst_disp": 40,
+        "q3_norm_lo": 33,
+        "q3_norm_hi": 39,
+        "blowout_brake_gap": 20,
+        "team_std_dev": 9.5,
+        "pace_pts_per_min": 3.63,
+        "min_clean_gid": 771090000,
+        "min_total_valid": 60,
+        "archive_min_total": 80,
+        "archive_min_s3": 55,
+        "archive_days": 185,
+        "archive_btn_label": "📥 Son 6 Ay Arşivini Güncelle (185 Gün)",
+        "default_barem": "141-150",
+        "default_backup_barem": "151-160",
+        "high_over_threshold": 151,
+        "bar_lower_floor": 120,
+        "bar_upper_cap": 180,
+        "archive_h1_slow_max": 66,
+        "archive_h1_fast_min": 76,
+        "mod10_center_digits": (7, 8, 9, 0),
+        "mod10_mid_digits": (1, 2, 3),
+        "mod10_risk_digits": (4, 5, 6),
+        "default_wave_probs": (50.3, 22.9, 21.9, 2.4, 2.5),
+        "barem_ranges": EURO_BAREM_RANGES,
+        "cluster_ranges": EURO_CLUSTER_RANGES,
+        "barem_odd_cols": {
+            "131'den Az": "odds_130_or_less",
+            "131-140": "odds_131_140",
+            "141-150": "odds_141_150",
+            "151-160": "odds_151_160",
+            "161-170": "odds_161_170",
+            "170'den Fazla": "odds_171_plus",
+        },
+        "barem_prob_cols": {
+            "131'den Az": "model_prob_130_or_less",
+            "131-140": "model_prob_131_140",
+            "141-150": "model_prob_141_150",
+            "151-160": "model_prob_151_160",
+            "161-170": "model_prob_161_170",
+            "170'den Fazla": "model_prob_171_plus",
+        },
+        "short_labels": {
+            "131'den Az": "131-",
+            "131-140": "131-140",
+            "141-150": "141-150",
+            "151-160": "151-160",
+            "161-170": "161-170",
+            "170'den Fazla": "170+",
+        },
+        "files": {
+            "log_seed": "euro_symmetry_log.csv",
+            "log_runtime": "runtime_euro_symmetry_log.csv",
+            "log_cloud": "cloud_euro_symmetry_backup.csv",
+            "matches_seed": "euro_matches_data.csv",
+            "matches_runtime": "runtime_euro_matches_data.csv",
+            "matches_cloud": "cloud_euro_matches_backup.csv",
+            "state_file": "euro_live_matches_state.json",
+            "ts_file": "euro_last_log_timestamps.json",
+        },
+    },
+}
+
+
+def get_league_config(league: str = "nba") -> dict:
+    return LEAGUE_CONFIGS.get(str(league or "nba").lower(), LEAGUE_CONFIGS["nba"])
+
+
+def get_csv_headers(league: str = "nba") -> list:
+    cfg = get_league_config(league)
+    b_names = [b[0] for b in cfg["barem_ranges"]]
+    return (
+        ["game_id", "game_name", "date", "check_time", "current_score"]
+        + [cfg["barem_odd_cols"][b] for b in b_names]
+        + [cfg["barem_prob_cols"][b] for b in b_names]
+        + ["highest_prob_range", "value_range", "best_cluster_name", "best_cluster_prob", "actual_score", "actual_range", "status"]
+    )
+
+
+def get_range_from_score(total: float, league: str = "nba") -> str:
+    cfg = get_league_config(league)
     total_int = int(round(float(total)))
-    if total_int <= 160:
-        return "160 Or Less"
-    elif total_int <= 170:
-        return "161-170"
-    elif total_int <= 180:
-        return "171-180"
-    elif total_int <= 190:
-        return "181-190"
-    elif total_int <= 200:
-        return "191-200"
-    elif total_int <= 210:
-        return "201-210"
-    elif total_int <= 220:
-        return "211-220"
-    elif total_int <= 230:
-        return "221-230"
-    else:
-        return "231+"
+    for b_name, _, b_hi in cfg["barem_ranges"]:
+        if total_int <= b_hi:
+            return b_name
+    return cfg["barem_ranges"][-1][0]
 
 
-def get_cluster_from_score(total: float) -> str:
+def get_cluster_from_score(total: float, league: str = "nba") -> str:
+    cfg = get_league_config(league)
     total_int = int(round(float(total)))
-    if total_int <= 180:
-        return "161-180"
-    elif total_int <= 190:
-        return "171-190"
-    elif total_int <= 200:
-        return "181-200"
-    elif total_int <= 210:
-        return "191-210"
-    elif total_int <= 220:
-        return "201-220"
-    elif total_int <= 230:
-        return "211-230"
-    else:
-        return "221-240"
+    for c_name, _, c_hi, _ in cfg["cluster_ranges"]:
+        if total_int <= c_hi:
+            return c_name
+    return cfg["cluster_ranges"][-1][0]
 
 
 def build_q3_q4_streak_signal(
     df,
-    projected_q3_total=53,
-    q3_threshold=50,
+    projected_q3_total=None,
+    q3_threshold=None,
     streak_window=3,
     team_home="",
     team_away="",
     q3_score=None,
+    league="nba",
 ):
     """Calculate how often a Q3 total is followed by a Q4 burst or collapse."""
+    cfg = get_league_config(league)
+    prior_q = float(cfg["prior_q"])
+    def_thr = int(round(prior_q)) - 3
+    if projected_q3_total is None:
+        projected_q3_total = prior_q
+    if q3_threshold is None:
+        q3_threshold = def_thr
+
     if isinstance(projected_q3_total, str):
         team_home = projected_q3_total
         if isinstance(q3_threshold, str):
             team_away = q3_threshold
-            q3_threshold = 50
-        projected_q3_total = q3_score if q3_score is not None else 53
+            q3_threshold = def_thr
+        projected_q3_total = q3_score if q3_score is not None else prior_q
     elif q3_score is not None:
         projected_q3_total = q3_score
 
@@ -105,7 +332,7 @@ def build_q3_q4_streak_signal(
         "burst_positive": {"probability": 0.25, "count": 0},
         "collapse_negative": {"probability": 0.25, "count": 0},
         "signal": "⚖️ Dengeli Q4 Beklentisi",
-        "detail": "Standart CyberLeague periyot dağılımı (53.0 sayı/çeyrek).",
+        "detail": f"Standart {cfg['short_name']} periyot dağılımı ({prior_q:.1f} sayı/çeyrek).",
         "threshold": q3_threshold,
         "sample_size": 0,
         "streak_window": streak_window,
@@ -151,7 +378,7 @@ def build_q3_q4_streak_signal(
 
     similar_q3["q4_delta_bucket"] = pd.cut(
         similar_q3["q4_total"],
-        bins=[-np.inf, 48.5, 55.5, np.inf],
+        bins=[-np.inf, float(cfg["q3_collapse_max"]), float(cfg["q3_burst_min"]), np.inf],
         labels=["collapse_negative", "normal", "burst_positive"],
     )
 
@@ -181,7 +408,7 @@ def build_q3_q4_streak_signal(
 
     detail = (
         f"Benzer Q3 temposundaki ({int(q3_val)} sayı) {total} geçmiş maçta Q4 ortalaması {avg_q4} sayı oldu "
-        f"(Patlama ≥56: %{b_pct}, Normal 49-55: %{n_pct}, Çöküş ≤48: %{c_pct})."
+        f"(Patlama ≥{cfg['q3_burst_disp']}: %{b_pct}, Normal {cfg['q3_norm_lo']}-{cfg['q3_norm_hi']}: %{n_pct}, Çöküş ≤{cfg['q3_collapse_disp']}: %{c_pct})."
     )
 
     return {
@@ -200,8 +427,9 @@ def build_q3_q4_streak_signal(
     }
 
 
-def predict_period_scores(df, home_q1, away_q1, home_q2, away_q2, team_home=None, team_away=None, top_k=8):
+def predict_period_scores(df, home_q1, away_q1, home_q2, away_q2, team_home=None, team_away=None, top_k=8, league="nba"):
     """Predict Q3/Q4 scoring using H2H/historical data or pure pace priors when database is empty."""
+    cfg = get_league_config(league)
     current_q12_home = float(home_q1 + home_q2)
     current_q12_away = float(away_q1 + away_q2)
     current_q12_total = current_q12_home + current_q12_away
@@ -217,8 +445,7 @@ def predict_period_scores(df, home_q1, away_q1, home_q2, away_q2, team_home=None
     )
 
     if not has_hist:
-        # Pure pace + CyberLeague prior (53.0 pts per quarter baseline)
-        prior_q = 53.0
+        prior_q = float(cfg["prior_q"])
         blended_q = 0.65 * current_pace + 0.35 * prior_q
         home_split = float(np.clip(0.6 * current_home_share + 0.4 * 0.5, 0.35, 0.65))
         home_q3 = blended_q * home_split
@@ -332,13 +559,21 @@ def predict_live_inplay(
     away_live_score,
     remaining_mins,
     completed_quarters,
-    quarter_length=12.0,
+    quarter_length=None,
     top_k=15,
+    league="nba",
 ):
     """
     Predict live match final score & barem distribution.
     Works 100% seamlessly both when `df` has historical matches AND when `df` is completely empty (clean slate).
     """
+    cfg = get_league_config(league)
+    if quarter_length is None:
+        quarter_length = float(cfg["quarter_length"])
+    else:
+        quarter_length = float(quarter_length)
+    prior_q = float(cfg["prior_q"])
+    total_match_len = 4.0 * quarter_length
     current_quarter = max(1, min(4, int(current_quarter or 1)))
     remaining_mins = float(np.clip(remaining_mins, 0.0, quarter_length))
     elapsed_in_q = max(0.05, quarter_length - remaining_mins)
@@ -374,17 +609,16 @@ def predict_live_inplay(
         else:
             hist = hist_raw
 
-    # Calculate baseline quarter score (CyberLeague average ~53.0 pts per 12m quarter = 212.0 total)
+    # Calculate baseline quarter score (League prior ~53.0 for 12m NBA, ~36.3 for 10m Euro)
     if not hist.empty:
         avg_match_total = sum(hist[c].mean() for c in required)
         league_avg_q_score = float(avg_match_total) / 4.0
     else:
-        # Also adapt baseline to completed quarters of the current match if available
         if completed_quarters:
             comp_q_avg = sum(h + a for h, a in completed_quarters) / len(completed_quarters)
-            league_avg_q_score = 0.65 * comp_q_avg + 0.35 * 53.0
+            league_avg_q_score = 0.65 * comp_q_avg + 0.35 * prior_q
         else:
-            league_avg_q_score = 53.0
+            league_avg_q_score = prior_q
 
     default_q_pace = league_avg_q_score / quarter_length
     blend_weight = float(np.clip(elapsed_in_q / quarter_length, 0.0, 1.0))
@@ -461,12 +695,17 @@ def predict_live_inplay(
         pred_home_final *= shrinkage
         pred_away_final *= shrinkage
 
-    # Blowout / Rölanti Freni: 4.500 maçlık arşivde fark 28+ sayıya çıktığında Q4 ortalaması 52.5'tan 44-46'ya düşer
+    # Blowout / Rölanti Freni: fark açıldığında Q4 ortalaması düşer
     cur_tot_h = sum(h_q for h_q, _ in completed_quarters) + float(home_live_score)
     cur_tot_a = sum(a_q for _, a_q in completed_quarters) + float(away_live_score)
     live_gap = abs(cur_tot_h - cur_tot_a)
-    if current_quarter >= 3 and live_gap >= 28:
-        brake_pts = min(9.5, 4.0 + (live_gap - 28.0) * 0.22) * ((48.0 - min(47.0, total_elapsed_mins)) / 16.0)
+    brake_gap = float(cfg["blowout_brake_gap"])
+    if current_quarter >= 3 and live_gap >= brake_gap:
+        max_brake = 9.5 if league == "nba" else 6.5
+        rem_span = max(8.0, total_match_len - (2.66 * quarter_length))
+        brake_pts = min(max_brake, 3.5 + (live_gap - brake_gap) * 0.22) * (
+            (total_match_len - min(total_match_len - 1.0, total_elapsed_mins)) / rem_span
+        )
         tot_now = pred_home_final + pred_away_final
         if tot_now > 0:
             brake_ratio = max(0.92, (tot_now - brake_pts) / tot_now)
@@ -474,29 +713,30 @@ def predict_live_inplay(
             pred_away_final *= brake_ratio
 
     # Dynamic standard deviation shrinks as remaining match minutes decrease!
-    total_rem_mins = max(0.5, (4.0 * quarter_length) - total_elapsed_mins)
-    rem_fraction = float(np.clip(total_rem_mins / (4.0 * quarter_length), 0.08, 1.0))
-    # Full game std dev per team is ~8.5 pts (total game std dev ~12.0 pts), shrinking with sqrt(rem_fraction)
-    team_std_dev = max(2.2, 8.5 * np.sqrt(rem_fraction))
+    total_rem_mins = max(0.5, total_match_len - total_elapsed_mins)
+    rem_fraction = float(np.clip(total_rem_mins / total_match_len, 0.08, 1.0))
+    team_std_dev = max(2.2, float(cfg["team_std_dev"]) * np.sqrt(rem_fraction))
 
-    rng = np.random.default_rng(int( abs(pred_home_final * 100 + pred_away_final * 10) ) % 100000)
+    rng = np.random.default_rng(int(abs(pred_home_final * 100 + pred_away_final * 10)) % 100000)
     sim_size = 10000
     sim_home_totals = rng.normal(pred_home_final, team_std_dev, sim_size)
     sim_away_totals = rng.normal(pred_away_final, team_std_dev, sim_size)
     sim_totals = sim_home_totals + sim_away_totals
 
+    b_ranges = cfg["barem_ranges"]
+    n_b_ranges = len(b_ranges)
     barem_probs = {}
-    for b_name, b_low, b_high in BAREM_RANGES:
-        if b_name == "160 Or Less":
+    for b_idx, (b_name, b_low, b_high) in enumerate(b_ranges):
+        if b_idx == 0:
             prob = float((sim_totals <= b_high).mean()) * 100.0
-        elif b_name == "231+":
+        elif b_idx == n_b_ranges - 1:
             prob = float((sim_totals > b_low).mean()) * 100.0
         else:
             prob = float(((sim_totals > b_low) & (sim_totals <= b_high)).mean()) * 100.0
         barem_probs[b_name] = round(prob, 1)
 
     clusters = {}
-    for c_name, c_low, c_high, _ in CLUSTER_RANGES:
+    for c_name, c_low, c_high, _ in cfg["cluster_ranges"]:
         c_prob = float(((sim_totals > c_low) & (sim_totals <= c_high)).mean()) * 100.0
         clusters[c_name] = round(c_prob, 1)
 
@@ -527,15 +767,22 @@ def predict_live_inplay(
     }
 
 
-def resolve_effective_barem_odds(odds_dict: dict, barem_probs: dict = None) -> tuple[dict, str]:
+def resolve_effective_barem_odds(odds_dict: dict, barem_probs: dict = None, league: str = "nba") -> tuple[dict, str]:
     """
-    Detects when 1xBet has locked (99.0 / closed) an extreme barem ('231+' or '160 Or Less')
+    Detects when 1xBet has locked (99.0 / closed) an extreme barem (e.g. '231+' / '160 Or Less' or '170'den Fazla' / '131'den Az')
     because it has become virtually certain (< 1.04 odd, 'Banko Kapandı'), preventing the system
-    from falsely mistaking the remaining high-odd neighbor (e.g. '221-230' at 9.67 or 20.00)
-    for the 1st Favorite.
+    from falsely mistaking the remaining high-odd neighbor (e.g. 9.67 or 20.00) for the 1st Favorite.
     Returns (effective_valid_odds, locked_fav_barem).
     """
-    barem_names = [b[0] for b in BAREM_RANGES]
+    cfg = get_league_config(league)
+    barem_names = [b[0] for b in cfg["barem_ranges"]]
+    b_low_ext = barem_names[0]
+    b_low_p1 = barem_names[1]
+    b_low_p2 = barem_names[2]
+    b_high_ext = barem_names[-1]
+    b_high_m1 = barem_names[-2]
+    b_high_m2 = barem_names[-3]
+
     raw = {}
     for k, v in (odds_dict or {}).items():
         try:
@@ -553,44 +800,35 @@ def resolve_effective_barem_odds(odds_dict: dict, barem_probs: dict = None) -> t
 
     locked_fav = None
 
-    # 1) Upper Extreme Lock ('231+' closed because match is guaranteed 231+):
-    # All barems <= 201-210 are closed (>=85.0), '231+' is closed (>=85.0),
-    # and either '221-230' is open at a longshot odd (>=3.80) with '211-220' higher/closed,
-    # or Monte Carlo model probability for '231+' is >= 60%.
-    o_231 = raw.get("231+", 99.0)
-    o_221 = raw.get("221-230", 99.0)
-    o_211 = raw.get("211-220", 99.0)
-    lower_open = [raw.get(b, 99.0) for b in barem_names[:6] if 1.001 <= raw.get(b, 99.0) < 85.0]
-    if o_231 >= 85.0 and not lower_open:
-        if (1.001 <= o_221 < 85.0 and (o_211 >= 85.0 or o_211 > o_221) and o_221 >= 3.80) or probs.get("231+", 0.0) >= 60.0:
-            imp_odd = round(max(1.01, min(1.06, 1.0 / max(0.94, 1.06 - (1.0 / max(o_221, 4.0))))), 3) if o_221 < 85.0 else 1.01
-            valid["231+"] = imp_odd
-            locked_fav = "231+"
+    o_high = raw.get(b_high_ext, 99.0)
+    o_hm1 = raw.get(b_high_m1, 99.0)
+    o_hm2 = raw.get(b_high_m2, 99.0)
+    lower_open = [raw.get(b, 99.0) for b in barem_names[:-3] if 1.001 <= raw.get(b, 99.0) < 85.0]
+    if o_high >= 85.0 and not lower_open:
+        if (1.001 <= o_hm1 < 85.0 and (o_hm2 >= 85.0 or o_hm2 > o_hm1) and o_hm1 >= 3.80) or probs.get(b_high_ext, 0.0) >= 60.0:
+            imp_odd = round(max(1.01, min(1.06, 1.0 / max(0.94, 1.06 - (1.0 / max(o_hm1, 4.0))))), 3) if o_hm1 < 85.0 else 1.01
+            valid[b_high_ext] = imp_odd
+            locked_fav = b_high_ext
 
-    # 2) Lower Extreme Lock ('160 Or Less' closed because match is guaranteed <=160):
-    o_160 = raw.get("160 Or Less", 99.0)
-    o_161 = raw.get("161-170", 99.0)
-    o_171 = raw.get("171-180", 99.0)
+    o_low = raw.get(b_low_ext, 99.0)
+    o_lp1 = raw.get(b_low_p1, 99.0)
+    o_lp2 = raw.get(b_low_p2, 99.0)
     upper_open = [raw.get(b, 99.0) for b in barem_names[3:] if 1.001 <= raw.get(b, 99.0) < 85.0]
-    if o_160 >= 85.0 and not upper_open:
-        if (1.001 <= o_161 < 85.0 and (o_171 >= 85.0 or o_171 > o_161) and o_161 >= 3.80) or probs.get("160 Or Less", 0.0) >= 60.0:
-            imp_odd = round(max(1.01, min(1.06, 1.0 / max(0.94, 1.06 - (1.0 / max(o_161, 4.0))))), 3) if o_161 < 85.0 else 1.01
-            valid["160 Or Less"] = imp_odd
-            locked_fav = "160 Or Less"
+    if o_low >= 85.0 and not upper_open:
+        if (1.001 <= o_lp1 < 85.0 and (o_lp2 >= 85.0 or o_lp2 > o_lp1) and o_lp1 >= 3.80) or probs.get(b_low_ext, 0.0) >= 60.0:
+            imp_odd = round(max(1.01, min(1.06, 1.0 / max(0.94, 1.06 - (1.0 / max(o_lp1, 4.0))))), 3) if o_lp1 < 85.0 else 1.01
+            valid[b_low_ext] = imp_odd
+            locked_fav = b_low_ext
 
     return valid, locked_fav
 
 
-def analyze_barem_symmetry(odds_dict: dict, barem_probs: dict) -> dict:
+def analyze_barem_symmetry(odds_dict: dict, barem_probs: dict, league: str = "nba") -> dict:
     """
-    Analyze 1xBet Barem Odds vs Model Probabilities (v4.8 Locked-Favorite & Smart Symmetry Engine):
-    - Detects locked extreme favorites ('231+' or '160 Or Less' closed by 1xBet because odd < 1.04)
-    - Identifies Bookmaker 1st & 2nd Favorites accurately without ever mistaking a 9.67/20.00 neighbor for the favorite
-    - Calculates Symmetry Ratio (gap between top 2 favorite barem odds)
-    - Calculates Smart Value Range (Simetri + Piyasa + Model Hibrit Değerli Barem)
-    - Calculates Best Dutching (Çifte Barem) combined odd
+    Analyze 1xBet Barem Odds vs Model Probabilities (v4.8 Locked-Favorite & Smart Symmetry Engine).
     """
-    valid_odds, locked_fav = resolve_effective_barem_odds(odds_dict, barem_probs)
+    cfg = get_league_config(league)
+    valid_odds, locked_fav = resolve_effective_barem_odds(odds_dict, barem_probs, league=league)
     sorted_by_odds = sorted(valid_odds.items(), key=lambda x: x[1])
 
     bookie_fav_1 = sorted_by_odds[0][0] if len(sorted_by_odds) >= 1 else None
@@ -598,14 +836,12 @@ def analyze_barem_symmetry(odds_dict: dict, barem_probs: dict) -> dict:
     bookie_fav_2 = sorted_by_odds[1][0] if len(sorted_by_odds) >= 2 else None
     bookie_fav_2_odd = sorted_by_odds[1][1] if len(sorted_by_odds) >= 2 else 99.0
 
-    # Symmetry gap between 1st and 2nd lowest odds
     symmetry_gap = round(bookie_fav_2_odd - bookie_fav_1_odd, 3) if (bookie_fav_1 and bookie_fav_2) else 99.0
     is_symmetric_trap = symmetry_gap <= 0.65
 
-    # Dutching (Çifte Şans) effective odd if backing top 2 adjacent barems
     dutch_odd = round(1.0 / ((1.0 / bookie_fav_1_odd) + (1.0 / bookie_fav_2_odd)), 2) if (bookie_fav_1 and bookie_fav_2) else 0.0
 
-    barem_names = [b[0] for b in BAREM_RANGES]
+    barem_names = [b[0] for b in cfg["barem_ranges"]]
     best_value_range = None
     best_ev = -999.0
     best_score = -999.0
@@ -686,10 +922,10 @@ def analyze_barem_symmetry(odds_dict: dict, barem_probs: dict) -> dict:
             best_value_range = max(barem_probs.keys(), key=lambda k: barem_probs[k])
             value_reason = f"{best_value_range}: Modelin en yüksek olasılıklı baremi"
         else:
-            best_value_range = "201-210"
+            best_value_range = cfg["default_barem"]
 
     highest_prob_range = bookie_fav_1 if bookie_fav_1 else (
-        max(barem_probs.keys(), key=lambda k: barem_probs[k]) if barem_probs else "201-210"
+        max(barem_probs.keys(), key=lambda k: barem_probs[k]) if barem_probs else cfg["default_barem"]
     )
 
     return {
@@ -713,66 +949,53 @@ def analyze_sequential_barem_wave(
     df_log: pd.DataFrame = None,
     current_fav_barem: str = None,
     custom_seq: list = None,
+    league: str = "nba",
 ) -> dict:
     """
-    Analyze consecutive match-to-match 36th-minute Expected Barem vs Actual Final Barem shifts:
-      0  -> Expected 36th-minute favorite barem hit (Merkez Barem)
+    Analyze consecutive match-to-match closing Expected Barem vs Actual Final Barem shifts:
+      0  -> Expected closing favorite barem hit (Merkez Barem)
      -1  -> Shifted 1 barem bracket DOWN (-1 Alt Barem)
      +1  -> Shifted 1 barem bracket UP (+1 Üst Barem)
-    Uses Markov & N-gram sequence matching across all 4,500+ consecutive historical matches.
+    Uses Markov & N-gram sequence matching across completed historical matches.
     """
-    barem_names = [b[0] for b in BAREM_RANGES]
+    cfg = get_league_config(league)
+    barem_names = [b[0] for b in cfg["barem_ranges"]]
+    def_b = cfg["default_barem"]
+    prior_q = float(cfg["prior_q"])
+    close_min_int = int(cfg["close_min_int"])
+    dec_min = int(cfg["decision_min"])
+    w0, wm1, wp1, wm2, wp2 = cfg["default_wave_probs"]
 
-    def _shift_barem_name(base_b: str, delta: int) -> str:
+    def _shift_b(base_b: str, delta: int) -> str:
         if base_b not in barem_names:
             return "-"
         idx = max(0, min(len(barem_names) - 1, barem_names.index(base_b) + delta))
         return barem_names[idx]
 
     if df_matches is None or df_matches.empty:
+        b_ref = current_fav_barem or def_b
         return {
             "recent_chain": [],
             "last_5_codes": [],
             "last_5_labels": "-",
             "pattern_matches_count": 0,
-            "prob_0": 41.7,
-            "prob_minus_1": 24.0,
-            "prob_plus_1": 21.7,
-            "prob_minus_2": 6.2,
-            "prob_plus_2": 6.4,
+            "prob_0": w0,
+            "prob_minus_1": wm1,
+            "prob_plus_1": wp1,
+            "prob_minus_2": wm2,
+            "prob_plus_2": wp2,
             "wave_direction": "0 / -1 (Beklenen veya 1 Alt Barem)",
-            "target_0_barem": current_fav_barem or "201-210",
-            "target_minus_1_barem": _shift_barem_name(current_fav_barem or "201-210", -1),
-            "target_plus_1_barem": _shift_barem_name(current_fav_barem or "201-210", 1),
-            "target_minus_2_barem": _shift_barem_name(current_fav_barem or "201-210", -2),
-            "target_plus_2_barem": _shift_barem_name(current_fav_barem or "201-210", 2),
-            "recommended_pair": f"{_shift_barem_name(current_fav_barem or '201-210', -1)} & {current_fav_barem or '201-210'}",
-            "recommended_pair_prob": 65.7,
+            "target_0_barem": b_ref,
+            "target_minus_1_barem": _shift_b(b_ref, -1),
+            "target_plus_1_barem": _shift_b(b_ref, 1),
+            "target_minus_2_barem": _shift_b(b_ref, -2),
+            "target_plus_2_barem": _shift_b(b_ref, 2),
+            "recommended_pair": f"{_shift_b(b_ref, -1)} & {b_ref}",
+            "recommended_pair_prob": round(w0 + wm1, 1),
         }
 
-    # Map closing favorite barem AND its exact odd from live symmetry_analysis_log.csv where available
-    barem_to_col = {
-        "160 Or Less": "odds_160_or_less",
-        "161-170": "odds_161_170",
-        "171-180": "odds_171_180",
-        "181-190": "odds_181_190",
-        "191-200": "odds_191_200",
-        "201-210": "odds_201_210",
-        "211-220": "odds_211_220",
-        "221-230": "odds_221_230",
-        "231+": "odds_231_plus",
-    }
-    barem_to_prob_col = {
-        "160 Or Less": "model_prob_160_or_less",
-        "161-170": "model_prob_161_170",
-        "171-180": "model_prob_171_180",
-        "181-190": "model_prob_181_190",
-        "191-200": "model_prob_191_200",
-        "201-210": "model_prob_201_210",
-        "211-220": "model_prob_211_220",
-        "221-230": "model_prob_221_230",
-        "231+": "model_prob_231_plus",
-    }
+    barem_to_col = cfg["barem_odd_cols"]
+    barem_to_prob_col = cfg["barem_prob_cols"]
     logged_closing_fav = {}
     logged_closing_odd = {}
     logged_closing_min = {}
@@ -785,12 +1008,12 @@ def analyze_sequential_barem_wave(
 
             o_first = {b: float(first_r.get(barem_to_col[b], 99.0) or 99.0) for b in barem_names}
             p_first = {b: float(first_r.get(barem_to_prob_col[b], 0.0) or 0.0) for b in barem_names}
-            eff_first, _ = resolve_effective_barem_odds(o_first, p_first)
+            eff_first, _ = resolve_effective_barem_odds(o_first, p_first, league=league)
             first_fav = min(eff_first, key=eff_first.get) if eff_first else str(first_r.get("highest_prob_range", "")).strip()
 
             o_last = {b: float(last_r.get(barem_to_col[b], 99.0) or 99.0) for b in barem_names}
             p_last = {b: float(last_r.get(barem_to_prob_col[b], 0.0) or 0.0) for b in barem_names}
-            eff_last, locked_b = resolve_effective_barem_odds(o_last, p_last)
+            eff_last, locked_b = resolve_effective_barem_odds(o_last, p_last, league=league)
             fav_val = min(eff_last, key=eff_last.get) if eff_last else str(last_r.get("highest_prob_range", "")).strip()
 
             if fav_val in barem_names:
@@ -828,8 +1051,8 @@ def analyze_sequential_barem_wave(
         + hist["away_q3"].astype(float)
     )
     hist["q4_tot"] = hist["home_q4"].astype(float) + hist["away_q4"].astype(float)
-    # 1xBet 36th-minute closing expectation: Q3 end score + blended Q4 pace (53.0 baseline + current pace)
-    hist["exp_tot_36"] = hist["s36"] + (0.65 * 53.0 + 0.35 * (hist["s36"] / 3.0))
+    # 1xBet Q3-closing expectation: Q3 end score + blended Q4 pace (prior_q baseline + current pace)
+    hist["exp_tot_36"] = hist["s36"] + (0.65 * prior_q + 0.35 * (hist["s36"] / 3.0))
 
     exp_barems = []
     exp_odds = []
@@ -839,7 +1062,7 @@ def analyze_sequential_barem_wave(
         if gid_s in logged_closing_fav:
             exp_barems.append(logged_closing_fav[gid_s])
             o_v = logged_closing_odd.get(gid_s, 0.0)
-            c_m = logged_closing_min.get(gid_s, "35.Dk")
+            c_m = logged_closing_min.get(gid_s, f"{dec_min}.Dk")
             is_lck = logged_closing_locked.get(gid_s, False)
             exp_odds.append(o_v)
             if is_lck:
@@ -849,14 +1072,14 @@ def analyze_sequential_barem_wave(
             else:
                 sources.append(f"✅ Gerçek 1xBet Oranı ({c_m})")
         else:
-            exp_barems.append(get_range_from_score(r["exp_tot_36"]))
+            exp_barems.append(get_range_from_score(r["exp_tot_36"], league=league))
             exp_odds.append(0.0)
-            sources.append("🧮 36.Dk Skor Tahmini (Oran Kaydı Yok)")
+            sources.append(f"🧮 {close_min_int}.Dk Skor Tahmini (Oran Kaydı Yok)")
 
     hist["exp_barem_36"] = exp_barems
     hist["exp_odd_36"] = exp_odds
     hist["source"] = sources
-    hist["act_barem"] = hist["total_score"].apply(get_range_from_score)
+    hist["act_barem"] = hist["total_score"].apply(lambda s: get_range_from_score(s, league=league))
 
     raw_shifts = []
     wave_codes = []
@@ -873,8 +1096,7 @@ def analyze_sequential_barem_wave(
     hist["raw_shift"] = raw_shifts
     hist["wave_code"] = wave_codes
 
-    # Build recent_chain STRICTLY AND ONLY from matches recorded in symmetry_analysis_log.csv!
-    # Sort strictly by 1xBet sequential game_id so chronological order is 100% immune to server timezone.
+    # Build recent_chain STRICTLY AND ONLY from matches recorded in log CSV!
     recent_chain = []
     tracked_hist = hist[hist["game_id"].astype(str).str.strip().isin(logged_closing_fav.keys())].copy()
     if not tracked_hist.empty:
@@ -882,7 +1104,7 @@ def analyze_sequential_barem_wave(
             tracked_hist["game_id"].astype(str).str.extract(r"(\d+)")[0].fillna(0).astype(int)
         )
         tracked_hist = (
-            tracked_hist[tracked_hist["_gid_num"] >= 770265000]
+            tracked_hist[tracked_hist["_gid_num"] >= int(cfg["min_clean_gid"])]
             .sort_values(by="_gid_num", ascending=True)
             .reset_index(drop=True)
         )
@@ -1002,12 +1224,12 @@ def analyze_sequential_barem_wave(
     p_down_all = round(p_m1 + p_m2, 1)
     p_up_all = round(p_p1 + p_p2, 1)
 
-    base_b = current_fav_barem if (current_fav_barem in barem_names) else "201-210"
+    base_b = current_fav_barem if (current_fav_barem in barem_names) else def_b
     b_0 = base_b
-    b_m1 = _shift_barem_name(base_b, -1)
-    b_p1 = _shift_barem_name(base_b, 1)
-    b_m2 = _shift_barem_name(base_b, -2)
-    b_p2 = _shift_barem_name(base_b, 2)
+    b_m1 = _shift_b(base_b, -1)
+    b_p1 = _shift_b(base_b, 1)
+    b_m2 = _shift_b(base_b, -2)
+    b_p2 = _shift_b(base_b, 2)
 
     pair_down_prob = round(p_0 + p_m1, 1)
     pair_up_prob = round(p_0 + p_p1, 1)
@@ -1063,8 +1285,8 @@ def analyze_sequential_barem_wave(
     }
 
 
-def _shift_barem_name(base_b: str, delta: int) -> str:
-    names = [b[0] for b in BAREM_RANGES]
+def _shift_barem_name(base_b: str, delta: int, league: str = "nba") -> str:
+    names = [b[0] for b in get_league_config(league)["barem_ranges"]]
     if base_b not in names:
         return base_b
     return names[max(0, min(len(names) - 1, names.index(base_b) + delta))]
@@ -1080,27 +1302,25 @@ def analyze_smart_35m_decision(
     recent_chain: list,
     score_gap: int = 0,
     cur_tot: int = 0,
-    elapsed_mins: float = 35.0,
+    elapsed_mins: float = None,
     odds_map: dict = None,
+    league: str = "nba",
 ) -> dict:
     """
-    v4.0 Deep Symmetry & 35th-Minute Smart Decision Engine (calibrated on 62+ closing matches & 4,550+ archive matches):
-    1. Score Gap (Clutch vs Blowout)
-    2. 2nd Favorite Direction (Market Skew: +1 Upper vs -1 Lower)
-    3. Extreme Low-Odd Trap (< 1.85)
-    4. Mod-10 Last Digit Barem Center Symmetry (cur_tot % 10: 1-4 Göbek vs 8-9-0 Alt Sınır Tuzağı)
-    5. Twin Odds Symmetry (fav2_odd - fav1_odd <= 0.25) & Top-2 Concentration (>= 78%)
-    6. Bell-Curve Wing Symmetry (|odd(+1) - odd(-1)| <= 0.75)
-    7. Late 5-Min Pendulum Symmetry (30m -> 35m barem jump/drop)
-    8. Sequential 2-Deviation Snapback Symmetry (Last 2 matches != 0 -> 3rd match 0 Merkez +33.6% ROI)
+    Deep Symmetry & Closing-Minute Smart Decision Engine (supports both NBA 35m and Euro 29m).
     """
-    barem_names = [b[0] for b in BAREM_RANGES]
-    barem_bounds = {b[0]: (b[1], b[2]) for b in BAREM_RANGES}
-    base_b = fav1_barem if fav1_barem in barem_names else "201-210"
+    cfg = get_league_config(league)
+    dec_min = int(cfg["decision_min"])
+    close_min_int = int(cfg["close_min_int"])
+    if elapsed_mins is None:
+        elapsed_mins = float(dec_min)
+    barem_names = [b[0] for b in cfg["barem_ranges"]]
+    barem_bounds = {b[0]: (b[1], b[2]) for b in cfg["barem_ranges"]}
+    base_b = fav1_barem if fav1_barem in barem_names else cfg["default_barem"]
     b_0 = base_b
-    b_m1 = _shift_barem_name(base_b, -1)
-    b_m2 = _shift_barem_name(base_b, -2)
-    b_p1 = _shift_barem_name(base_b, 1)
+    b_m1 = _shift_barem_name(base_b, -1, league=league)
+    b_m2 = _shift_barem_name(base_b, -2, league=league)
+    b_p1 = _shift_barem_name(base_b, 1, league=league)
 
     idx_fav = barem_names.index(base_b)
     idx_sec = barem_names.index(fav2_barem) if fav2_barem in barem_names else max(0, idx_fav - 1)
@@ -1121,25 +1341,16 @@ def analyze_smart_35m_decision(
             f"Bu durumda maçların neredeyse yarısı (%48.5) alt bareme ({b_m1}) kaymış, üst bareme ({b_p1}) ise hiç (%0) çıkmamıştır."
         )
 
-    # Calculate in-game drift (Q1 -> Now), Late 5m Pendulum (30m -> 35m), and Odds Drop Velocity for this game_id
+    # Calculate in-game drift (Q1 -> Now), Late Pre-Close Pendulum, and Odds Drop Velocity
     open_b = base_b
     drift = 0
     late_jump = 0
     b_30m = base_b
     odd_prev_ref = float(fav1_odd or 0.0)
     odd_prev_min = int(float(elapsed_mins or 0))
-    barem_to_col_local = {
-        "160 Or Less": "odds_160_or_less",
-        "160-": "odds_160_or_less",
-        "161-170": "odds_161_170",
-        "171-180": "odds_171_180",
-        "181-190": "odds_181_190",
-        "191-200": "odds_191_200",
-        "201-210": "odds_201_210",
-        "211-220": "odds_211_220",
-        "221-230": "odds_221_230",
-        "231+": "odds_231_plus",
-    }
+    barem_to_col_local = dict(cfg["barem_odd_cols"])
+    barem_to_col_local.update({"160-": "odds_160_or_less", "131-": "odds_130_or_less", "170+": "odds_171_plus"})
+    pre_lo, pre_hi = int(cfg["q3_pre_low"]), int(cfg["q3_pre_high"])
     if df_log is not None and not df_log.empty and game_id and "game_id" in df_log.columns:
         g_sub = df_log[df_log["game_id"].astype(str).str.strip() == str(game_id).strip()].copy()
         if not g_sub.empty:
@@ -1150,7 +1361,7 @@ def analyze_smart_35m_decision(
             g_sub["_m"] = (
                 g_sub["check_time"].astype(str).str.extract(r"Minute\s+(\d+)", expand=False).astype(float).fillna(0)
             )
-            c30 = g_sub[(g_sub["_m"] >= 27) & (g_sub["_m"] <= 31)]
+            c30 = g_sub[(g_sub["_m"] >= pre_lo) & (g_sub["_m"] <= pre_hi)]
             if not c30.empty:
                 b30_cand = str(c30.iloc[-1].get("highest_prob_range", "")).strip()
                 if b30_cand in barem_names:
@@ -1197,54 +1408,58 @@ def analyze_smart_35m_decision(
         f"Maç içinde beklenti zaten düştüyse daha da alt bareme oynama tuzağına düşmeyin; maçların %82'si {base_b} veya üstünde kalır."
     )
 
-    # Late 5-Min Change (30m -> 35m)
+    # Last Digit of Score (Simple explanation)
+    mid_q3 = int(cfg["mid_q3_min"])
+    pre_ref_m = int(cfg["q3_pre_high"]) - 1
+    mod10 = int(cur_tot) % 10 if cur_tot > 0 else cfg["mod10_center_digits"][1]
+    c_digs = cfg["mod10_center_digits"]
+    r_digs = cfg["mod10_risk_digits"]
+    c_digs_str = ", ".join(str(x) for x in c_digs[:-1]) + f" veya {c_digs[-1]}"
+    r_digs_str = ", ".join(str(x) for x in r_digs[:-1]) + f" veya {r_digs[-1]}"
+    exp_rem_dec_val = float(cfg["exp_rem_decision"])
+
     if late_jump <= -1:
         pendulum_badge = f"🔄 Son 5 Dk'da Barem Düştü ({b_30m} ➔ {base_b} — Daha Fazla Düşmez!)"
         pendulum_tip = (
-            f"30. dakikada favori {b_30m} iken 35. dakikada {base_b} baremine düştü. "
-            f"62 maçlık veride son 5 dakikada baremi düşen maçların HİÇBİRİ (%0) bir alt barem olan {b_m1} aralığına düşmemiştir! "
-            f"%85.8 ihtimalle ya şu anki {base_b} bareminde kalır ya da eski {b_30m} baremine geri döner."
+            f"{pre_ref_m}. dakikada favori {b_30m} iken {dec_min}. dakikada {base_b} baremine düştü. "
+            f"Son bölümde baremi zaten düşen maçlarda bir alt barem olan {b_m1} aralığına düşüş nadirdir; "
+            f"çoğunlukla ya {base_b} bareminde kalır ya da eski {b_30m} baremine geri döner."
         )
     elif late_jump >= 1:
         pendulum_badge = f"🔄 Son 5 Dk'da Barem Yükseldi ({b_30m} ➔ {base_b} — Daha Fazla Çıkmaz!)"
         pendulum_tip = (
-            f"30. dakikada favori {b_30m} iken 35. dakikada {base_b} baremine yükseldi. "
-            f"Son 5 dakikada zaten yükseldiği için buradan bir üst bareme ({b_p1}) gitme ihtimali sadece %8.3'tür; maçların %75'i {base_b} veya {b_m1} aralığında kalır."
+            f"{pre_ref_m}. dakikada favori {b_30m} iken {dec_min}. dakikada {base_b} baremine yükseldi. "
+            f"Kapanışa doğru zaten yükseldiği için bir üst bareme ({b_p1}) gitme ihtimali düşer; {base_b} veya {b_m1} aralığında kalır."
         )
     else:
         pendulum_badge = f"⚖️ Son 5 Dk'dır Barem Sabit ({base_b})"
         pendulum_tip = (
-            f"30. dakikadan 35. dakikaya favori barem ({base_b}) hiç değişmedi. "
-            f"Böyle dengeli giden maçlarda direkt {base_b} baremi %53.5 oranında tutmaktadır."
+            f"{pre_ref_m}. dakikadan {dec_min}. dakikaya favori barem ({base_b}) hiç değişmedi. "
+            f"Böyle dengeli giden maçlarda direkt {base_b} baremi yüksek oranda tutmaktadır."
         )
 
-    # Last Digit of Score (Simple explanation)
-    mod10 = int(cur_tot) % 10 if cur_tot > 0 else 2
-    if cur_tot > 0 and float(elapsed_mins or 35.0) >= 30.0:
-        if mod10 in (1, 2, 3, 4):
+    if cur_tot > 0 and float(elapsed_mins or dec_min) >= mid_q3 - 5:
+        if mod10 in c_digs:
             mod10_badge = f"🎯 Skorun Son Rakamı Avantajlı ({cur_tot} ➔ Tam {base_b} Ortasına Düşüyor)"
             mod10_tip = (
-                f"Şu anki toplam skor ({cur_tot}) '{mod10}' rakamıyla bitiyor. Kalan sürede ortalama ~53 sayı atıldığında maç sonu skoru "
-                f"tam {base_b} bareminin ortasına (en güvenli yerine) denk geliyor! "
-                f"Skorun sonu 1, 2, 3 veya 4 ile biten maçlarda direkt {base_b} baremi %57.6 oranında tutmuştur."
+                f"Şu anki toplam skor ({cur_tot}) '{mod10}' rakamıyla bitiyor. Kalan sürede ortalama ~{exp_rem_dec_val:.0f} sayı atıldığında maç sonu skoru "
+                f"tam {base_b} bareminin ortasına (en güvenli yerine) denk geliyor! (Avantajlı rakamlar: {c_digs_str})."
             )
-        elif mod10 in (8, 9, 0):
+        elif mod10 in r_digs:
             mod10_badge = f"⚠️ Skorun Son Rakamı Sınırda ({cur_tot} ➔ {b_m1} Alt Barem Riski Var)"
             mod10_tip = (
-                f"Şu anki toplam skor ({cur_tot}) '{mod10}' rakamıyla bitiyor. Kalan sürede ortalama ~53 sayı eklendiğinde maç sonu skoru "
-                f"{base_b} bareminin en alt sınırına (bıçak sırtına) denk geliyor; sadece 2 sayı eksik atılsa bir alt barem olan {b_m1} olur! "
-                f"Bu yüzden skor sonu 8, 9 veya 0 olan maçlarda alt barem ({b_m1}) %43.8 oranında gelmiştir."
+                f"Şu anki toplam skor ({cur_tot}) '{mod10}' rakamıyla bitiyor. Kalan sürede ortalama ~{exp_rem_dec_val:.0f} sayı eklendiğinde maç sonu skoru "
+                f"{base_b} bareminin en alt sınırına denk geliyor; birkaç sayı eksik atılsa bir alt barem olan {b_m1} olur! (Sınır rakamları: {r_digs_str})."
             )
         else:
             mod10_badge = f"📐 Skorun Son Rakamı Normal ({cur_tot} ➔ {base_b} Üst Kısmına Yakın)"
             mod10_tip = (
-                f"Şu anki toplam skor ({cur_tot}) '{mod10}' rakamıyla bitiyor. Ortalama ~53 sayı eklendiğinde {base_b} bareminin orta-üst kısmına denk gelir "
-                f"({base_b} tutma oranı %53.8)."
+                f"Şu anki toplam skor ({cur_tot}) '{mod10}' rakamıyla bitiyor. Ortalama ~{exp_rem_dec_val:.0f} sayı eklendiğinde {base_b} bareminin orta-üst kısmına denk gelir."
             )
     else:
-        mod10_badge = f"🔢 Skorun Son Rakamı: ..{mod10} (30. Dakikadan Sonra Devreye Girer)"
+        mod10_badge = f"🔢 Skorun Son Rakamı: ..{mod10} ({mid_q3 - 5}. Dakikadan Sonra Devreye Girer)"
         mod10_tip = (
-            f"Maç 30-35. dakikaya geldiğinde toplam skorun son rakamına bakarak maç sonunun {base_b} bareminin tam ortasına mı "
+            f"Maç {mid_q3}-{dec_min}. dakikaya geldiğinde toplam skorun son rakamına bakarak maç sonunun {base_b} bareminin tam ortasına mı "
             f"yoksa {b_m1} alt sınırına mı düşeceğini otomatik hesaplar."
         )
 
@@ -1319,62 +1534,64 @@ def analyze_smart_35m_decision(
 
     gap = abs(int(score_gap or 0))
     if gap <= 5:
-        exp_rem_35 = 59.0
+        exp_rem_35 = float(cfg["exp_rem_clutch"])
         margin_badge = f"⚠️ Skor Çok Yakın: {gap} Sayı Fark (Faul & Uzatma Riski Var)"
         margin_tip = (
             f"İki takım arasındaki fark sadece {gap} sayı (0-5 arası başa baş maç). Son dakikalarda taktik fauller ve uzatma "
-            f"ihtimali yüzünden 35. dakikadan sonra ortalama 59 sayı atılır (normalden 6 sayı fazla) ve "
-            f"maçların üçte biri (%33) üst bareme ({b_p1}) kaçar. Bu yüzden başa baş maçlara BAHİS ALMAMAK (Pas Geçmek) en doğrusudur."
+            f"ihtimali yüzünden {dec_min}. dakikadan sonra ortalama {exp_rem_35:.1f} sayı atılır ve "
+            f"maçların önemli kısmı üst bareme ({b_p1}) kaçar. Bu yüzden başa baş maçlara BAHİS ALMAMAK (Pas Geçmek) en doğrusudur."
         )
     elif gap >= 18:
-        exp_rem_35 = 47.4
+        exp_rem_35 = float(cfg["exp_rem_blowout"])
         margin_badge = f"🧊 Fark Çok Açıldı: {gap} Sayı Fark (Maç Yavaşlar / Rölanti)"
         margin_tip = (
             f"Skor farkı {gap} sayıya (18+ sayı) çıktığında takımlar son çeyrekte tempoyu düşürür. "
-            f"35. dakikadan sonra ortalama sadece 47.4 sayı atılır (yakın maçtan 11.6 sayı daha az!). "
-            f"Üst bareme ({b_p1}) kaçma ihtimali sadece %5'tir; direkt {base_b} baremi %60 oranında tutar."
+            f"{dec_min}. dakikadan sonra ortalama sadece {exp_rem_35:.1f} sayı atılır; "
+            f"üst bareme ({b_p1}) kaçma ihtimali çok düşüktür ve {base_b} / {b_m1} bölgesi güçlenir."
         )
     elif gap >= 10:
-        exp_rem_35 = 53.5
+        exp_rem_35 = float(cfg["exp_rem_ctrl"])
         margin_badge = f"🛡️ Fark Kontrollü: {gap} Sayı Fark (Uzatma Riski Düşük)"
         margin_tip = f"Skor farkı {gap} sayı (10-17 arası); uzatma riski düşüktür. İki barem kapatılacaksa {base_b} ve bir alt barem {b_m1} birlikte çok güçlüdür."
     else:
-        exp_rem_35 = 53.0
+        exp_rem_35 = exp_rem_dec_val
         margin_badge = f"⚖️ Normal Skor Farkı: {gap} Sayı Fark"
-        margin_tip = f"Skor farkı {gap} sayı (6-9 arası); kalan sürede normal tempo (~53 sayı) beklenir."
+        margin_tip = f"Skor farkı {gap} sayı (6-9 arası); kalan sürede normal tempo (~{exp_rem_dec_val:.0f} sayı) beklenir."
 
     # Barem interior edge position
     fav_lo, fav_hi = barem_bounds.get(base_b, (201, 210))
-    fav_mid = (fav_lo + min(fav_hi, 240)) / 2.0
-    rem_mins_est = max(0.0, 48.0 - float(elapsed_mins or 35.0))
-    scaled_rem = exp_rem_35 * (rem_mins_est / 13.0) if rem_mins_est > 0 else 0.0
+    eff_lo = max(float(cfg["bar_lower_floor"]), float(fav_lo))
+    eff_hi = min(float(fav_hi), float(cfg["bar_upper_cap"]))
+    fav_mid = (eff_lo + eff_hi) / 2.0
+    rem_mins_est = max(0.0, float(cfg["total_minutes"]) - float(elapsed_mins or dec_min))
+    scaled_rem = exp_rem_35 * (rem_mins_est / float(cfg["rem_span_decision"])) if rem_mins_est > 0 else 0.0
     proj_tot_edge = float(cur_tot) + scaled_rem if cur_tot > 0 else fav_mid
     edge_offset = proj_tot_edge - fav_mid
 
-    if cur_tot > 0 and 28.0 <= float(elapsed_mins or 35.0) <= 36.5:
+    if cur_tot > 0 and (close_min_int - 8.0) <= float(elapsed_mins or dec_min) <= (close_min_int + 0.5):
         if edge_offset < -3.0:
             edge_badge = f"📐 Beklenen Bitiş: ~{proj_tot_edge:.0f} Sayı ({base_b} Alt Sınırında ➔ {b_m1} Riski Var)"
             edge_tip = (
                 f"Şu anki skor ({cur_tot}) + kalan sürede beklenen sayı (~{scaled_rem:.0f}) = ~{proj_tot_edge:.0f} sayı yapıyor. "
-                f"Bu sayı {base_b} bareminin en alt sınırında kaldığı için maçların %55.6'sı bir alt barem olan {b_m1} aralığına düşmektedir."
+                f"Bu sayı {base_b} bareminin alt sınırında kaldığı için bir alt barem olan {b_m1} aralığına düşme riski artar."
             )
         elif edge_offset > 3.0:
             edge_badge = f"📐 Beklenen Bitiş: ~{proj_tot_edge:.0f} Sayı ({base_b} Üst Kısmında)"
             edge_tip = (
                 f"Şu anki skor ({cur_tot}) + kalan sürede beklenen sayı (~{scaled_rem:.0f}) = ~{proj_tot_edge:.0f} sayı yapıyor. "
-                f"{base_b} bareminin orta-üst kısmında güçlü duruyor (%56 ihtimalle {base_b} tutar)."
+                f"{base_b} bareminin orta-üst kısmında güçlü duruyor."
             )
         else:
             edge_badge = f"🎯 Beklenen Bitiş: ~{proj_tot_edge:.0f} Sayı (Tam {base_b} Ortasında)"
             edge_tip = (
                 f"Şu anki skor ({cur_tot}) + kalan sürede beklenen sayı (~{scaled_rem:.0f}) = ~{proj_tot_edge:.0f} sayı ile "
-                f"tam {base_b} bareminin ortasına denk geliyor (%55.6 ihtimalle {base_b} tutar)."
+                f"tam {base_b} bareminin ortasına denk geliyor."
             )
     else:
-        edge_badge = f"⏱️ 35.Dk'dan Sonra Ortalama 53 Sayı Atılır (Bu Maçta Beklenen: ~{exp_rem_35:.0f} Sayı)"
+        edge_badge = f"⏱️ {dec_min}.Dk'dan Sonra Ortalama {exp_rem_dec_val:.0f} Sayı Atılır (Bu Maçta Beklenen: ~{exp_rem_35:.0f} Sayı)"
         edge_tip = (
-            "Geçmiş 62 maçta 35. dakikadan maç bitimine kadar ortalama 53.3 sayı atılmıştır "
-            "(yakın maçlarda 59 sayı, fark açık maçlarda 47.4 sayı). Maç 30-35. dakikaya geldiğinde burada tahmini maç sonu toplamı görünür."
+            f"{dec_min}. dakikadan maç bitimine kadar ortalama {exp_rem_dec_val:.1f} sayı atılır. "
+            f"Maç {mid_q3}-{dec_min}. dakikaya geldiğinde burada tahmini maç sonu toplamı görünür."
         )
 
     prev_shift = recent_chain[-1]["raw_shift"] if recent_chain else 0
@@ -1426,7 +1643,7 @@ def analyze_smart_35m_decision(
             f"1xBet {b_0} baremini kesin favori olarak fiyatladı veya kapattı (2. Favori {sec_b_clean} oranı {fav2_odd:.2f} seviyesinde). "
             f"Geçmiş maçlarda bu durumda {b_0} baremi %80-%100 oranında tutarken, açık kalan {sec_b_clean} baremi %0 (hiç tutmadı) ile tam bir tuzak olmuştur"
         )
-    elif gap <= 5 and float(elapsed_mins or 35.0) >= 30.0:
+    elif gap <= 5 and float(elapsed_mins or dec_min) >= mid_q3:
         zone_badge = f"⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: {gap} Sayı Fark)"
         zone_type = "PASS_CLUTCH"
         stake_badge = "0 TL (Pas Geç — Uzatma ve Faul Riski)"
@@ -1434,7 +1651,7 @@ def analyze_smart_35m_decision(
         backup_pick = dutch_pick
         conf_pct = 38.0
         reasons.append(
-            f"Maç başa baş gidiyor (fark sadece {gap} sayı). Son dakikalarda taktik fauller ve uzatma yüzünden normalden çok fazla sayı (ort. 59 sayı) atılıyor ve maçların %33'ü üst barem olan {b_p1} aralığına kaçıyor. Bu yüzden bu maça bahis almamak en güvenli karardır"
+            f"Maç başa baş gidiyor (fark sadece {gap} sayı). Son dakikalarda taktik fauller ve uzatma yüzünden normalden fazla sayı (ort. {exp_rem_35:.1f} sayı) atılıyor ve üst bareme ({b_p1}) kaçma riski artıyor. Bu yüzden bu maça bahis almamak en güvenli karardır"
         )
     elif odd_val >= 1.18 and odd_val < 1.85 and odd2_val < 4.50:
         zone_badge = f"⚠️ 1. FAVORİ ORANI ÇOK DÜŞÜK TUZAĞI ({b_0} Oranı: {odd_val:.2f})"
@@ -1444,7 +1661,7 @@ def analyze_smart_35m_decision(
         backup_pick = f"🛡️ {b_0} ile {sec_b_clean} İkisini Birden Kapat"
         conf_pct = 74.0
         reasons.append(
-            f"Şu an 1. Favori olan {b_0} bareminin oranı 1.18-1.85 tuzak aralığında ({odd_val:.2f}) ve 2. Favori {sec_b_clean} ({fav2_odd:.2f}) hemen yanında duruyor. Geçmiş maçlarda bu durumda 2. Favori olan {sec_b_clean} baremini oynamak %50 isabet ve +%72.2 net kâr sağladı"
+            f"Şu an 1. Favori olan {b_0} bareminin oranı 1.18-1.85 tuzak aralığında ({odd_val:.2f}) ve 2. Favori {sec_b_clean} ({fav2_odd:.2f}) hemen yanında duruyor"
         )
     elif odd_val >= 2.10 and sec_dir >= 1:
         zone_badge = f"🔥 ÇOK GÜÇLÜ SİNYAL: {b_0} BAREMİ ÖNDE (Oran: {odd_val:.2f})"
@@ -1454,17 +1671,17 @@ def analyze_smart_35m_decision(
         backup_pick = dutch_pick
         conf_pct = 88.0
         reasons.append(
-            f"Şu an en güçlü aday {b_0} baremi (Oran: {odd_val:.2f}) ve 2. favori üst barem olan {sec_b_clean} aralığında duruyor. Geçmişte bu durumdaki maçların %61'i direkt {b_0} aralığında bitti ve hiçbiri alt bareme ({b_m1}) düşmedi. İki barem kapatmak isterseniz {dutch_short} ikilisini seçebilirsiniz"
+            f"Şu an en güçlü aday {b_0} baremi (Oran: {odd_val:.2f}) ve 2. favori üst barem olan {sec_b_clean} aralığında duruyor. İki barem kapatmak isterseniz {dutch_short} ikilisini seçebilirsiniz"
         )
     elif gap >= 18 and odd_val >= 1.85:
         zone_badge = f"🔥 FARK AÇIK / MAÇ YAVAŞLADI SİNYALİ ({b_0} — Fark: {gap} Sayı)"
         zone_type = "SUPER_SIGNAL"
         stake_badge = f"2000 TL (Güçlü Sinyal — {b_0} Baremine)"
         primary_pick = f"🎯 Direkt {b_0} Baremini Oyna (Oran: {odd_val:.2f})"
-        backup_pick = f"🛡️ {b_0} ile {b_m1} İkisini Birden Kapat (%95 Tutar)"
+        backup_pick = f"🛡️ {b_0} ile {b_m1} İkisini Birden Kapat"
         conf_pct = 86.0
         reasons.append(
-            f"Skor farkı {gap} sayıya çıktığı için takımlar tempoyu düşürdü (kalan sürede ort. 47 sayı atılıyor). Bu durumdaki maçların %60'ı direkt {b_0} aralığında, %95'i ise {b_0} veya {b_m1} aralığında bitiyor"
+            f"Skor farkı {gap} sayıya çıktığı için takımlar son çeyrekte tempoyu düşürdü (kalan sürede ort. {exp_rem_35:.1f} sayı). {b_0} veya {b_m1} bölgesi çok güçlü"
         )
     elif odd_val > 1.0 and odd_val < 2.10 and sec_dir <= -1 and late_jump >= 0:
         zone_badge = f"⚠️ ALT BAREME KAYMA EĞİLİMİ ({b_m1} Daha Avantajlı)"
@@ -1474,9 +1691,9 @@ def analyze_smart_35m_decision(
         backup_pick = f"🛡️ {b_0} ile {b_m1} İkisini Birden Kapat"
         conf_pct = 76.0
         reasons.append(
-            f"1. Favori olan {b_0} oranı 2.10'un altında ({odd_val:.2f}) ve 2. Favori alt baremde ({b_m1}) duruyor. Böyle maçlarda {b_0} zarar ettirirken, bir alt barem olan {b_m1} aralığını oynamak düzenli kâr (+%16.6) sağladı"
+            f"1. Favori olan {b_0} oranı 2.10'un altında ({odd_val:.2f}) ve 2. Favori alt baremde ({b_m1}) duruyor"
         )
-    elif cur_tot > 0 and float(elapsed_mins or 35.0) >= 30.0 and (mod10 in (8, 9, 0)) and sec_dir <= -1 and odd_val < 2.25 and late_jump >= 0:
+    elif cur_tot > 0 and float(elapsed_mins or dec_min) >= mid_q3 - 5 and (mod10 in r_digs) and sec_dir <= -1 and odd_val < 2.25 and late_jump >= 0:
         zone_badge = f"📉 SKOR SINIRDA: {b_m1} ALT BAREME YAKIN (Skor: {cur_tot})"
         zone_type = "TRAP_LOW"
         stake_badge = f"1000 TL ({b_m1} Baremine Oyna)"
@@ -1484,7 +1701,7 @@ def analyze_smart_35m_decision(
         backup_pick = f"🛡️ {b_0} ile {b_m1} İkisini Birden Kapat"
         conf_pct = 75.0
         reasons.append(
-            f"Şu anki toplam skor ({cur_tot}) son rakamı nedeniyle kalan ~53 sayı eklendiğinde {b_0} bareminin en alt sınırında kalıyor ve piyasa da {b_m1} alt baremini işaret ediyor (%44 ihtimalle {b_m1} aralığına kayar)"
+            f"Şu anki toplam skor ({cur_tot}) son rakamı nedeniyle kalan ~{exp_rem_dec_val:.0f} sayı eklendiğinde {b_0} bareminin en alt sınırında kalıyor ve piyasa da {b_m1} alt baremini işaret ediyor"
         )
     elif 1.85 <= odd_val <= 2.79:
         zone_badge = f"💎 İDEAL ORAN: {b_0} BAREMİ ÖNDE (Oran: {odd_val:.2f})"
@@ -1492,7 +1709,7 @@ def analyze_smart_35m_decision(
         stake_badge = f"1000 TL ({b_0} Baremine Oyna)"
         primary_pick = f"🎯 Direkt {b_0} Baremini Oyna (Oran: {odd_val:.2f})"
         backup_pick = dutch_pick
-        conf_pct = 82.0 if mod10 in (1, 2, 3, 4) else 79.0
+        conf_pct = 82.0 if mod10 in c_digs else 79.0
         reasons.append(
             f"Şu an en güçlü aday {b_0} baremi (Oran: {odd_val:.2f}). Benzer maçların %55'i direkt {b_0} aralığında bitti. Garantiye almak için iki barem kapatmak isterseniz {dutch_short} ikilisini seçin (10 maçın 8'inde bu ikisinden biri tuttu)"
         )
@@ -1551,17 +1768,16 @@ def analyze_smart_35m_decision(
     }
 
 
-def analyze_matchup_live_summary(df_matches: pd.DataFrame, team_home: str, team_away: str) -> dict:
+def analyze_matchup_live_summary(df_matches: pd.DataFrame, team_home: str, team_away: str, league: str = "nba") -> dict:
     """
-    Compute concise H2H & 4th-quarter DNA summary for a live match card:
-    - Last 5 H2H total scores & average
-    - Most frequent H2H 20-point cluster & single barem
-    - Combined 4th-quarter average points (Slow Q4 <= 51.5 -> %86 Center/Lower; Fast Q4 >= 53.8)
+    Compute concise H2H & 4th-quarter DNA summary for a live match card.
     """
+    cfg = get_league_config(league)
+    avg_q4_lig = float(cfg["avg_q4_sum"])
     res = {
         "last5_str": "Veri bekleniyor",
         "top_cluster_str": "-",
-        "q4_pace_badge": "⚖️ 4. Çeyrek Ortalaması: ~52.4 Sayı",
+        "q4_pace_badge": f"⚖️ 4. Çeyrek Ortalaması: ~{avg_q4_lig:.1f} Sayı",
         "q4_pace_tip": "İki takımın 4. çeyrek sayı ortalaması.",
     }
     if df_matches is None or df_matches.empty or not team_home or not team_away:
@@ -1586,10 +1802,9 @@ def analyze_matchup_live_summary(df_matches: pd.DataFrame, team_home: str, team_
         avg_h2h = float(h2h["total_score"].mean())
         res["last5_str"] = f"{' • '.join(last5_scores)} (Ort: {avg_h2h:.1f})"
 
-        # Best 20-pt cluster in H2H
         best_c = None
         best_cp = -1.0
-        for c_name, c_lo, c_hi, _ in CLUSTER_RANGES:
+        for c_name, c_lo, c_hi, _ in cfg["cluster_ranges"]:
             p = float(((h2h["total_score"] >= c_lo) & (h2h["total_score"] <= c_hi)).mean() * 100.0)
             if p > best_cp:
                 best_cp = p
@@ -1597,7 +1812,6 @@ def analyze_matchup_live_summary(df_matches: pd.DataFrame, team_home: str, team_
         if best_c:
             res["top_cluster_str"] = f"{best_c} (%{best_cp:.0f} — {len(h2h)} Maç)"
 
-    # 2) Combined 4th-quarter pace (non-OT games)
     no_ot = df_m[df_m.get("is_ot", 0) == 0] if "is_ot" in df_m.columns else df_m
     hq4_s = pd.concat([
         no_ot[no_ot["home_team"] == th]["home_q4"],
@@ -1608,20 +1822,21 @@ def analyze_matchup_live_summary(df_matches: pd.DataFrame, team_home: str, team_
         no_ot[no_ot["away_team"] == ta]["away_q4"],
     ]).dropna()
 
-    q4_h_avg = float(hq4_s.mean()) if len(hq4_s) >= 5 else 26.2
-    q4_a_avg = float(aq4_s.mean()) if len(aq4_s) >= 5 else 26.2
+    def_q4_half = float(cfg["q4_half_default"])
+    q4_h_avg = float(hq4_s.mean()) if len(hq4_s) >= 5 else def_q4_half
+    q4_a_avg = float(aq4_s.mean()) if len(aq4_s) >= 5 else def_q4_half
     q4_sum = q4_h_avg + q4_a_avg
 
-    if q4_sum <= 51.6:
-        res["q4_pace_badge"] = f"🐢 Yavaş 4. Çeyrek ({q4_sum:.1f} Sayı ➔ %86 Favori/Alt Barem)"
+    if q4_sum <= float(cfg["q4_slow_max"]):
+        res["q4_pace_badge"] = f"🐢 Yavaş 4. Çeyrek ({q4_sum:.1f} Sayı ➔ Favori/Alt Barem Güçlü)"
         res["q4_pace_tip"] = (
-            f"Bu iki takımın 4. çeyrek ortalamaları toplamı {q4_sum:.1f} sayıdır (lig ortalaması 52.4'ten düşük). "
-            f"Yavaş 4. çeyrek takımlarının maçlarında son periyotta sayı patlaması yaşanmaz ve %85.7 oranında Favori veya 1 Alt Barem gelir!"
+            f"Bu iki takımın 4. çeyrek ortalamaları toplamı {q4_sum:.1f} sayıdır (lig ortalaması {avg_q4_lig:.1f}'ten düşük). "
+            f"Yavaş 4. çeyrek takımlarının maçlarında son periyotta sayı patlaması yaşanmaz!"
         )
-    elif q4_sum >= 53.6:
+    elif q4_sum >= float(cfg["q4_fast_min"]):
         res["q4_pace_badge"] = f"⚡ Hızlı 4. Çeyrek ({q4_sum:.1f} Sayı ➔ Yüksek Son Periyot Temposu)"
         res["q4_pace_tip"] = (
-            f"Bu iki takımın 4. çeyrek ortalamaları toplamı {q4_sum:.1f} sayıdır (lig ortalaması 52.4'ten yüksek). "
+            f"Bu iki takımın 4. çeyrek ortalamaları toplamı {q4_sum:.1f} sayıdır (lig ortalaması {avg_q4_lig:.1f}'ten yüksek). "
             f"Son periyotta hızlı hücum ettikleri için alt bareme düşme ihtimali azalır."
         )
     else:
@@ -1631,42 +1846,24 @@ def analyze_matchup_live_summary(df_matches: pd.DataFrame, team_home: str, team_
     return res
 
 
-def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
+def simulate_35m_strategies(df_log: pd.DataFrame, league: str = "nba") -> dict:
     """
-    Simulate 35th-minute betting strategies (1000 TL flat stake + tiered 0/1000/2000 TL bankroll)
-    across all COMPLETED matches in symmetry_analysis_log.csv, and build real analytical tables:
-    - Strategies comparison (v3 Selective, Tiered Bankroll, v3 All-Match, v2 Legacy, Pure 0, Smart Dutching v2, Fixed Dutching)
-    - Odds brackets (<1.85, 1.85-2.09, 2.10-2.34, >=2.35)
-    - 2nd Favorite direction brackets (-1 Lower vs +1 Upper)
-    - Score Margin brackets (0-5 Clutch/OT, 6-11 Normal, 12-17 High, 18+ Blowout)
-    - Barem interior edge brackets (Lower edge, Center, Upper edge)
-    - Minute-by-minute timing window ROI (18m, 24m, 30m, 32-33m Trap, 34-35m Closing)
-    - Drift (Q1 -> 35m) & Sequential Transitions
+    Simulate closing-minute betting strategies (1000 TL flat stake + tiered 0/1000/2000 TL bankroll)
+    across all COMPLETED matches in log CSV, and build real analytical tables.
     """
-    barem_names = [b[0] for b in BAREM_RANGES]
-    barem_bounds = {b[0]: (b[1], b[2]) for b in BAREM_RANGES}
-    b_cols = {
-        "160 Or Less": "odds_160_or_less",
-        "161-170": "odds_161_170",
-        "171-180": "odds_171_180",
-        "181-190": "odds_181_190",
-        "191-200": "odds_191_200",
-        "201-210": "odds_201_210",
-        "211-220": "odds_211_220",
-        "221-230": "odds_221_230",
-        "231+": "odds_231_plus",
-    }
-    p_cols = {
-        "160 Or Less": "model_prob_160_or_less",
-        "161-170": "model_prob_161_170",
-        "171-180": "model_prob_171_180",
-        "181-190": "model_prob_181_190",
-        "191-200": "model_prob_191_200",
-        "201-210": "model_prob_201_210",
-        "211-220": "model_prob_211_220",
-        "221-230": "model_prob_221_230",
-        "231+": "model_prob_231_plus",
-    }
+    cfg = get_league_config(league)
+    barem_names = [b[0] for b in cfg["barem_ranges"]]
+    barem_bounds = {b[0]: (b[1], b[2]) for b in cfg["barem_ranges"]}
+    b_cols = cfg["barem_odd_cols"]
+    p_cols = cfg["barem_prob_cols"]
+    dec_min = int(cfg["decision_min"])
+    closing_start = int(cfg["closing_start_min"])
+    pre_lo, pre_hi = int(cfg["q3_pre_low"]), int(cfg["q3_pre_high"])
+    min_clean_gid = int(cfg["min_clean_gid"])
+    exp_rem_dec = float(cfg["exp_rem_decision"])
+    c_digs = cfg["mod10_center_digits"]
+    m_digs = cfg["mod10_mid_digits"]
+    r_digs = cfg["mod10_risk_digits"]
 
     empty_res = {
         "total_matches": 0,
@@ -1693,7 +1890,7 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
 
     comp["_gid_num"] = comp["game_id"].astype(str).str.extract(r"(\d+)")[0].fillna(0).astype(int)
     comp["_min"] = comp["check_time"].astype(str).str.extract(r"Minute\s+(\d+)")[0].fillna(-1).astype(int)
-    comp = comp[comp["_gid_num"] >= 770265000].sort_values(by=["_gid_num", "_min"], ascending=[True, True], kind="stable")
+    comp = comp[comp["_gid_num"] >= min_clean_gid].sort_values(by=["_gid_num", "_min"], ascending=[True, True], kind="stable")
 
     def _parse_sc(s_val):
         try:
@@ -1718,33 +1915,32 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
     raw_records = []
     for gid, grp in comp.groupby("game_id", sort=False):
         first_r = grp.iloc[0]
-        cands = grp[grp["_min"] >= 32]
+        cands = grp[grp["_min"] >= closing_start]
         if cands.empty:
             continue
-        # Prefer latest 32+ min row that still has open odds (< 90.0) before 36m lock
         last_r = cands.iloc[-1]
         for _, cand_row in cands.iloc[::-1].iterrows():
             if any(1.0 < float(cand_row.get(b_cols[bn], 0.0) or 0.0) < 90.0 for bn in barem_names):
                 last_r = cand_row
                 break
-        cands30 = grp[(grp["_min"] >= 27) & (grp["_min"] <= 31)]
+        cands30 = grp[(grp["_min"] >= pre_lo) & (grp["_min"] <= pre_hi)]
         r30 = cands30.iloc[-1] if not cands30.empty else first_r
         o30_raw = {b_n: float(r30.get(b_cols[b_n], 99.0) or 99.0) for b_n in barem_names}
         p30_raw = {b_n: float(r30.get(p_cols[b_n], 0.0) or 0.0) for b_n in barem_names}
-        eff30, _ = resolve_effective_barem_odds(o30_raw, p30_raw)
+        eff30, _ = resolve_effective_barem_odds(o30_raw, p30_raw, league=league)
         b30 = min(eff30, key=eff30.get) if eff30 else str(r30.get("highest_prob_range", "")).strip()
 
         act_b = str(last_r.get("actual_range", "")).strip()
         o_open_raw = {b_n: float(first_r.get(b_cols[b_n], 99.0) or 99.0) for b_n in barem_names}
         p_open_raw = {b_n: float(first_r.get(p_cols[b_n], 0.0) or 0.0) for b_n in barem_names}
-        eff_open, _ = resolve_effective_barem_odds(o_open_raw, p_open_raw)
+        eff_open, _ = resolve_effective_barem_odds(o_open_raw, p_open_raw, league=league)
         open_b = min(eff_open, key=eff_open.get) if eff_open else str(first_r.get("highest_prob_range", "")).strip()
         if act_b not in barem_names:
             continue
 
         o_last_raw = {b_n: float(last_r.get(b_cols[b_n], 99.0) or 99.0) for b_n in barem_names}
         p_last_raw = {b_n: float(last_r.get(p_cols[b_n], 0.0) or 0.0) for b_n in barem_names}
-        odds_map, locked_fav_b = resolve_effective_barem_odds(o_last_raw, p_last_raw)
+        odds_map, locked_fav_b = resolve_effective_barem_odds(o_last_raw, p_last_raw, league=league)
         if not odds_map:
             continue
 
@@ -1783,12 +1979,14 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
         cur_tot35 = (s1 + s2) if s1 is not None else 0
         final_tot = (a1 + a2) if a1 is not None else 0
         rem_pts = (final_tot - cur_tot35) if (s1 is not None and a1 is not None) else None
-        min_val = int(last_r.get("_min", 35))
+        min_val = int(last_r.get("_min", dec_min))
         mod10 = cur_tot35 % 10
 
         fav_lo, fav_hi = barem_bounds[fav_b]
-        fav_mid = (fav_lo + min(fav_hi, 240)) / 2.0
-        proj_35 = cur_tot35 + 53.3 if cur_tot35 > 0 else fav_mid
+        eff_lo = max(float(cfg["bar_lower_floor"]), float(fav_lo))
+        eff_hi = min(float(fav_hi), float(cfg["bar_upper_cap"]))
+        fav_mid = (eff_lo + eff_hi) / 2.0
+        proj_35 = cur_tot35 + exp_rem_dec if cur_tot35 > 0 else fav_mid
         edge_offset = proj_35 - fav_mid
 
         is_locked_or_runaway = bool(locked_fav_b) or odd_0 < 1.18 or (odd_0 < 1.85 and sec_odd >= 4.50)
@@ -1833,16 +2031,16 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
         s_v3_all_ret += ret_v3_all
         s_v3_all_wins += int(hit_v3_all)
 
-        # 2b) v4 Deep Symmetry rule (adds Mod-10 Alt Sınır [8,9,0] + Late-Jump Pendulum guard)
+        # 2b) v4 Deep Symmetry rule (adds Mod-10 Alt Sınır + Late-Jump Pendulum guard)
         if is_locked_or_runaway:
             v4_b, v4_odd = fav_b, odd_0
         elif odd_0 < 1.85:
             v4_b, v4_odd = sec_b, sec_odd
         elif odd_0 < 2.10 and sec_dir <= -1 and late_jump >= 0:
             v4_b, v4_odd = m1_b, odd_m1
-        elif (mod10 in (8, 9, 0)) and sec_dir <= -1 and odd_0 < 2.25 and late_jump >= 0:
+        elif (mod10 in r_digs) and sec_dir <= -1 and odd_0 < 2.25 and late_jump >= 0:
             v4_b, v4_odd = m1_b, odd_m1
-            v3_rule_lbl = "📉 Skor Sınırda (..8/9/0) ➔ 1 Alt Barem"
+            v3_rule_lbl = f"📉 Skor Sınırda ({'/'.join(str(x) for x in r_digs)}) ➔ 1 Alt Barem"
         else:
             v4_b, v4_odd = fav_b, odd_0
         hit_v4 = act_b == v4_b
@@ -1958,7 +2156,7 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             {
                 "Maç": str(last_r.get("game_name", "")).replace(" (cyber)", ""),
                 "Kapanış Dk & Fark": f"{last_r.get('check_time', '')} ({margin35} Sayı Fark | Sonu ..{mod10})",
-                "35.Dk 1. Favori": fav_disp_lbl,
+                f"{dec_min}.Dk 1. Favori": fav_disp_lbl,
                 "2. Favori Nerede?": f"{sec_arrow} ({sec_odd:.2f})",
                 "🤖 Sistemin Önerdiği Barem": f"{v4_b} ({v4_odd:.2f}) [{v3_rule_lbl}]",
                 "Maçın Bittiği Barem": f"{act_b} ({last_r.get('actual_score', '')})",
@@ -2067,11 +2265,14 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
     ]
 
     # NEW SYMMETRY TABLE A: Last Digit of Score
+    c_digs_lbl = " - ".join(str(x) for x in c_digs)
+    m_digs_lbl = " - ".join(str(x) for x in m_digs)
+    r_digs_lbl = " - ".join(str(x) for x in r_digs)
     mod10_brackets = []
     for digits, lbl, advice in [
-        ((1, 2, 3, 4), "🎯 Skorun Son Rakamı 1 - 2 - 3 - 4 (Tam Barem Ortasına Düşer)", "💎 Kalan sürede ~53 sayı atılınca tam barem ortasına denk gelir: 1. Favori %57.6 tutar (+%22 net kâr)"),
-        ((5, 6, 7), "📐 Skorun Son Rakamı 5 - 6 - 7 (Barem Üst Kısmına Yakın)", "⚖️ Kalan sürede ~53 sayı atılınca baremin orta-üst kısmına denk gelir: 1. Favori %53.8 tutar (+%10.5 net kâr)"),
-        ((8, 9, 0), "⚠️ Skorun Son Rakamı 8 - 9 - 0 (Alt Sınırda Kalır / 1 Alt Barem Riski)", "📉 Kalan sürede ~53 sayı atılınca baremin en alt sınırında kalır (2 sayı az atılsa 1 Alt Barem olur!): 1 Alt Barem %43.8 gelir"),
+        (c_digs, f"🎯 Skorun Son Rakamı {c_digs_lbl} (Tam Barem Ortasına Düşer)", f"💎 Kalan sürede ~{exp_rem_dec:.0f} sayı atılınca tam barem ortasına denk gelir: 1. Favori çok güçlü!"),
+        (m_digs, f"📐 Skorun Son Rakamı {m_digs_lbl} (Barem Üst Kısmına Yakın)", f"⚖️ Kalan sürede ~{exp_rem_dec:.0f} sayı atılınca baremin orta-üst kısmına denk gelir."),
+        (r_digs, f"⚠️ Skorun Son Rakamı {r_digs_lbl} (Alt Sınırda Kalır / 1 Alt Barem Riski)", f"📉 Kalan sürede ~{exp_rem_dec:.0f} sayı atılınca baremin en alt sınırında kalır: 1 Alt Barem riski yükselir!"),
     ]:
         sub = [x for x in raw_records if x["mod10"] in digits]
         if sub:
@@ -2082,7 +2283,7 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             roi_0 = ((sum(x["odd_0"] for x in sub if x["shift"] == 0) - n_s) / n_s) * 100.0
             mod10_brackets.append(
                 {
-                    "35. Dk Toplam Skorun Son Rakamı": lbl,
+                    f"{dec_min}. Dk Toplam Skorun Son Rakamı": lbl,
                     "Maç Sayısı": n_s,
                     "🎯 1. Favori Tutma & Kâr": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s}) | Kâr: %{roi_0:+.1f}",
                     "📉 Alt Bareme Düşme": f"%{c_down/n_s*100:.1f} ({c_down}/{n_s})",
@@ -2251,11 +2452,11 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
 
     # 4. Barem Interior Edge Position
     edge_brackets = []
-    sub_35only = [x for x in raw_records if x["min35"] == 35]
+    sub_35only = [x for x in raw_records if x["min35"] >= dec_min - 1]
     for cond_fn, lbl, advice in [
-        (lambda x: x["edge_offset"] < -3.0, "📐 Baremin Alt Sınırında Kalıyor (Skor + 53 Sayı = Alt Sınırda)", "📉 DİKKAT: Maçların %55.6'sı 1 Alt Bareme Düşer (1. Favori -%24.6 Zarar Ettirir!)"),
-        (lambda x: -3.0 <= x["edge_offset"] <= 3.0, "🎯 Baremin Tam Ortasında (Skor + 53 Sayı = Tam Ortada)", "💎 GÜVENLİ BÖLGE: Maçların %55.6'sı Direkt 1. Favoride Biter (+%17.8 Kâr)"),
-        (lambda x: x["edge_offset"] > 3.0, "📐 Baremin Üst Kısmında (Skor + 53 Sayı = Üst Sınıra Yakın)", "📈 GÜÇLÜ FAVORİ: %56.3 Oranında 1. Favori Tutar (+%22.2 Kâr), %31.3 Üst Bareme Çıkar"),
+        (lambda x: x["edge_offset"] < -3.0, f"📐 Baremin Alt Sınırında Kalıyor (Skor + {exp_rem_dec:.0f} Sayı = Alt Sınırda)", "📉 DİKKAT: 1 Alt Bareme Düşme Riski Yüksektir!"),
+        (lambda x: -3.0 <= x["edge_offset"] <= 3.0, f"🎯 Baremin Tam Ortasında (Skor + {exp_rem_dec:.0f} Sayı = Tam Ortada)", "💎 GÜVENLİ BÖLGE: Direkt 1. Favoride Bitme Oranı Yüksektir"),
+        (lambda x: x["edge_offset"] > 3.0, f"📐 Baremin Üst Kısmında (Skor + {exp_rem_dec:.0f} Sayı = Üst Sınıra Yakın)", "📈 GÜÇLÜ FAVORİ: 1. Favori Güçlü ve Üst Barem Eğilimli"),
     ]:
         sub = [x for x in sub_35only if cond_fn(x)]
         if sub:
@@ -2276,13 +2477,17 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             )
 
     # 5. Minute-by-Minute Optimal Entry Window
+    m_early = int(cfg["early_q2_min"])
+    m_half = int(cfg["halftime_min"])
+    m_midq3 = int(cfg["mid_q3_min"])
+    m_trap = int(cfg["trap_min"])
     minute_windows = []
     for m_target, m_lbl, m_advice in [
-        (18, "⚡ 18. Dakika (2. Çeyrek Ortası — Erken Bahis)", "💎 Erken bahiste en kârlı dakika: 1. Favori (+%16.8 Kâr) ve İlk 2 Favori İkilisi (+%14.3 Kâr)"),
-        (24, "⏸️ 24. Dakika (Devre Arası)", "⚖️ 1. Favori kârlı (+%11.4 Kâr), devre arası tempo analizi için uygun"),
-        (30, "🕒 30. Dakika (3. Çeyrek Ortası)", "⚖️ Oranlar şekillenmeye başlar (%45.9 1. Favori tutma, +%5.8 Kâr)"),
-        (33, "🚨 32 - 33. Dakika (3. Çeyrek Sonu — TUZAK DAKİKA)", "⛔ BAHİS ALMA! Barem değişim anı olduğu için en çok yanılma ve zarar (-%17.1) bu dakikadadır"),
-        (35, "🔥 34 - 35. Dakika (Kapanış — EN YÜKSEK İSABET)", "🎯 Ana Karar Anı: 1. Favori (%50.8 Tutar), İlk 2 Favori İkilisi (%83.6 Tutar)"),
+        (m_early, f"⚡ {m_early}. Dakika (2. Çeyrek Ortası — Erken Bahis)", "💎 Erken bahis tempo penceresi"),
+        (m_half, f"⏸️ {m_half}. Dakika (Devre Arası)", "⚖️ Devre arası tempo analizi için uygun"),
+        (m_midq3, f"🕒 {m_midq3}. Dakika (3. Çeyrek Ortası)", "⚖️ Oranlar şekillenmeye başlar"),
+        (m_trap, f"🚨 {m_trap - 1} - {m_trap}. Dakika (3. Çeyrek Sonuna Doğru — Geçiş Anı)", "⚠️ Barem değişim anı olduğu için dikkatli olunmalı"),
+        (dec_min, f"🔥 {dec_min - 1} - {dec_min}. Dakika (Kapanış — EN YÜKSEK İSABET)", "🎯 Ana Karar Anı: Kapanış simetri kuralları burada çalışır"),
     ]:
         m_hits0, m_ret0, m_hits_d, m_ret_d, m_n = 0, 0.0, 0, 0.0, 0
         for gid, grp in comp.groupby("game_id", sort=False):
@@ -2295,10 +2500,10 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
                 continue
             om_raw = {b_n: float(r_m.get(b_cols[b_n], 0.0) or 0.0) for b_n in barem_names}
             pm_raw = {
-                b_n: float(r_m.get(b_cols[b_n].replace("odds_", "model_prob_"), 0.0) or 0.0)
+                b_n: float(r_m.get(p_cols[b_n], 0.0) or 0.0)
                 for b_n in barem_names
             }
-            om, _ = resolve_effective_barem_odds(om_raw, pm_raw)
+            om, _ = resolve_effective_barem_odds(om_raw, pm_raw, league=league)
             if not om:
                 continue
             sb = sorted(om.items(), key=lambda x: x[1])
@@ -2322,13 +2527,13 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
                 }
             )
 
-    # 6. Drift (Opening -> 35m Barem Change) Breakdown
+    # 6. Drift (Opening -> Closing Barem Change) Breakdown
     drift_brackets = []
     for cond_fn, lbl, advice in [
-        (lambda d: d >= 1, "📈 Maç Başından 35. Dakikaya Barem Yükseldi", "🎯 Maç Hızlı Gitti: 35. Dk Favorisi %58 Tutar (+%26.1 Kâr), Alt Bareme Nadiren Düşer"),
-        (lambda d: d == 0, "⚖️ Maç Başından 35. Dakikaya Barem Aynı Kaldı", "📉 Maçların %43'ü Alt Bareme Kayar ➔ 1. Favori ile 1 Alt Baremi Birlikte Kapatmak Güvenlidir"),
-        (lambda d: d == -1, "📉 Maç Başından 35. Dakikaya Barem 1 Kademe Düştü", "⚖️ %43 Yeni Favoride Kalır, %43 Tekrar Eski Üst Baremine Çıkar"),
-        (lambda d: d <= -2, "❄️ Maç Başından 35. Dakikaya Barem Çok Düştü (2-3 Kademe)", "🎯 Zaten Çok Düştüğü İçin Daha Fazla Düşmez; Yeni Favoride Dengelenir (+%14.1 Kâr)"),
+        (lambda d: d >= 1, f"📈 Maç Başından {dec_min}. Dakikaya Barem Yükseldi", f"🎯 Maç Hızlı Gitti: {dec_min}. Dk Favorisi Tutar, Alt Bareme Nadiren Düşer"),
+        (lambda d: d == 0, f"⚖️ Maç Başından {dec_min}. Dakikaya Barem Aynı Kaldı", "📉 Alt Bareme Kayma Riski Vardır ➔ 1. Favori ile 1 Alt Baremi Birlikte Kapatmak Güvenlidir"),
+        (lambda d: d == -1, f"📉 Maç Başından {dec_min}. Dakikaya Barem 1 Kademe Düştü", "⚖️ Yeni Favoride Kalır veya Eski Üst Baremine Çıkar"),
+        (lambda d: d <= -2, f"❄️ Maç Başından {dec_min}. Dakikaya Barem Çok Düştü (2-3 Kademe)", "🎯 Zaten Çok Düştüğü İçin Daha Fazla Düşmez; Yeni Favoride Dengelenir"),
     ]:
         sub = [x for x in raw_records if cond_fn(x["drift"])]
         if sub:
@@ -2339,7 +2544,7 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             c_up = sum(1 for x in sub if x["shift"] >= 1)
             drift_brackets.append(
                 {
-                    "Maç Başından 35. Dakikaya Barem Değişimi": lbl,
+                    f"Maç Başından {dec_min}. Dakikaya Barem Değişimi": lbl,
                     "Maç Sayısı": n_s,
                     "🎯 1. Favori Barem": f"%{c_0/n_s*100:.1f} ({c_0}/{n_s})",
                     "📉 1 Alt Barem": f"%{c_m1/n_s*100:.1f} ({c_m1}/{n_s})",
@@ -2392,12 +2597,19 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
     }
 
 
-def analyze_archive_4500_symmetry(df_hist: pd.DataFrame) -> dict:
+def analyze_archive_4500_symmetry(df_hist: pd.DataFrame, league: str = "nba") -> dict:
     """
-    Analyzes 4,550+ completed CyberLeague matches for deep mathematical symmetries in plain Turkish.
+    Analyzes completed historical archive matches for deep Mod-10 & Half-by-Half symmetries in plain Turkish.
     """
     if df_hist is None or df_hist.empty:
         return {"total_archive": 0, "mod10_36m": [], "half_symmetry": []}
+
+    cfg = get_league_config(league)
+    barem_names = [b[0] for b in cfg["barem_ranges"]]
+    rem_c = int(cfg["exp_rem_close"])
+    close_m = int(cfg["close_min_int"])
+    h1_slow = int(cfg["archive_h1_slow_max"])
+    h1_fast = int(cfg["archive_h1_fast_min"])
 
     df_h = df_hist.copy()
     for col in ["home_q1", "away_q1", "home_q2", "away_q2", "home_q3", "away_q3", "home_q4", "away_q4", "total_score"]:
@@ -2413,51 +2625,69 @@ def analyze_archive_4500_symmetry(df_hist: pd.DataFrame) -> dict:
     df_h["H1"] = df_h["Q1"] + df_h["Q2"]
     df_h["H2"] = df_h["Q3"] + df_h["Q4"]
     df_h["S36"] = df_h["H1"] + df_h["Q3"]
-    df_h = df_h[(df_h["total_score"] >= 140) & (df_h["S36"] >= 100)].copy()
+    df_h = df_h[
+        (df_h["total_score"] >= int(cfg["archive_min_total"]))
+        & (df_h["S36"] >= int(cfg["archive_min_s3"]))
+    ].copy()
     if df_h.empty:
         return {"total_archive": 0, "mod10_36m": [], "half_symmetry": []}
 
     df_h["s36_mod10"] = (df_h["S36"].astype(int)) % 10
+    df_h["act_b_idx"] = df_h["total_score"].apply(lambda x: barem_names.index(get_range_from_score(x, league=league)))
     mod10_rows = []
-    digit_notes = {
-        0: "⚖️ +52 sayı eklenince sonu ..2 olur (Baremin alt-orta kısmı): Beklenen Barem %40.3, 1 Alt Barem %39.7 başa baş",
-        1: "📉 +52 sayı eklenince sonu ..3 olur (Alt sınıra yakın): 1 Alt Barem (%38.7) ve Beklenen Barem (%36.9) dengeli",
-        2: "⚖️ +52 sayı eklenince sonu ..4 olur (Barem ortasına yakın): Üç yön dengeli (%36 Beklenen / %31 Alt / %32 Üst)",
-        3: "🎯 EN GÜVENLİ SON RAKAM (+52 eklenince sonu ..5 tam barem ortası olur): Beklenen Barem %45.3 (En Yüksek!), Alt %27.6 = Üst %27.1 eşit!",
-        4: "🎯 +52 sayı eklenince sonu ..6 olur (Barem ortası): Beklenen Barem %40.0, Üst Barem %33.8",
-        5: "📈 +52 sayı eklenince sonu ..7 olur (Orta-üst kısım): Beklenen Barem %40.7, Üst Barem %37.3",
-        6: "📈 +52 sayı eklenince sonu ..8 olur (Üst sınıra yakın): Beklenen Barem %41.1 ve Üst Barem %40.9 eşit!",
-        7: "🔥 +52 sayı eklenince sonu ..9 olur (Üst sınırda): 1 Üst Barem %46.0 ile öne geçer!",
-        8: "🔥 ÜST BAREME GEÇİŞ (+52 eklenince sonu ..0 barem tavanı olur): 1 sayı bile fazla atılsa Üst Bareme geçer (%51.6 Üst Barem!)",
-        9: "❄️ ALT BAREME DÜŞÜŞ (+52 eklenince sonu ..1 barem tabanı olur): 1 sayı bile az atılsa Alt Bareme düşer (%48.5 Alt Barem!)",
-    }
+    if league == "nba":
+        digit_notes = {
+            0: "⚖️ +52 sayı eklenince sonu ..2 olur (Baremin alt-orta kısmı): Beklenen Barem ve 1 Alt Barem dengeli",
+            1: "📉 +52 sayı eklenince sonu ..3 olur (Alt sınıra yakın): 1 Alt Barem ve Beklenen Barem dengeli",
+            2: "⚖️ +52 sayı eklenince sonu ..4 olur (Barem ortasına yakın)",
+            3: "🎯 EN GÜVENLİ SON RAKAM (+52 eklenince sonu ..5 tam barem ortası olur): Beklenen Barem oranı en yüksek!",
+            4: "🎯 +52 sayı eklenince sonu ..6 olur (Barem ortası)",
+            5: "📈 +52 sayı eklenince sonu ..7 olur (Orta-üst kısım)",
+            6: "📈 +52 sayı eklenince sonu ..8 olur (Üst sınıra yakın)",
+            7: "🔥 +52 sayı eklenince sonu ..9 olur (Üst sınırda): Üst bareme geçiş güçlü!",
+            8: "🔥 ÜST BAREME GEÇİŞ (+52 eklenince sonu ..0 barem tavanı olur)",
+            9: "❄️ ALT BAREME DÜŞÜŞ (+52 eklenince sonu ..1 barem tabanı olur)",
+        }
+    else:
+        digit_notes = {
+            0: "🎯 +37 sayı eklenince sonu ..7 olur (Orta-üst kısım): Beklenen Barem çok güçlü",
+            1: "📈 +37 sayı eklenince sonu ..8 olur (Üst sınıra yakın): 1 Üst Barem şansı yükselir",
+            2: "📈 +37 sayı eklenince sonu ..9 olur (Üst sınırda): Üst bareme taşma eğilimi yüksektir",
+            3: "🔥 ÜST BAREME GEÇİŞ (+37 eklenince sonu ..0 barem tavanı olur): En yüksek +1 Üst çıkış oranı!",
+            4: "❄️ ALT BAREME DÜŞÜŞ (+37 eklenince sonu ..1 barem tabanı olur): 1 Alt Bareme düşme oranı en yüksek!",
+            5: "📉 +37 sayı eklenince sonu ..2 olur (Alt sınıra yakın): 1 Alt Barem riski sürer",
+            6: "⚖️ +37 sayı eklenince sonu ..3 olur (Alt-orta): 1 Alt ve Merkez dengeli",
+            7: "🎯 +37 sayı eklenince sonu ..4 olur (Barem ortası): Beklenen Barem %53+ tutar",
+            8: "🎯 EN GÜVENLİ SON RAKAM (+37 eklenince sonu ..5 tam barem ortası olur): En yüksek Merkez tutma oranı (~%56)!",
+            9: "🎯 +37 sayı eklenince sonu ..6 olur (Barem ortası): Güvenli bölge",
+        }
+    ex_prefix = "15" if league == "nba" else "10"
     for d in range(10):
         sub = df_h[df_h["s36_mod10"] == d]
         if sub.empty:
             continue
-        exp_tot = sub["S36"] + 52
-        act_b_idx = (sub["total_score"] - 1) // 10
-        exp_b_idx = (exp_tot - 1) // 10
-        same_b = (act_b_idx == exp_b_idx).mean() * 100.0
-        down_b = (act_b_idx < exp_b_idx).mean() * 100.0
-        up_b = (act_b_idx > exp_b_idx).mean() * 100.0
+        exp_tot = sub["S36"] + rem_c
+        exp_b_idx = exp_tot.apply(lambda x: barem_names.index(get_range_from_score(x, league=league)))
+        same_b = (sub["act_b_idx"] == exp_b_idx).mean() * 100.0
+        down_b = (sub["act_b_idx"] < exp_b_idx).mean() * 100.0
+        up_b = (sub["act_b_idx"] > exp_b_idx).mean() * 100.0
         mod10_rows.append(
             {
-                "3. Çeyrek Sonu (36.Dk) Skorun Son Rakamı": f"Sonu ..{d} ile bitenler (Örn: 15{d})",
+                f"3. Çeyrek Sonu ({close_m}.Dk) Skorun Son Rakamı": f"Sonu ..{d} ile bitenler (Örn: {ex_prefix}{d})",
                 "Maç Sayısı": len(sub),
-                "Maç Sonu Beklenen Son Rakam (+52 Sayı)": f"..{(d + 2) % 10}",
+                f"Maç Sonu Beklenen Son Rakam (+{rem_c} Sayı)": f"..{(d + rem_c) % 10}",
                 "📉 Alt Bareme Düşme": f"%{down_b:.1f}",
                 "🎯 Beklenen Baremde Kalma": f"%{same_b:.1f}",
                 "📈 Üst Bareme Çıkma": f"%{up_b:.1f}",
-                "💡 4.550 Maçlık İstatistik Özeti": digit_notes.get(d, ""),
+                f"💡 {len(df_h)} Maçlık İstatistik Özeti": digit_notes.get(d, ""),
             }
         )
 
     half_rows = []
     for lbl, cond, note in [
-        ("❄️ İlk Yarı Az Sayı Çıktı (98 Sayı ve Altı)", df_h["H1"] <= 98, "📈 İkinci Yarı Hızlanır: 2. yarıda oyun açılır ve ilk yarıdan ortalama +12.6 sayı DAHA FAZLA atılır!"),
-        ("⚖️ İlk Yarı Normal Bitti (99 - 107 Sayı Arası)", (df_h["H1"] >= 99) & (df_h["H1"] <= 107), "🪞 İki Yarı Eşit Gider: 1. Yarı (103.0) ile 2. Yarı (105.4) neredeyse birebir aynı sayıda biter"),
-        ("🔥 İlk Yarı Çok Sayı Çıktı (108 Sayı ve Üstü)", df_h["H1"] >= 108, "🧊 İkinci Yarı Yavaşlar: 2. yarıda tempo düşer ve ilk yarıdan ortalama -8.4 sayı DAHA AZ atılır!"),
+        (f"❄️ İlk Yarı Az Sayı Çıktı ({h1_slow} Sayı ve Altı)", df_h["H1"] <= h1_slow, "📈 İkinci Yarı Hızlanır: Düşük ilk yarı sonrası 2. yarı daha açık oynanır!"),
+        (f"⚖️ İlk Yarı Normal Bitti ({h1_slow + 1} - {h1_fast - 1} Sayı Arası)", (df_h["H1"] > h1_slow) & (df_h["H1"] < h1_fast), "🪞 İki Yarı Dengeli Gider: 1. Yarı ile 2. Yarı yakın sayıda biter"),
+        (f"🔥 İlk Yarı Çok Sayı Çıktı ({h1_fast} Sayı ve Üstü)", df_h["H1"] >= h1_fast, "🧊 İkinci Yarı Yavaşlar: Çok yüksek ilk yarı sonrası 2. yarı tempo biraz dengelenir!"),
     ]:
         sub = df_h[cond]
         if sub.empty:
@@ -2479,3 +2709,324 @@ def analyze_archive_4500_symmetry(df_hist: pd.DataFrame) -> dict:
         "mod10_36m": mod10_rows,
         "half_symmetry": half_rows,
     }
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# TEAM-PAIR (H2H) HISTORY ENGINE (LEAGUE-AWARE)
+# ═════════════════════════════════════════════════════════════════════════════
+def analyze_team_pair_history(
+    df_matches: pd.DataFrame, team_home: str, team_away: str, last_n: int = 8, league: str = "nba"
+) -> dict:
+    """
+    Pair-based history: every finished game between the two teams (either direction).
+    Returns counts, average total, barem distribution, tempo vs league and a plain-Turkish hint.
+    """
+    res = {
+        "n": 0,
+        "avg_total": 0.0,
+        "std_total": 0.0,
+        "league_avg": 0.0,
+        "diff_vs_league": 0.0,
+        "top_barem": "-",
+        "top_barem_pct": 0.0,
+        "second_barem": "-",
+        "second_barem_pct": 0.0,
+        "barem_counts": {},
+        "avg_margin": 0.0,
+        "ot_rate": 0.0,
+        "avg_q4": 0.0,
+        "last_games": [],
+        "tempo_label": "⏳ Veri Bekleniyor",
+        "hint": "Bu iki takım daha önce karşılaşmamış; çift bazlı sinyal yok.",
+        "confidence": "none",
+    }
+    if df_matches is None or df_matches.empty or not team_home or not team_away:
+        return res
+    df_m = df_matches.copy()
+    for col in ["total_score", "margin", "is_ot", "home_q4", "away_q4", "home_total", "away_total"]:
+        if col in df_m.columns:
+            df_m[col] = pd.to_numeric(df_m[col], errors="coerce")
+    df_m = df_m.dropna(subset=["total_score"])
+    if df_m.empty:
+        return res
+    res["league_avg"] = round(float(df_m["total_score"].mean()), 1)
+
+    th = str(team_home).strip()
+    ta = str(team_away).strip()
+    h2h = df_m[
+        ((df_m["home_team"] == th) & (df_m["away_team"] == ta))
+        | ((df_m["home_team"] == ta) & (df_m["away_team"] == th))
+    ].copy()
+    if h2h.empty:
+        return res
+    if "date" in h2h.columns:
+        h2h = h2h.sort_values("date", kind="stable")
+
+    n = len(h2h)
+    tots = h2h["total_score"].astype(float)
+    avg_t = float(tots.mean())
+    res["n"] = n
+    res["avg_total"] = round(avg_t, 1)
+    res["std_total"] = round(float(tots.std()) if n > 1 else 0.0, 1)
+    res["diff_vs_league"] = round(avg_t - res["league_avg"], 1)
+
+    barems = tots.apply(lambda s: get_range_from_score(s, league=league))
+    counts = barems.value_counts()
+    res["barem_counts"] = {str(k): int(v) for k, v in counts.items()}
+    res["top_barem"] = str(counts.index[0])
+    res["top_barem_pct"] = round(float(counts.iloc[0]) / n * 100.0, 1)
+    if len(counts) > 1:
+        res["second_barem"] = str(counts.index[1])
+        res["second_barem_pct"] = round(float(counts.iloc[1]) / n * 100.0, 1)
+
+    if "margin" in h2h.columns:
+        res["avg_margin"] = round(float(h2h["margin"].abs().mean()), 1)
+    if "is_ot" in h2h.columns:
+        res["ot_rate"] = round(float((h2h["is_ot"].fillna(0) > 0).mean()) * 100.0, 1)
+    if "home_q4" in h2h.columns and "away_q4" in h2h.columns:
+        res["avg_q4"] = round(float((h2h["home_q4"] + h2h["away_q4"]).mean()), 1)
+
+    last_games = []
+    for _, r in h2h.tail(last_n).iloc[::-1].iterrows():
+        tot = int(r["total_score"])
+        last_games.append(
+            {
+                "Tarih": str(r.get("date", "")),
+                "Maç": f"{str(r.get('home_team', '')).replace(' (cyber)', '')} vs {str(r.get('away_team', '')).replace(' (cyber)', '')}",
+                "Skor": f"{int(r.get('home_total', 0) or 0)}-{int(r.get('away_total', 0) or 0)}",
+                "Toplam": tot,
+                "Barem": get_range_from_score(tot, league=league),
+            }
+        )
+    res["last_games"] = last_games
+
+    diff = res["diff_vs_league"]
+    thr_diff = 8.0 if league == "nba" else 6.0
+    if diff >= thr_diff:
+        res["tempo_label"] = f"🔥 Yüksek Skorlu Çift (Lig Ort. +{diff:.1f})"
+    elif diff <= -thr_diff:
+        res["tempo_label"] = f"🧊 Düşük Skorlu Çift (Lig Ort. {diff:.1f})"
+    else:
+        res["tempo_label"] = f"⚖️ Lig Ortalamasına Yakın ({diff:+.1f})"
+
+    if n >= 5:
+        res["confidence"] = "high"
+    elif n >= 3:
+        res["confidence"] = "medium"
+    else:
+        res["confidence"] = "low"
+
+    conf_txt = {
+        "high": "güvenilir örneklem",
+        "medium": "orta örneklem",
+        "low": "az örneklem — sadece ipucu olarak bakın",
+    }[res["confidence"]]
+    res["hint"] = (
+        f"{n} karşılaşmada ortalama {avg_t:.1f} sayı; en sık biten barem {res['top_barem']} "
+        f"(%{res['top_barem_pct']:.0f}). {res['tempo_label']} • {conf_txt}."
+    )
+    return res
+
+
+def build_team_pair_table(df_matches: pd.DataFrame, min_games: int = 2, league: str = "nba") -> pd.DataFrame:
+    """One row per unordered team pair with >= min_games finished games."""
+    if df_matches is None or df_matches.empty:
+        return pd.DataFrame()
+    df_m = df_matches.copy()
+    df_m["total_score"] = pd.to_numeric(df_m["total_score"], errors="coerce")
+    df_m = df_m.dropna(subset=["total_score", "home_team", "away_team"])
+    if df_m.empty:
+        return pd.DataFrame()
+    league_avg = float(df_m["total_score"].mean())
+    df_m["_pair"] = df_m.apply(
+        lambda r: " vs ".join(sorted([str(r["home_team"]).replace(" (cyber)", ""), str(r["away_team"]).replace(" (cyber)", "")])),
+        axis=1,
+    )
+    rows = []
+    for pair, g in df_m.groupby("_pair"):
+        if len(g) < min_games:
+            continue
+        tots = g["total_score"].astype(float)
+        bar = tots.apply(lambda s: get_range_from_score(s, league=league)).value_counts()
+        rows.append(
+            {
+                "Takım Çifti": pair,
+                "Maç": len(g),
+                "Ort. Toplam": round(float(tots.mean()), 1),
+                "Lig Farkı": f"{float(tots.mean()) - league_avg:+.1f}",
+                "En Sık Barem": f"{bar.index[0]} (%{bar.iloc[0] / len(g) * 100:.0f})",
+                "Min - Max": f"{int(tots.min())} - {int(tots.max())}",
+                "_sort": len(g),
+            }
+        )
+    if not rows:
+        return pd.DataFrame()
+    out = pd.DataFrame(rows).sort_values(["_sort", "Ort. Toplam"], ascending=[False, False]).drop(columns=["_sort"])
+    return out.reset_index(drop=True)
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# DATA VALIDATION ("HATA BEKÇİSİ") (LEAGUE-AWARE)
+# ═════════════════════════════════════════════════════════════════════════════
+def _parse_score_pair(s):
+    import re as _re
+
+    m = _re.search(r"(\d+)\s*[-:]\s*(\d+)", str(s))
+    if not m:
+        return None
+    return int(m.group(1)), int(m.group(2))
+
+
+def validate_symmetry_log(df_log: pd.DataFrame, league: str = "nba") -> dict:
+    """
+    Scans every minute-row of the barem log and flags suspicious records.
+    Severity: 🔴 Hata (veri yanlış olabilir) / 🟠 Uyarı (kontrol et) / 🔵 Bilgi.
+    """
+    import re as _re
+
+    cfg = get_league_config(league)
+    val_cols = [
+        (b[0], cfg["barem_odd_cols"][b[0]], cfg["barem_prob_cols"][b[0]])
+        for b in cfg["barem_ranges"]
+    ]
+    close_m_int = int(cfg["close_min_int"])
+    gap_lo = close_m_int - 8
+    out = {"issues": [], "n_rows": 0, "n_games": 0, "counts": {"🔴 Hata": 0, "🟠 Uyarı": 0, "🔵 Bilgi": 0}, "by_type": {}}
+    if df_log is None or df_log.empty:
+        return out
+
+    df = df_log.reset_index(drop=True).copy()
+    out["n_rows"] = len(df)
+    out["n_games"] = int(df["game_id"].nunique()) if "game_id" in df.columns else 0
+
+    def _add(sev, typ, row, detail, fix):
+        out["issues"].append(
+            {
+                "Önem": sev,
+                "Sorun Türü": typ,
+                "Maç": str(row.get("game_name", "")).replace(" (cyber)", ""),
+                "Maç Kodu": str(row.get("game_id", "")),
+                "Dakika": str(row.get("check_time", "")),
+                "Detay": detail,
+                "Önerilen Çözüm": fix,
+            }
+        )
+        out["counts"][sev] = out["counts"].get(sev, 0) + 1
+        out["by_type"][typ] = out["by_type"].get(typ, 0) + 1
+
+    for _, r in df.iterrows():
+        o_d, p_d = {}, {}
+        for b, oc, pc in val_cols:
+            try:
+                o_d[b] = float(r.get(oc, 99.0) or 99.0)
+            except Exception:
+                o_d[b] = 99.0
+            try:
+                p_d[b] = float(r.get(pc, 0.0) or 0.0)
+            except Exception:
+                p_d[b] = 0.0
+
+        stored_fav = str(r.get("highest_prob_range", "")).strip()
+        try:
+            sym = analyze_barem_symmetry(o_d, p_d, league=league)
+        except Exception:
+            sym = {}
+        new_fav = sym.get("highest_prob_range")
+        if new_fav and stored_fav and new_fav != stored_fav:
+            _add(
+                "🔴 Hata",
+                "Favori Uyuşmazlığı",
+                r,
+                f"Kayıtlı favori {stored_fav}, motorun hesapladığı {new_fav}",
+                "Geçmiş kayıtları yeniden hesapla (otomatik onarım)",
+            )
+
+        if stored_fav in o_d:
+            fo = o_d[stored_fav]
+            if 9.0 <= fo < 85.0 and not sym.get("is_locked_fav", False):
+                _add(
+                    "🟠 Uyarı",
+                    "Favori Oranı Çok Yüksek",
+                    r,
+                    f"Favori {stored_fav} oranı {fo:.2f}; gerçek favori kilitlenmiş olabilir",
+                    "Komşu barem oranlarına ve 99.0 kilitlerine bak",
+                )
+            if fo < 1.0:
+                _add("🔴 Hata", "Geçersiz Oran", r, f"{stored_fav} oranı {fo:.2f} (<1.00)", "Satırı sil / yeniden çek")
+
+        open_cnt = sum(1 for v in o_d.values() if 1.0 < v < 85.0)
+        mm = _re.search(r"Minute\s+(\d+)", str(r.get("check_time", "")))
+        mn = int(mm.group(1)) if mm else None
+        if open_cnt == 0 and mn is not None and mn < close_m_int - 6:
+            _add("🟠 Uyarı", "Hiç Açık Oran Yok", r, "Tüm baremler kapalı (99.0)", "Kaynak bozuk olabilir; kaydı kontrol et")
+
+        if str(r.get("status", "")) == "COMPLETED":
+            act_sc = str(r.get("actual_score", "")).strip()
+            act_rg = str(r.get("actual_range", "")).strip()
+            if not act_rg or act_rg == "nan":
+                _add("🔴 Hata", "Biten Maçta Sonuç Yok", r, "COMPLETED ama actual_range boş", "Sonuçları yeniden çek")
+            else:
+                pair = _parse_score_pair(act_sc)
+                if pair:
+                    exp_rg = get_range_from_score(pair[0] + pair[1], league=league)
+                    if exp_rg != act_rg:
+                        _add(
+                            "🔴 Hata",
+                            "Sonuç Barem Uyuşmazlığı",
+                            r,
+                            f"Skor {act_sc} = {pair[0] + pair[1]} sayı ➔ {exp_rg}, kayıt {act_rg}",
+                            "actual_range değerini düzelt",
+                        )
+
+    if "game_id" in df.columns and "check_time" in df.columns:
+        df["_min"] = df["check_time"].astype(str).str.extract(r"Minute\s+(\d+)")[0].astype(float)
+        for gid, g in df.groupby("game_id", sort=False):
+            g = g.sort_values("_min", kind="stable")
+            last_row = g.iloc[-1]
+            mins = g["_min"].dropna().tolist()
+            for a, b in zip(mins, mins[1:]):
+                if b - a > 3 and a >= gap_lo and b <= close_m_int:
+                    rr = g[g["_min"] == b].iloc[0]
+                    _add(
+                        "🔵 Bilgi",
+                        "Dakika Atlaması",
+                        rr,
+                        f"{int(a)}. dakikadan {int(b)}. dakikaya atlandı ({int(b - a)} dk boşluk)",
+                        "Tarama gecikmesi; kritik değilse yok say",
+                    )
+                    break
+            prev_tot = None
+            for _, rr in g.iterrows():
+                pr = _parse_score_pair(rr.get("current_score", ""))
+                if not pr:
+                    continue
+                tot = pr[0] + pr[1]
+                if prev_tot is not None and tot < prev_tot - 1:
+                    _add(
+                        "🔴 Hata",
+                        "Skor Geriye Gitti",
+                        rr,
+                        f"Toplam skor {prev_tot} ➔ {tot} düştü",
+                        "Yanlış eşleşen maç satırı olabilir; kontrol et",
+                    )
+                    break
+                prev_tot = tot
+            if "actual_score" in g.columns:
+                acts = {str(x).strip() for x in g["actual_score"].dropna().tolist() if str(x).strip() not in ("", "nan")}
+                if len(acts) > 1:
+                    _add(
+                        "🔴 Hata",
+                        "Maç İçinde Farklı Final Skoru",
+                        last_row,
+                        f"Aynı maçta {len(acts)} farklı sonuç: {', '.join(sorted(acts))}",
+                        "Doğru sonucu tek değere eşitle",
+                    )
+
+        dups = df.duplicated(subset=["game_id", "check_time"], keep=False)
+        if dups.any():
+            rr = df[dups].iloc[0]
+            _add("🟠 Uyarı", "Tekrarlı Kayıt", rr, f"{int(dups.sum())} satır aynı maç + dakika", "Yinelenenleri temizle")
+
+    sev_order = {"🔴 Hata": 0, "🟠 Uyarı": 1, "🔵 Bilgi": 2}
+    out["issues"].sort(key=lambda x: (sev_order.get(x["Önem"], 9), x["Maç Kodu"]))
+    return out

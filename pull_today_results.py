@@ -19,6 +19,41 @@ CSV_PATH = os.path.join(BASE_DIR, "matches_data.csv" if _IS_GH_ACTIONS else "run
 LOG_CSV_PATH = os.path.join(BASE_DIR, "symmetry_analysis_log.csv" if _IS_GH_ACTIONS else "runtime_symmetry_log.csv")
 MIRROR_CACHE_PATH = os.path.join(BASE_DIR, "mirror_cache.json")
 
+_LEAGUE_API_META = {
+    "nba": {
+        "champ_id": "2935701",
+        "min_total": 100,
+        "matches_seed": "matches_data.csv",
+        "matches_runtime": "runtime_matches_data.csv",
+        "log_seed": "symmetry_analysis_log.csv",
+        "log_runtime": "runtime_symmetry_log.csv",
+    },
+    "euro": {
+        "champ_id": "2983166",
+        "min_total": 60,
+        "matches_seed": "euro_matches_data.csv",
+        "matches_runtime": "runtime_euro_matches_data.csv",
+        "log_seed": "euro_symmetry_log.csv",
+        "log_runtime": "runtime_euro_symmetry_log.csv",
+    },
+}
+
+
+def _resolve_results_paths(league: str = "nba") -> tuple[str, str, str, str, int]:
+    meta = _LEAGUE_API_META.get(league, _LEAGUE_API_META["nba"])
+    m_file = meta["matches_seed"] if _IS_GH_ACTIONS else meta["matches_runtime"]
+    l_file = meta["log_seed"] if _IS_GH_ACTIONS else meta["log_runtime"]
+    m_path = os.path.join(BASE_DIR, m_file)
+    l_path = os.path.join(BASE_DIR, l_file)
+    seed_m = os.path.join(BASE_DIR, meta["matches_seed"])
+    if not _IS_GH_ACTIONS and not os.path.exists(m_path) and os.path.exists(seed_m):
+        try:
+            with open(seed_m, "rb") as src, open(m_path, "wb") as dst:
+                dst.write(src.read())
+        except Exception:
+            pass
+    return m_path, l_path, meta["matches_seed"], meta["champ_id"], int(meta["min_total"])
+
 TEAM_STARS = {
     "Boston Celtics (cyber)": ["Tatum Cyber", "Brown Cyber", "White Cyber"],
     "Golden State Warriors (cyber)": ["Steph Cyber", "Green Cyber", "Kuminga Cyber"],
@@ -135,15 +170,23 @@ def _open_keepalive_results_conn(ctx):
         return conn, dom
 
 
-def pull_today_results(only_tracked=False, days_back=1) -> int:
+def _settle_for_league(league: str):
+    try:
+        return auto_settle_checkpoints(league=league)
+    except TypeError:
+        return auto_settle_checkpoints()
+
+
+def pull_today_results(only_tracked=False, days_back=1, league="nba") -> int:
     """
-    Fetch completed NBA 2K26 CyberLeague games via a single persistent Keep-Alive SSL socket.
-    Pulls 1 day in ~0.1s or 125 days (4+ months, ~4,400 matches) in ~12s with zero rate-limiting.
+    Fetch completed cyber basketball games via a single persistent Keep-Alive SSL socket.
+    Supports both NBA 2K26 CyberLeague ('nba') and NBA 2K26 Cyber Euro League ('euro').
     """
+    matches_csv_path, log_csv_path, matches_seed_name, champ_id, min_total_score = _resolve_results_paths(league)
     now = int(time.time())
     base_date_to = (now // 300) * 300 + 300
     ctx = ssl._create_unverified_context()
-    days_back = max(1, min(150, int(days_back)))
+    days_back = max(1, min(200, int(days_back)))
 
     all_raw_games = []
     conn, host_hdr = _open_keepalive_results_conn(ctx)
@@ -151,7 +194,7 @@ def pull_today_results(only_tracked=False, days_back=1) -> int:
     for d_idx in range(days_back):
         w_to = base_date_to - (d_idx * 86400)
         w_from = w_to - 86400
-        path = f"/service-api/result/web/api/v3/games?champId=2935701&dateFrom={w_from}&dateTo={w_to}&lng=en&ref=110"
+        path = f"/service-api/result/web/api/v3/games?champId={champ_id}&dateFrom={w_from}&dateTo={w_to}&lng=en&ref=110"
         for attempt in range(2):
             try:
                 conn.request(
@@ -184,13 +227,13 @@ def pull_today_results(only_tracked=False, days_back=1) -> int:
         pass
 
     if not all_raw_games:
-        auto_settle_checkpoints()
+        _settle_for_league(league)
         return 0
 
     tracked_ids = set()
-    if only_tracked and os.path.exists(LOG_CSV_PATH) and os.path.getsize(LOG_CSV_PATH) > 0:
+    if only_tracked and os.path.exists(log_csv_path) and os.path.getsize(log_csv_path) > 0:
         try:
-            with open(LOG_CSV_PATH, "r", encoding="utf-8") as f:
+            with open(log_csv_path, "r", encoding="utf-8") as f:
                 for row in csv.DictReader(f):
                     gid = str(row.get("game_id", "")).strip()
                     if gid:
@@ -200,9 +243,9 @@ def pull_today_results(only_tracked=False, days_back=1) -> int:
 
     existing_ids = set()
     all_matches = []
-    if os.path.exists(CSV_PATH) and os.path.getsize(CSV_PATH) > 0:
+    if os.path.exists(matches_csv_path) and os.path.getsize(matches_csv_path) > 0:
         try:
-            with open(CSV_PATH, "r", encoding="utf-8") as f:
+            with open(matches_csv_path, "r", encoding="utf-8") as f:
                 for row in csv.DictReader(f):
                     if row.get("game_id"):
                         existing_ids.add(row["game_id"].strip())
@@ -248,7 +291,7 @@ def pull_today_results(only_tracked=False, days_back=1) -> int:
 
             home_total = int(score_match.group(1))
             away_total = int(score_match.group(2))
-            if home_total == away_total or (home_total + away_total) < 100:
+            if home_total == away_total or (home_total + away_total) < min_total_score:
                 continue
 
             quarters_raw = score_match.group(3).split(",")
@@ -326,15 +369,16 @@ def pull_today_results(only_tracked=False, days_back=1) -> int:
         ]
         all_matches.extend(new_games)
         all_matches = sorted(all_matches, key=lambda x: str(x.get("date", "")))
-        with open(CSV_PATH, "w", encoding="utf-8", newline="") as f:
+        with open(matches_csv_path, "w", encoding="utf-8", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=headers_csv)
             writer.writeheader()
             writer.writerows(all_matches)
-        print(f"Added {len(new_games)} completed games (tz fixed: {tz_fixed_count}) to matches_data.csv (Total: {len(all_matches)}).")
+        print(f"[{league.upper()}] Added {len(new_games)} completed games (tz fixed: {tz_fixed_count}) to {matches_seed_name} (Total: {len(all_matches)}).")
 
-    auto_settle_checkpoints()
+    _settle_for_league(league)
     return len(new_games)
 
 
 if __name__ == "__main__":
-    pull_today_results(only_tracked=False, days_back=3)
+    pull_today_results(only_tracked=False, days_back=3, league="nba")
+    pull_today_results(only_tracked=False, days_back=3, league="euro")

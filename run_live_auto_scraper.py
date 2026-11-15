@@ -22,6 +22,8 @@ from period_predictor import (
     BAREM_RANGES,
     analyze_barem_symmetry,
     build_q3_q4_streak_signal,
+    get_csv_headers,
+    get_league_config,
     get_range_from_score,
     predict_live_inplay,
 )
@@ -34,51 +36,53 @@ from update_all_checkpoints import auto_settle_checkpoints
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 _IS_GH_ACTIONS = os.environ.get("GITHUB_ACTIONS") == "true"
-CSV_PATH = os.path.join(BASE_DIR, "symmetry_analysis_log.csv" if _IS_GH_ACTIONS else "runtime_symmetry_log.csv")
-MATCHES_CSV_PATH = os.path.join(BASE_DIR, "matches_data.csv" if _IS_GH_ACTIONS else "runtime_matches_data.csv")
+
+
+def _get_scraper_paths(league: str = "nba") -> dict:
+    """Resolve runtime/GH Actions paths for a given league without cross-contamination."""
+    cfg = get_league_config(league)
+    files = cfg["files"]
+    key = cfg["key"]
+    csv_path = os.path.join(BASE_DIR, files["log_seed"] if _IS_GH_ACTIONS else files["log_runtime"])
+    matches_path = os.path.join(BASE_DIR, files["matches_seed"] if _IS_GH_ACTIONS else files["matches_runtime"])
+    state_name = files["state_file"] if _IS_GH_ACTIONS else ("runtime_live_state.json" if key == "nba" else "runtime_euro_live_state.json")
+    ts_name = "match_log_timestamps.json" if key == "nba" else "euro_match_log_timestamps.json"
+    return {
+        "csv_path": csv_path,
+        "seed_csv": os.path.join(BASE_DIR, files["log_seed"]),
+        "cloud_csv": os.path.join(BASE_DIR, files["log_cloud"]),
+        "matches_path": matches_path,
+        "seed_matches": os.path.join(BASE_DIR, files["matches_seed"]),
+        "cloud_matches": os.path.join(BASE_DIR, files["matches_cloud"]),
+        "state_file": os.path.join(BASE_DIR, state_name),
+        "ts_file": os.path.join(BASE_DIR, ts_name),
+    }
+
+
+_NBA_PATHS = _get_scraper_paths("nba")
+CSV_PATH = _NBA_PATHS["csv_path"]
+MATCHES_CSV_PATH = _NBA_PATHS["matches_path"]
 CACHE_FILE = os.path.join(BASE_DIR, "match_detail_cache.json")
-TS_FILE = os.path.join(BASE_DIR, "match_log_timestamps.json")
-LIVE_STATE_FILE = os.path.join(BASE_DIR, "live_matches_state.json" if _IS_GH_ACTIONS else "runtime_live_state.json")
-
-CSV_HEADERS = [
-    "game_id",
-    "game_name",
-    "date",
-    "check_time",
-    "current_score",
-    "odds_160_or_less",
-    "odds_161_170",
-    "odds_171_180",
-    "odds_181_190",
-    "odds_191_200",
-    "odds_201_210",
-    "odds_211_220",
-    "odds_221_230",
-    "odds_231_plus",
-    "model_prob_160_or_less",
-    "model_prob_161_170",
-    "model_prob_171_180",
-    "model_prob_181_190",
-    "model_prob_191_200",
-    "model_prob_201_210",
-    "model_prob_211_220",
-    "model_prob_221_230",
-    "model_prob_231_plus",
-    "highest_prob_range",
-    "value_range",
-    "best_cluster_name",
-    "best_cluster_prob",
-    "actual_score",
-    "actual_range",
-    "status",
-]
+TS_FILE = _NBA_PATHS["ts_file"]
+LIVE_STATE_FILE = _NBA_PATHS["state_file"]
+CSV_HEADERS = get_csv_headers("nba")
 
 
-def init_csv():
-    if not os.path.exists(CSV_PATH) or os.path.getsize(CSV_PATH) == 0:
-        with open(CSV_PATH, mode="w", newline="", encoding="utf-8") as f:
+def init_csv(league: str = "nba"):
+    paths = _get_scraper_paths(league)
+    csv_path = paths["csv_path"]
+    if (not os.path.exists(csv_path) or os.path.getsize(csv_path) == 0) and not _IS_GH_ACTIONS:
+        if os.path.exists(paths["seed_csv"]) and os.path.getsize(paths["seed_csv"]) > 0:
+            try:
+                import shutil
+                shutil.copyfile(paths["seed_csv"], csv_path)
+            except Exception:
+                pass
+    if not os.path.exists(csv_path) or os.path.getsize(csv_path) == 0:
+        headers = get_csv_headers(league)
+        with open(csv_path, mode="w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
-            writer.writerow(CSV_HEADERS)
+            writer.writerow(headers)
 
 
 def _extract_minute_num(check_time_str: str) -> int:
@@ -86,27 +90,36 @@ def _extract_minute_num(check_time_str: str) -> int:
     return int(m.group(1)) if m else 0
 
 
-def upsert_symmetry_log_row(new_row: dict):
-    """Thread-safe wrapper: serialises all read-modify-write cycles on symmetry_analysis_log.csv."""
+def upsert_symmetry_log_row(new_row: dict, league: str = "nba"):
+    """Thread-safe wrapper: serialises all read-modify-write cycles on a league's symmetry log CSV."""
     with _FILE_LOCK:
-        _upsert_symmetry_log_row_unlocked(new_row)
+        _upsert_symmetry_log_rows_unlocked([new_row], league=league)
 
 
-def _upsert_symmetry_log_row_unlocked(new_row: dict):
+def _upsert_symmetry_log_row_unlocked(new_row: dict, league: str = "nba"):
+    _upsert_symmetry_log_rows_unlocked([new_row], league=league)
+
+
+def _upsert_symmetry_log_rows_unlocked(new_rows: list, league: str = "nba"):
     """
-    Upsert a checkpoint row by (game_id, check_time) so simultaneous games never create
+    Batch upsert checkpoint rows by (game_id, check_time) so simultaneous games never create
     duplicate minute rows and rows stay cleanly grouped by game_id and sorted by minute.
     """
-    init_csv()
+    if not new_rows:
+        return
+    init_csv(league)
+    cfg = get_league_config(league)
+    csv_path = _get_scraper_paths(league)["csv_path"]
+    headers = get_csv_headers(league)
+    min_clean_gid = int(cfg.get("min_clean_gid", 0)) if cfg["key"] == "nba" else 770000000
+
     existing_rows = []
-    if os.path.exists(CSV_PATH) and os.path.getsize(CSV_PATH) > 0:
+    if os.path.exists(csv_path) and os.path.getsize(csv_path) > 0:
         try:
-            with open(CSV_PATH, mode="r", newline="", encoding="utf-8") as f:
+            with open(csv_path, mode="r", newline="", encoding="utf-8") as f:
                 existing_rows = list(csv.DictReader(f))
         except Exception:
             existing_rows = []
-
-    MIN_CLEAN_GID = 770265000
 
     def _gid_int(g_str: str) -> int:
         m = re.search(r"(\d+)", str(g_str or ""))
@@ -117,45 +130,96 @@ def _upsert_symmetry_log_row_unlocked(new_row: dict):
     for r in existing_rows:
         gid = str(r.get("game_id", "")).strip()
         ctime = str(r.get("check_time", "")).strip()
-        if not gid or _gid_int(gid) < MIN_CLEAN_GID:
+        if not gid or _gid_int(gid) < min_clean_gid:
             continue
         if gid not in game_order:
             game_order.append(gid)
-        dedup_map[(gid, ctime)] = r
+        dedup_map[(gid, ctime)] = {h: r.get(h, "") for h in headers}
 
-    new_gid = str(new_row.get("game_id", "")).strip()
-    if _gid_int(new_gid) < MIN_CLEAN_GID:
+    changed = False
+    for new_row in new_rows:
+        new_gid = str(new_row.get("game_id", "")).strip()
+        if _gid_int(new_gid) < min_clean_gid:
+            continue
+        new_ctime = str(new_row.get("check_time", "")).strip()
+        if new_gid not in game_order:
+            game_order.append(new_gid)
+
+        clean_new = {h: new_row.get(h, "") for h in headers}
+        if (new_gid, new_ctime) in dedup_map:
+            prev = dedup_map[(new_gid, new_ctime)]
+            if prev.get("status") == "COMPLETED":
+                clean_new["actual_score"] = prev.get("actual_score", "")
+                clean_new["actual_range"] = prev.get("actual_range", "")
+                clean_new["status"] = "COMPLETED"
+        dedup_map[(new_gid, new_ctime)] = clean_new
+        changed = True
+
+    if not changed:
         return
-    new_ctime = str(new_row.get("check_time", "")).strip()
-    if new_gid not in game_order:
-        game_order.append(new_gid)
 
-    if (new_gid, new_ctime) in dedup_map:
-        prev = dedup_map[(new_gid, new_ctime)]
-        if prev.get("status") == "COMPLETED":
-            new_row["actual_score"] = prev.get("actual_score", "")
-            new_row["actual_range"] = prev.get("actual_range", "")
-            new_row["status"] = "COMPLETED"
-    dedup_map[(new_gid, new_ctime)] = new_row
-
-    # Group by game_id (in order of game appearance) and sort each game's checkpoints by minute
     final_rows = []
     for gid in game_order:
         g_rows = [r for (g, _), r in dedup_map.items() if g == gid]
         g_rows.sort(key=lambda x: _extract_minute_num(x.get("check_time", "")))
         final_rows.extend(g_rows)
 
-    tmp_main = CSV_PATH + ".tmp"
+    tmp_main = csv_path + ".tmp"
     with open(tmp_main, mode="w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=CSV_HEADERS)
+        writer = csv.DictWriter(f, fieldnames=headers)
         writer.writeheader()
         writer.writerows(final_rows)
-    os.replace(tmp_main, CSV_PATH)
+    os.replace(tmp_main, csv_path)
 
 
-def _map_barem_name(raw_name: str, params_list: list, parameter_val) -> str:
-    """Map 1xBet / Fansport event parameters or market name to standard 9 Barem brackets."""
+def _map_barem_name(raw_name: str, params_list: list, parameter_val, league: str = "nba") -> str:
+    """Map 1xBet / Fansport event parameters or market name to a league's Barem brackets."""
     joined_params = "-".join(str(x).strip() for x in (params_list or []) if str(x).strip())
+    rn = str(raw_name or "").strip().lower()
+
+    if str(league or "nba").lower() == "euro":
+        if joined_params in {"131-140", "141-150", "151-160", "161-170"}:
+            return joined_params
+        if "130" in joined_params or ("131" in joined_params and "140" not in joined_params):
+            return "131'den Az"
+        if "171" in joined_params or ("170" in joined_params and "161" not in joined_params):
+            return "170'den Fazla"
+
+        if parameter_val is not None:
+            try:
+                p_float = float(parameter_val)
+                if p_float <= 130.5:
+                    return "131'den Az"
+                elif 130.9 <= p_float <= 132.5:
+                    return "131-140"
+                elif 140.9 <= p_float <= 142.5:
+                    return "141-150"
+                elif 150.9 <= p_float <= 152.5:
+                    return "151-160"
+                elif 160.9 <= p_float <= 162.5:
+                    return "161-170"
+                elif p_float >= 170.5:
+                    return "170'den Fazla"
+            except Exception:
+                pass
+
+        for bracket in ("131-140", "141-150", "151-160", "161-170"):
+            if bracket in rn:
+                return bracket
+        if "130" in rn or "az" in rn or "or less" in rn:
+            return "131'den Az"
+        if "171" in rn or "170" in rn or "fazla" in rn or "more" in rn:
+            return "170'den Fazla"
+        if "131" in rn:
+            return "131-140"
+        if "141" in rn:
+            return "141-150"
+        if "151" in rn:
+            return "151-160"
+        if "161" in rn:
+            return "161-170"
+        return ""
+
     if joined_params in {
         "161-170",
         "171-180",
@@ -195,7 +259,6 @@ def _map_barem_name(raw_name: str, params_list: list, parameter_val) -> str:
         except Exception:
             pass
 
-    rn = str(raw_name or "").strip().lower()
     if "160" in rn:
         return "160 Or Less"
     elif "161" in rn:
@@ -341,12 +404,13 @@ try {
             pass
 
 
-def fetch_all_live_games_via_api(domain: str = "") -> list:
+def fetch_all_live_games_via_api(domain: str = "", league: str = "nba") -> list:
     """
-    Fetch ALL simultaneous live NBA 2K26 CyberLeague games and their exact Barem (G=3319 / GS=1322)
+    Fetch ALL simultaneous live CyberLeague / Cyber Euro League games and their exact Barem (G=3319 / GS=1322)
     odds directly via 1xBet's LiveFeed JSON API (`Get1x2_VZip` + `GetGameZip`) in ~0.3s.
-    Never misses a second or third simultaneous live match!
     """
+    cfg = get_league_config(league)
+    champ_id = cfg["champ_id"]
     ctx = ssl._create_unverified_context()
     conn, host_hdr = _open_keepalive_results_conn(ctx)
     req_headers = {
@@ -355,7 +419,7 @@ def fetch_all_live_games_via_api(domain: str = "") -> list:
         "Connection": "keep-alive",
     }
 
-    list_path = "/service-api/LiveFeed/Get1x2_VZip?sports=3&champs=2935701&count=50&lng=en&mode=4"
+    list_path = f"/service-api/LiveFeed/Get1x2_VZip?sports=3&champs={champ_id}&count=50&lng=en&mode=4"
     raw_list = []
     try:
         conn.request("GET", list_path, headers=req_headers)
@@ -482,18 +546,19 @@ def fetch_all_live_games_via_api(domain: str = "") -> list:
     return parsed_games
 
 
-def fetch_active_match_urls(domain: str) -> list:
-    """Fetch active NBA 2K26 CyberLeague match URLs from the league page in ~0.15s."""
+def fetch_active_match_urls(domain: str, league: str = "nba") -> list:
+    """Fetch active league match URLs from the league page in ~0.15s."""
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
     }
     ctx = ssl._create_unverified_context()
-    league_url = f"{domain}/en/live/basketball/2935701-nba-2k26-cyber-league"
+    slug = "2983166-nba-2k26-cyber-euro-league" if str(league or "nba").lower() == "euro" else "2935701-nba-2k26-cyber-league"
+    league_url = f"{domain}/en/live/basketball/{slug}"
     req = urllib.request.Request(league_url, headers=headers)
     html = urllib.request.urlopen(req, context=ctx, timeout=8).read().decode("utf-8", errors="ignore")
 
     paths = re.findall(
-        r"(/en/live/basketball/2935701-nba-2k26-cyber-league/\d+-[0-9a-z-]+)", html
+        rf"(/en/live/basketball/{re.escape(slug)}/\d+-[0-9a-z-]+)", html
     )
     unique_urls = []
     seen_ids = set()
@@ -507,44 +572,46 @@ def fetch_active_match_urls(domain: str) -> list:
     return unique_urls
 
 
-def get_required_interval(elapsed_mins: float) -> int:
+def get_required_interval(elapsed_mins: float, close_min: float = 36.0) -> int:
     """
-    Polling schedule for 0 - 36.0 minutes:
-    - 0 to 24m: 300s (5 min)
-    - 24 to 30m: 180s (3 min)
-    - 30 to 32m: 120s (2 min)
-    - 32 to 34m: 60s (1 min)
-    - 34 to 35m: 30s
-    - 35 to 36m: 10s (Barem closing window!)
-    - 36m+: 60s (Only waiting for final score, no CSV logging)
+    Adaptive polling schedule relative to league Barem close minute (36.0 NBA / 30.0 Euro):
+    - close_min - 1 to close_min: 10s (Barem closing decision window!)
+    - close_min - 2 to close_min - 1: 30s
+    - close_min - 4 to close_min - 2: 60s
+    - close_min - 6 to close_min - 4: 120s
+    - close_min - 12 to close_min - 6: 180s
+    - earlier: 300s
+    - close_min+: 60s (Waiting for final score, no CSV logging)
     """
-    if elapsed_mins >= 36.0:
+    if elapsed_mins >= close_min:
         return 60
-    elif elapsed_mins >= 35.0:
+    elif elapsed_mins >= close_min - 1.0:
         return 10
-    elif elapsed_mins >= 34.0:
+    elif elapsed_mins >= close_min - 2.0:
         return 30
-    elif elapsed_mins >= 32.0:
+    elif elapsed_mins >= close_min - 4.0:
         return 60
-    elif elapsed_mins >= 30.0:
+    elif elapsed_mins >= close_min - 6.0:
         return 120
-    elif elapsed_mins >= 24.0:
+    elif elapsed_mins >= close_min - 12.0:
         return 180
     else:
         return 300
 
 
-_LAST_MERGE_SIG = {"sig": None}
+_LAST_MERGE_SIG = {}
 
 
-def merge_cloud_backups():
+def merge_cloud_backups(league: str = "nba"):
     """
-    Merge the 24/7 GitHub Actions cloud backup CSVs into the local CSVs.
+    Merge the 24/7 GitHub Actions cloud backup CSVs into the local league CSVs.
     Runs only when a backup file actually changed (size/mtime signature), under a global lock,
     with atomic writes so concurrent UI/engine threads can never truncate or corrupt the log.
     """
-    cloud_sym = os.path.join(BASE_DIR, "cloud_symmetry_backup.csv")
-    cloud_m = os.path.join(BASE_DIR, "cloud_matches_backup.csv")
+    paths = _get_scraper_paths(league)
+    cloud_sym = paths["cloud_csv"]
+    cloud_m = paths["cloud_matches"]
+    matches_path = paths["matches_path"]
 
     def _sig(p):
         try:
@@ -555,76 +622,91 @@ def merge_cloud_backups():
 
     cur_sig = (_sig(cloud_sym), _sig(cloud_m))
     with _FILE_LOCK:
-        if _LAST_MERGE_SIG["sig"] == cur_sig:
+        if _LAST_MERGE_SIG.get(league) == cur_sig:
             return
         if os.path.exists(cloud_sym) and os.path.getsize(cloud_sym) > 0:
             try:
                 with open(cloud_sym, "r", encoding="utf-8") as f:
                     c_rows = list(csv.DictReader(f))
-                for r in c_rows:
-                    _upsert_symmetry_log_row_unlocked(r)
+                if c_rows:
+                    _upsert_symmetry_log_rows_unlocked(c_rows, league=league)
             except Exception:
                 pass
         if os.path.exists(cloud_m) and os.path.getsize(cloud_m) > 0:
             try:
                 df_c = pd.read_csv(cloud_m)
-                if os.path.exists(MATCHES_CSV_PATH) and os.path.getsize(MATCHES_CSV_PATH) > 0:
-                    df_l = pd.read_csv(MATCHES_CSV_PATH)
+                if os.path.exists(matches_path) and os.path.getsize(matches_path) > 0:
+                    df_l = pd.read_csv(matches_path)
                     df_merged = (
                         pd.concat([df_c, df_l], ignore_index=True)
                         .sort_values("date")
                         .drop_duplicates(subset=["game_id"], keep="last")
                     )
-                    tmp_m = MATCHES_CSV_PATH + ".tmp"
-                    df_merged.to_csv(tmp_m, index=False, encoding="utf-8")
-                    os.replace(tmp_m, MATCHES_CSV_PATH)
+                else:
+                    df_merged = df_c
+                tmp_m = matches_path + ".tmp"
+                df_merged.to_csv(tmp_m, index=False, encoding="utf-8")
+                os.replace(tmp_m, matches_path)
             except Exception:
                 pass
-        _LAST_MERGE_SIG["sig"] = cur_sig
+        _LAST_MERGE_SIG[league] = cur_sig
 
 
-def run_auto_scraper(force_manual=False):
-    init_csv()
-    merge_cloud_backups()
+def _scrape_single_league(domain: str, league: str = "nba", force_manual: bool = False) -> int:
+    cfg = get_league_config(league)
+    paths = _get_scraper_paths(league)
+    tag = cfg["key"].upper()
+    q_len = float(cfg["quarter_length"])
+    q_secs = q_len * 60.0
+    close_min = float(cfg["close_min"])
+    pace_ppm = float(cfg.get("pace_pts_per_min", 4.4))
+    barem_ranges = cfg["barem_ranges"]
+    default_cluster = cfg["cluster_ranges"][len(cfg["cluster_ranges"]) // 2][0]
+
+    init_csv(league)
+    merge_cloud_backups(league)
     start_ts = time.time()
 
-    domain = discover_active_domain()
-    print(f"[v2.0 Engine] Active 1xBet/Mirror domain: {domain}")
-
-    api_games = fetch_all_live_games_via_api(domain)
+    api_games = fetch_all_live_games_via_api(domain, league=league)
     if api_games:
-        print(f"Found {len(api_games)} active NBA 2K26 CyberLeague matches via LiveFeed API.")
+        print(f"[{tag}] Found {len(api_games)} active {cfg['short_name']} matches via LiveFeed API.")
     else:
         try:
-            match_urls = fetch_active_match_urls(domain)
+            match_urls = fetch_active_match_urls(domain, league=league)
         except Exception as e:
-            print(f"Primary domain fetch failed ({e}), refreshing mirror...")
+            print(f"[{tag}] Primary domain fetch failed ({e}), refreshing mirror...")
             domain = discover_active_domain(force_refresh=True)
             try:
-                match_urls = fetch_active_match_urls(domain)
+                match_urls = fetch_active_match_urls(domain, league=league)
             except Exception as e2:
-                print(f"Mirror fetch failed ({e2})")
+                print(f"[{tag}] Mirror fetch failed ({e2})")
                 match_urls = []
-        print(f"Found {len(match_urls)} active NBA 2K26 CyberLeague matches via SSR fallback.")
+        print(f"[{tag}] Found {len(match_urls)} active {cfg['short_name']} matches via SSR fallback.")
         for match_url in match_urls:
             d = extract_ssr_match_data(match_url)
             if "error" not in d:
                 api_games.append(d)
 
-    # Load historical matches (may be empty on clean slate!)
-    if os.path.exists(MATCHES_CSV_PATH) and os.path.getsize(MATCHES_CSV_PATH) > 0:
+    matches_path = paths["matches_path"]
+    if not os.path.exists(matches_path) and os.path.exists(paths["seed_matches"]) and not _IS_GH_ACTIONS:
         try:
-            df_matches = pd.read_csv(MATCHES_CSV_PATH)
+            import shutil
+            shutil.copyfile(paths["seed_matches"], matches_path)
+        except Exception:
+            pass
+    if os.path.exists(matches_path) and os.path.getsize(matches_path) > 0:
+        try:
+            df_matches = pd.read_csv(matches_path)
         except Exception:
             df_matches = pd.DataFrame()
     else:
         df_matches = pd.DataFrame()
 
-    # Load timestamps
+    ts_file = paths["ts_file"]
     log_timestamps = {}
-    if os.path.exists(TS_FILE):
+    if os.path.exists(ts_file):
         try:
-            with open(TS_FILE, "r", encoding="utf-8") as f:
+            with open(ts_file, "r", encoding="utf-8") as f:
                 log_timestamps = json.load(f)
         except Exception:
             log_timestamps = {}
@@ -633,7 +715,6 @@ def run_auto_scraper(force_manual=False):
     live_cards = []
 
     for data in api_games:
-
         game_id_str = f"CB-{data.get('id')}"
         team1 = str(data.get("team1", "")).strip()
         team2 = str(data.get("team2", "")).strip()
@@ -641,26 +722,27 @@ def run_auto_scraper(force_manual=False):
         total_away = int(data.get("score2") or 0)
 
         if data.get("isNotStarted") or (total_home == 0 and total_away == 0 and not data.get("periodScores")):
-            print(f"  PRE-GAME: {team1} vs {team2} has not started yet.")
+            print(f"  [{tag}] PRE-GAME: {team1} vs {team2} has not started yet.")
             live_cards.append(
                 {
                     "game_id": game_id_str,
+                    "league": cfg["key"],
                     "team_home": team1,
                     "team_away": team2,
                     "home_score": 0,
                     "away_score": 0,
                     "quarter": 1,
                     "elapsed_mins": 0.0,
-                    "remaining_mins": 12.0,
+                    "remaining_mins": q_len,
                     "status": "PRE_GAME",
                     "completed_quarters": [],
                     "live_q_score": "0-0",
                     "odds": {},
                     "barem_probs": {},
-                    "predicted_total": 212.0,
-                    "predicted_home_final": 106.0,
-                    "predicted_away_final": 106.0,
-                    "best_cluster_name": "201-220",
+                    "predicted_total": round(cfg["prior_q"] * 4.0, 1),
+                    "predicted_home_final": round(cfg["prior_q"] * 2.0, 1),
+                    "predicted_away_final": round(cfg["prior_q"] * 2.0, 1),
+                    "best_cluster_name": default_cluster,
                     "best_cluster_prob": 0.0,
                     "value_range": "-",
                     "highest_prob_range": "-",
@@ -696,27 +778,25 @@ def run_auto_scraper(force_manual=False):
                 away_live_score = a_s
 
         time_in_seconds = float(data.get("timeInSeconds") or 0.0)
-        if time_in_seconds > 720.0:
+        if time_in_seconds > q_secs:
             total_match_elapsed = time_in_seconds / 60.0
-            quarter_elapsed = max(0.0, total_match_elapsed - (current_quarter - 1) * 12.0)
+            quarter_elapsed = max(0.0, total_match_elapsed - (current_quarter - 1) * q_len)
         elif time_in_seconds > 0:
             quarter_elapsed = time_in_seconds / 60.0
-            total_match_elapsed = (current_quarter - 1) * 12.0 + quarter_elapsed
+            total_match_elapsed = (current_quarter - 1) * q_len + quarter_elapsed
         else:
-            # Estimate from current quarter score if clock temporarily 0
-            est_q_mins = min(12.0, (home_live_score + away_live_score) / 4.4)
+            est_q_mins = min(q_len, (home_live_score + away_live_score) / pace_ppm)
             quarter_elapsed = est_q_mins
-            total_match_elapsed = (current_quarter - 1) * 12.0 + quarter_elapsed
+            total_match_elapsed = (current_quarter - 1) * q_len + quarter_elapsed
 
-        remaining_mins = max(0.0, min(12.0, 12.0 - quarter_elapsed))
+        remaining_mins = max(0.0, min(q_len, q_len - quarter_elapsed))
         check_time = f"Q{current_quarter} - Minute {int(total_match_elapsed)}"
 
-        # Map 9 Barem odds
         odds_dict = {}
         for o in data.get("outcomes", []):
             if o.get("isLocked"):
                 continue
-            b_name = _map_barem_name(o.get("name", ""), o.get("params", []), o.get("parameter"))
+            b_name = _map_barem_name(o.get("name", ""), o.get("params", []), o.get("parameter"), league=league)
             if not b_name:
                 continue
             coef_str = str(o.get("coefView", "")).strip()
@@ -728,9 +808,8 @@ def run_auto_scraper(force_manual=False):
                 except Exception:
                     pass
 
-        full_odds = {b[0]: odds_dict.get(b[0], 99.0) for b in BAREM_RANGES}
+        full_odds = {b[0]: odds_dict.get(b[0], 99.0) for b in barem_ranges}
 
-        # Run Monte Carlo & Symmetry Analysis
         res_pred = predict_live_inplay(
             df=df_matches,
             team_home=team1,
@@ -740,31 +819,31 @@ def run_auto_scraper(force_manual=False):
             away_live_score=away_live_score,
             remaining_mins=remaining_mins,
             completed_quarters=completed_quarters[:3],
-            quarter_length=12.0,
+            quarter_length=q_len,
+            league=league,
         )
         barem_probs = res_pred.get("barem_probs", {})
-        sym_info = analyze_barem_symmetry(full_odds, barem_probs)
+        sym_info = analyze_barem_symmetry(full_odds, barem_probs, league=league)
         is_barem_open = (
             any(v < 90.0 for v in full_odds.values()) or bool(sym_info.get("is_locked_fav", False))
-        ) and total_match_elapsed < 36.0
+        ) and total_match_elapsed < close_min
 
-        # Q3 -> Q4 Burst / Collapse Signal
         if len(completed_quarters) >= 3:
             q3_total_for_signal = completed_quarters[2][0] + completed_quarters[2][1]
         elif current_quarter == 3:
-            el_q3 = max(1.0, 12.0 - remaining_mins)
-            q3_total_for_signal = int(round(((home_live_score + away_live_score) / el_q3) * 12.0))
+            el_q3 = max(1.0, q_len - remaining_mins)
+            q3_total_for_signal = int(round(((home_live_score + away_live_score) / el_q3) * q_len))
         else:
-            q3_total_for_signal = 53
-        q3_q4_sig = build_q3_q4_streak_signal(df_matches, team1, team2, q3_score=q3_total_for_signal)
+            q3_total_for_signal = int(round(cfg["prior_q"]))
+        q3_q4_sig = build_q3_q4_streak_signal(df_matches, team1, team2, q3_score=q3_total_for_signal, league=league)
 
-        req_interval = get_required_interval(total_match_elapsed)
+        req_interval = get_required_interval(total_match_elapsed, close_min=close_min)
         recommended_poll_speed = min(recommended_poll_speed, req_interval)
 
-        # Save to live dashboard state card
         live_cards.append(
             {
                 "game_id": game_id_str,
+                "league": cfg["key"],
                 "team_home": team1,
                 "team_away": team2,
                 "home_score": total_home,
@@ -801,11 +880,11 @@ def run_auto_scraper(force_manual=False):
             }
         )
 
-        # STRICT RULE: Never log snapshots to symmetry_analysis_log.csv after Minute 36.0 or when barem is closed!
-        if total_match_elapsed >= 36.0 or not is_barem_open:
+        # STRICT RULE: Never log snapshots to symmetry log after close_min or when barem is closed!
+        if total_match_elapsed >= close_min or not is_barem_open:
             print(
-                f"  [SKIP CSV] {team1} vs {team2} ({check_time}, Score {total_home}-{total_away}): "
-                f"Minute >= 36 or Barem closed. Waiting for final result only."
+                f"  [{tag} SKIP CSV] {team1} vs {team2} ({check_time}, Score {total_home}-{total_away}): "
+                f"Minute >= {int(close_min)} or Barem closed. Waiting for final result only."
             )
             continue
 
@@ -820,70 +899,73 @@ def run_auto_scraper(force_manual=False):
                 "date": datetime.now(TR_TZ).strftime("%Y-%m-%d"),
                 "check_time": check_time,
                 "current_score": f"{total_home}-{total_away}",
-                "odds_160_or_less": full_odds["160 Or Less"],
-                "odds_161_170": full_odds["161-170"],
-                "odds_171_180": full_odds["171-180"],
-                "odds_181_190": full_odds["181-190"],
-                "odds_191_200": full_odds["191-200"],
-                "odds_201_210": full_odds["201-210"],
-                "odds_211_220": full_odds["211-220"],
-                "odds_221_230": full_odds["221-230"],
-                "odds_231_plus": full_odds["231+"],
-                "model_prob_160_or_less": barem_probs.get("160 Or Less", 0.0),
-                "model_prob_161_170": barem_probs.get("161-170", 0.0),
-                "model_prob_171_180": barem_probs.get("171-180", 0.0),
-                "model_prob_181_190": barem_probs.get("181-190", 0.0),
-                "model_prob_191_200": barem_probs.get("191-200", 0.0),
-                "model_prob_201_210": barem_probs.get("201-210", 0.0),
-                "model_prob_211_220": barem_probs.get("211-220", 0.0),
-                "model_prob_221_230": barem_probs.get("221-230", 0.0),
-                "model_prob_231_plus": barem_probs.get("231+", 0.0),
-                "highest_prob_range": sym_info["highest_prob_range"],
-                "value_range": sym_info["value_range"],
-                "best_cluster_name": res_pred.get("best_cluster_name", ""),
-                "best_cluster_prob": res_pred.get("best_cluster_prob", 0.0),
-                "actual_score": "",
-                "actual_range": "",
-                "status": "PENDING",
             }
-            upsert_symmetry_log_row(row)
+            for b_name, col_name in cfg["barem_odd_cols"].items():
+                row[col_name] = full_odds[b_name]
+            for b_name, col_name in cfg["barem_prob_cols"].items():
+                row[col_name] = barem_probs.get(b_name, 0.0)
+            row.update(
+                {
+                    "highest_prob_range": sym_info["highest_prob_range"],
+                    "value_range": sym_info["value_range"],
+                    "best_cluster_name": res_pred.get("best_cluster_name", ""),
+                    "best_cluster_prob": res_pred.get("best_cluster_prob", 0.0),
+                    "actual_score": "",
+                    "actual_range": "",
+                    "status": "PENDING",
+                }
+            )
+            upsert_symmetry_log_row(row, league=league)
             log_timestamps[game_id_str] = now_ts
-            with open(TS_FILE, "w", encoding="utf-8") as f:
+            with open(ts_file, "w", encoding="utf-8") as f:
                 json.dump(log_timestamps, f)
 
             print(
-                f"  [LOGGED] {team1} vs {team2} | {check_time} | Score: {total_home}-{total_away} | "
+                f"  [{tag} LOGGED] {team1} vs {team2} | {check_time} | Score: {total_home}-{total_away} | "
                 f"Fav: {sym_info['highest_prob_range']} ({sym_info['bookie_fav_1_odd']}) | "
                 f"Value: {sym_info['value_range']} | Cluster: {res_pred.get('best_cluster_name')} ({res_pred.get('best_cluster_prob')}%)"
             )
         else:
             rem_wait = int(req_interval - elapsed_since_last)
-            print(f"  [THROTTLED] {team1} vs {team2} ({check_time}): next log in {rem_wait}s.")
+            print(f"  [{tag} THROTTLED] {team1} vs {team2} ({check_time}): next log in {rem_wait}s.")
 
-    # Keep live dashboard refreshed every 20s (or 10s in 35-36m closing window) so new games appear immediately
     live_poll_speed = min(20, recommended_poll_speed)
 
-    # Save live cards state for instant dashboard rendering
     state_payload = {
         "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "timestamp": time.time(),
+        "league": cfg["key"],
         "domain": domain,
         "recommended_poll_speed": live_poll_speed,
         "duration_sec": round(time.time() - start_ts, 2),
         "live_matches": live_cards,
     }
-    with open(LIVE_STATE_FILE, "w", encoding="utf-8") as f:
+    tmp_state = paths["state_file"] + ".tmp"
+    with open(tmp_state, "w", encoding="utf-8") as f:
         json.dump(state_payload, f, ensure_ascii=False, indent=2)
+    os.replace(tmp_state, paths["state_file"])
 
-    # Check if any match has finished and settle checkpoints immediately
     try:
-        pull_today_results(only_tracked=False, days_back=1)
-        auto_settle_checkpoints()
+        pull_today_results(only_tracked=False, days_back=1, league=league)
+        auto_settle_checkpoints(league=league)
     except Exception as e:
-        print(f"Auto-settle warning: {e}")
+        print(f"[{tag}] Auto-settle warning: {e}")
 
-    print(f"[POLL_SPEED] {live_poll_speed} (Completed in {round(time.time() - start_ts, 2)}s)")
+    print(f"[{tag} POLL_SPEED] {live_poll_speed} (Completed in {round(time.time() - start_ts, 2)}s)")
     return live_poll_speed
+
+
+def run_auto_scraper(force_manual=False, league: str = "all"):
+    domain = discover_active_domain()
+    print(f"[v2.1 Multi-League Engine] Active 1xBet/Mirror domain: {domain}")
+    leagues = ("nba", "euro") if str(league or "all").lower() == "all" else (str(league).lower(),)
+    poll_speeds = []
+    for lg in leagues:
+        try:
+            poll_speeds.append(_scrape_single_league(domain, league=lg, force_manual=force_manual))
+        except Exception as e:
+            print(f"[{lg.upper()}] Scrape cycle error: {e}")
+    return min(poll_speeds) if poll_speeds else 20
 
 
 run_single_cycle = run_auto_scraper
@@ -891,4 +973,8 @@ run_single_cycle = run_auto_scraper
 
 if __name__ == "__main__":
     force_flag = "--manual" in sys.argv
-    run_auto_scraper(force_manual=force_flag)
+    arg_league = "all"
+    for arg in sys.argv[1:]:
+        if arg.startswith("--league="):
+            arg_league = arg.split("=", 1)[1].strip().lower()
+    run_auto_scraper(force_manual=force_flag, league=arg_league)
