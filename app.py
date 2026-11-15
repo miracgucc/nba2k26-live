@@ -109,7 +109,7 @@ EXP_REM_DEC = float(LEAGUE_CFG["exp_rem_decision"])
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v5.0-dual-league-euro"
+ENGINE_VERSION = "v5.1-dual-league-euro"
 
 
 def _ensure_clean_git_tracked_files():
@@ -503,8 +503,10 @@ st.markdown(
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }}
 
-.block-container {{
-    padding-top: 1.2rem !important;
+.block-container,
+.stMainBlockContainer,
+[data-testid="stMainBlockContainer"] {{
+    padding-top: 3.5rem !important;
     padding-bottom: 2.5rem !important;
     max-width: 1460px !important;
 }}
@@ -754,26 +756,6 @@ next_in = (
     else 5
 )
 
-sw_c1, sw_c2 = st.columns(2)
-with sw_c1:
-    st.button(
-        "🏀 NBA 2K26 CyberLeague (4x12 Dk • 9 Barem)",
-        key="btn_league_nba",
-        on_click=set_active_league,
-        args=("nba",),
-        type="primary" if not IS_EURO else "secondary",
-        use_container_width=True,
-    )
-with sw_c2:
-    st.button(
-        "🇪🇺 NBA 2K26 Cyber Euro League (4x10 Dk • 6 Barem)",
-        key="btn_league_euro",
-        on_click=set_active_league,
-        args=("euro",),
-        type="primary" if IS_EURO else "secondary",
-        use_container_width=True,
-    )
-
 _title_icon = "🇪🇺" if IS_EURO else "🏀"
 _barem_desc = f"{LEAGUE_BAREM_N}'{'lı' if LEAGUE_BAREM_N == 6 else 'lu'} Barem • 4x{int(Q_LEN)} Dk • Kapanış {CLOSE_MIN_INT}. Dk"
 
@@ -798,6 +780,44 @@ st.markdown(
 """,
     unsafe_allow_html=True,
 )
+
+sw_c0, sw_c1, sw_c2 = st.columns([0.95, 2.0, 2.0], vertical_alignment="center")
+with sw_c0:
+    st.markdown(
+        '<div style="background:var(--bg-card); border:1px solid var(--border-subtle); '
+        'border-radius:10px; padding:0.52rem 0.75rem; text-align:center; '
+        'font-size:0.82rem; font-weight:800; color:var(--text-primary); '
+        'box-shadow:var(--shadow-card);">🏆 LİG GEÇİŞİ</div>',
+        unsafe_allow_html=True,
+    )
+with sw_c1:
+    _nba_lbl = (
+        "✅ 🏀 NBA 2K26 CyberLeague (Aktif • 9 Barem)"
+        if not IS_EURO
+        else "🏀 NBA 2K26 CyberLeague'e Geç (4x12 Dk • 9 Barem)"
+    )
+    st.button(
+        _nba_lbl,
+        key="btn_league_nba",
+        on_click=set_active_league,
+        args=("nba",),
+        type="primary" if not IS_EURO else "secondary",
+        use_container_width=True,
+    )
+with sw_c2:
+    _euro_lbl = (
+        "✅ 🇪🇺 NBA 2K26 Cyber Euro League (Aktif • 6 Barem)"
+        if IS_EURO
+        else "🇪🇺 NBA 2K26 Cyber Euro League'e Geç (4x10 Dk • 6 Barem)"
+    )
+    st.button(
+        _euro_lbl,
+        key="btn_league_euro",
+        on_click=set_active_league,
+        args=("euro",),
+        type="primary" if IS_EURO else "secondary",
+        use_container_width=True,
+    )
 
 ctrl_c1, ctrl_c2, ctrl_c3, ctrl_c4, ctrl_c5, ctrl_c6 = st.columns([1.25, 1.25, 1.35, 1.0, 0.85, 0.9])
 
