@@ -66,6 +66,7 @@ EURO_CLUSTER_RANGES = [
 
 BAREM_RANGES = NBA_BAREM_RANGES
 CLUSTER_RANGES = NBA_CLUSTER_RANGES
+_NBA_FEB_DAYS = max(290, (datetime.now().date() - datetime(2026, 2, 1).date()).days + 2)
 
 LEAGUE_CONFIGS = {
     "nba": {
@@ -111,8 +112,8 @@ LEAGUE_CONFIGS = {
         "min_total_valid": 100,
         "archive_min_total": 140,
         "archive_min_s3": 100,
-        "archive_days": 120,
-        "archive_btn_label": "📥 Son 4 Ay Arşivini Güncelle (120 Gün)",
+        "archive_days": _NBA_FEB_DAYS,
+        "archive_btn_label": f"📥 Şubat 2026+ Arşivini Güncelle ({_NBA_FEB_DAYS} Gün)",
         "default_barem": "201-210",
         "default_backup_barem": "211-220",
         "high_over_threshold": 211,

@@ -186,7 +186,7 @@ def pull_today_results(only_tracked=False, days_back=1, league="nba") -> int:
     now = int(time.time())
     base_date_to = (now // 300) * 300 + 300
     ctx = ssl._create_unverified_context()
-    days_back = max(1, min(200, int(days_back)))
+    days_back = max(1, min(400, int(days_back)))
 
     all_raw_games = []
     conn, host_hdr = _open_keepalive_results_conn(ctx)
@@ -279,6 +279,8 @@ def pull_today_results(only_tracked=False, days_back=1, league="nba") -> int:
 
             date_start = g.get("dateStart", now)
             game_time = datetime.fromtimestamp(date_start, tz=TR_TZ).strftime("%Y-%m-%d %H:%M")
+            if league == "nba" and days_back >= 250 and game_time < "2026-02-01":
+                continue
             home_team = g.get("opp1", "").strip()
             away_team = g.get("opp2", "").strip()
             score_str = g.get("score", "").strip()
