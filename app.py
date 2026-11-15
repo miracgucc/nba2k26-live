@@ -76,7 +76,7 @@ IS_DARK = st.session_state.ui_theme == "matte_dark"
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v4.7-all-matches-view"
+ENGINE_VERSION = "v4.8-wave-color-coded"
 
 
 def _ensure_clean_git_tracked_files():
@@ -383,6 +383,26 @@ if not IS_DARK:
         --val-bg: #fffbeb;
         --val-border: #f59e0b;
         --val-text: #92400e;
+        --wave-fav-bg: #dcfce7;
+        --wave-fav-border: #10b981;
+        --wave-fav-accent: #059669;
+        --wave-fav-text: #064e3b;
+        --wave-down1-bg: #e0f2fe;
+        --wave-down1-border: #0284c7;
+        --wave-down1-accent: #0369a1;
+        --wave-down1-text: #0c4a6e;
+        --wave-down2-bg: #e0e7ff;
+        --wave-down2-border: #4f46e5;
+        --wave-down2-accent: #4338ca;
+        --wave-down2-text: #1e1b4b;
+        --wave-up1-bg: #ffedd5;
+        --wave-up1-border: #ea580c;
+        --wave-up1-accent: #c2410c;
+        --wave-up1-text: #7c2d12;
+        --wave-up2-bg: #ffe4e6;
+        --wave-up2-border: #e11d48;
+        --wave-up2-accent: #be123c;
+        --wave-up2-text: #881337;
     """
 else:
     THEME_VARS = """
@@ -410,6 +430,26 @@ else:
         --val-bg: rgba(245, 158, 11, 0.15);
         --val-border: #fbbf24;
         --val-text: #fde68a;
+        --wave-fav-bg: rgba(16, 185, 129, 0.20);
+        --wave-fav-border: #10b981;
+        --wave-fav-accent: #059669;
+        --wave-fav-text: #a7f3d0;
+        --wave-down1-bg: rgba(14, 165, 233, 0.20);
+        --wave-down1-border: #38bdf8;
+        --wave-down1-accent: #0284c7;
+        --wave-down1-text: #bae6fd;
+        --wave-down2-bg: rgba(99, 102, 241, 0.24);
+        --wave-down2-border: #818cf8;
+        --wave-down2-accent: #4f46e5;
+        --wave-down2-text: #c7d2fe;
+        --wave-up1-bg: rgba(249, 115, 22, 0.20);
+        --wave-up1-border: #fb923c;
+        --wave-up1-accent: #ea580c;
+        --wave-up1-text: #fed7aa;
+        --wave-up2-bg: rgba(244, 63, 94, 0.24);
+        --wave-up2-border: #fb7185;
+        --wave-up2-accent: #e11d48;
+        --wave-up2-text: #fecdd3;
     """
 
 st.markdown(
@@ -862,6 +902,11 @@ def render_live_dashboard():
     recent_chain = wave_global.get("recent_chain", [])
     if recent_chain:
         pills_html = ""
+        cnt_fav_all = sum(1 for x in recent_chain if x["raw_shift"] == 0)
+        cnt_down_all = sum(1 for x in recent_chain if x["raw_shift"] < 0)
+        cnt_up_all = sum(1 for x in recent_chain if x["raw_shift"] > 0)
+        tot_chain_n = max(1, len(recent_chain))
+
         for idx_c, item in reversed(list(enumerate(recent_chain, 1))):
             sh = item["raw_shift"]
             t_short = (
@@ -874,37 +919,74 @@ def render_live_dashboard():
             a_tot = item.get("away_total", 0)
             sc_pair = f"{h_tot}:{a_tot}" if (h_tot and a_tot) else f"{item['total_score']}"
             if sh == 0:
-                p_bg = "var(--fav1-bg)"
-                p_bd = "var(--fav1-border)"
-                p_tx = "var(--fav1-text)"
-                tag_txt = "🎯 Tam Favori Geldi"
-            elif sh < 0:
-                p_bg = "var(--fav2-bg)"
-                p_bd = "var(--fav2-border)"
-                p_tx = "var(--fav2-text)"
-                tag_txt = f"📉 {abs(sh)} Alt Bareme Düştü"
+                p_bg = "var(--wave-fav-bg)"
+                p_bd = "var(--wave-fav-border)"
+                p_acc = "var(--wave-fav-accent)"
+                p_tx = "var(--wave-fav-text)"
+                tag_txt = "🎯 Tam Favori Geldi (0)"
+            elif sh == -1:
+                p_bg = "var(--wave-down1-bg)"
+                p_bd = "var(--wave-down1-border)"
+                p_acc = "var(--wave-down1-accent)"
+                p_tx = "var(--wave-down1-text)"
+                tag_txt = "📉 -1 Alt Bareme Düştü"
+            elif sh <= -2:
+                p_bg = "var(--wave-down2-bg)"
+                p_bd = "var(--wave-down2-border)"
+                p_acc = "var(--wave-down2-accent)"
+                p_tx = "var(--wave-down2-text)"
+                tag_txt = f"❄️ {sh} Alt Bareme Düştü"
+            elif sh == 1:
+                p_bg = "var(--wave-up1-bg)"
+                p_bd = "var(--wave-up1-border)"
+                p_acc = "var(--wave-up1-accent)"
+                p_tx = "var(--wave-up1-text)"
+                tag_txt = "📈 +1 Üst Bareme Çıktı"
             else:
-                p_bg = "var(--val-bg)"
-                p_bd = "var(--val-border)"
-                p_tx = "var(--val-text)"
-                tag_txt = f"📈 {sh} Üst Bareme Çıktı"
+                p_bg = "var(--wave-up2-bg)"
+                p_bd = "var(--wave-up2-border)"
+                p_acc = "var(--wave-up2-accent)"
+                p_tx = "var(--wave-up2-text)"
+                tag_txt = f"🔥 +{sh} Üst Bareme Çıktı"
 
             odd_36_val = float(item.get("exp_odd_36", 0.0) or 0.0)
-            if odd_36_val > 0:
+            src_txt = str(item.get("source", ""))
+            if "Banko Kilit" in src_txt:
+                ref_line = f'📊 36.Dk Favori: <b>{item["exp_barem_36"]} (🔒 Kilit)</b> ➔ Biten: <b>{item["act_barem"]}</b>'
+            elif odd_36_val > 0:
                 ref_line = f'📊 36.Dk Favori: <b>{item["exp_barem_36"]} ({odd_36_val:.2f})</b> ➔ Biten: <b>{item["act_barem"]}</b>'
             else:
                 ref_line = f'🧮 36.Dk Tahmin: <b>{item["exp_barem_36"]}</b> ➔ Biten: <b>{item["act_barem"]}</b>'
             drift_line = item.get("drift_label", "")
 
             pills_html += (
-                f'<div style="background:{p_bg}; border:1.5px solid {p_bd}; color:{p_tx}; border-radius:10px; padding:0.48rem 0.65rem; min-width:155px; flex:1 1 180px;">'
-                f'<div style="font-size:0.67rem; font-weight:700; opacity:0.85;">#{idx_c} &bull; 🕒 {time_only} | {t_short}</div>'
+                f'<div style="background:{p_bg}; border:1.5px solid {p_bd}; border-left:5px solid {p_acc}; color:{p_tx}; border-radius:10px; padding:0.5rem 0.68rem; min-width:160px; flex:1 1 185px;">'
+                f'<div style="font-size:0.67rem; font-weight:700; opacity:0.88;">#{idx_c} &bull; 🕒 {time_only} | {t_short}</div>'
                 f'<div style="font-size:0.71rem; font-weight:700; margin-top:0.08rem;">Skor: {sc_pair} ({item["total_score"]} Sayı)</div>'
-                f'<div style="font-size:0.82rem; font-weight:800; margin:0.12rem 0;">{tag_txt}</div>'
-                f'<div style="font-size:0.66rem; opacity:0.95;">{ref_line}</div>'
-                f'<div style="font-size:0.63rem; opacity:0.85; margin-top:0.08rem;">{drift_line}</div>'
+                f'<div style="margin:0.18rem 0;"><span style="background:{p_acc}; color:#ffffff; font-size:0.75rem; font-weight:800; padding:0.14rem 0.5rem; border-radius:6px; display:inline-block;">{tag_txt}</span></div>'
+                f'<div style="font-size:0.66rem; opacity:0.96;">{ref_line}</div>'
+                f'<div style="font-size:0.63rem; opacity:0.86; margin-top:0.08rem;">{drift_line}</div>'
                 f"</div>"
             )
+
+        last5_badges = []
+        for x5 in recent_chain[-5:]:
+            sh5 = x5["raw_shift"]
+            if sh5 == 0:
+                last5_badges.append(
+                    '<span style="background:var(--wave-fav-accent); color:#fff; padding:0.12rem 0.45rem; border-radius:6px; font-size:0.73rem; font-weight:800;">🎯 Favori (0)</span>'
+                )
+            elif sh5 < 0:
+                c5 = "var(--wave-down1-accent)" if sh5 == -1 else "var(--wave-down2-accent)"
+                last5_badges.append(
+                    f'<span style="background:{c5}; color:#fff; padding:0.12rem 0.45rem; border-radius:6px; font-size:0.73rem; font-weight:800;">📉 {sh5} Alt</span>'
+                )
+            else:
+                c5 = "var(--wave-up1-accent)" if sh5 == 1 else "var(--wave-up2-accent)"
+                last5_badges.append(
+                    f'<span style="background:{c5}; color:#fff; padding:0.12rem 0.45rem; border-radius:6px; font-size:0.73rem; font-weight:800;">📈 +{sh5} Üst</span>'
+                )
+        last5_chain_html = ' <span style="color:var(--text-muted); font-weight:800;">➔</span> '.join(last5_badges)
 
         last10_items = recent_chain[-10:]
         l10_n = len(last10_items)
@@ -928,9 +1010,10 @@ def render_live_dashboard():
         st.markdown(
             f"""
             <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:13px; padding:0.9rem 1.2rem; margin-top:0.9rem; box-shadow:var(--shadow-card);">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-                    <div style="font-size:0.92rem; font-weight:800; color:var(--text-primary);">
-                        🌊 Son Biten Maçlarda 36. Dakika Favorisi Tuttu mu, Kaydı mı? (Toplam {len(recent_chain)} Maç | Son 5 Maç: <span style="font-family:'JetBrains Mono',monospace; color:var(--score-text);">{wave_global['last_5_labels']}</span>)
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.55rem;">
+                    <div style="font-size:0.92rem; font-weight:800; color:var(--text-primary); display:flex; align-items:center; flex-wrap:wrap; gap:0.35rem;">
+                        <span>🌊 Son Biten Maçlarda 36. Dakika Favorisi Tuttu mu, Kaydı mı? (Toplam {len(recent_chain)} Maç)</span>
+                        <span style="margin-left:0.25rem;">Son 5 Maç: {last5_chain_html}</span>
                     </div>
                     <div style="display:flex; gap:0.45rem; flex-wrap:wrap; align-items:center;">
                         {form_badge_html}
@@ -938,6 +1021,17 @@ def render_live_dashboard():
                             🔮 Sıradaki Maç Beklentisi: 📉 1 Alt: %{wave_global['prob_minus_1']} &bull; 🎯 Tam Favori: %{wave_global['prob_0']} &bull; 📈 1 Üst: %{wave_global['prob_plus_1']}
                         </div>
                     </div>
+                </div>
+                <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center; margin-bottom:0.65rem; font-size:0.75rem; font-weight:700;">
+                    <span style="background:var(--wave-fav-bg); border:1.5px solid var(--wave-fav-border); color:var(--wave-fav-text); padding:0.2rem 0.65rem; border-radius:8px;">
+                        🟢 🎯 Tam Favori Geldi (0): <b>{cnt_fav_all} Maç (%{cnt_fav_all/tot_chain_n*100:.1f})</b>
+                    </span>
+                    <span style="background:var(--wave-down1-bg); border:1.5px solid var(--wave-down1-border); color:var(--wave-down1-text); padding:0.2rem 0.65rem; border-radius:8px;">
+                        🔵 📉 -1 / -2 Alt Bareme Düştü (Soğudu): <b>{cnt_down_all} Maç (%{cnt_down_all/tot_chain_n*100:.1f})</b>
+                    </span>
+                    <span style="background:var(--wave-up1-bg); border:1.5px solid var(--wave-up1-border); color:var(--wave-up1-text); padding:0.2rem 0.65rem; border-radius:8px;">
+                        🟠 📈 +1 / +2 Üst Bareme Çıktı (Isındı): <b>{cnt_up_all} Maç (%{cnt_up_all/tot_chain_n*100:.1f})</b>
+                    </span>
                 </div>
                 <div style="display:flex; gap:0.45rem; flex-wrap:wrap; max-height:340px; overflow-y:auto; padding-right:4px;">
                     {pills_html}
