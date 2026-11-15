@@ -76,7 +76,7 @@ IS_DARK = st.session_state.ui_theme == "matte_dark"
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v4.5-pro-suite"
+ENGINE_VERSION = "v4.6-94m-calibrated"
 
 
 def _ensure_clean_git_tracked_files():
@@ -236,7 +236,7 @@ def load_symmetry_log() -> pd.DataFrame:
 
     # Dynamically upgrade value_range with v4.3 Smart Symmetry Value Engine for all historical rows
     _b_cols = [
-        ("160 ve altı", "odds_160_or_less", "model_prob_160_or_less"),
+        ("160 Or Less", "odds_160_or_less", "model_prob_160_or_less"),
         ("161-170", "odds_161_170", "model_prob_161_170"),
         ("171-180", "odds_171_180", "model_prob_171_180"),
         ("181-190", "odds_181_190", "model_prob_181_190"),
@@ -244,7 +244,7 @@ def load_symmetry_log() -> pd.DataFrame:
         ("201-210", "odds_201_210", "model_prob_201_210"),
         ("211-220", "odds_211_220", "model_prob_211_220"),
         ("221-230", "odds_221_230", "model_prob_221_230"),
-        ("231 ve üstü", "odds_231_plus", "model_prob_231_plus"),
+        ("231+", "odds_231_plus", "model_prob_231_plus"),
     ]
     smart_vals = []
     for _, r in df.iterrows():
@@ -2237,6 +2237,7 @@ with tab_bankroll:
             clu_pnl, clu_hits = 0.0, 0
             v3_all_pnl, v3_all_hits = 0.0, 0
             v3_sel_pnl, v3_sel_hits, v3_sel_bets = 0.0, 0, 0
+            dutch_sel_pnl, dutch_sel_hits = 0.0, 0
             dutch_v2_pnl, dutch_v2_hits = 0.0, 0
             n_bets = len(df_eval_roi)
             b_names_roi = [b[0] for b in BAREM_RANGES]
@@ -2303,8 +2304,8 @@ with tab_bankroll:
                     else:
                         v3_sel_pnl -= unit_bet
 
-                # Smart Dutching v2 (10+ gap -> Fav & 1 Alt; <10 gap -> 1.Fav & 2.Fav)
-                if sc_gap >= 10:
+                # Smart Dutching v2 (20+ gap -> Fav & 1 Alt; else -> 1.Fav & 2.Fav)
+                if sc_gap >= 20:
                     db1, do1 = fav_b, fav_odd
                     db2, do2 = m1_b_r, odd_m1_r
                 else:
@@ -2316,6 +2317,13 @@ with tab_bankroll:
                     dutch_v2_hits += 1
                 else:
                     dutch_v2_pnl -= unit_bet
+
+                if sc_gap >= 6:
+                    if act_b in (db1, db2):
+                        dutch_sel_pnl += unit_bet * (eff_dv2 - 1.0)
+                        dutch_sel_hits += 1
+                    else:
+                        dutch_sel_pnl -= unit_bet
 
                 # 1. Fav Strategy
                 if act_b == fav_b:
@@ -2371,12 +2379,28 @@ with tab_bankroll:
                     "Kâr Oranı (%)": f"%{(v3_sel_pnl / sel_wagered)*100:+.1f}",
                 },
                 {
+                    "Oynama Yöntemi (Strateji)": "🔥 Akıllı Value Barem (94 Maç Simetri + Piyasa + Model Hibrit Değerli Tek Barem)",
+                    "Oynanan Maç": n_bets,
+                    "Tutma Oranı": f"{val_hits} / {n_bets} (%{(val_hits/max(1,n_bets))*100:.1f})",
+                    "Toplam Yatırılan": f"{tot_wagered:,.0f} TL",
+                    "Net Kâr / Zarar": f"{val_pnl:+,.0f} TL",
+                    "Kâr Oranı (%)": f"%{(val_pnl / tot_wagered)*100:+.1f}",
+                },
+                {
                     "Oynama Yöntemi (Strateji)": "🤖 Tüm Maçlara Akıllı Tek Barem (Oran <1.85➔2.Fav | Oran <2.10&Alt➔1 Alt | Diğer➔1.Fav)",
                     "Oynanan Maç": n_bets,
                     "Tutma Oranı": f"{v3_all_hits} / {n_bets} (%{(v3_all_hits/max(1,n_bets))*100:.1f})",
                     "Toplam Yatırılan": f"{tot_wagered:,.0f} TL",
                     "Net Kâr / Zarar": f"{v3_all_pnl:+,.0f} TL",
                     "Kâr Oranı (%)": f"%{(v3_all_pnl / tot_wagered)*100:+.1f}",
+                },
+                {
+                    "Oynama Yöntemi (Strateji)": "🛡️ Seçici İki Barem Kapatma (0-5 Sayı Farklı Yakın Maçları Pas Geç + 1. & 2. Favori İkilisi)",
+                    "Oynanan Maç": v3_sel_bets,
+                    "Tutma Oranı": f"{dutch_sel_hits} / {v3_sel_bets} (%{(dutch_sel_hits/max(1,v3_sel_bets))*100:.1f})",
+                    "Toplam Yatırılan": f"{sel_wagered:,.0f} TL",
+                    "Net Kâr / Zarar": f"{dutch_sel_pnl:+,.0f} TL",
+                    "Kâr Oranı (%)": f"%{(dutch_sel_pnl / sel_wagered)*100:+.1f}",
                 },
                 {
                     "Oynama Yöntemi (Strateji)": "⭐ Her Maç 1xBet 1. Favori Baremi Oynamak (32+ Dk Kapanış)",
@@ -2387,7 +2411,7 @@ with tab_bankroll:
                     "Kâr Oranı (%)": f"%{(fav_pnl / tot_wagered)*100:+.1f}",
                 },
                 {
-                    "Oynama Yöntemi (Strateji)": "🛡️ Akıllı İki Barem Kapatma (Fark 10+ ise Favori & 1 Alt / Diğerlerinde 1. & 2. Favori)",
+                    "Oynama Yöntemi (Strateji)": "🛡️ Tüm Maçlara İki Barem Kapatma (1. & 2. Favori İkilisi / 20+ Farkta Favori & 1 Alt)",
                     "Oynanan Maç": n_bets,
                     "Tutma Oranı": f"{dutch_v2_hits} / {n_bets} (%{(dutch_v2_hits/max(1,n_bets))*100:.1f})",
                     "Toplam Yatırılan": f"{tot_wagered:,.0f} TL",
@@ -2401,14 +2425,6 @@ with tab_bankroll:
                     "Toplam Yatırılan": f"{tot_wagered:,.0f} TL",
                     "Net Kâr / Zarar": f"{clu_pnl:+,.0f} TL",
                     "Kâr Oranı (%)": f"%{(clu_pnl / tot_wagered)*100:+.1f}",
-                },
-                {
-                    "Oynama Yöntemi (Strateji)": "🔥 Akıllı Value Barem (%80 Piyasa + %20 Model + 4 Simetri Kuralı ile Değerli Tek Barem)",
-                    "Oynanan Maç": n_bets,
-                    "Tutma Oranı": f"{val_hits} / {n_bets} (%{(val_hits/max(1,n_bets))*100:.1f})",
-                    "Toplam Yatırılan": f"{tot_wagered:,.0f} TL",
-                    "Net Kâr / Zarar": f"{val_pnl:+,.0f} TL",
-                    "Kâr Oranı (%)": f"%{(val_pnl / tot_wagered)*100:+.1f}",
                 },
             ]
             st.dataframe(

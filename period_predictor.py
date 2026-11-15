@@ -13,6 +13,8 @@ __all__ = [
     "analyze_barem_symmetry",
     "analyze_sequential_barem_wave",
     "analyze_smart_35m_decision",
+    "analyze_matchup_live_summary",
+    "analyze_archive_4500_symmetry",
     "simulate_35m_strategies",
 ]
 
@@ -569,57 +571,56 @@ def analyze_barem_symmetry(odds_dict: dict, barem_probs: dict) -> dict:
         inv_sum = sum(1.0 / o for o in valid_odds.values())
         mkt_probs = {b: (1.0 / o) / inv_sum * 100.0 for b, o in valid_odds.items()} if inv_sum > 0 else {}
 
-        top_mod_b = max(valid_odds.keys(), key=lambda k: float((barem_probs or {}).get(k, 0.0)))
-        mod_fav1_p = float((barem_probs or {}).get(bookie_fav_1, 0.0))
-
-        for b_name, odd in valid_odds.items():
-            idx = barem_names.index(b_name) if b_name in barem_names else -1
-            if fav1_idx >= 0 and idx >= 0:
-                if abs(idx - fav1_idx) > 1 and b_name != bookie_fav_2:
+        # v4.6 94-Match Empirical Calibration:
+        # 1) Extreme Low Favorite Trap (< 1.88): 1st Favorite went 0/8 (0%) while 2nd Favorite earned +9.21u (+115% ROI)!
+        if bookie_fav_2 and bookie_fav_1_odd < 1.88 and bookie_fav_2_odd <= 3.80:
+            best_value_range = bookie_fav_2
+            best_ev = 0.42 * bookie_fav_2_odd - 1.0
+            value_reason = (
+                f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): 1. Favori oranı ({bookie_fav_1_odd:.2f}) 1.88 altında tuzak bölgede "
+                f"(94 maçta %0 tuttu, 2. Favori +%115 kâr sağladı)"
+            )
+        # 2) 2nd Favorite is LOWER (-1) and 1st Favorite < 2.10: Downward shift hits 47.4% (+9.11u profit)
+        elif bookie_fav_2 and fav2_idx < fav1_idx and bookie_fav_1_odd < 2.10 and bookie_fav_2_odd <= 3.40:
+            best_value_range = bookie_fav_2
+            best_ev = 0.45 * bookie_fav_2_odd - 1.0
+            value_reason = (
+                f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): 2. Favori alt baremde ve 1. Favori oranı ({bookie_fav_1_odd:.2f}) "
+                f"2.10 altında olduğu için 1 Alt Barem çok değerli (+9.11 Birim Kâr)"
+            )
+        # 3) 2nd Favorite is UPPER (+1) and 1st Favorite >= 1.88: Center hits 51.3% (+5.00u profit)
+        elif fav2_idx > fav1_idx and bookie_fav_1_odd >= 1.88:
+            mod_p1 = float((barem_probs or {}).get(bookie_fav_1, 0.0))
+            mod_p2 = float((barem_probs or {}).get(bookie_fav_2, 0.0)) if bookie_fav_2 else 0.0
+            if bookie_fav_1_odd <= 2.55 or mod_p1 >= mod_p2 * 0.85 or not bookie_fav_2:
+                best_value_range = bookie_fav_1
+                best_ev = 0.51 * bookie_fav_1_odd - 1.0
+                value_reason = (
+                    f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): 2. Favori üst baremde ({bookie_fav_2}) olduğu için "
+                    f"maç alt bareme düşmez ve 1. Favori %51.3 oranında tutar"
+                )
+            else:
+                best_value_range = bookie_fav_2
+                best_ev = 0.40 * bookie_fav_2_odd - 1.0
+                value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): Model olasılığı (%{mod_p2:.0f}) üst baremi destekliyor"
+        else:
+            # 4) Hybrid Market (78%) + Model (22%) between 1st and 2nd Favorite
+            for b_name in ([bookie_fav_1, bookie_fav_2] if bookie_fav_2 else [bookie_fav_1]):
+                odd = valid_odds.get(b_name, 99.0)
+                if odd > 3.50 and b_name != bookie_fav_1:
                     continue
-            if odd > 3.65 and b_name != bookie_fav_1:
-                continue
-
-            mp = float((barem_probs or {}).get(b_name, 0.0))
-            kp = float(mkt_probs.get(b_name, 0.0))
-            true_p = (0.80 * kp + 0.20 * mp) / 100.0
-            reasons = []
-
-            # 1) Golden Band (2.08-2.45) + Upper 2nd Fav (+1): Center stays solid
-            if fav2_idx > fav1_idx and 2.08 <= bookie_fav_1_odd <= 2.45:
-                if b_name == bookie_fav_1:
-                    true_p += 0.18
-                    reasons.append(f"2.Favori üstte ({bookie_fav_2}) ve oran Altın Bantta ({bookie_fav_1_odd:.2f}) olduğu için merkez çok güçlü")
-
-            # 2) Compressed Favorite (< 2.08) + Lower 2nd Fav (-1): Downward shift
-            if bookie_fav_1_odd < 2.08 and fav2_idx < fav1_idx:
-                if b_name == bookie_fav_2 and bookie_fav_2_odd <= 3.30:
-                    true_p += 0.12
-                    reasons.append(f"1.Favori oranı ({bookie_fav_1_odd:.2f}) aşırı sıkıştığı için 1 Alt Barem ({bookie_fav_2}) değerli")
-                elif b_name == bookie_fav_1 and bookie_fav_1_odd < 1.92:
-                    true_p -= 0.06
-
-            # 3) Twin Odds (gap <= 0.35): 2nd Fav offers higher payout for near-equal probability
-            if symmetry_gap <= 0.35 and b_name == bookie_fav_2:
-                if mp >= mod_fav1_p * 0.88 or fav2_idx < fav1_idx:
-                    true_p += 0.08
-                    reasons.append(f"İkiz oran (fark {symmetry_gap:.2f}) ve yüksek oran avantajı ({odd:.2f})")
-
-            # 4) Model Top Barem agreement
-            if b_name == top_mod_b and mp >= 22.0:
-                true_p += 0.05
-                reasons.append(f"Monte Carlo modeli de 1. sırada (%{mp:.0f}) destekliyor")
-
-            ev = true_p * odd - 1.0
-            score = true_p + (ev * 0.55)
-            if score > best_score:
-                best_score = score
-                best_ev = ev
-                best_value_range = b_name
-                if reasons:
-                    value_reason = f"{b_name} ({odd:.2f}): " + " • ".join(reasons)
-                else:
-                    value_reason = f"{b_name} ({odd:.2f}): Piyasa (%{kp:.0f}) ve Model (%{mp:.0f}) dengesinde en yüksek beklenen değer"
+                mp = float((barem_probs or {}).get(b_name, 0.0)) / 100.0
+                kp = float(mkt_probs.get(b_name, 0.0)) / 100.0
+                tp = 0.78 * kp + 0.22 * mp
+                if b_name == bookie_fav_2 and fav2_idx < fav1_idx:
+                    tp += 0.06
+                ev = tp * odd - 1.0
+                sc = tp + 0.50 * ev
+                if sc > best_score:
+                    best_score = sc
+                    best_ev = ev
+                    best_value_range = b_name
+                    value_reason = f"{b_name} ({odd:.2f}): Piyasa (%{kp*100:.0f}) ve Model (%{mp*100:.0f}) simetrisinde en yüksek beklenen değer"
 
     if not best_value_range:
         if bookie_fav_1:
@@ -1032,7 +1033,8 @@ def analyze_smart_35m_decision(
     odd_prev_ref = float(fav1_odd or 0.0)
     odd_prev_min = int(float(elapsed_mins or 0))
     barem_to_col_local = {
-        "160 ve altı": "odds_160_or_less",
+        "160 Or Less": "odds_160_or_less",
+        "160-": "odds_160_or_less",
         "161-170": "odds_161_170",
         "171-180": "odds_171_180",
         "181-190": "odds_181_190",
@@ -1040,7 +1042,7 @@ def analyze_smart_35m_decision(
         "201-210": "odds_201_210",
         "211-220": "odds_211_220",
         "221-230": "odds_221_230",
-        "231 ve üstü": "odds_231_plus",
+        "231+": "odds_231_plus",
     }
     if df_log is not None and not df_log.empty and game_id and "game_id" in df_log.columns:
         g_sub = df_log[df_log["game_id"].astype(str).str.strip() == str(game_id).strip()].copy()
@@ -1284,7 +1286,9 @@ def analyze_smart_35m_decision(
     reasons = []
 
     # Two-barem cover recommendation + Ready-made 1000 TL Dutching Split
-    if gap >= 10:
+    # On 94 matches, 1st & 2nd Favorite pair hits 82.8% when gap >= 6 (and 93.3% on gap 12-17)!
+    # Only on 20+ point blowouts (where Q4 garbage time slows down) do we force 0 & -1.
+    if gap >= 20:
         dutch_b1, dutch_b2 = b_0, b_m1
         dutch_pick = f"🛡️ {b_0} ile {b_m1} İkisini Birden Kapat"
         dutch_short = f"{b_0} ve {b_m1}"
@@ -1586,6 +1590,7 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
     s_v4_sel_ret, s_v4_sel_cost, s_v4_sel_wins, s_v4_sel_cnt = 0.0, 0.0, 0, 0
     s_v3_sel_ret, s_v3_sel_cost, s_v3_sel_wins, s_v3_sel_cnt = 0.0, 0.0, 0, 0
     s_tiered_ret, s_tiered_cost, s_tiered_wins, s_tiered_cnt = 0.0, 0.0, 0, 0
+    s_dutch_sel_ret, s_dutch_sel_cost, s_dutch_sel_wins, s_dutch_sel_cnt = 0.0, 0.0, 0, 0
     s_v3_all_ret, s_v3_all_wins = 0.0, 0
     s_smart_ret, s_smart_wins = 0.0, 0
     s_0_ret, s_0_wins = 0.0, 0
@@ -1598,7 +1603,12 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
         cands = grp[grp["_min"] >= 32]
         if cands.empty:
             continue
+        # Prefer latest 32+ min row that still has open odds (< 90.0) before 36m lock
         last_r = cands.iloc[-1]
+        for _, cand_row in cands.iloc[::-1].iterrows():
+            if any(1.0 < float(cand_row.get(b_cols[bn], 0.0) or 0.0) < 90.0 for bn in barem_names):
+                last_r = cand_row
+                break
         cands30 = grp[(grp["_min"] >= 27) & (grp["_min"] <= 31)]
         r30 = cands30.iloc[-1] if not cands30.empty else first_r
         b30 = str(r30.get("highest_prob_range", "")).strip()
@@ -1740,8 +1750,8 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
         s_dutch_ret += ret_dutch
         s_dutch_wins += int(hit_dutch)
 
-        # 7) Smart Dutching v2 (margin >= 10 -> 0 & -1; else -> 0 & 2ndFav)
-        d2_partner = m1_b if margin35 >= 10 else sec_b
+        # 7) Smart Dutching v2 (margin >= 20 -> 0 & -1; else -> 1. & 2. Favori)
+        d2_partner = m1_b if margin35 >= 20 else sec_b
         d2_p_odd = odd_m1 if d2_partner == m1_b else sec_odd
         if d2_partner != fav_b and d2_p_odd > 1.0:
             dutch_v2_odd = round(1.0 / ((1.0 / odd_0) + (1.0 / d2_p_odd)), 2)
@@ -1752,6 +1762,14 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
         ret_dutch_v2 = round(stake * dutch_v2_odd, 1) if hit_dutch_v2 else 0.0
         s_dutch_v2_ret += ret_dutch_v2
         s_dutch_v2_wins += int(hit_dutch_v2)
+
+        # 7b) Selective Top-2 Dutching (Pass when margin35 <= 5 Clutch/OT risk)
+        if not is_clutch_pass:
+            s_dutch_sel_cnt += 1
+            s_dutch_sel_cost += stake
+            if hit_dutch_v2:
+                s_dutch_sel_wins += 1
+                s_dutch_sel_ret += ret_dutch_v2
 
         raw_records.append(
             {
@@ -1877,7 +1895,17 @@ def simulate_35m_strategies(df_log: pd.DataFrame) -> dict:
             "roi_pct": round((s_0_ret / tot_cost - 1.0) * 100.0, 1),
         },
         {
-            "name": "🛡️ Akıllı İki Barem Kapatma (Fark 10+ ise Favori & 1 Alt / Diğerlerinde 1. & 2. Favori)",
+            "name": "🛡️ Seçici İki Barem Kapatma (0-5 Sayı Farklı Yakın Maçları Pas Geç + 1. & 2. Favori İkilisi)",
+            "wins": s_dutch_sel_wins,
+            "total": s_dutch_sel_cnt,
+            "win_rate": round(s_dutch_sel_wins / max(1, s_dutch_sel_cnt) * 100.0, 1),
+            "cost": round(s_dutch_sel_cost, 0),
+            "return": round(s_dutch_sel_ret, 0),
+            "net_profit": round(s_dutch_sel_ret - s_dutch_sel_cost, 0),
+            "roi_pct": round((s_dutch_sel_ret / max(1.0, s_dutch_sel_cost) - 1.0) * 100.0, 1),
+        },
+        {
+            "name": "🛡️ Tüm Maçlara Akıllı İki Barem Kapatma (1. & 2. Favori İkilisi / 20+ Farkta Favori & 1 Alt)",
             "wins": s_dutch_v2_wins,
             "total": tot_m,
             "win_rate": round(s_dutch_v2_wins / tot_m * 100.0, 1),
