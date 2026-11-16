@@ -109,14 +109,17 @@ EXP_REM_DEC = float(LEAGUE_CFG["exp_rem_decision"])
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v5.2-dual-league-feb2026"
+ENGINE_VERSION = "v5.3-bulletproof-numeric-guard"
 
 
 def _ensure_clean_git_tracked_files():
     """Keep git-tracked seed CSV/JSON files clean on Streamlit Cloud so git pull never blocks."""
     try:
         import subprocess
-        if os.environ.get("GITHUB_ACTIONS") != "true" and os.environ.get("HOME", "").startswith("/home/appuser"):
+        home_dir = os.environ.get("HOME", "")
+        if os.environ.get("GITHUB_ACTIONS") != "true" and (
+            home_dir.startswith("/home/appuser") or home_dir.startswith("/home/adminuser")
+        ):
             subprocess.run(
                 [
                     "git",
@@ -124,9 +127,13 @@ def _ensure_clean_git_tracked_files():
                     "--",
                     "symmetry_analysis_log.csv",
                     "matches_data.csv",
+                    "cloud_symmetry_backup.csv",
+                    "cloud_matches_backup.csv",
                     "live_matches_state.json",
                     "euro_symmetry_log.csv",
                     "euro_matches_data.csv",
+                    "cloud_euro_symmetry_backup.csv",
+                    "cloud_euro_matches_backup.csv",
                     "euro_live_matches_state.json",
                 ],
                 cwd=BASE_DIR,
@@ -327,6 +334,21 @@ def load_completed_matches(league: str = ACTIVE_LEAGUE) -> pd.DataFrame:
         return pd.DataFrame()
     df = pd.concat(frames, ignore_index=True)
     df["game_id"] = df["game_id"].astype(str).str.strip()
+    df = df[df["game_id"].str.startswith("CB-")].copy()
+    num_cols = [
+        "home_q1", "away_q1", "home_q2", "away_q2",
+        "home_q3", "away_q3", "home_q4", "away_q4",
+        "ot_home", "ot_away", "home_total", "away_total",
+        "total_score", "margin", "is_ot", "top_scorer_points",
+    ]
+    for nc in num_cols:
+        if nc in df.columns:
+            df[nc] = pd.to_numeric(df[nc], errors="coerce")
+    req_m_cols = [c for c in ["home_q1", "away_q1", "home_q2", "away_q2", "home_q3", "away_q3", "home_q4", "away_q4", "total_score"] if c in df.columns]
+    if req_m_cols:
+        df = df.dropna(subset=req_m_cols).copy()
+    if "total_score" in df.columns:
+        df = df[df["total_score"] > 0].copy()
     return df.drop_duplicates(subset=["game_id"], keep="last").reset_index(drop=True)
 
 

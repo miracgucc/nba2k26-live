@@ -247,9 +247,19 @@ def pull_today_results(only_tracked=False, days_back=1, league="nba") -> int:
         try:
             with open(matches_csv_path, "r", encoding="utf-8") as f:
                 for row in csv.DictReader(f):
-                    if row.get("game_id"):
-                        existing_ids.add(row["game_id"].strip())
-                        all_matches.append(row)
+                    gid_r = str(row.get("game_id", "") or "").strip()
+                    if not gid_r or gid_r == "game_id":
+                        continue
+                    try:
+                        tot_v = float(row.get("total_score", 0) or 0)
+                        _ = float(row.get("home_q1", 0))
+                        _ = float(row.get("away_q4", 0))
+                        if tot_v <= 0:
+                            continue
+                    except (ValueError, TypeError):
+                        continue
+                    existing_ids.add(gid_r)
+                    all_matches.append(row)
         except Exception:
             pass
 
@@ -371,10 +381,12 @@ def pull_today_results(only_tracked=False, days_back=1, league="nba") -> int:
         ]
         all_matches.extend(new_games)
         all_matches = sorted(all_matches, key=lambda x: str(x.get("date", "")))
-        with open(matches_csv_path, "w", encoding="utf-8", newline="") as f:
+        tmp_path = f"{matches_csv_path}.{os.getpid()}.tmp"
+        with open(tmp_path, "w", encoding="utf-8", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=headers_csv)
             writer.writeheader()
             writer.writerows(all_matches)
+        os.replace(tmp_path, matches_csv_path)
         print(f"[{league.upper()}] Added {len(new_games)} completed games (tz fixed: {tz_fixed_count}) to {matches_seed_name} (Total: {len(all_matches)}).")
 
     _settle_for_league(league)

@@ -17,7 +17,7 @@ def _hot_sync_latest_code():
     base_dir = os.path.dirname(os.path.abspath(__file__))
     bucket = int(now // 45)
     updated_any = False
-    for fname in ("period_predictor.py", "app.py"):
+    for fname in ("period_predictor.py", "pull_today_results.py", "run_live_auto_scraper.py", "app.py"):
         try:
             url = f"https://raw.githubusercontent.com/miracgucc/nba2k26-live/main/{fname}?cb={bucket}"
             req = urllib.request.Request(url, headers={"Cache-Control": "no-cache", "User-Agent": "Mozilla/5.0"})

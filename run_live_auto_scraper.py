@@ -637,13 +637,21 @@ def merge_cloud_backups(league: str = "nba"):
                 df_c = pd.read_csv(cloud_m)
                 if os.path.exists(matches_path) and os.path.getsize(matches_path) > 0:
                     df_l = pd.read_csv(matches_path)
+                    df_merged = pd.concat([df_c, df_l], ignore_index=True)
+                else:
+                    df_merged = df_c.copy()
+                if "game_id" in df_merged.columns and "total_score" in df_merged.columns:
+                    df_merged["game_id"] = df_merged["game_id"].astype(str).str.strip()
+                    df_merged = df_merged[df_merged["game_id"].str.startswith("CB-")].copy()
+                    for _mc in ("home_q1", "away_q1", "home_q2", "away_q2", "home_q3", "away_q3", "home_q4", "away_q4", "total_score"):
+                        if _mc in df_merged.columns:
+                            df_merged[_mc] = pd.to_numeric(df_merged[_mc], errors="coerce")
+                    df_merged = df_merged.dropna(subset=["home_q1", "away_q1", "home_q2", "away_q2", "home_q3", "away_q3", "home_q4", "away_q4", "total_score"]).copy()
+                    df_merged = df_merged[df_merged["total_score"] > 0].copy()
                     df_merged = (
-                        pd.concat([df_c, df_l], ignore_index=True)
-                        .sort_values("date")
+                        df_merged.sort_values("date")
                         .drop_duplicates(subset=["game_id"], keep="last")
                     )
-                else:
-                    df_merged = df_c
                 tmp_m = matches_path + ".tmp"
                 df_merged.to_csv(tmp_m, index=False, encoding="utf-8")
                 os.replace(tmp_m, matches_path)

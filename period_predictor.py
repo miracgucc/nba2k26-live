@@ -284,7 +284,13 @@ def get_csv_headers(league: str = "nba") -> list:
 
 def get_range_from_score(total: float, league: str = "nba") -> str:
     cfg = get_league_config(league)
-    total_int = int(round(float(total)))
+    try:
+        val = float(total)
+        if np.isnan(val) or np.isinf(val):
+            return cfg["default_barem"]
+        total_int = int(round(val))
+    except (ValueError, TypeError):
+        return cfg["default_barem"]
     for b_name, _, b_hi in cfg["barem_ranges"]:
         if total_int <= b_hi:
             return b_name
@@ -293,7 +299,13 @@ def get_range_from_score(total: float, league: str = "nba") -> str:
 
 def get_cluster_from_score(total: float, league: str = "nba") -> str:
     cfg = get_league_config(league)
-    total_int = int(round(float(total)))
+    try:
+        val = float(total)
+        if np.isnan(val) or np.isinf(val):
+            return cfg["cluster_ranges"][len(cfg["cluster_ranges"]) // 2][0]
+        total_int = int(round(val))
+    except (ValueError, TypeError):
+        return cfg["cluster_ranges"][len(cfg["cluster_ranges"]) // 2][0]
     for c_name, _, c_hi, _ in cfg["cluster_ranges"]:
         if total_int <= c_hi:
             return c_name
@@ -351,7 +363,12 @@ def build_q3_q4_streak_signal(
     if not all(col in df.columns for col in required):
         return default_resp
 
-    hist = df.dropna(subset=required).copy()
+    hist = df.copy()
+    for c in required:
+        hist[c] = pd.to_numeric(hist[c], errors="coerce")
+    hist = hist.dropna(subset=required).copy()
+    if hist.empty:
+        return default_resp
     if team_home or team_away:
         mask = pd.Series(False, index=hist.index)
         if team_home:
@@ -473,7 +490,27 @@ def predict_period_scores(df, home_q1, away_q1, home_q2, away_q2, team_home=None
             "shift_note": "Sıfır kurulum — Canlı tempo modeli aktif",
         }
 
-    hist_raw = df.dropna(subset=required).copy()
+    hist_raw = df.copy()
+    for c in required:
+        hist_raw[c] = pd.to_numeric(hist_raw[c], errors="coerce")
+    hist_raw = hist_raw.dropna(subset=required).copy()
+    if hist_raw.empty:
+        return {
+            "predicted_q3_home": round(q3_home, 1),
+            "predicted_q3_away": round(q3_away, 1),
+            "predicted_q4_home": round(q4_home, 1),
+            "predicted_q4_away": round(q4_away, 1),
+            "predicted_total": round(tot_final, 1),
+            "predicted_home_final": round(home_final, 1),
+            "predicted_away_final": round(away_final, 1),
+            "winner": "Ev Sahibi" if home_final >= away_final else "Deplasman",
+            "tempo_multiplier": round(tempo_mult, 2),
+            "neighbor_count": 0,
+            "tempo_note": "Canlı Tempo Bazlı",
+            "recent_shift_signal": 0.0,
+            "recent_shift_volatility": 0.0,
+            "shift_note": "Sıfır kurulum — Canlı tempo modeli aktif",
+        }
     if team_home and team_away:
         h2h_mask = (
             ((hist_raw["home_team"] == team_home) & (hist_raw["away_team"] == team_away))
@@ -592,10 +629,11 @@ def predict_live_inplay(
 
     hist = pd.DataFrame()
     if has_hist:
-        hist_raw = df.dropna(subset=required).copy()
+        hist_raw = df.copy()
         for c in required:
-            hist_raw[c] = hist_raw[c].astype(float)
-        if team_home and team_away:
+            hist_raw[c] = pd.to_numeric(hist_raw[c], errors="coerce")
+        hist_raw = hist_raw.dropna(subset=required).copy()
+        if not hist_raw.empty and team_home and team_away:
             h2h_mask = (
                 ((hist_raw["home_team"] == team_home) & (hist_raw["away_team"] == team_away))
                 | ((hist_raw["home_team"] == team_away) & (hist_raw["away_team"] == team_home))
@@ -1039,7 +1077,33 @@ def analyze_sequential_barem_wave(
                 logged_closing_min[gid_clean] = str(last_r.get("check_time", "")).strip()
 
     req_cols = ["home_q1", "away_q1", "home_q2", "away_q2", "home_q3", "away_q3", "home_q4", "away_q4", "total_score"]
-    hist = df_matches.dropna(subset=req_cols).copy()
+    hist = df_matches.copy()
+    for c in req_cols:
+        if c in hist.columns:
+            hist[c] = pd.to_numeric(hist[c], errors="coerce")
+    hist = hist.dropna(subset=req_cols).copy()
+    hist = hist[hist["total_score"] > 0].copy()
+    if hist.empty:
+        b_ref = current_fav_barem or def_b
+        return {
+            "recent_chain": [],
+            "last_5_codes": [],
+            "last_5_labels": "-",
+            "pattern_matches_count": 0,
+            "prob_0": w0,
+            "prob_minus_1": wm1,
+            "prob_plus_1": wp1,
+            "prob_minus_2": wm2,
+            "prob_plus_2": wp2,
+            "wave_direction": "0 / -1 (Beklenen veya 1 Alt Barem)",
+            "target_0_barem": b_ref,
+            "target_minus_1_barem": _shift_b(b_ref, -1),
+            "target_plus_1_barem": _shift_b(b_ref, 1),
+            "target_minus_2_barem": _shift_b(b_ref, -2),
+            "target_plus_2_barem": _shift_b(b_ref, 2),
+            "recommended_pair": f"{_shift_b(b_ref, -1)} & {b_ref}",
+            "recommended_pair_prob": round(w0 + wm1, 1),
+        }
     if "date" in hist.columns:
         hist = hist.sort_values(by="date", ascending=True).reset_index(drop=True)
 
