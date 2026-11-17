@@ -883,7 +883,15 @@ def _scrape_single_league(domain: str, league: str = "nba", force_manual: bool =
             league=league,
         )
         barem_probs = res_pred.get("barem_probs", {})
-        sym_info = analyze_barem_symmetry(full_odds, barem_probs, league=league)
+        _cur_h_sc = sum(int(q[0]) for q in completed_quarters[:3]) + int(home_live_score)
+        _cur_a_sc = sum(int(q[1]) for q in completed_quarters[:3]) + int(away_live_score)
+        sym_info = analyze_barem_symmetry(
+            full_odds,
+            barem_probs,
+            league=league,
+            proj_tot=float(res_pred.get("predicted_total", 0.0) or 0.0),
+            score_gap=abs(_cur_h_sc - _cur_a_sc),
+        )
         is_barem_open = (
             any(v < 90.0 for v in full_odds.values()) or bool(sym_info.get("is_locked_fav", False))
         ) and total_match_elapsed < close_min

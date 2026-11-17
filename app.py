@@ -109,7 +109,7 @@ EXP_REM_DEC = float(LEAGUE_CFG["exp_rem_decision"])
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v5.4-calibrated-177"
+ENGINE_VERSION = "v5.5-rebuilt-177"
 
 
 def _ensure_clean_git_tracked_files():
@@ -1254,9 +1254,20 @@ def render_live_dashboard():
             fav1 = m.get("bookie_fav_1") or "-"
             fav1_odd = m.get("bookie_fav_1_odd", 99.0)
             fav2 = m.get("bookie_fav_2") or "-"
-            sym_live = analyze_barem_symmetry(m.get("odds", {}), m.get("barem_probs", {}), league=ACTIVE_LEAGUE)
+            _gap_now = abs(int(h_sc) - int(a_sc))
+            sym_live = analyze_barem_symmetry(
+                m.get("odds", {}),
+                m.get("barem_probs", {}),
+                league=ACTIVE_LEAGUE,
+                proj_tot=pred_tot,
+                score_gap=_gap_now,
+            )
             val_rng = sym_live.get("value_range") or m.get("value_range") or "-"
+            val_has_edge = bool(sym_live.get("has_value_edge", False))
+            val_status_lbl = sym_live.get("value_status_label") or f"🔥 Value: {val_rng}"
             val_reason = sym_live.get("value_reason") or "Piyasa ve model simetrisine göre en yüksek beklenen değerli barem."
+            wing_badge_live = sym_live.get("wing_badge") or ""
+            sym_guidance_live = sym_live.get("sym_guidance") or ""
             clu_name = m.get("best_cluster_name") or "-"
             clu_prob = m.get("best_cluster_prob", 0.0)
             dutch_odd = m.get("dutch_odd", 0.0)
@@ -1267,7 +1278,14 @@ def render_live_dashboard():
             q4_burst_p = q3_sig.get("burst_prob", 35.0)
             q4_coll_p = q3_sig.get("collapse_prob", 25.0)
 
-            match_wave = analyze_sequential_barem_wave(df_hist, df_log, current_fav_barem=fav1, league=ACTIVE_LEAGUE)
+            match_wave = analyze_sequential_barem_wave(
+                df_hist,
+                df_log,
+                current_fav_barem=fav1,
+                league=ACTIVE_LEAGUE,
+                odds_map=m.get("odds", {}),
+                proj_tot=pred_tot,
+            )
             w_b0 = match_wave["target_0_barem"]
             w_bm1 = match_wave["target_minus_1_barem"]
             w_bp1 = match_wave["target_plus_1_barem"]
@@ -1284,11 +1302,12 @@ def render_live_dashboard():
                 game_id=str(m.get("game_id", "")),
                 df_log=df_log,
                 recent_chain=recent_chain,
-                score_gap=abs(int(h_sc) - int(a_sc)),
+                score_gap=_gap_now,
                 cur_tot=int(tot_sc),
                 elapsed_mins=float(el_m),
                 odds_map=m.get("odds", {}),
                 league=ACTIVE_LEAGUE,
+                proj_tot=pred_tot,
             )
             smart_color = {
                 "SUPER_SIGNAL": "#059669",
@@ -1387,10 +1406,10 @@ def render_live_dashboard():
                     cls_list.append("fav2")
                     tag_html = '<div class="b-tag" style="background:var(--fav2-border); color:#ffffff;">🥈 2. FAVORİ</div>'
 
-                if b_name == val_rng and odd_v < 90.0 and b_name != fav1:
+                if val_has_edge and b_name == val_rng and odd_v < 90.0 and b_name != fav1:
                     cls_list.append("val-pick")
                     tag_html = '<div class="b-tag" style="background:var(--val-border); color:#ffffff;">🔥 DEĞERLİ ORAN</div>'
-                elif b_name == val_rng and b_name == fav1 and odd_v < 90.0:
+                elif val_has_edge and b_name == val_rng and b_name == fav1 and odd_v < 90.0:
                     tag_html = '<div class="b-tag" style="background:var(--fav1-border); color:#ffffff;">⭐ FAVORİ + DEĞERLİ</div>'
 
                 rel_pos_html = (
@@ -1410,10 +1429,12 @@ def render_live_dashboard():
                 )
 
             sym_text = (
-                f"1.Fav: {fav1} ({fav1_odd:.2f}) &bull; 2.Fav: {fav2} (İkisini Kapatma Oranı: {dutch_odd:.2f})"
+                f"1.Fav: {fav1} ({fav1_odd:.2f}) &bull; 2.Fav: {fav2} (Ortak: {dutch_odd:.2f})"
                 if sym_gap < 2.0 and fav1_odd < 90
-                else f"1. Favori Barem: {fav1} ({fav1_odd if fav1_odd < 90 else '-'})"
+                else f"1. Favori: {fav1} ({fav1_odd if fav1_odd < 90 else '-'})"
             )
+            if wing_badge_live:
+                sym_text += f' &bull; <span style="font-size:0.75rem; color:var(--text-primary);">{wing_badge_live}</span>'
             barem_grid_cls = "barem-grid-6" if LEAGUE_BAREM_N == 6 else "barem-grid"
 
             st.markdown(
@@ -1445,10 +1466,10 @@ def render_live_dashboard():
                             <div style="font-size:0.74rem; color:var(--text-secondary); margin-top:0.12rem;">{smart['odd_trend_badge']}</div>
                         </div>
                     </div>
-                    <div class="info-strip" style="cursor:help;" title="20-Sayı Kümesi: Yan yana iki baremin (toplam 20 sayılık geniş aralığın) gelme ihtimalidir. Akıllı Value Nedeni: {val_reason}">
-                        <div class="info-strip-label">🛡️ En Güçlü 20-Sayı Kümesi & Akıllı Value [?]</div>
+                    <div class="info-strip" style="cursor:help;" title="20-Sayı Kümesi: Yan yana iki baremin (toplam 20 sayılık geniş aralığın) gelme ihtimalidir. Akıllı Değer Nedeni: {val_reason}">
+                        <div class="info-strip-label">🛡️ En Güçlü 20-Sayı Kümesi & Akıllı Değer [?]</div>
                         <div class="info-strip-val" style="color:var(--val-text);">
-                            Küme: {clu_name} (%{clu_prob:.1f}) &nbsp;&bull;&nbsp; 🔥 Value: {val_rng}
+                            Küme: {clu_name} (%{clu_prob:.1f}) &nbsp;&bull;&nbsp; {val_status_lbl}
                         </div>
                     </div>
                     <div class="info-strip" style="cursor:help;" title="{h2h_live['q4_pace_tip']}">
