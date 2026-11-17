@@ -109,7 +109,7 @@ EXP_REM_DEC = float(LEAGUE_CFG["exp_rem_decision"])
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v5.3-bulletproof-numeric-guard"
+ENGINE_VERSION = "v5.4-calibrated-177"
 
 
 def _ensure_clean_git_tracked_files():
@@ -286,6 +286,8 @@ def load_symmetry_log(league: str = ACTIVE_LEAGUE) -> pd.DataFrame:
     df["game_id"] = df["game_id"].astype(str).str.strip()
     df["_gnum"] = df["game_id"].str.extract(r"(\d+)")[0].fillna(0).astype(int)
     df = df[df["_gnum"] >= min_gid].copy()
+    if "game_name" in df.columns:
+        df = df[df["game_name"].astype(str).str.contains(r"\(cyber\)", case=False, na=False)].copy()
     if df.empty:
         return pd.DataFrame(columns=headers)
     df["_done"] = (df["status"].astype(str) == "COMPLETED").astype(int)
@@ -1291,7 +1293,9 @@ def render_live_dashboard():
             smart_color = {
                 "SUPER_SIGNAL": "#059669",
                 "GOLDEN": "#059669",
+                "CALC_VALUE": "#059669",
                 "PASS_CLUTCH": "#dc2626",
+                "PASS_WEAK": "#dc2626",
                 "TRAP_EXTREME": "#e11d48",
                 "TRAP_LOW": "#d97706",
             }.get(smart["zone_type"], "var(--text-secondary)")

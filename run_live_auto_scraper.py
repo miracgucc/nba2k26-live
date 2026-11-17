@@ -100,10 +100,25 @@ def _upsert_symmetry_log_row_unlocked(new_row: dict, league: str = "nba"):
     _upsert_symmetry_log_rows_unlocked([new_row], league=league)
 
 
+def _is_valid_cyber_match(game_name: str) -> bool:
+    """Reject non-cyber leagues (e.g. IPBL, TBL, Chinese Women) leaked by mirror fallbacks."""
+    gn = str(game_name or "").lower()
+    return "(cyber)" in gn
+
+
+def _score_sum(sc_str: str) -> int:
+    try:
+        a, b = str(sc_str or "").split("-")
+        return int(a.strip()) + int(b.strip())
+    except Exception:
+        return -1
+
+
 def _upsert_symmetry_log_rows_unlocked(new_rows: list, league: str = "nba"):
     """
     Batch upsert checkpoint rows by (game_id, check_time) so simultaneous games never create
-    duplicate minute rows and rows stay cleanly grouped by game_id and sorted by minute.
+    duplicate minute rows, foreign non-cyber matches are blocked, and halftime score rollbacks
+    are rejected automatically.
     """
     if not new_rows:
         return
@@ -127,21 +142,38 @@ def _upsert_symmetry_log_rows_unlocked(new_rows: list, league: str = "nba"):
 
     dedup_map = {}
     game_order = []
+    changed = False
     for r in existing_rows:
         gid = str(r.get("game_id", "")).strip()
         ctime = str(r.get("check_time", "")).strip()
-        if not gid or _gid_int(gid) < min_clean_gid:
+        if not gid or _gid_int(gid) < min_clean_gid or not _is_valid_cyber_match(r.get("game_name", "")):
+            changed = True
             continue
         if gid not in game_order:
             game_order.append(gid)
         dedup_map[(gid, ctime)] = {h: r.get(h, "") for h in headers}
 
-    changed = False
     for new_row in new_rows:
         new_gid = str(new_row.get("game_id", "")).strip()
-        if _gid_int(new_gid) < min_clean_gid:
+        if _gid_int(new_gid) < min_clean_gid or not _is_valid_cyber_match(new_row.get("game_name", "")):
             continue
         new_ctime = str(new_row.get("check_time", "")).strip()
+        new_m = _extract_minute_num(new_ctime)
+        new_tot = _score_sum(new_row.get("current_score", ""))
+
+        # Reject transient halftime / quarter-transition score reset glitches (cur_tot < prev_tot)
+        if new_tot >= 0:
+            max_prior_tot = max(
+                (
+                    _score_sum(er.get("current_score", ""))
+                    for (eg, ec), er in dedup_map.items()
+                    if eg == new_gid and _extract_minute_num(ec) <= new_m
+                ),
+                default=-1,
+            )
+            if max_prior_tot > 0 and new_tot < max_prior_tot:
+                continue
+
         if new_gid not in game_order:
             game_order.append(new_gid)
 
@@ -444,9 +476,13 @@ def fetch_all_live_games_via_api(domain: str = "", league: str = "nba") -> list:
             pass
 
     parsed_games = []
+    target_champ = str(champ_id).strip()
     for item in raw_list:
         gid = item.get("I")
         if not gid:
+            continue
+        item_li = str(item.get("LI") or "").strip()
+        if item_li and item_li != target_champ:
             continue
         detail_path = (
             f"/service-api/LiveFeed/GetGameZip?id={gid}&lng=en&isSubGames=true"
@@ -476,6 +512,13 @@ def fetch_all_live_games_via_api(domain: str = "", league: str = "nba") -> list:
                 pass
 
         src = g_val if isinstance(g_val, dict) else item
+        src_li = str(src.get("LI") or item_li or "").strip()
+        if src_li and src_li != target_champ:
+            continue
+        t1_name = str(src.get("O1", "")).strip()
+        t2_name = str(src.get("O2", "")).strip()
+        if not (_is_valid_cyber_match(t1_name) and _is_valid_cyber_match(t2_name)):
+            continue
         sc = src.get("SC") or {}
         fs = sc.get("FS") or {}
         ps_raw = sc.get("PS") or []
@@ -726,6 +769,8 @@ def _scrape_single_league(domain: str, league: str = "nba", force_manual: bool =
         game_id_str = f"CB-{data.get('id')}"
         team1 = str(data.get("team1", "")).strip()
         team2 = str(data.get("team2", "")).strip()
+        if not (_is_valid_cyber_match(team1) and _is_valid_cyber_match(team2)):
+            continue
         total_home = int(data.get("score1") or 0)
         total_away = int(data.get("score2") or 0)
 
@@ -784,6 +829,13 @@ def _scrape_single_league(domain: str, league: str = "nba", force_manual: bool =
             elif q_num == current_quarter:
                 home_live_score = h_s
                 away_live_score = a_s
+
+        # Recover true cumulative score if BetB2B briefly emits a quarter-only total at halftime
+        ps_cum_h = sum(q[0] for q in completed_quarters) + home_live_score
+        ps_cum_a = sum(q[1] for q in completed_quarters) + away_live_score
+        if (ps_cum_h + ps_cum_a) > (total_home + total_away) and ps_cum_h >= total_home and ps_cum_a >= total_away:
+            total_home = ps_cum_h
+            total_away = ps_cum_a
 
         time_in_seconds = float(data.get("timeInSeconds") or 0.0)
         if time_in_seconds > q_secs:
