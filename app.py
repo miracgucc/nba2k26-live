@@ -1910,7 +1910,7 @@ with tab_smart35:
                 ),
                 "Kâr Oranı (%)": st.column_config.TextColumn(
                     "Kâr Oranı (%)",
-                    help="Yatırılan her 100 TL başına elde edilen net yüzdelik kâr.",
+                    help="Yatırılan her 1.000 TL başına elde edilen net kazanç yüzdesi.",
                 ),
             },
             use_container_width=True,

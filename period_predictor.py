@@ -969,7 +969,7 @@ def analyze_barem_symmetry(
         if locked_fav or bookie_fav_1_odd < 1.18:
             sym_guidance = f"🔒 {bookie_fav_1} tek başına kilit favori (1.20 altı tek başına oynanmaz)."
         elif 1.85 <= bookie_fav_1_odd < 2.10:
-            sym_guidance = f"💎 {bookie_fav_1} ({bookie_fav_1_odd:.2f}) altın tek favori aralığında ({'Euro %57.3 / +13.7 TL' if is_euro_lg else 'NBA %60.0 / +20.6 TL'})."
+            sym_guidance = f"💎 {bookie_fav_1} ({bookie_fav_1_odd:.2f}) altın tek favori aralığında ({'Euro %57.3 / 1.000 TL başı +137 TL' if is_euro_lg else 'NBA %60.0 / 1.000 TL başı +206 TL'})."
         elif not is_euro_lg and 2.10 <= bookie_fav_1_odd < 2.30:
             sym_guidance = f"⚠️ NBA'de 2.10–2.30 arası 1. Favori ({bookie_fav_1}) tuzak bölgesi (%33.8); 2. Favori ({bookie_fav_2}) daha değerli."
         elif symmetry_gap <= 0.65:
@@ -1004,7 +1004,7 @@ def analyze_barem_symmetry(
                 selective_value_range = proj_barem
                 po = valid_odds[proj_barem]
                 best_ev = float((barem_probs or {}).get(proj_barem, 35.0)) / 100.0 * po - 1.0
-                value_reason = f"{proj_barem} ({po:.2f}): Euro skor tahmini ({proj_tot:.0f}) sitenin altını gösteriyor (+26.6 TL/100 bölge)"
+                value_reason = f"{proj_barem} ({po:.2f}): Euro skor tahmini ({proj_tot:.0f}) sitenin altını gösteriyor (1.000 TL başı +266 TL bölge)"
             elif 1.85 <= bookie_fav_1_odd < 2.10:
                 best_value_range = bookie_fav_1
                 mp1 = float((barem_probs or {}).get(bookie_fav_1, 0.0)) / 100.0
@@ -1939,7 +1939,7 @@ def analyze_smart_35m_decision(
         conf_pct = 45.0
         reasons.append(
             f"1. Favori oranı 1.20 altında ({odd_val:.2f}) kaldığında bir tek sürpriz tüm kazancı siliyor "
-            f"(NBA -34.9 TL, Euro -19.7 TL zarar bölgesi — pas geçmek en doğrusudur)"
+            f"(1.000 TL başı NBA -349 TL, Euro -197 TL zarar bölgesi — pas geçmek en doğrusudur)"
         )
     elif gap <= gap_close_thr and float(elapsed_mins or dec_min) >= mid_q3:
         zone_badge = f"⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: {gap} Sayı Fark)"
@@ -1949,7 +1949,7 @@ def analyze_smart_35m_decision(
         conf_pct = 32.0
         reasons.append(
             f"Maç başa baş gidiyor (fark sadece {gap} sayı). Son bölümde fauller ve uzatma nedeniyle kalan sayı artar (ort. {exp_rem_35:.1f}); "
-            f"237 NBA maçında %31.8 (-34.5 TL/100) ile ağır zarar bölgesi olduğu için pas geçilir"
+            f"237 NBA maçında %31.8 (1.000 TL başı -345 TL) ile ağır zarar bölgesi olduğu için pas geçilir"
         )
     elif (not is_euro_lg and 2.50 <= odd_val < 90.0) or (is_euro_lg and 2.30 <= odd_val < 90.0):
         thr_txt = "2.30" if is_euro_lg else "2.50"
@@ -1960,10 +1960,10 @@ def analyze_smart_35m_decision(
         conf_pct = 25.0
         reasons.append(
             f"{'Euro' if is_euro_lg else 'NBA'} maçlarında 1. Favori oranı {thr_txt} ve üzerine çıktığında site de kararsız kalıyor "
-            f"({'%11.1 / -73.1 TL' if is_euro_lg else '%16.7 / -57.2 TL'} — pas geçmek en doğrusudur)"
+            f"({'%11.1 / 1.000 TL başı -731 TL' if is_euro_lg else '%16.7 / 1.000 TL başı -572 TL'} — pas geçmek en doğrusudur)"
         )
     elif not is_euro_lg:
-        # ── NBA v6.0 ULTRA-CLEAN ENGINE (237 matches: +17.8 TL/100 | OLD +4.7 | NEW +50.5!) ──
+        # ── NBA v6.0 ULTRA-CLEAN ENGINE (237 matches: +178 TL / 1000 TL) ──
         if 1.20 <= odd_val < 1.50 and 1.01 < odd2_val < 85.0:
             zone_badge = f"⚠️ NBA KISA ORAN TUZAĞI ({b_0}: {odd_val:.2f} ➔ 2. Fav Fırsatı)"
             zone_type = "TRAP_EXTREME"
@@ -1973,7 +1973,7 @@ def analyze_smart_35m_decision(
             primary_weights = [1.0]
             conf_pct = 78.0
             reasons.append(
-                f"NBA'de 1. Favori 1.20–1.50 arasındayken 2. Favori ({sec_b_clean}) hem eski hem yeni maçlarda yüksek kâr (%57.1, +96.6 TL/100) sağlamıştır"
+                f"NBA'de 1. Favori 1.20–1.50 arasındayken 2. Favori ({sec_b_clean}) hem eski hem yeni maçlarda yüksek kâr (%57.1, 1.000 TL başı +966 TL) sağlamıştır"
             )
         elif 1.85 <= odd_val < 2.10:
             zone_badge = f"💎 NBA ALTIN TEK FAVORİ: {b_0} ({odd_val:.2f})"
@@ -1984,7 +1984,7 @@ def analyze_smart_35m_decision(
             primary_weights = [1.0]
             conf_pct = 82.0
             reasons.append(
-                f"237 NBA maçında 1.85–2.10 arası 1. Favori (başa baş olmayanlarda) %62.8 tutma ve +26.4 TL/100 net kazançla en güçlü tek barem bölgesidir"
+                f"237 NBA maçında 1.85–2.10 arası 1. Favori (başa baş olmayanlarda) %62.8 tutma ve 1.000 TL başı +264 TL net kazançla en güçlü tek barem bölgesidir"
             )
         elif (
             cur_tot > 0
@@ -2002,7 +2002,7 @@ def analyze_smart_35m_decision(
             conf_pct = 76.0
             reasons.append(
                 f"Yeni kalibreli maç sonu tahmini ({mc_pb}) sitenin favorisinden ({b_0}) ayrışıyor; "
-                f"hem eski hem yeni maçlarda artı yazan (+11.9 TL/100) değer sinyalidir"
+                f"hem eski hem yeni maçlarda artı yazan (1.000 TL başı +119 TL) değer sinyalidir"
             )
         elif 2.10 <= odd_val < 2.50 and 10 <= gap <= 20 and has_two_valid_odds:
             zone_badge = f"🛡️ NBA KONTROLLÜ AĞIRLIKLI İKİLİ ({dutch_short})"
@@ -2013,7 +2013,7 @@ def analyze_smart_35m_decision(
             primary_weights = [w1, w2]
             conf_pct = 80.0
             reasons.append(
-                f"Fark 10–20 sayı arasındayken NBA'de 2.10–2.50 bölgesi tek başına belirsizdir; 2. Favori ağırlıklı (550/450 TL) ikili %80.0 tutma ve +6.9 TL/100 kazanç üretir"
+                f"Fark 10–20 sayı arasındayken NBA'de 2.10–2.50 bölgesi tek başına belirsizdir; 2. Favori ağırlıklı (550/450 TL) ikili %80.0 tutma ve 1.000 TL başı +69 TL kazanç üretir"
             )
         elif 2.10 <= odd_val < 2.30 and drift < 0 and 1.01 < odd2_val < 85.0:
             zone_badge = f"⚠️ NBA 2.10–2.30 DÜŞÜŞ TUZAĞI ➔ 2. Fav ({sec_b_clean})"
@@ -2024,7 +2024,7 @@ def analyze_smart_35m_decision(
             primary_weights = [1.0]
             conf_pct = 72.0
             reasons.append(
-                f"NBA'de 2.10–2.30 aralığında ve barem aşağı düştüğünde 1. Favori %33.8 (-25.6 TL) ile ağır kayıp yazarken 2. Favori ({sec_b_clean}) artıya geçmiştir"
+                f"NBA'de 2.10–2.30 aralığında ve barem aşağı düştüğünde 1. Favori %33.8 (1.000 TL başı -256 TL) ile ağır kayıp yazarken 2. Favori ({sec_b_clean}) artıya geçmiştir"
             )
         else:
             zone_badge = f"⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — {b_0}: {odd_val:.2f})" if odd_val < 90 else "⏳ Oran Bekleniyor"
@@ -2036,7 +2036,7 @@ def analyze_smart_35m_decision(
                 f"Bu oran ({odd_val:.2f}) ve skor farkında ({gap}) ne tek favoride ne de tahminde net üstünlük var; kasa korumak için pas geçilir"
             )
     else:
-        # ── EURO LEAGUE v6.0 ENGINE (184 matches: %60.8 | +27.7 TL/100 | OLD +27.3 | NEW +28.1!) ──
+        # ── EURO LEAGUE v6.0 ENGINE (184 matches: %61.9 | +310 TL / 1000 TL!) ──
         if (
             cur_tot > 0
             and float(elapsed_mins or dec_min) >= mid_q3 - 3
@@ -2052,7 +2052,7 @@ def analyze_smart_35m_decision(
             primary_weights = [1.0]
             conf_pct = 82.0
             reasons.append(
-                f"Euro League'de hem skor hesabı hem 2. Favori bir alt baremi ({proj_barem}) gösterdiğinde 184 maçta %48.3 tutma ve +35.2 TL/100 net kâr (eski +34, yeni +36.5) elde edilmiştir"
+                f"Euro League'de hem skor hesabı hem 2. Favori bir alt baremi ({proj_barem}) gösterdiğinde 184 maçta %48.1 tutma ve 1.000 TL başı +356 TL net kâr (eski +250, yeni +470 TL) elde edilmiştir"
             )
         elif (
             cur_tot > 0
@@ -2069,7 +2069,7 @@ def analyze_smart_35m_decision(
             primary_weights = [1.0]
             conf_pct = 79.0
             reasons.append(
-                f"Yeni maç sonu tahmini sitenin bir altını ({mc_pb}) gösteriyor; Euro'da hem eski (+38.5 TL) hem yeni (+15.8 TL) maçlarda yüksek değer üretmiştir"
+                f"Yeni maç sonu tahmini sitenin bir altını ({mc_pb}) gösteriyor; Euro'da hem eski (1.000 TL başı +292 TL) hem yeni (+432 TL) maçlarda yüksek değer üretmiştir"
             )
         elif 1.50 <= odd_val < 2.10:
             is_best_euro = 1.85 <= odd_val < 2.10
@@ -2085,7 +2085,7 @@ def analyze_smart_35m_decision(
             primary_weights = [1.0]
             conf_pct = 85.0 if is_best_euro else 78.0
             reasons.append(
-                f"184 Euro maçında 1.85–2.10 arası 1. Favori hem eski (+9.8 TL) hem yeni (+17.6 TL) maçlarda %57.3 tutma ile en kararlı tek barem bölgesidir"
+                f"184 Euro maçında 1.85–2.10 arası 1. Favori hem eski (1.000 TL başı +98 TL) hem yeni (+176 TL) maçlarda %57.3 tutma ile en kararlı tek barem bölgesidir"
                 if is_best_euro
                 else f"Euro League'de 1.50–1.85 arası başa baş olmayan maçlarda 1. Favori ({b_0}) %58.6 ile güçlü tutmaktadır"
             )
@@ -2099,7 +2099,7 @@ def analyze_smart_35m_decision(
             primary_weights = [1.0]
             conf_pct = 77.0
             reasons.append(
-                f"Normalde 2.10–2.30 Euro favorileri risklidir; ancak '{why_reb}' olduğunda Euro'da 1. Favori %60–%65 tutma (+13 ile +21 TL/100) ile güçlü tepki verir"
+                f"Normalde 2.10–2.30 Euro favorileri risklidir; ancak '{why_reb}' olduğunda Euro'da 1. Favori %60–%65 tutma (1.000 TL başı +128 ile +213 TL) ile güçlü tepki verir"
             )
         else:
             zone_badge = f"⛔ EURO SEÇİCİ PAS GEÇ ({b_0}: {odd_val:.2f})" if odd_val < 90 else "⏳ Oran Bekleniyor"
@@ -2108,7 +2108,7 @@ def analyze_smart_35m_decision(
             primary_pick = f"⛔ Bahis Alma (Net Sinyal Yok — Takip: {b_0})" if odd_val < 90 else "⏳ Oran Bekleniyor"
             conf_pct = 44.0
             reasons.append(
-                f"Euro League'de 1.20–1.50 düşük getiri verir, 2.10–2.30 arası ise tepki sinyali yoksa (-6.1 TL) zararlıdır; pas geçilir"
+                f"Euro League'de 1.20–1.50 düşük getiri verir, 2.10–2.30 arası ise tepki sinyali yoksa (1.000 TL başı -61 TL) zararlıdır; pas geçilir"
             )
 
     # 2. Tercih (Garanti İkili Kapat) v6.0 — STRICTLY POSITIVE ON BOTH OLD & BRAND-NEW FOR NBA AND EURO!
