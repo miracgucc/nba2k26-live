@@ -187,14 +187,23 @@ def _upsert_symmetry_log_rows_unlocked(new_rows: list, league: str = "nba"):
         dedup_map[(new_gid, new_ctime)] = clean_new
         changed = True
 
-    if not changed:
-        return
-
     final_rows = []
     for gid in game_order:
         g_rows = [r for (g, _), r in dedup_map.items() if g == gid]
         g_rows.sort(key=lambda x: _extract_minute_num(x.get("check_time", "")))
-        final_rows.extend(g_rows)
+        # Self-heal transient halftime score resets (e.g. Q2 - Minute 24 dropping 103 -> 55)
+        max_sc_seen = -1
+        for gr in g_rows:
+            cur_sc_sum = _score_sum(gr.get("current_score", ""))
+            if cur_sc_sum >= 0 and max_sc_seen > 0 and cur_sc_sum < max_sc_seen - 2:
+                changed = True
+                continue
+            if cur_sc_sum > max_sc_seen:
+                max_sc_seen = cur_sc_sum
+            final_rows.append(gr)
+
+    if not changed:
+        return
 
     tmp_main = csv_path + ".tmp"
     with open(tmp_main, mode="w", newline="", encoding="utf-8") as f:

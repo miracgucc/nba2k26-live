@@ -109,7 +109,7 @@ EXP_REM_DEC = float(LEAGUE_CFG["exp_rem_decision"])
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v5.5-rebuilt-177"
+ENGINE_VERSION = "v6.0-calibrated-420"
 
 
 def _ensure_clean_git_tracked_files():
@@ -1194,11 +1194,15 @@ def render_live_dashboard():
                     elapsed_mins=el_al,
                     odds_map=m_al.get("odds", {}),
                     league=ACTIVE_LEAGUE,
+                    proj_tot=float(m_al.get("predicted_total", 0.0) or 0.0),
                 )
+                _al_is_pass = str(sm_al.get("zone_type", "")).startswith("PASS_")
+                _al_border = "#64748b" if _al_is_pass else "#059669"
+                _al_bg = "rgba(100,116,139,0.10)" if _al_is_pass else "rgba(5,150,105,0.12)"
                 closing_alerts_html += (
-                    f'<div style="background:rgba(5,150,105,0.12); border:2px solid #059669; border-radius:12px; padding:0.75rem 1.1rem; margin-bottom:0.75rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; box-shadow:var(--shadow-card);">'
+                    f'<div style="background:{_al_bg}; border:2px solid {_al_border}; border-radius:12px; padding:0.75rem 1.1rem; margin-bottom:0.75rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; box-shadow:var(--shadow-card);">'
                     f'<div>'
-                    f'<span style="background:#059669; color:#ffffff; padding:0.18rem 0.6rem; border-radius:6px; font-size:0.74rem; font-weight:800;">🚨 KARAR ANI (KAPANIŞA {rem_lock:.1f} DK KALDI)</span> '
+                    f'<span style="background:{_al_border}; color:#ffffff; padding:0.18rem 0.6rem; border-radius:6px; font-size:0.74rem; font-weight:800;">🚨 KARAR ANI (KAPANIŞA {rem_lock:.1f} DK KALDI)</span> '
                     f'<span style="font-size:0.98rem; font-weight:800; color:var(--text-primary); margin-left:0.4rem;">🏀 {th_al} vs {ta_al} ({el_al:.1f}. Dk | Skor: {hsc_al}-{asc_al})</span>'
                     f'<div style="font-size:0.84rem; color:var(--text-primary); margin-top:0.28rem;">'
                     f'<b>🎯 Tek Barem:</b> {sm_al["primary_pick"]} &nbsp;&bull;&nbsp; <b>🛡️ İkili Kapatma:</b> {sm_al["backup_pick"]} &nbsp;&bull;&nbsp; <b>💰 Önerilen:</b> {sm_al["stake_badge"]}'
@@ -1312,9 +1316,13 @@ def render_live_dashboard():
             smart_color = {
                 "SUPER_SIGNAL": "#059669",
                 "GOLDEN": "#059669",
+                "GOLDEN_PAIR": "#059669",
+                "GOLDEN_REBOUND": "#059669",
                 "CALC_VALUE": "#059669",
                 "PASS_CLUTCH": "#dc2626",
                 "PASS_WEAK": "#dc2626",
+                "PASS_LOW_ODD": "#dc2626",
+                "PASS_SELECTIVE": "#64748b",
                 "TRAP_EXTREME": "#e11d48",
                 "TRAP_LOW": "#d97706",
             }.get(smart["zone_type"], "var(--text-secondary)")
