@@ -109,7 +109,7 @@ EXP_REM_DEC = float(LEAGUE_CFG["exp_rem_decision"])
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v6.0-calibrated-420"
+ENGINE_VERSION = "v6.1-symmetry-complete"
 
 
 def _ensure_clean_git_tracked_files():
@@ -1807,8 +1807,8 @@ with tab_smart35:
         st.info("Sonuçlanmış canlı kapanış kaydı bekleniyor. Maçlar bittikçe bu sekme otomatik dolar.")
     else:
         st.caption(
-            f"📊 İncelenen gerçek maç sayısı: **{sim35['total_matches']}** • Her maça sabit **1000 TL** (veya Kademeli Kasa: **0 / 1000 / 2000 TL**) bahis • "
-            "Tablo başlıklarındaki **`?`** işaretlerinin veya aşağıdaki kutuların üstüne fareyle gelerek her kuralın ne işe yaradığını okuyabilirsiniz."
+            f"📊 İncelenen gerçek maç sayısı: **{sim35['total_matches']}** • Her maça sabit **1.000 TL** bahis üzerinden gerçek performans • "
+            "Tablo başlıklarındaki **`?`** işaretlerinin veya aşağıdaki kutuların üstüne fareyle gelerek her simetri ve oran kuralının ne işe yaradığını okuyabilirsiniz."
         )
         _n_games = df_sym_all["game_id"].nunique() if not df_sym_all.empty else 0
         _n_done = (
@@ -1819,49 +1819,58 @@ with tab_smart35:
         st.caption(f"🔎 Veri kaynağı: {len(df_sym_all)} dakika kaydı • {_n_games} maç • {_n_done} sonuçlanmış • sürüm {ENGINE_VERSION}")
 
         _gap_thr = int(LEAGUE_CFG["blowout_brake_gap"]) if IS_EURO else 18
-        _slow_q4_avg = 35 if IS_EURO else 47
+        _slow_q4_avg = 33 if IS_EURO else 48
         _exp_rem_d = int(round(EXP_REM_DEC))
         _m10_center_str = "-".join(str(x) for x in LEAGUE_CFG["mod10_center_digits"])
         _m10_risk_str = "-".join(str(x) for x in LEAGUE_CFG["mod10_risk_digits"])
         _ex_fav1 = LEAGUE_CFG["default_barem"]
         _ex_fav2 = LEAGUE_CFG["default_backup_barem"]
+        _rule3_title = "🔄 3. Kural: Euro Alt Sapma & Sarkaç Dönüşü [?]" if IS_EURO else "🔄 3. Kural: 2. Favori Fırsat Bölgeleri [?]"
+        _rule3_body = (
+            "Euro'da önceki maçlar <b>1.Fav dışında</b> bittiyse veya <b>2 maç üst üste Alt</b> geldiyse sıradaki maçta <b>1. Favori</b> merkeze çok güçlü döner (1.000 TL başı <b>+213 TL ile +433 TL</b>)."
+            if IS_EURO
+            else "NBA'de 1.Fav oranı <b>1.20–1.50</b> (aşırı sıkışmış) veya <b>2.10–2.30</b> (kararsız tepe) olduğunda doğrudan <b>2. Favori Barem</b> tek başına 1.000 TL başı <b>+604 TL ile +966 TL</b> üretir."
+        )
+        _rule4_body = (
+            f"Son iki maç zıt yönlere savrulduysa (<b>-1 ➔ +1</b> veya <b>+1 ➔ -1 Sarkaç Simetrisi</b>), 3. maç yüksek oranda merkeze (<b>1. Favori</b>) döner (NBA <b>%52.9 / +49 TL</b>, Euro <b>%60.0 / +123 TL</b>). Üst üste iki kez <b>2 Alt (-2)</b> ise 424 maçta <b>%0 (hiç)</b> gelmemiştir!"
+        )
 
         st.markdown(
             f"""
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:0.55rem; margin:0.5rem 0 0.85rem 0;">
                 <div class="info-strip" style="cursor:help; border-left:4px solid #059669;"
-                     title="1xBet'te en düşük oranlı 1. Favori baremin yanında 2. Favori vardır. Eğer 2. Favori BİR ÜST baremdeyse (ör. 1.Favori {_ex_fav1} iken 2.Favori {_ex_fav2} ise) ve 1.Favori oranı 2.10 üstüyse, maç alta kolay kolay düşmez; direkt 1. Favori güçlüdür!">
-                    <div class="info-strip-label">🔥 1. Kural: 2. Favori Nerede Duruyor? [?]</div>
+                     title="1xBet'te {DEC_MIN}. dakikada 1. Favori oranı 1.85 ile 2.10 arasındaysa (Euro'da 1.50-2.10 tüm bant) 1. Favori tek başına en verimli bölgededir: NBA'de 1.000 TL başı +264 TL, Euro'da +137 TL net kazanç!">
+                    <div class="info-strip-label">🔥 1. Kural: 1.85–2.10 Altın Tek Favori [?]</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
-                        <b>2. Favori üst baremdeyse</b> maç alta düşmez, direkt <b>1. Favoriyi</b> oyna. <b>Alt baremdeyse</b> ve oran 2.10 altındaysa <b>1 Alt Baremi</b> oyna.
+                        1. Favori oranı <b>1.85–2.10</b> arasındaysa (Euro'da <b>1.50–2.10</b>) doğrudan <b>Tek 1. Favori Barem</b> en yüksek net kazancı verir.
                     </div>
                 </div>
                 <div class="info-strip" style="cursor:help; border-left:4px solid #dc2626;"
-                     title="{DEC_MIN}. dakikada iki takım arasındaki skor farkı 0 ile 5 sayı arasındaysa maç başa baş demektir. Son dakikalarda taktik fauller ve uzatma yüzünden beklenenden fazla sayı atılır ve maç üst bareme kaçabilir. Bu maçları pas geçmek seni zarardan korur!">
-                    <div class="info-strip-label">⛔ 2. Kural: Fark 0-5 Sayı İse Pas Geç [?]</div>
+                     title="{DEC_MIN}. dakikada skor farkı 0-5 sayı ise taktik faul ve uzatma yüzünden barem şaşar. Ayrıca 1.20 altı ölü oranlar ile NBA 2.30+ / Euro 2.50+ dağınık oranlar pas geçilir.">
+                    <div class="info-strip-label">⛔ 2. Kural: Fark 0-5 ve Uç Oranları Pas Geç [?]</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
-                        {DEC_MIN}. dk'da fark <b>0-5 sayı</b> ise faul ve uzatma yüzünden çok sayı atılır. <b>Bahis Alma (Pas Geç)</b>.
+                        Fark <b>0-5 sayı</b>, oran <b>1.20 altı</b> veya <b>{"2.50+" if IS_EURO else "2.30+"}</b> ise <b>Bahis Alma (Pas Geç)</b>.
                     </div>
                 </div>
                 <div class="info-strip" style="cursor:help; border-left:4px solid #2563eb;"
-                     title="{DEC_MIN}. dakikada fark {_gap_thr} sayı veya daha fazlaysa maç kopmuş demektir. Takımlar son çeyrekte tempoyu düşürür, kalan sürede ortalama ~{_slow_q4_avg} sayı atılır ve üst bareme kolay kaçmaz.">
-                    <div class="info-strip-label">🧊 3. Kural: Fark {_gap_thr}+ Sayı İse Maç Yavaşlar [?]</div>
+                     title="Gerçek maç verilerinde 1. Favorinin zayıflayıp 2. Favorinin veya merkeze dönüşün öne çıktığı en kârlı fırsat bölgeleri.">
+                    <div class="info-strip-label">{_rule3_title}</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
-                        Fark <b>{_gap_thr}+ sayı</b> olduğunda son çeyrek yavaşlar (kalan ~{_slow_q4_avg} sayı). Üst bareme kaçmaz; <b>1. Favori</b> güçlüdür.
+                        {_rule3_body}
                     </div>
                 </div>
                 <div class="info-strip" style="cursor:help; border-left:4px solid #e11d48;"
-                     title="{DEC_MIN}. dakikada 1. Favori oranı 1.85'in altındaysa (ör. 1.65, 1.75), değer kaybolmuş demektir; böyle durumlarda 2. Favori / komşu barem alternatifi değer taşır.">
-                    <div class="info-strip-label">🚨 4. Kural: Oran 1.85 Altı İse Tuzaktır [?]</div>
+                     title="Ardışık biten maçların barem kayma sırası (Sarkaç -1➔+1 / +1➔-1 ve -2 tekrarsızlığı) sıradaki maçın merkeze dönüşünü belirler.">
+                    <div class="info-strip-label">🌊 4. Kural: Sarkaç & Dalga Simetrisi [?]</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
-                        1. Favori oranı <b>1.85 altındaysa</b> dikkat! Onun yerine doğrudan <b>2. Favori Baremi</b> incele.
+                        {_rule4_body}
                     </div>
                 </div>
                 <div class="info-strip" style="cursor:help; border-left:4px solid #d97706;"
-                     title="{DEC_MIN}. dakikadan maç sonuna kadar ortalama {_exp_rem_d} sayı atılır. Toplam skorun son rakamı {_m10_center_str} ise maç tam barem ortasına düşer; {_m10_risk_str} ise alt sınırda kalıp 1 Alt Bareme düşme riski artar.">
-                    <div class="info-strip-label">🎯 5. Kural: Skorun Son Rakamı Kuralı [?]</div>
+                     title="İki barem kapatırken 500/500 eşit bölmek yerine NBA'de 10-20 farkta 2. Favoriye 550 TL / 1. Favoriye 450 TL (veya 1.Tercihe 650 TL / Korumaya 350 TL) ağırlık vermek 1.000 TL başı net kârı artıya taşır.">
+                    <div class="info-strip-label">🛡️ 5. Kural: Ağırlıklı İkili Kapatma (550/450 TL) [?]</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
-                        {DEC_MIN}. dk toplam skorun sonu <b>{_m10_center_str}</b> ise tam barem ortasına düşer (<b>1. Favori</b> güçlü); <b>{_m10_risk_str}</b> ise <b>1 Alt Barem</b> riski vardır.
+                        İkili kapatmada eşit bölmek yerine <b>550 TL / 450 TL</b> veya <b>650 TL / 350 TL</b> ağırlıklı bölüşüm komisyonu yenip artıya geçirir.
                     </div>
                 </div>
             </div>
@@ -1870,8 +1879,8 @@ with tab_smart35:
         )
 
         st.markdown(
-            "###### 💰 Sanal Kasa: Hangi Yöntem Ne Kadar Kazandırdı?",
-            help="Gerçek sonuçlanmış maçların tamamında bu yöntemleri uygulasaydık kasamızın ne olacağını gösterir. Kâr Oranı (%): Yatırılan toplam paraya göre yüzdelik net kazançtır.",
+            "###### 💰 Sanal Kasa: Hangi Yöntem 1.000 TL Başına Ne Kadar Kazandırdı?",
+            help="Gerçek sonuçlanmış maçların tamamında bu yöntemleri her maça 1.000 TL yatırarak uygulasaydık kasamızın ne olacağını gösterir.",
         )
         st.dataframe(
             pd.DataFrame(
@@ -1879,6 +1888,7 @@ with tab_smart35:
                     {
                         "Oynama Yöntemi (Strateji)": s["name"],
                         "Tutma Oranı": f"{s['wins']} / {s['total']} (%{s['win_rate']})",
+                        "1.000 TL Başı Net": f"{s['net_profit']/max(1, s['total']):+.0f} TL",
                         "Toplam Yatırılan": f"{s['cost']:.0f} TL",
                         "Toplam Geri Dönüş": f"{s['return']:.0f} TL",
                         "Net Kâr / Zarar": f"{s['net_profit']:+.0f} TL",
@@ -1890,11 +1900,15 @@ with tab_smart35:
             column_config={
                 "Oynama Yöntemi (Strateji)": st.column_config.TextColumn(
                     "Oynama Yöntemi (Strateji)",
-                    help="Test edilen bahis yöntemi. En üstteki yöntem başa baş maçları (0-5 fark) pas geçip diğerlerine 1000 TL oynar.",
+                    help="Test edilen bahis yöntemi. En üstteki yöntem v6.1 1. Tercih (Canlı Kart Karar Motoru) kurallarını uygular.",
                 ),
                 "Tutma Oranı": st.column_config.TextColumn(
                     "Tutma Oranı",
                     help="Oynanan toplam maç içinden kaç tanesinin kazandığı ve tutturma yüzdesi.",
+                ),
+                "1.000 TL Başı Net": st.column_config.TextColumn(
+                    "1.000 TL Başı Net",
+                    help="Oynanan her 1.000 TL'lik kupon başına kasaya kalan ortalama net kâr veya zarar.",
                 ),
                 "Toplam Yatırılan": st.column_config.TextColumn(
                     "Toplam Yatırılan",
@@ -2492,20 +2506,38 @@ with tab_bankroll:
         with dc3:
             odd_2 = st.number_input(f"2. Barem Oranı ({def_b2_name})", min_value=1.50, max_value=50.0, value=float(def_o2), step=0.10, key=f"bk_o2_{ACTIVE_LEAGUE}")
 
+        split_mode = st.selectbox(
+            "⚖️ İkili Kapatma Bölüşüm Yöntemi (1.000 TL Bazlı)",
+            [
+                "🛡️ %55 2. Favori / %45 1. Favori (550 TL / 450 TL — NBA 10-20 Fark Önerilen)",
+                "💎 %65 1. Barem / %35 2. Barem (650 TL / 350 TL — Ana Tercih + Sigorta)",
+                "⚖️ Eşit Garanti Dönüş (Klasik Oran Orantılı Bölüşüm)",
+            ],
+            index=0 if not IS_EURO else 1,
+            key=f"bk_split_mode_{ACTIVE_LEAGUE}",
+        )
+
         inv_sum = (1.0 / odd_1) + (1.0 / odd_2)
         eff_dutch_odd = 1.0 / inv_sum if inv_sum > 0 else 0.0
-        stake_1 = total_stake * ((1.0 / odd_1) / inv_sum)
-        stake_2 = total_stake * ((1.0 / odd_2) / inv_sum)
-        gross_return = stake_1 * odd_1
-        net_profit = gross_return - total_stake
-        roi_pct = (net_profit / total_stake) * 100.0 if total_stake > 0 else 0.0
+        if split_mode.startswith("🛡️"):
+            stake_1 = total_stake * 0.45
+            stake_2 = total_stake * 0.55
+        elif split_mode.startswith("💎"):
+            stake_1 = total_stake * 0.65
+            stake_2 = total_stake * 0.35
+        else:
+            stake_1 = total_stake * ((1.0 / odd_1) / inv_sum)
+            stake_2 = total_stake * ((1.0 / odd_2) / inv_sum)
+
+        ret_1 = stake_1 * odd_1
+        ret_2 = stake_2 * odd_2
+        net_1 = ret_1 - total_stake
+        net_2 = ret_2 - total_stake
 
         st.success(
-            f"💰 **1. Bareme ({def_b1_name}) Yatırılacak:** `{stake_1:.2f} TL` (Oran: {odd_1:.2f})\n\n"
-            f"💰 **2. Bareme ({def_b2_name}) Yatırılacak:** `{stake_2:.2f} TL` (Oran: {odd_2:.2f})\n\n"
-            f"✅ **Efektif Çifte Şans Oranı:** `{eff_dutch_odd:.2f}` | "
-            f"**Garanti Toplam Dönüş:** `{gross_return:.2f} TL` | "
-            f"**Net Kâr:** `+{net_profit:.2f} TL` (**+%{roi_pct:.1f} ROI**)"
+            f"💰 **1. Bareme ({def_b1_name}) Yatırılacak:** `{stake_1:.0f} TL` (Oran: {odd_1:.2f}) ➔ Tutarsa Dönüş: `{ret_1:.0f} TL` (**Net: `{net_1:+.0f} TL`**)\n\n"
+            f"💰 **2. Bareme ({def_b2_name}) Yatırılacak:** `{stake_2:.0f} TL` (Oran: {odd_2:.2f}) ➔ Tutarsa Dönüş: `{ret_2:.0f} TL` (**Net: `{net_2:+.0f} TL`**)\n\n"
+            f"✅ **Klasik Eşit Çifte Şans Oranı:** `{eff_dutch_odd:.2f}` | **Toplam Kupon:** `{total_stake:.0f} TL`"
         )
 
     with d_col2:
