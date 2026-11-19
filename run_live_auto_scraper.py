@@ -45,8 +45,20 @@ def _get_scraper_paths(league: str = "nba") -> dict:
     key = cfg["key"]
     csv_path = os.path.join(BASE_DIR, files["log_seed"] if _IS_GH_ACTIONS else files["log_runtime"])
     matches_path = os.path.join(BASE_DIR, files["matches_seed"] if _IS_GH_ACTIONS else files["matches_runtime"])
-    state_name = files["state_file"] if _IS_GH_ACTIONS else ("runtime_live_state.json" if key == "nba" else "runtime_euro_live_state.json")
-    ts_name = "match_log_timestamps.json" if key == "nba" else "euro_match_log_timestamps.json"
+    if _IS_GH_ACTIONS:
+        state_name = files["state_file"]
+    elif key == "nba":
+        state_name = "runtime_live_state.json"
+    elif key == "nba2k27":
+        state_name = "runtime_nba2k27_live_state.json"
+    else:
+        state_name = "runtime_euro_live_state.json"
+    if key == "nba":
+        ts_name = "match_log_timestamps.json"
+    elif key == "nba2k27":
+        ts_name = "nba2k27_match_log_timestamps.json"
+    else:
+        ts_name = "euro_match_log_timestamps.json"
     return {
         "csv_path": csv_path,
         "seed_csv": os.path.join(BASE_DIR, files["log_seed"]),
@@ -604,7 +616,13 @@ def fetch_active_match_urls(domain: str, league: str = "nba") -> list:
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
     }
     ctx = ssl._create_unverified_context()
-    slug = "2983166-nba-2k26-cyber-euro-league" if str(league or "nba").lower() == "euro" else "2935701-nba-2k26-cyber-league"
+    _lk = str(league or "nba").lower()
+    if _lk == "euro":
+        slug = "2983166-nba-2k26-cyber-euro-league"
+    elif _lk == "nba2k27":
+        slug = "3125701-nba-2k27-cyber-league"
+    else:
+        slug = "2935701-nba-2k26-cyber-league"
     league_url = f"{domain}/en/live/basketball/{slug}"
     req = urllib.request.Request(league_url, headers=headers)
     html = urllib.request.urlopen(req, context=ctx, timeout=8).read().decode("utf-8", errors="ignore")
@@ -1035,7 +1053,7 @@ def _scrape_single_league(domain: str, league: str = "nba", force_manual: bool =
 def run_auto_scraper(force_manual=False, league: str = "all"):
     domain = discover_active_domain()
     print(f"[v2.1 Multi-League Engine] Active 1xBet/Mirror domain: {domain}")
-    leagues = ("nba", "euro") if str(league or "all").lower() == "all" else (str(league).lower(),)
+    leagues = ("nba", "nba2k27", "euro") if str(league or "all").lower() == "all" else (str(league).lower(),)
     poll_speeds = []
     for lg in leagues:
         try:

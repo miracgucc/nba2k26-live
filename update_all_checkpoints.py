@@ -110,5 +110,5 @@ def auto_settle_checkpoints(league: str = "nba") -> int:
 
 
 if __name__ == "__main__":
-    for _lg in ("nba", "euro"):
+    for _lg in ("nba", "nba2k27", "euro"):
         auto_settle_checkpoints(_lg)

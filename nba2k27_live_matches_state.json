@@ -1,0 +1,99 @@
+{
+  "updated_at": "2026-11-19 11:21:33",
+  "timestamp": 1795076493.1032748,
+  "league": "nba2k27",
+  "domain": "https://fswinbest.icu",
+  "recommended_poll_speed": 20,
+  "duration_sec": 0.52,
+  "live_matches": [
+    {
+      "game_id": "CB-772212969",
+      "league": "nba2k27",
+      "team_home": "Detroit Pistons (cyber)",
+      "team_away": "New York Knicks (cyber)",
+      "home_score": 5,
+      "away_score": 2,
+      "quarter": 1,
+      "elapsed_mins": 1.1,
+      "remaining_mins": 10.9,
+      "check_time": "Q1 - Minute 1",
+      "status": "BAREM_OPEN",
+      "completed_quarters": [],
+      "live_q_score": "5-2",
+      "odds": {
+        "160 Or Less": 99.0,
+        "161-170": 99.0,
+        "171-180": 99.0,
+        "181-190": 12.0,
+        "191-200": 5.83,
+        "201-210": 3.71,
+        "211-220": 3.5,
+        "221-230": 5.89,
+        "231+": 10.0
+      },
+      "barem_probs": {
+        "160 Or Less": 0.1,
+        "161-170": 0.5,
+        "171-180": 2.2,
+        "181-190": 5.8,
+        "191-200": 13.1,
+        "201-210": 20.0,
+        "211-220": 23.1,
+        "221-230": 18.1,
+        "231+": 17.1
+      },
+      "clusters": {
+        "161-180": 2.6,
+        "171-190": 8.0,
+        "181-200": 18.9,
+        "191-210": 33.1,
+        "201-220": 43.1,
+        "211-230": 41.3,
+        "221-240": 29.2
+      },
+      "predicted_total": 214.0,
+      "predicted_home_final": 115.5,
+      "predicted_away_final": 98.5,
+      "best_cluster_name": "201-220",
+      "best_cluster_prob": 43.1,
+      "h2h_sample_size": 3,
+      "q3_q4_signal": {
+        "normal": {
+          "probability": 0.333,
+          "count": 3
+        },
+        "burst_positive": {
+          "probability": 0.333,
+          "count": 3
+        },
+        "collapse_negative": {
+          "probability": 0.333,
+          "count": 3
+        },
+        "signal": "⚖️ Dengeli Q3 ➔ Q4 Geçişi",
+        "detail": "Benzer Q3 temposundaki (52 sayı) 9 geçmiş maçta Q4 ortalaması 52.4 sayı oldu (Patlama ≥56: %33.3, Normal 49-55: %33.3, Çöküş ≤48: %33.3).",
+        "threshold": 49,
+        "sample_size": 9,
+        "streak_window": 3,
+        "burst_probability": 0.333,
+        "collapse_probability": 0.333,
+        "normal_probability": 0.333,
+        "burst_prob": 33.3,
+        "collapse_prob": 33.3,
+        "normal_prob": 33.3
+      },
+      "value_range": "201-210",
+      "highest_prob_range": "211-220",
+      "bookie_fav_1": "211-220",
+      "bookie_fav_1_odd": 3.5,
+      "bookie_fav_2": "201-210",
+      "bookie_fav_2_odd": 3.71,
+      "symmetry_gap": 0.21,
+      "is_symmetric_trap": true,
+      "dutch_odd": 1.8,
+      "best_ev_pct": 3.8,
+      "is_barem_open": true,
+      "updated_at": "11:21:33"
+    }
+  ]
+}

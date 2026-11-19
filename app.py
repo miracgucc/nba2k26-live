@@ -71,12 +71,14 @@ def toggle_ui_theme():
 
 
 def set_active_league(league_key: str):
-    st.session_state.active_league = "euro" if str(league_key).lower() == "euro" else "nba"
+    lk = str(league_key or "nba").lower()
+    st.session_state.active_league = lk if lk in ("nba", "nba2k27", "euro") else "nba"
 
 
 IS_DARK = st.session_state.ui_theme == "matte_dark"
 ACTIVE_LEAGUE = st.session_state.active_league
 IS_EURO = ACTIVE_LEAGUE == "euro"
+IS_NBA2K27 = ACTIVE_LEAGUE == "nba2k27"
 LEAGUE_CFG = get_league_config(ACTIVE_LEAGUE)
 BAREM_RANGES = LEAGUE_CFG["barem_ranges"]
 CLUSTER_RANGES = LEAGUE_CFG["cluster_ranges"]
@@ -109,7 +111,7 @@ EXP_REM_DEC = float(LEAGUE_CFG["exp_rem_decision"])
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v6.1-symmetry-complete"
+ENGINE_VERSION = "v6.2-triple-league-2k27"
 
 
 def _ensure_clean_git_tracked_files():
@@ -130,6 +132,11 @@ def _ensure_clean_git_tracked_files():
                     "cloud_symmetry_backup.csv",
                     "cloud_matches_backup.csv",
                     "live_matches_state.json",
+                    "nba2k27_symmetry_log.csv",
+                    "nba2k27_matches_data.csv",
+                    "cloud_nba2k27_symmetry_backup.csv",
+                    "cloud_nba2k27_matches_backup.csv",
+                    "nba2k27_live_matches_state.json",
                     "euro_symmetry_log.csv",
                     "euro_matches_data.csv",
                     "cloud_euro_symmetry_backup.csv",
@@ -805,7 +812,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-sw_c0, sw_c1, sw_c2 = st.columns([0.95, 2.0, 2.0], vertical_alignment="center")
+sw_c0, sw_c1, sw_c2, sw_c3 = st.columns([0.9, 1.55, 1.55, 1.55], vertical_alignment="center")
 with sw_c0:
     st.markdown(
         '<div style="background:var(--bg-card); border:1px solid var(--border-subtle); '
@@ -817,22 +824,36 @@ with sw_c0:
 with sw_c1:
     _nba_lbl = (
         "✅ 🏀 NBA 2K26 CyberLeague (Aktif • 9 Barem)"
-        if not IS_EURO
-        else "🏀 NBA 2K26 CyberLeague'e Geç (4x12 Dk • 9 Barem)"
+        if ACTIVE_LEAGUE == "nba"
+        else "🏀 NBA 2K26 CyberLeague (4x12 Dk • 9 Barem)"
     )
     st.button(
         _nba_lbl,
         key="btn_league_nba",
         on_click=set_active_league,
         args=("nba",),
-        type="primary" if not IS_EURO else "secondary",
+        type="primary" if ACTIVE_LEAGUE == "nba" else "secondary",
         use_container_width=True,
     )
 with sw_c2:
+    _nba27_lbl = (
+        "✅ 🔥 NBA 2K27 CyberLeague (Aktif • 9 Barem)"
+        if ACTIVE_LEAGUE == "nba2k27"
+        else "🔥 NBA 2K27 CyberLeague (4x12 Dk • 9 Barem)"
+    )
+    st.button(
+        _nba27_lbl,
+        key="btn_league_nba2k27",
+        on_click=set_active_league,
+        args=("nba2k27",),
+        type="primary" if ACTIVE_LEAGUE == "nba2k27" else "secondary",
+        use_container_width=True,
+    )
+with sw_c3:
     _euro_lbl = (
         "✅ 🇪🇺 NBA 2K26 Cyber Euro League (Aktif • 6 Barem)"
         if IS_EURO
-        else "🇪🇺 NBA 2K26 Cyber Euro League'e Geç (4x10 Dk • 6 Barem)"
+        else "🇪🇺 NBA 2K26 Cyber Euro League (4x10 Dk • 6 Barem)"
     )
     st.button(
         _euro_lbl,

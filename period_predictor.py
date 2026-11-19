@@ -171,6 +171,109 @@ LEAGUE_CONFIGS = {
             "ts_file": "last_log_timestamps.json",
         },
     },
+    "nba2k27": {
+        "key": "nba2k27",
+        "champ_id": "3125701",
+        "slug": "3125701-nba-2k27-cyber-league",
+        "title": "NBA 2K27 CyberLeague Pro",
+        "short_name": "NBA 2K27 CyberLeague",
+        "btn_label": "🔥 NBA 2K27 CyberLeague",
+        "quarter_length": 12.0,
+        "total_minutes": 48.0,
+        "close_min": 36.0,
+        "close_min_int": 36,
+        "decision_min": 35,
+        "closing_start_min": 32,
+        "final_win_start": 34,
+        "trap_min": 33,
+        "mid_q3_min": 30,
+        "halftime_min": 24,
+        "early_q2_min": 18,
+        "q3_pre_low": 27,
+        "q3_pre_high": 31,
+        "rem_span_decision": 13.0,
+        "prior_q": 52.5,
+        "exp_rem_close": 52,
+        "exp_rem_decision": 54.0,
+        "exp_rem_clutch": 58.6,
+        "exp_rem_blowout": 48.3,
+        "exp_rem_ctrl": 53.7,
+        "avg_q4_sum": 51.7,
+        "q4_slow_max": 51.0,
+        "q4_fast_min": 53.0,
+        "q4_half_default": 25.9,
+        "q3_collapse_max": 48.5,
+        "q3_burst_min": 55.5,
+        "q3_collapse_disp": 48,
+        "q3_burst_disp": 56,
+        "q3_norm_lo": 49,
+        "q3_norm_hi": 55,
+        "blowout_brake_gap": 28,
+        "team_std_dev": 8.5,
+        "pace_pts_per_min": 4.4,
+        "min_clean_gid": 770000000,
+        "min_total_valid": 100,
+        "archive_min_total": 140,
+        "archive_min_s3": 100,
+        "archive_days": 30,
+        "archive_btn_label": "📥 NBA 2K27 Arşivini Güncelle (30 Gün)",
+        "default_barem": "201-210",
+        "default_backup_barem": "211-220",
+        "high_over_threshold": 211,
+        "bar_lower_floor": 150,
+        "bar_upper_cap": 240,
+        "archive_h1_slow_max": 98,
+        "archive_h1_fast_min": 108,
+        "mod10_center_digits": (1, 2, 3, 4),
+        "mod10_mid_digits": (5, 6, 7),
+        "mod10_risk_digits": (8, 9, 0),
+        "default_wave_probs": (40.6, 26.3, 20.0, 8.6, 4.6),
+        "barem_ranges": NBA_BAREM_RANGES,
+        "cluster_ranges": NBA_CLUSTER_RANGES,
+        "barem_odd_cols": {
+            "160 Or Less": "odds_160_or_less",
+            "161-170": "odds_161_170",
+            "171-180": "odds_171_180",
+            "181-190": "odds_181_190",
+            "191-200": "odds_191_200",
+            "201-210": "odds_201_210",
+            "211-220": "odds_211_220",
+            "221-230": "odds_221_230",
+            "231+": "odds_231_plus",
+        },
+        "barem_prob_cols": {
+            "160 Or Less": "model_prob_160_or_less",
+            "161-170": "model_prob_161_170",
+            "171-180": "model_prob_171_180",
+            "181-190": "model_prob_181_190",
+            "191-200": "model_prob_191_200",
+            "201-210": "model_prob_201_210",
+            "211-220": "model_prob_211_220",
+            "221-230": "model_prob_221_230",
+            "231+": "model_prob_231_plus",
+        },
+        "short_labels": {
+            "160 Or Less": "160-",
+            "161-170": "161-170",
+            "171-180": "171-180",
+            "181-190": "181-190",
+            "191-200": "191-200",
+            "201-210": "201-210",
+            "211-220": "211-220",
+            "221-230": "221-230",
+            "231+": "231+",
+        },
+        "files": {
+            "log_seed": "nba2k27_symmetry_log.csv",
+            "log_runtime": "runtime_nba2k27_symmetry_log.csv",
+            "log_cloud": "cloud_nba2k27_symmetry_backup.csv",
+            "matches_seed": "nba2k27_matches_data.csv",
+            "matches_runtime": "runtime_nba2k27_matches_data.csv",
+            "matches_cloud": "cloud_nba2k27_matches_backup.csv",
+            "state_file": "nba2k27_live_matches_state.json",
+            "ts_file": "nba2k27_last_log_timestamps.json",
+        },
+    },
     "euro": {
         "key": "euro",
         "champ_id": "2983166",
@@ -725,10 +828,11 @@ def predict_live_inplay(
     total_rem_mins = max(0.25, total_match_len - total_elapsed_mins)
 
     # Calibrated Zero-Bias Empirical Model (v6.0 on 235 NBA + 180 Euro): recent baseline + gap deceleration + team Q4 residual
-    gap_slope_q4 = -0.399 if league == "nba" else -0.453
-    base_full_sd = 17.5 if league == "nba" else 14.8
+    is_nba_fmt = str(league or "nba").lower() != "euro"
+    gap_slope_q4 = -0.399 if is_nba_fmt else -0.453
+    base_full_sd = 17.5 if is_nba_fmt else 14.8
     lg_tot_est = float(hist_avg_total)
-    default_q4_gap0 = 56.55 if league == "nba" else 41.55
+    default_q4_gap0 = 56.55 if is_nba_fmt else 41.55
     lg_q4_gap0 = default_q4_gap0
     team_tot_delta = 0.0
     team_q4_delta = 0.0
@@ -745,13 +849,13 @@ def predict_live_inplay(
                 _df_rec = _df_c.tail(240)
                 _tot_all = float(_df_c["total_score"].mean())
                 _tot_rec = float(_df_rec["total_score"].mean())
-                _anchor_tot = 208.6 if league == "nba" else 145.0
+                _anchor_tot = 208.6 if is_nba_fmt else 145.0
                 lg_tot_est = 0.55 * _tot_rec + 0.15 * _tot_all + 0.30 * _anchor_tot
 
                 def _calc_q4_gap0(_sub):
                     _q4 = _sub["home_q4"] + _sub["away_q4"]
                     _g3 = ((_sub["home_q1"] + _sub["home_q2"] + _sub["home_q3"]) - (_sub["away_q1"] + _sub["away_q2"] + _sub["away_q3"])).abs().clip(upper=30.0)
-                    _g_sl = 0.34 if league == "nba" else 0.36
+                    _g_sl = 0.34 if is_nba_fmt else 0.36
                     return float((_q4 + _g_sl * _g3).mean())
 
                 _dyn_q4_gap0 = 0.70 * _calc_q4_gap0(_df_rec) + 0.30 * _calc_q4_gap0(_df_c)
@@ -2514,8 +2618,8 @@ def simulate_35m_strategies(df_log: pd.DataFrame, league: str = "nba") -> dict:
         eff_hi = min(float(fav_hi), float(cfg["bar_upper_cap"]))
         fav_mid = (eff_lo + eff_hi) / 2.0
         # Gap-adjusted remaining points expectation from v6.1 calibration
-        _g_sl_sim = -0.399 if str(league or "nba").lower() == "nba" else -0.453
-        _g_int_sim = 58.69 if str(league or "nba").lower() == "nba" else 43.42
+        _g_sl_sim = -0.399 if str(league or "nba").lower() != "euro" else -0.453
+        _g_int_sim = 58.69 if str(league or "nba").lower() != "euro" else 43.42
         _rem_gap_est = (_g_int_sim + _g_sl_sim * min(30.0, float(margin35))) * (
             max(0.5, float(cfg["total_minutes"]) - (float(min_val) + 0.5)) / float(cfg["rem_span_decision"] - 0.5)
         )
@@ -3156,7 +3260,7 @@ def analyze_archive_4500_symmetry(df_hist: pd.DataFrame, league: str = "nba") ->
     df_h["s36_mod10"] = (df_h["S36"].astype(int)) % 10
     df_h["act_b_idx"] = df_h["total_score"].apply(lambda x: barem_names.index(get_range_from_score(x, league=league)))
     mod10_rows = []
-    if league == "nba":
+    if str(league or "nba").lower() != "euro":
         digit_notes = {
             0: "⚖️ +52 sayı eklenince sonu ..2 olur (Baremin alt-orta kısmı): Beklenen Barem ve 1 Alt Barem dengeli",
             1: "📉 +52 sayı eklenince sonu ..3 olur (Alt sınıra yakın): 1 Alt Barem ve Beklenen Barem dengeli",
@@ -3182,7 +3286,7 @@ def analyze_archive_4500_symmetry(df_hist: pd.DataFrame, league: str = "nba") ->
             8: "🎯 EN GÜVENLİ SON RAKAM (+37 eklenince sonu ..5 tam barem ortası olur): En yüksek Merkez tutma oranı (~%56)!",
             9: "🎯 +37 sayı eklenince sonu ..6 olur (Barem ortası): Güvenli bölge",
         }
-    ex_prefix = "15" if league == "nba" else "10"
+    ex_prefix = "15" if str(league or "nba").lower() != "euro" else "10"
     for d in range(10):
         sub = df_h[df_h["s36_mod10"] == d]
         if sub.empty:
@@ -3322,7 +3426,7 @@ def analyze_team_pair_history(
     res["last_games"] = last_games
 
     diff = res["diff_vs_league"]
-    thr_diff = 8.0 if league == "nba" else 6.0
+    thr_diff = 8.0 if str(league or "nba").lower() != "euro" else 6.0
     if diff >= thr_diff:
         res["tempo_label"] = f"🔥 Yüksek Skorlu Çift (Lig Ort. +{diff:.1f})"
     elif diff <= -thr_diff:

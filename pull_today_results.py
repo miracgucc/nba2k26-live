@@ -28,6 +28,14 @@ _LEAGUE_API_META = {
         "log_seed": "symmetry_analysis_log.csv",
         "log_runtime": "runtime_symmetry_log.csv",
     },
+    "nba2k27": {
+        "champ_id": "3125701",
+        "min_total": 100,
+        "matches_seed": "nba2k27_matches_data.csv",
+        "matches_runtime": "runtime_nba2k27_matches_data.csv",
+        "log_seed": "nba2k27_symmetry_log.csv",
+        "log_runtime": "runtime_nba2k27_symmetry_log.csv",
+    },
     "euro": {
         "champ_id": "2983166",
         "min_total": 60,
@@ -395,4 +403,5 @@ def pull_today_results(only_tracked=False, days_back=1, league="nba") -> int:
 
 if __name__ == "__main__":
     pull_today_results(only_tracked=False, days_back=3, league="nba")
+    pull_today_results(only_tracked=False, days_back=3, league="nba2k27")
     pull_today_results(only_tracked=False, days_back=3, league="euro")
