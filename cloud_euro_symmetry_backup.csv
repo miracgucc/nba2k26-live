@@ -3384,20 +3384,20 @@ CB-772493865,Virtus Bologna (cyber) vs Barcelona (cyber),2026-11-20,Q3 - Minute 
 CB-772493865,Virtus Bologna (cyber) vs Barcelona (cyber),2026-11-20,Q3 - Minute 27,51-72,99.0,99.0,18.0,2.336,2.304,5.6,0.0,0.8,7.8,30.0,39.6,21.7,161-170,161-170,151-170,69.6,63-88,151-160,COMPLETED
 CB-772493865,Virtus Bologna (cyber) vs Barcelona (cyber),2026-11-20,Q3 - Minute 28,53-72,99.0,99.0,18.0,2.312,2.27,6.16,0.0,0.6,7.9,30.1,39.7,21.6,161-170,161-170,151-170,69.9,63-88,151-160,COMPLETED
 CB-772493865,Virtus Bologna (cyber) vs Barcelona (cyber),2026-11-20,Q3 - Minute 29,55-74,99.0,99.0,99.0,2.795,1.975,5.43,0.0,0.6,7.0,29.3,41.8,21.4,161-170,161-170,151-170,71.1,63-88,151-160,COMPLETED
-CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q1 - Minute 0,2-2,3.07,3.62,3.79,5.91,17.0,99.0,10.2,18.1,26.0,23.5,14.9,7.3,131'den Az,131-140,141-160,49.5,,,PENDING
-CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q1 - Minute 4,6-5,2.3,3.5,4.32,9.4,99.0,99.0,20.9,25.2,26.1,18.2,7.5,2.0,131'den Az,131-140,131-150,51.4,,,PENDING
-CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q1 - Minute 6,8-7,1.93,3.57,5.29,13.0,99.0,99.0,28.5,27.5,25.2,13.4,4.4,0.9,131'den Az,131'den Az,121-140,56.0,,,PENDING
-CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q2 - Minute 10,13-15,1.696,3.49,6.51,19.0,99.0,99.0,36.4,29.8,22.2,9.0,2.2,0.3,131'den Az,131'den Az,121-140,66.2,,,PENDING
-CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q2 - Minute 13,13-22,1.904,3.256,5.47,17.0,99.0,99.0,47.8,29.5,16.5,5.0,1.1,0.1,131'den Az,131'den Az,121-140,77.3,,,PENDING
-CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q2 - Minute 16,23-26,2.05,3.025,4.85,17.0,99.0,99.0,29.9,31.6,25.4,10.6,2.2,0.2,131'den Az,131'den Az,121-140,61.5,,,PENDING
-CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q2 - Minute 18,30-26,1.856,3.12,5.95,20.0,99.0,99.0,40.5,32.3,20.3,6.2,0.6,0.1,131'den Az,131'den Az,121-140,72.7,,,PENDING
-CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q2 - Minute 19,32-26,1.6,3.325,7.72,99.0,99.0,99.0,41.4,33.3,18.9,5.7,0.6,0.1,131'den Az,131'den Az,121-140,74.7,,,PENDING
-CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q3 - Minute 21,37-26,1.44,3.54,10.0,99.0,99.0,99.0,58.1,28.8,10.7,2.2,0.2,0.0,131'den Az,131'den Az,121-140,86.9,,,PENDING
-CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q3 - Minute 24,42-32,1.392,3.41,14.0,99.0,99.0,99.0,47.7,34.5,14.8,2.7,0.3,0.0,131'den Az,131'den Az,121-140,82.2,,,PENDING
-CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q3 - Minute 26,44-41,2.008,2.544,5.83,99.0,99.0,99.0,25.2,38.7,27.7,7.6,0.8,0.0,131'den Az,131'den Az,131-150,66.4,,,PENDING
-CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q3 - Minute 27,46-41,1.656,2.78,9.3,99.0,99.0,99.0,40.7,38.5,17.8,2.9,0.1,0.0,131'den Az,131'den Az,121-140,79.2,,,PENDING
-CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q3 - Minute 28,48-41,1.565,2.864,11.0,99.0,99.0,99.0,53.5,34.7,10.7,1.0,0.0,0.0,131'den Az,131'den Az,121-140,88.3,,,PENDING
-CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q3 - Minute 29,48-43,1.245,4.03,20.0,99.0,99.0,99.0,53.3,35.9,9.8,0.9,0.0,0.0,131'den Az,131'den Az,121-140,89.3,,,PENDING
+CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q1 - Minute 0,2-2,3.07,3.62,3.79,5.91,17.0,99.0,10.2,18.1,26.0,23.5,14.9,7.3,131'den Az,131-140,141-160,49.5,65-59,131'den Az,COMPLETED
+CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q1 - Minute 4,6-5,2.3,3.5,4.32,9.4,99.0,99.0,20.9,25.2,26.1,18.2,7.5,2.0,131'den Az,131-140,131-150,51.4,65-59,131'den Az,COMPLETED
+CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q1 - Minute 6,8-7,1.93,3.57,5.29,13.0,99.0,99.0,28.5,27.5,25.2,13.4,4.4,0.9,131'den Az,131'den Az,121-140,56.0,65-59,131'den Az,COMPLETED
+CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q2 - Minute 10,13-15,1.696,3.49,6.51,19.0,99.0,99.0,36.4,29.8,22.2,9.0,2.2,0.3,131'den Az,131'den Az,121-140,66.2,65-59,131'den Az,COMPLETED
+CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q2 - Minute 13,13-22,1.904,3.256,5.47,17.0,99.0,99.0,47.8,29.5,16.5,5.0,1.1,0.1,131'den Az,131'den Az,121-140,77.3,65-59,131'den Az,COMPLETED
+CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q2 - Minute 16,23-26,2.05,3.025,4.85,17.0,99.0,99.0,29.9,31.6,25.4,10.6,2.2,0.2,131'den Az,131'den Az,121-140,61.5,65-59,131'den Az,COMPLETED
+CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q2 - Minute 18,30-26,1.856,3.12,5.95,20.0,99.0,99.0,40.5,32.3,20.3,6.2,0.6,0.1,131'den Az,131'den Az,121-140,72.7,65-59,131'den Az,COMPLETED
+CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q2 - Minute 19,32-26,1.6,3.325,7.72,99.0,99.0,99.0,41.4,33.3,18.9,5.7,0.6,0.1,131'den Az,131'den Az,121-140,74.7,65-59,131'den Az,COMPLETED
+CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q3 - Minute 21,37-26,1.44,3.54,10.0,99.0,99.0,99.0,58.1,28.8,10.7,2.2,0.2,0.0,131'den Az,131'den Az,121-140,86.9,65-59,131'den Az,COMPLETED
+CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q3 - Minute 24,42-32,1.392,3.41,14.0,99.0,99.0,99.0,47.7,34.5,14.8,2.7,0.3,0.0,131'den Az,131'den Az,121-140,82.2,65-59,131'den Az,COMPLETED
+CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q3 - Minute 26,44-41,2.008,2.544,5.83,99.0,99.0,99.0,25.2,38.7,27.7,7.6,0.8,0.0,131'den Az,131'den Az,131-150,66.4,65-59,131'den Az,COMPLETED
+CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q3 - Minute 27,46-41,1.656,2.78,9.3,99.0,99.0,99.0,40.7,38.5,17.8,2.9,0.1,0.0,131'den Az,131'den Az,121-140,79.2,65-59,131'den Az,COMPLETED
+CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q3 - Minute 28,48-41,1.565,2.864,11.0,99.0,99.0,99.0,53.5,34.7,10.7,1.0,0.0,0.0,131'den Az,131'den Az,121-140,88.3,65-59,131'den Az,COMPLETED
+CB-772500663,Dubai (cyber) vs Bayern Munich (cyber),2026-11-20,Q3 - Minute 29,48-43,1.245,4.03,20.0,99.0,99.0,99.0,53.3,35.9,9.8,0.9,0.0,0.0,131'den Az,131'den Az,121-140,89.3,65-59,131'den Az,COMPLETED
 CB-772506617,Real Madrid Baloncesto (cyber) vs Baskonia (cyber),2026-11-20,Q1 - Minute 1,3-3,99.0,20.0,7.51,3.67,3.235,3.05,5.3,12.6,22.4,25.8,20.5,13.4,170'den Fazla,161-170,141-160,48.2,,,PENDING
 CB-772506617,Real Madrid Baloncesto (cyber) vs Baskonia (cyber),2026-11-20,Q1 - Minute 4,13-3,99.0,10.0,4.13,3.085,3.93,6.01,9.4,17.7,26.3,25.1,14.3,7.1,151-160,141-150,141-160,51.4,,,PENDING
 CB-772506617,Real Madrid Baloncesto (cyber) vs Baskonia (cyber),2026-11-20,Q1 - Minute 6,19-7,99.0,10.0,4.34,3.06,3.76,5.97,6.5,15.5,25.5,27.1,17.3,8.2,151-160,151-160,141-160,52.5,,,PENDING
