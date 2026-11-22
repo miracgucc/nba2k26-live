@@ -111,7 +111,7 @@ EXP_REM_DEC = float(LEAGUE_CFG["exp_rem_decision"])
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v7.0-triple-calibrated-762"
+ENGINE_VERSION = "v7.1-selective-calibrated"
 
 
 def _ensure_clean_git_tracked_files():
