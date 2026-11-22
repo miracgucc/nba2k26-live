@@ -111,7 +111,7 @@ EXP_REM_DEC = float(LEAGUE_CFG["exp_rem_decision"])
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v6.2-triple-league-2k27"
+ENGINE_VERSION = "v7.0-triple-calibrated-762"
 
 
 def _ensure_clean_git_tracked_files():
@@ -1846,52 +1846,74 @@ with tab_smart35:
         _m10_risk_str = "-".join(str(x) for x in LEAGUE_CFG["mod10_risk_digits"])
         _ex_fav1 = LEAGUE_CFG["default_barem"]
         _ex_fav2 = LEAGUE_CFG["default_backup_barem"]
-        _rule3_title = "🔄 3. Kural: Euro Alt Sapma & Sarkaç Dönüşü [?]" if IS_EURO else "🔄 3. Kural: 2. Favori Fırsat Bölgeleri [?]"
+        _rule1_title = (
+            "🔥 1. Kural: Alt Kanat & V-Dip 1. Favori [?]"
+            if IS_NBA2K27
+            else ("🔥 1. Kural: 1.50–2.10 Altın Merkez Favori [?]" if IS_EURO else "🔥 1. Kural: 1.85–2.10 Altın Tek Favori [?]")
+        )
+        _rule1_body = (
+            "NBA 2K27'de <b>Alt komşu oranı üst komşudan 1.00+ düşükse</b> (1.000 TL başı <b>+157 TL</b>), <b>V-Dip</b> (<b>+119 TL</b>) veya <b>2x Alt sonrası</b> (<b>+396 TL</b>) doğrudan <b>1. Favori</b> oynanır."
+            if IS_NBA2K27
+            else (
+                "Euro'da 1.Fav oranı <b>1.50–2.10</b> ve fark <b>5–20 sayı</b> iken (özellikle <b>Tam İkiz <=0.25: +313 TL</b> veya <b>Barem Düşüşü: +163 TL</b>) doğrudan <b>1. Favori</b> en yüksek net kazancı verir."
+                if IS_EURO
+                else "NBA 2K26'da 1.Fav oranı <b>1.85–2.10</b> ve fark <b>6+ sayı</b> iken (önceki maç +1 üst değilse) doğrudan <b>1. Favori Barem</b> 1.000 TL başı <b>+217 TL</b> kazandırır."
+            )
+        )
+        _rule3_title = (
+            "🔄 3. Kural: NBA 2K27 2. Favori Bölgeleri [?]"
+            if IS_NBA2K27
+            else ("🔄 3. Kural: Euro 21+ Fark & 2.10+ 2. Favori [?]" if IS_EURO else "🔄 3. Kural: NBA 2K26 2. Favori Fırsatları [?]")
+        )
         _rule3_body = (
-            "Euro'da önceki maçlar <b>1.Fav dışında</b> bittiyse veya <b>2 maç üst üste Alt</b> geldiyse sıradaki maçta <b>1. Favori</b> merkeze çok güçlü döner (1.000 TL başı <b>+213 TL ile +433 TL</b>)."
-            if IS_EURO
-            else "NBA'de 1.Fav oranı <b>1.20–1.50</b> (aşırı sıkışmış) veya <b>2.10–2.30</b> (kararsız tepe) olduğunda doğrudan <b>2. Favori Barem</b> tek başına 1.000 TL başı <b>+604 TL ile +966 TL</b> üretir."
+            "NBA 2K27'de maç içinde <b>barem aşağı düştüyse</b> (<b>+385 TL</b>), <b>1. ve 2. Fav oran farkı <=0.45</b> ise (<b>+173 TL</b>) veya oran <b>2.50+</b> ise (<b>+945 TL</b>) doğrudan <b>2. Favori Barem</b> oynanır."
+            if IS_NBA2K27
+            else (
+                "Euro'da 29. dk fark <b>21+ sayı</b> olduğunda maç rölantiye girer ve <b>2. Favori</b> 1.000 TL başı <b>+270 TL</b> kazandırır. Ayrıca <b>2.10–2.50</b> bandında üst kanat açıkken <b>2. Favori +433 TL</b> üretir."
+                if IS_EURO
+                else "NBA 2K26'da 1.Fav oranı <b>1.50 altı</b> (<b>+338 TL</b>), <b>2.10–2.30</b> (<b>+162 TL</b>), <b>2.50+</b> (<b>+407 TL</b>) veya önceki maç <b>+1 Üst</b> bittiyse (<b>+265 TL</b>) doğrudan <b>2. Favori</b> oynanır."
+            )
         )
         _rule4_body = (
-            f"Son iki maç zıt yönlere savrulduysa (<b>-1 ➔ +1</b> veya <b>+1 ➔ -1 Sarkaç Simetrisi</b>), 3. maç yüksek oranda merkeze (<b>1. Favori</b>) döner (NBA <b>%52.9 / +49 TL</b>, Euro <b>%60.0 / +123 TL</b>). Üst üste iki kez <b>2 Alt (-2)</b> ise 424 maçta <b>%0 (hiç)</b> gelmemiştir!"
+            "Euro'da <b>Önceki Maç +1 Üst</b> (<b>+160 TL</b>), <b>Sarkaç (-1➔+1 / +1➔-1: +180 TL)</b> ve <b>2x Favori Yatması (+168 TL)</b> sonrası <b>1. Favori</b> merkeze döner. NBA 2K26'da ise <b>+1 Üst</b> ve <b>-2 Alt</b> sonrasında <b>2. Favori (+250 ile +265 TL)</b> kazanır!"
         )
 
         st.markdown(
             f"""
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:0.55rem; margin:0.5rem 0 0.85rem 0;">
                 <div class="info-strip" style="cursor:help; border-left:4px solid #059669;"
-                     title="1xBet'te {DEC_MIN}. dakikada 1. Favori oranı 1.85 ile 2.10 arasındaysa (Euro'da 1.50-2.10 tüm bant) 1. Favori tek başına en verimli bölgededir: NBA'de 1.000 TL başı +264 TL, Euro'da +137 TL net kazanç!">
-                    <div class="info-strip-label">🔥 1. Kural: 1.85–2.10 Altın Tek Favori [?]</div>
+                     title="762 gerçek kapanış maçında (358 NBA 2K26 + 59 NBA 2K27 + 345 Euro) hem ilk yarı hem ikinci yarı maçlarında doğrulanmış ana 1. Favori kuralı.">
+                    <div class="info-strip-label">{_rule1_title}</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
-                        1. Favori oranı <b>1.85–2.10</b> arasındaysa (Euro'da <b>1.50–2.10</b>) doğrudan <b>Tek 1. Favori Barem</b> en yüksek net kazancı verir.
+                        {_rule1_body}
                     </div>
                 </div>
                 <div class="info-strip" style="cursor:help; border-left:4px solid #dc2626;"
-                     title="{DEC_MIN}. dakikada skor farkı 0-5 sayı ise taktik faul ve uzatma yüzünden barem şaşar. Ayrıca 1.20 altı ölü oranlar ile NBA 2.30+ / Euro 2.50+ dağınık oranlar pas geçilir.">
-                    <div class="info-strip-label">⛔ 2. Kural: Fark 0-5 ve Uç Oranları Pas Geç [?]</div>
+                     title="{DEC_MIN}. dakikada skor farkı 0-5 sayı (Euro 0-4) ise taktik faul ve uzatma yüzünden barem şaşar (NBA 1.000 TL başı -330 TL zarar). Bu maçlar pas geçilir.">
+                    <div class="info-strip-label">⛔ 2. Kural: Başa Baş (0–5 Fark) Pas Geç [?]</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
-                        Fark <b>0-5 sayı</b>, oran <b>1.20 altı</b> veya <b>{"2.50+" if IS_EURO else "2.30+"}</b> ise <b>Bahis Alma (Pas Geç)</b>.
+                        Fark <b>{"0–4 sayı ve oran 1.20 altı / 2.50+" if IS_EURO else "0–5 sayı"}</b> ise <b>Bahis Alma (Pas Geç)</b>.
                     </div>
                 </div>
                 <div class="info-strip" style="cursor:help; border-left:4px solid #2563eb;"
-                     title="Gerçek maç verilerinde 1. Favorinin zayıflayıp 2. Favorinin veya merkeze dönüşün öne çıktığı en kârlı fırsat bölgeleri.">
+                     title="Gerçek maç verilerinde 1. Favorinin zayıflayıp 2. Favorinin öne çıktığı en kârlı fırsat bölgeleri.">
                     <div class="info-strip-label">{_rule3_title}</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
                         {_rule3_body}
                     </div>
                 </div>
                 <div class="info-strip" style="cursor:help; border-left:4px solid #e11d48;"
-                     title="Ardışık biten maçların barem kayma sırası (Sarkaç -1➔+1 / +1➔-1 ve -2 tekrarsızlığı) sıradaki maçın merkeze dönüşünü belirler.">
-                    <div class="info-strip-label">🌊 4. Kural: Sarkaç & Dalga Simetrisi [?]</div>
+                     title="Ardışık biten maçların barem kayma sırası (Sarkaç -1➔+1 / +1➔-1, +1 Üst ve -2 Alt tekrarsızlığı) sıradaki maçın yönünü belirler.">
+                    <div class="info-strip-label">🌊 4. Kural: Ardışık Dalga & Sarkaç Simetrisi [?]</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
                         {_rule4_body}
                     </div>
                 </div>
                 <div class="info-strip" style="cursor:help; border-left:4px solid #d97706;"
-                     title="İki barem kapatırken 500/500 eşit bölmek yerine NBA'de 10-20 farkta 2. Favoriye 550 TL / 1. Favoriye 450 TL (veya 1.Tercihe 650 TL / Korumaya 350 TL) ağırlık vermek 1.000 TL başı net kârı artıya taşır.">
-                    <div class="info-strip-label">🛡️ 5. Kural: Ağırlıklı İkili Kapatma (550/450 TL) [?]</div>
+                     title="İki barem kapatırken 500/500 eşit bölmek yerine 650 TL / 350 TL veya 550 TL / 450 TL ağırlık vermek üç ligde de %83–%88 isabet ve 1.000 TL başı net kâr sağlar.">
+                    <div class="info-strip-label">🛡️ 5. Kural: Ağırlıklı İkili Kapatma (650/350 & 550/450 TL) [?]</div>
                     <div style="font-size:0.77rem; color:var(--text-primary); margin-top:0.15rem;">
-                        İkili kapatmada eşit bölmek yerine <b>550 TL / 450 TL</b> veya <b>650 TL / 350 TL</b> ağırlıklı bölüşüm komisyonu yenip artıya geçirir.
+                        Seçilmiş maçlarda <b>650/350 TL</b> veya <b>550/450 TL</b> ikili kapatma NBA 2K26'da <b>%83.1 (+49 TL)</b>, NBA 2K27'de <b>%88.2 (+97 TL)</b>, Euro'da <b>%84.0 (+193 TL)</b> üretir.
                     </div>
                 </div>
             </div>
