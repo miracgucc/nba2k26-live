@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 19:24:40",
-  "timestamp": 1795451080.32,
+  "updated_at_tr": "2026-11-23 19:26:02",
+  "timestamp": 1795451162.44,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Golden State Warriors",
       "away_team": "Houston Rockets",
       "quarter": 3,
-      "elapsed_mins": 31.7,
-      "in_decision_window_35m": false,
+      "elapsed_mins": 33.1,
+      "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "93-58",
-      "score_gap": 35,
+      "current_score": "96-60",
+      "score_gap": 36,
       "fav1_barem": "221-230",
-      "fav1_odd": 2.2,
+      "fav1_odd": 2.17,
       "fav2_barem": "211-220",
-      "fav2_odd": 3.17,
+      "fav2_odd": 3.07,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 221-230: 2.20)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 221-230: 2.17)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 19:24:38"
+      "updated_at_tr": "2026-11-23 19:26:01"
     },
     {
       "signal_id": "CB-773537280_35m",
@@ -56,15 +56,15 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Dallas Mavericks",
       "quarter": 1,
-      "elapsed_mins": 4.0,
+      "elapsed_mins": 5.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "8-14",
-      "score_gap": 6,
+      "current_score": "10-17",
+      "score_gap": 7,
       "fav1_barem": "201-210",
-      "fav1_odd": 4.17,
+      "fav1_odd": 4.03,
       "fav2_barem": "211-220",
-      "fav2_odd": 4.3,
+      "fav2_odd": 4.56,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,17 +74,36 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 4.17)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 4.03)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 19:24:38"
+      "updated_at_tr": "2026-11-23 19:26:01"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-773528972_35m",
+      "game_id": "CB-773528972",
+      "raw_game_id": "773528972",
+      "date": "2026-11-23",
+      "game_name": "Golden State Warriors vs Houston Rockets",
+      "current_score": "96-60",
+      "score_gap": 36,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 221-230: 2.17)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-773520393_35m",
       "game_id": "CB-773520393",
@@ -407,25 +426,6 @@
       "actual_score": "99-106",
       "actual_range": "201-210",
       "result": "TUTTU"
-    },
-    {
-      "signal_id": "CB-773404553_35m",
-      "game_id": "CB-773404553",
-      "raw_game_id": "773404553",
-      "date": "2026-11-23",
-      "game_name": "Los Angeles Lakers vs Denver Nuggets",
-      "current_score": "87-67",
-      "score_gap": 20,
-      "decision": "OYNA",
-      "pick_type": "1. Favori",
-      "target_barem": "201-210",
-      "target_barem_tr": "201-210",
-      "target_t_id": 1843,
-      "target_odd": 2.38,
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Önceki Maç +1 Üst (%53.8 / +267 TL)): 201-210 (2.38)",
-      "actual_score": "109-103",
-      "actual_range": "211-220",
-      "result": "YATTI"
     }
   ]
 }
