@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 18:20:16",
-  "timestamp": 1795447216.64,
+  "updated_at_tr": "2026-11-23 18:20:42",
+  "timestamp": 1795447242.75,
   "active_domain": "https://fswin-best.icu",
   "chain_state": {
     "prev_shift": -1,
@@ -19,11 +19,11 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Indiana Pacers",
       "quarter": 4,
-      "elapsed_mins": 41.4,
+      "elapsed_mins": 41.9,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "77-101",
-      "score_gap": 24,
+      "current_score": "79-101",
+      "score_gap": 22,
       "fav1_barem": "201-210",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -44,7 +44,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 18:20:16"
+      "updated_at_tr": "2026-11-23 18:20:42"
     },
     {
       "signal_id": "CB-773520393_35m",
@@ -54,13 +54,13 @@
       "home_team": "New York Knicks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 2,
-      "elapsed_mins": 12.3,
+      "elapsed_mins": 12.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "23-23",
-      "score_gap": 0,
+      "current_score": "24-23",
+      "score_gap": 1,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.48,
+      "fav1_odd": 3.47,
       "fav2_barem": "191-200",
       "fav2_odd": 3.78,
       "decision": "OYNA",
@@ -79,7 +79,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 18:20:16"
+      "updated_at_tr": "2026-11-23 18:20:42"
     }
   ],
   "recent_history": [
