@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 18:45:42",
-  "timestamp": 1795448742.93,
+  "updated_at_tr": "2026-11-23 18:46:31",
+  "timestamp": 1795448791.64,
   "active_domain": "https://fswin-best.icu",
   "chain_state": {
     "prev_shift": 0,
@@ -19,32 +19,32 @@
       "home_team": "Golden State Warriors",
       "away_team": "Houston Rockets",
       "quarter": 1,
-      "elapsed_mins": 3.9,
+      "elapsed_mins": 4.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "13-5",
-      "score_gap": 8,
+      "current_score": "15-8",
+      "score_gap": 7,
       "fav1_barem": "231+",
-      "fav1_odd": 1.59,
+      "fav1_odd": 1.56,
       "fav2_barem": "221-230",
-      "fav2_odd": 4.22,
+      "fav2_odd": 4.45,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "231+",
       "target_barem_tr": "231 veya daha fazla",
       "target_barem_en": "231 or more",
       "target_t_id": 1846,
-      "target_odd": 1.59,
+      "target_odd": 1.56,
       "min_acceptable_odd": 1.5,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA KONTROLLÜ TEK FAVORİ: 231+ (1.59)",
+      "zone_badge": "💎 NBA KONTROLLÜ TEK FAVORİ: 231+ (1.56)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-23 18:45:42"
+      "updated_at_tr": "2026-11-23 18:46:31"
     },
     {
       "signal_id": "CB-773520393_35m",
@@ -79,7 +79,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 18:45:42"
+      "updated_at_tr": "2026-11-23 18:46:31"
     }
   ],
   "recent_history": [
