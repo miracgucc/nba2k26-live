@@ -1070,6 +1070,26 @@ _BAREM_META_2K26 = {
 }
 
 
+def discover_active_melbet_domain() -> str:
+    """Query Melbet's permanent master edge IP (178.253.29.189 / 91.186.206.142) to get the latest unblocked TR domain."""
+    import socket
+    ctx = ssl._create_unverified_context()
+    for ip, host in [("178.253.29.189", "melbet.com"), ("91.186.206.142", "melbet.org")]:
+        try:
+            with socket.create_connection((ip, 443), timeout=4) as s:
+                with ctx.wrap_socket(s, server_hostname=host) as ss:
+                    ss.sendall(
+                        f"GET /tr/live/basketball HTTP/1.1\r\nHost: {host}\r\nUser-Agent: Mozilla/5.0\r\nConnection: close\r\n\r\n".encode()
+                    )
+                    head = ss.recv(2048).decode("utf-8", errors="ignore")
+                    m = re.search(r"Location:\s*(https?://[^/\r\n]+)", head, re.IGNORECASE)
+                    if m:
+                        return m.group(1).strip()
+        except Exception:
+            pass
+    return "https://melbet-56831.pro"
+
+
 def _send_telegram_alert_if_configured(sig: dict):
     """Send a Telegram push notification when a new 35m OYNA signal triggers (if configured)."""
     token = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
@@ -1274,11 +1294,14 @@ def _update_live_bet_signal_file(live_cards: list, paths: dict, domain: str):
             active_signals.append(sig_item)
             _send_telegram_alert_if_configured(sig_item)
 
+    melbet_dom = discover_active_melbet_domain()
     payload = {
         "engine_version": "v7.1-selective-calibrated",
         "updated_at_tr": datetime.now(TR_TZ).strftime("%Y-%m-%d %H:%M:%S"),
         "timestamp": round(time.time(), 2),
         "active_domain": domain,
+        "active_melbet_domain": melbet_dom,
+        "active_melbet_nba2k26_url": f"{melbet_dom}/tr/live/basketball/2935701-nba-2k26-cyber-league",
         "chain_state": {
             "prev_shift": prev_sh,
             "prev2_shift": prev2_sh,

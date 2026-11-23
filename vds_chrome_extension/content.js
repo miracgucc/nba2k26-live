@@ -1,14 +1,6 @@
 (function () {
     'use strict';
 
-    const host = (window.location.hostname || "").toLowerCase();
-    const isBetSite =
-        host.includes("melbet") ||
-        host.includes("1xbet") ||
-        host.includes("1x-bet") ||
-        document.querySelector(".c-bets__bet, .ui-market, .cyber-Arena, [data-market]");
-
-    if (!isBetSite) return;
     if (document.getElementById("nba2k26-autopilot-panel")) return;
 
     const SIGNAL_URL = "https://raw.githubusercontent.com/miracgucc/nba2k26-live/main/live_bet_signal.json";
@@ -17,7 +9,9 @@
     const STORAGE_KEY_MAX_BETS = "nba2k26_v71_max_night_bets";
     const STORAGE_KEY_LOG = "nba2k26_v71_bet_log";
 
+    let latestMelbetUrl = "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league";
     let wakeLockSentinel = null;
+
     async function requestScreenWakeLock() {
         try {
             if ('wakeLock' in navigator && isAutoEnabled() && !wakeLockSentinel) {
@@ -65,7 +59,7 @@
         "bottom:14px",
         "right:14px",
         "z-index:999999",
-        "width:310px",
+        "width:315px",
         "background:rgba(15,23,42,0.96)",
         "color:#f8fafc",
         "border:2px solid #10b981",
@@ -84,6 +78,11 @@
         <div id="nba2k26-status-box" style="background:#1e293b;padding:6px 8px;border-radius:8px;margin-bottom:6px;line-height:1.35;">
             ⏳ 7/24 Bulut sinyal motoruna bağlanıyor...
         </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <button id="nba2k26-melbet-btn" style="width:100%;background:#2563eb;color:#fff;border:none;border-radius:6px;padding:5px 8px;font-weight:700;font-size:11px;cursor:pointer;">
+                🚀 Güncel Melbet NBA 2K26 Sayfasına Git
+            </button>
+        </div>
         <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#94a3b8;">
             <span>Oynanan Kupon: <b id="nba2k26-count-lbl" style="color:#fff;">0</b> / <input id="nba2k26-max-inp" type="number" min="1" max="50" style="width:40px;background:#0f172a;color:#fff;border:1px solid #334155;border-radius:4px;padding:1px 3px;text-align:center;" /></span>
             <button id="nba2k26-reset-btn" style="background:#334155;color:#cbd5e1;border:none;border-radius:4px;padding:2px 6px;font-size:10px;cursor:pointer;">Sayacı Sıfırla</button>
@@ -93,6 +92,7 @@
     document.body.appendChild(panel);
 
     const toggleBtn = document.getElementById("nba2k26-toggle-btn");
+    const melbetBtn = document.getElementById("nba2k26-melbet-btn");
     const statusBox = document.getElementById("nba2k26-status-box");
     const countLbl = document.getElementById("nba2k26-count-lbl");
     const maxInp = document.getElementById("nba2k26-max-inp");
@@ -107,6 +107,10 @@
     resetBtn.addEventListener("click", () => {
         localStorage.setItem(STORAGE_KEY_PLAYED, "[]");
         updateUI();
+    });
+
+    melbetBtn.addEventListener("click", () => {
+        window.location.href = latestMelbetUrl;
     });
 
     toggleBtn.addEventListener("click", () => {
@@ -177,6 +181,24 @@
             if (!res.ok) return;
             const data = await res.json();
             const played = getPlayedSignals();
+
+            if (data.active_melbet_nba2k26_url) {
+                latestMelbetUrl = data.active_melbet_nba2k26_url;
+                melbetBtn.textContent = "🚀 Güncel Melbet'e Git (" + (data.active_melbet_domain || "").replace("https://", "") + ")";
+            }
+
+            // Auto domain-hop if current Melbet domain got BTK-blocked during the night
+            const curHost = (window.location.hostname || "").toLowerCase();
+            const bodyTxt = (document.body ? document.body.innerText : "").toLowerCase();
+            const isBlockedPage =
+                bodyTxt.includes("erisime_engellenmis") ||
+                bodyTxt.includes("ülkenizde kullanılamamaktadır") ||
+                bodyTxt.includes("err_connection") ||
+                bodyTxt.includes("bu siteye ulaşılamıyor");
+            if (curHost.includes("melbet") && isBlockedPage && data.active_melbet_domain && ! window.location.href.startsWith(data.active_melbet_domain)) {
+                window.location.href = latestMelbetUrl;
+                return;
+            }
 
             if (data.has_active_play_signal && data.current_play_signal) {
                 const sig = data.current_play_signal;
