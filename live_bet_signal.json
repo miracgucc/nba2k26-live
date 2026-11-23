@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 18:59:46",
-  "timestamp": 1795449586.71,
+  "updated_at_tr": "2026-11-23 19:00:42",
+  "timestamp": 1795449642.32,
   "active_domain": "https://fswin-best.icu",
   "chain_state": {
     "prev_shift": 0,
@@ -19,15 +19,15 @@
       "home_team": "Golden State Warriors",
       "away_team": "Houston Rockets",
       "quarter": 2,
-      "elapsed_mins": 13.2,
+      "elapsed_mins": 14.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "45-23",
+      "current_score": "47-25",
       "score_gap": 22,
       "fav1_barem": "231+",
-      "fav1_odd": 1.68,
+      "fav1_odd": 1.7,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.53,
+      "fav2_odd": 3.39,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -37,14 +37,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.68)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.70)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 18:59:46"
+      "updated_at_tr": "2026-11-23 19:00:42"
     },
     {
       "signal_id": "CB-773520393_35m",
@@ -54,11 +54,11 @@
       "home_team": "New York Knicks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 4,
-      "elapsed_mins": 39.0,
+      "elapsed_mins": 39.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "64-82",
-      "score_gap": 18,
+      "current_score": "67-82",
+      "score_gap": 15,
       "fav1_barem": "181-190",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -79,7 +79,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 18:59:46"
+      "updated_at_tr": "2026-11-23 19:00:42"
     }
   ],
   "recent_history": [
