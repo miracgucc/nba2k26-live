@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 18:55:51",
-  "timestamp": 1795449351.62,
+  "updated_at_tr": "2026-11-23 18:56:20",
+  "timestamp": 1795449380.06,
   "active_domain": "https://fswin-best.icu",
   "chain_state": {
     "prev_shift": 0,
@@ -25,26 +25,26 @@
       "current_score": "35-21",
       "score_gap": 14,
       "fav1_barem": "231+",
-      "fav1_odd": 1.63,
+      "fav1_odd": 1.71,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.93,
+      "fav2_odd": 3.73,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "231+",
       "target_barem_tr": "231 veya daha fazla",
       "target_barem_en": "231 or more",
       "target_t_id": 1846,
-      "target_odd": 1.63,
-      "min_acceptable_odd": 1.5,
+      "target_odd": 1.71,
+      "min_acceptable_odd": 1.56,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA KONTROLLÜ TEK FAVORİ: 231+ (1.63)",
+      "zone_badge": "💎 NBA KONTROLLÜ TEK FAVORİ: 231+ (1.71)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-23 18:55:51"
+      "updated_at_tr": "2026-11-23 18:56:20"
     },
     {
       "signal_id": "CB-773520393_35m",
@@ -56,9 +56,9 @@
       "quarter": 3,
       "elapsed_mins": 36.0,
       "in_decision_window_35m": false,
-      "is_barem_open": true,
-      "current_score": "58-78",
-      "score_gap": 20,
+      "is_barem_open": false,
+      "current_score": "60-78",
+      "score_gap": 18,
       "fav1_barem": "181-190",
       "fav1_odd": 2.1,
       "fav2_barem": "191-200",
@@ -79,7 +79,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 18:55:51"
+      "updated_at_tr": "2026-11-23 18:56:20"
     }
   ],
   "recent_history": [
