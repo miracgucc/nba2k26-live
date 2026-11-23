@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 23:53:15",
-  "timestamp": 1795467195.22,
+  "updated_at_tr": "2026-11-23 23:53:52",
+  "timestamp": 1795467232.07,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
       "quarter": 2,
-      "elapsed_mins": 22.3,
+      "elapsed_mins": 22.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "43-58",
-      "score_gap": 15,
+      "current_score": "45-58",
+      "score_gap": 13,
       "fav1_barem": "231+",
-      "fav1_odd": 2.42,
+      "fav1_odd": 2.73,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.03,
+      "fav2_odd": 3.04,
       "decision": "OYNA",
-      "pick_type": "1. Favori",
-      "target_barem": "231+",
-      "target_barem_tr": "231 veya daha fazla",
-      "target_barem_en": "231 or more",
-      "target_t_id": 1846,
-      "target_odd": 2.42,
-      "min_acceptable_odd": 2.27,
-      "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (10–15 Fark (%60.0 / +415 TL)): 231+ (2.42)",
+      "pick_type": "2. Favori",
+      "target_barem": "221-230",
+      "target_barem_tr": "221-230",
+      "target_barem_en": "221-230",
+      "target_t_id": 1845,
+      "target_odd": 3.04,
+      "min_acceptable_odd": 2.9,
+      "zone_type": "TRAP_EXTREME",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 221-230 (3.04)",
       "stakes": {
-        "kasa_8000": 400,
-        "kasa_10000": 500,
-        "kasa_15000": 750,
-        "kasa_20000": 1000
+        "kasa_8000": 320,
+        "kasa_10000": 400,
+        "kasa_15000": 600,
+        "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 23:53:13"
+      "updated_at_tr": "2026-11-23 23:53:50"
     },
     {
       "signal_id": "CB-773579238_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 23:53:13"
+      "updated_at_tr": "2026-11-23 23:53:50"
     },
     {
       "signal_id": "CB-773596651_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 23:53:13"
+      "updated_at_tr": "2026-11-23 23:53:50"
     }
   ],
   "recent_history": [
