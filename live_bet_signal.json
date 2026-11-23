@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 18:17:08",
-  "timestamp": 1795447028.08,
+  "updated_at_tr": "2026-11-23 18:17:50",
+  "timestamp": 1795447070.03,
   "active_domain": "https://fswin-best.icu",
   "chain_state": {
     "prev_shift": -1,
@@ -44,7 +44,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 18:17:08"
+      "updated_at_tr": "2026-11-23 18:17:50"
     },
     {
       "signal_id": "CB-773520393_35m",
@@ -54,32 +54,32 @@
       "home_team": "New York Knicks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 1,
-      "elapsed_mins": 10.4,
+      "elapsed_mins": 11.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "21-23",
-      "score_gap": 2,
+      "current_score": "23-23",
+      "score_gap": 0,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.57,
+      "fav1_odd": 3.43,
       "fav2_barem": "191-200",
-      "fav2_odd": 4.35,
+      "fav2_odd": 4.4,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "191-200",
       "target_barem_tr": "191-200",
       "target_barem_en": "191-200",
       "target_t_id": 1842,
-      "target_odd": 4.35,
-      "min_acceptable_odd": 4.2,
+      "target_odd": 4.4,
+      "min_acceptable_odd": 4.25,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (4.35)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (4.40)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 18:17:08"
+      "updated_at_tr": "2026-11-23 18:17:50"
     }
   ],
   "recent_history": [
