@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 18:19:39",
-  "timestamp": 1795447179.47,
+  "updated_at_tr": "2026-11-23 18:20:16",
+  "timestamp": 1795447216.64,
   "active_domain": "https://fswin-best.icu",
   "chain_state": {
     "prev_shift": -1,
@@ -19,7 +19,7 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Indiana Pacers",
       "quarter": 4,
-      "elapsed_mins": 40.9,
+      "elapsed_mins": 41.4,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "77-101",
@@ -44,7 +44,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 18:19:39"
+      "updated_at_tr": "2026-11-23 18:20:16"
     },
     {
       "signal_id": "CB-773520393_35m",
@@ -54,7 +54,7 @@
       "home_team": "New York Knicks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 2,
-      "elapsed_mins": 12.2,
+      "elapsed_mins": 12.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "23-23",
@@ -79,7 +79,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 18:19:39"
+      "updated_at_tr": "2026-11-23 18:20:16"
     }
   ],
   "recent_history": [
