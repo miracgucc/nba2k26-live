@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 19:52:47",
-  "timestamp": 1795452767.42,
+  "updated_at_tr": "2026-11-23 19:53:22",
+  "timestamp": 1795452802.63,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 19:52:46"
+      "updated_at_tr": "2026-11-23 19:53:21"
     },
     {
       "signal_id": "CB-773537280_35m",
@@ -59,8 +59,8 @@
       "elapsed_mins": 24.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "46-53",
-      "score_gap": 7,
+      "current_score": "47-53",
+      "score_gap": 6,
       "fav1_barem": "201-210",
       "fav1_odd": 3.2,
       "fav2_barem": "211-220",
@@ -81,7 +81,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 19:52:46"
+      "updated_at_tr": "2026-11-23 19:53:21"
     }
   ],
   "recent_history": [
