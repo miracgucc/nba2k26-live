@@ -223,6 +223,18 @@
             bestMatch.el.click();
             return { clicked: true, liveOdd: bestMatch.liveOdd, matchedText: bestMatch.text };
         }
+
+        // If not found yet, try clicking collapsed "Tam Puan Sayısı" header or "Tümü"/"Toplam" tab
+        const headers = document.querySelectorAll("button, [role='tab'], .ui-market-group__header, .bets_group_title, span, div");
+        for (const h of headers) {
+            if (!h.offsetParent) continue;
+            const ht = (h.innerText || "").replace(/\s+/g, " ").trim().toLowerCase();
+            if (ht === "tam puan sayısı" || ht === "toplam puan aralığı" || ht === "tümü") {
+                h.scrollIntoView({ behavior: "instant", block: "center" });
+                h.click();
+                break;
+            }
+        }
         return { clicked: false, liveOdd: 0 };
     }
 
