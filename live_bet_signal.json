@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 01:33:26",
-  "timestamp": 1795473206.46,
+  "updated_at_tr": "2026-11-24 01:33:52",
+  "timestamp": 1795473232.86,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -18,11 +18,11 @@
     "home_team": "Los Angeles Clippers",
     "away_team": "Minnesota Timberwolves",
     "quarter": 3,
-    "elapsed_mins": 35.5,
+    "elapsed_mins": 35.7,
     "in_decision_window_35m": true,
     "is_barem_open": true,
-    "current_score": "77-67",
-    "score_gap": 10,
+    "current_score": "77-69",
+    "score_gap": 8,
     "fav1_barem": "201-210",
     "fav1_odd": 2.35,
     "fav2_barem": "191-200",
@@ -36,14 +36,14 @@
     "target_odd": 2.35,
     "min_acceptable_odd": 2.2,
     "zone_type": "GOLDEN",
-    "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (10–15 Fark (%60.0 / +415 TL)): 201-210 (2.35)",
+    "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Tam İkiz Oran (%56.2 / +331 TL)): 201-210 (2.35)",
     "stakes": {
       "kasa_8000": 400,
       "kasa_10000": 500,
       "kasa_15000": 750,
       "kasa_20000": 1000
     },
-    "updated_at_tr": "2026-11-24 01:33:25"
+    "updated_at_tr": "2026-11-24 01:33:51"
   },
   "active_signals": [
     {
@@ -54,11 +54,11 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Minnesota Timberwolves",
       "quarter": 3,
-      "elapsed_mins": 35.5,
+      "elapsed_mins": 35.7,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "77-67",
-      "score_gap": 10,
+      "current_score": "77-69",
+      "score_gap": 8,
       "fav1_barem": "201-210",
       "fav1_odd": 2.35,
       "fav2_barem": "191-200",
@@ -72,14 +72,14 @@
       "target_odd": 2.35,
       "min_acceptable_odd": 2.2,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (10–15 Fark (%60.0 / +415 TL)): 201-210 (2.35)",
+      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Tam İkiz Oran (%56.2 / +331 TL)): 201-210 (2.35)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-24 01:33:25"
+      "updated_at_tr": "2026-11-24 01:33:51"
     }
   ],
   "live_matches": [
@@ -91,15 +91,15 @@
       "home_team": "Detroit Pistons",
       "away_team": "Oklahoma City Thunder",
       "quarter": 1,
-      "elapsed_mins": 9.9,
+      "elapsed_mins": 10.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "21-19",
-      "score_gap": 2,
+      "current_score": "26-19",
+      "score_gap": 7,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.67,
+      "fav1_odd": 3.82,
       "fav2_barem": "191-200",
-      "fav2_odd": 3.91,
+      "fav2_odd": 3.9,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -109,14 +109,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.67)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.82)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 01:33:25"
+      "updated_at_tr": "2026-11-24 01:33:51"
     },
     {
       "signal_id": "CB-773603297_35m",
@@ -126,11 +126,11 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Minnesota Timberwolves",
       "quarter": 3,
-      "elapsed_mins": 35.5,
+      "elapsed_mins": 35.7,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "77-67",
-      "score_gap": 10,
+      "current_score": "77-69",
+      "score_gap": 8,
       "fav1_barem": "201-210",
       "fav1_odd": 2.35,
       "fav2_barem": "191-200",
@@ -144,14 +144,14 @@
       "target_odd": 2.35,
       "min_acceptable_odd": 2.2,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (10–15 Fark (%60.0 / +415 TL)): 201-210 (2.35)",
+      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Tam İkiz Oran (%56.2 / +331 TL)): 201-210 (2.35)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-24 01:33:25"
+      "updated_at_tr": "2026-11-24 01:33:51"
     }
   ],
   "recent_history": [
@@ -161,15 +161,15 @@
       "raw_game_id": "773603297",
       "date": "2026-11-24",
       "game_name": "Los Angeles Clippers vs Minnesota Timberwolves",
-      "current_score": "77-67",
-      "score_gap": 10,
+      "current_score": "77-69",
+      "score_gap": 8,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_t_id": 1843,
       "target_odd": 2.35,
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (10–15 Fark (%60.0 / +415 TL)): 201-210 (2.35)",
+      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Tam İkiz Oran (%56.2 / +331 TL)): 201-210 (2.35)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
