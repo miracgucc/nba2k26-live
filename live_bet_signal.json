@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 21:38:59",
-  "timestamp": 1795459139.68,
+  "updated_at_tr": "2026-11-23 21:39:35",
+  "timestamp": 1795459175.41,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Detroit Pistons",
       "away_team": "Minnesota Timberwolves",
       "quarter": 2,
-      "elapsed_mins": 13.1,
+      "elapsed_mins": 13.7,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "39-29",
       "score_gap": 10,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.25,
+      "fav1_odd": 3.42,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.64,
+      "fav2_odd": 3.63,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "221-230",
       "target_barem_tr": "221-230",
       "target_barem_en": "221-230",
       "target_t_id": 1845,
-      "target_odd": 3.64,
-      "min_acceptable_odd": 3.49,
+      "target_odd": 3.63,
+      "min_acceptable_odd": 3.48,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 221-230 (3.64)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 221-230 (3.63)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 21:38:58"
+      "updated_at_tr": "2026-11-23 21:39:34"
     },
     {
       "signal_id": "CB-773554184_35m",
@@ -55,8 +55,8 @@
       "game_name": "New York Knicks vs Indiana Pacers",
       "home_team": "New York Knicks",
       "away_team": "Indiana Pacers",
-      "quarter": 3,
-      "elapsed_mins": 36.0,
+      "quarter": 4,
+      "elapsed_mins": 36.4,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "78-62",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 21:38:58"
+      "updated_at_tr": "2026-11-23 21:39:34"
     }
   ],
   "recent_history": [
