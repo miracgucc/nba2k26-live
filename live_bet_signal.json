@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 18:27:41",
-  "timestamp": 1795447661.74,
+  "updated_at_tr": "2026-11-23 18:28:18",
+  "timestamp": 1795447698.57,
   "active_domain": "https://fswin-best.icu",
   "chain_state": {
     "prev_shift": -1,
@@ -19,11 +19,11 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Indiana Pacers",
       "quarter": 4,
-      "elapsed_mins": 46.5,
+      "elapsed_mins": 47.2,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "89-114",
-      "score_gap": 25,
+      "current_score": "91-114",
+      "score_gap": 23,
       "fav1_barem": "201-210",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -44,7 +44,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 18:27:41"
+      "updated_at_tr": "2026-11-23 18:28:18"
     },
     {
       "signal_id": "CB-773520393_35m",
@@ -60,26 +60,26 @@
       "current_score": "28-29",
       "score_gap": 1,
       "fav1_barem": "181-190",
-      "fav1_odd": 3.21,
+      "fav1_odd": 3.23,
       "fav2_barem": "191-200",
-      "fav2_odd": 3.98,
+      "fav2_odd": 3.81,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "191-200",
       "target_barem_tr": "191-200",
       "target_barem_en": "191-200",
       "target_t_id": 1842,
-      "target_odd": 3.98,
-      "min_acceptable_odd": 3.83,
+      "target_odd": 3.81,
+      "min_acceptable_odd": 3.66,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (3.98)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (3.81)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 18:27:41"
+      "updated_at_tr": "2026-11-23 18:28:18"
     }
   ],
   "recent_history": [
