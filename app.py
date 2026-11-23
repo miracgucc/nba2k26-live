@@ -1839,6 +1839,36 @@ with tab_smart35:
         )
         st.caption(f"🔎 Veri kaynağı: {len(df_sym_all)} dakika kaydı • {_n_games} maç • {_n_done} sonuçlanmış • sürüm {ENGINE_VERSION}")
 
+        with st.expander("🌙📱 Telefon Gece Oto-Pilot Kurulumu (Bilgisayar Kapalı — 1xBet Mobil & Melbet)", expanded=False):
+            st.markdown(
+                """
+                **Evdeki bilgisayarınız tamamen kapalıyken** gece siz uyuduğunuzda 35. dakikada sadece seçici kurallara (`v7.1`) uyan **NBA 2K26** maçlarına otomatik bahis almak için 2 yöntem hazırlandı:
+                - **Canlı Bulut Sinyal Adresi (7/24 Bilgisayar Kapalıyken Güncellenir):**  
+                  `https://raw.githubusercontent.com/miracgucc/nba2k26-live/main/live_bet_signal.json`
+                ---
+                #### 📲 1. Yöntem: Melbet / 1xBet Mobil Tarayıcı Oto-Pilot (Android Kiwi Browser / Firefox Mobil)
+                1. Telefonunuza Google Play'den ücretsiz **Kiwi Browser** (veya **Firefox + Tampermonkey**) indirin.
+                2. Aşağıdaki **"📥 Telefon Gece Oto-Pilot Scriptini İndir (.user.js)"** butonuna basıp Tampermonkey içine ekleyin.
+                3. Melbet (veya 1xBet) mobil sayfasında **"Tek Tıkla Bahis (1-Click Bet)"** özelliğini açıp bahis tutarınızı (`400 TL`, `500 TL` vb.) kaydedin.
+                4. Gece yatarken ekranın sağ altındaki **`🌙 NBA 2K26 Oto-Pilot v7.1 -> 🟢 AÇIK`** kutusunu açık bırakın; buluttan `35. dakika OYNA` sinyali geldiği saniye seçilen bareme otomatik tıklar, pas geçilen maçlara dokunmaz!
+
+                #### 🤖 2. Yöntem: 1xBet Android Mobil Uygulaması İçin MacroDroid Oto-Tıklayıcı
+                1. 1xBet TR'de sadece mobil uygulama üzerinden bahis yapıyorsanız Google Play'den ücretsiz **MacroDroid** uygulamasını kurun.
+                2. **Tetikleyici (Trigger):** `Düzenli Aralık (Her 15 Saniye)` ➔ **Eylem (Action):** `HTTP GET` ile yukarıdaki `live_bet_signal.json` adresini okuyun.
+                3. **Koşul:** `has_active_play_signal == true` olduğunda **1xBet uygulamasında** `"Tek Tıkla Bahis"` açıkken `current_play_signal.target_barem_tr` (`201-210`, `211-220` vb.) metninin yanındaki orana `UI Click (Ekranda Metne Tıkla)` komutu verin.
+                """
+            )
+            _autopilot_js_path = os.path.join(BASE_DIR, "mobile_night_autopilot.user.js")
+            if os.path.exists(_autopilot_js_path):
+                with open(_autopilot_js_path, "r", encoding="utf-8") as _f_js:
+                    _js_content = _f_js.read()
+                st.download_button(
+                    label="📥 Telefon Gece Oto-Pilot Scriptini İndir (mobile_night_autopilot.user.js)",
+                    data=_js_content,
+                    file_name="mobile_night_autopilot.user.js",
+                    mime="application/javascript",
+                )
+
         _gap_thr = int(LEAGUE_CFG["blowout_brake_gap"]) if IS_EURO else 18
         _slow_q4_avg = 33 if IS_EURO else 48
         _exp_rem_d = int(round(EXP_REM_DEC))
@@ -1849,7 +1879,7 @@ with tab_smart35:
         _rule1_title = (
             "🔥 1. Kural: Alt Kanat & V-Dip 1. Favori [?]"
             if IS_NBA2K27
-            else ("🔥 1. Kural: 1.50–2.10 Altın Merkez Favori [?]" if IS_EURO else "🔥 1. Kural: 1.85–2.10 Altın Tek Favori [?]")
+            else ("🔥 1. Kural: 1.50–2.10 Altın Merkez Favori [?]" if IS_EURO else "🔥 1. Kural: 1.85–2.10 & Seçici 2.30–2.50 1. Favori [?]")
         )
         _rule1_body = (
             "NBA 2K27'de <b>Alt komşu oranı üst komşudan 1.00+ düşükse</b> (1.000 TL başı <b>+157 TL</b>), <b>V-Dip</b> (<b>+119 TL</b>) veya <b>2x Alt sonrası</b> (<b>+396 TL</b>) doğrudan <b>1. Favori</b> oynanır."
@@ -1857,13 +1887,13 @@ with tab_smart35:
             else (
                 "Euro'da 1.Fav oranı <b>1.50–2.10</b> ve fark <b>5–20 sayı</b> iken (özellikle <b>Tam İkiz <=0.25: +313 TL</b> veya <b>Barem Düşüşü: +163 TL</b>) doğrudan <b>1. Favori</b> en yüksek net kazancı verir."
                 if IS_EURO
-                else "NBA 2K26'da 1.Fav oranı <b>1.85–2.10</b> ve fark <b>6+ sayı</b> iken (önceki maç +1 üst değilse) doğrudan <b>1. Favori Barem</b> 1.000 TL başı <b>+217 TL</b> kazandırır."
+                else "NBA 2K26'da <b>1.85–2.10</b> (önceki maç +1 değilken: <b>%60.7 / +222 TL</b>) ve <b>2.30–2.50</b> bandında <b>Tam İkiz (<=0.25) / 10–15 Fark / +1 Üst</b> (<b>%56–%60 / +267 ile +415 TL</b>) doğrudan <b>1. Favori</b> oynanır."
             )
         )
         _rule3_title = (
             "🔄 3. Kural: NBA 2K27 2. Favori Bölgeleri [?]"
             if IS_NBA2K27
-            else ("🔄 3. Kural: Euro 21+ Fark & 2.10+ 2. Favori [?]" if IS_EURO else "🔄 3. Kural: NBA 2K26 2. Favori Fırsatları [?]")
+            else ("🔄 3. Kural: Euro 21+ Fark & 2.10+ 2. Favori [?]" if IS_EURO else "🔄 3. Kural: NBA 2K26 Seçici 2. Favori Fırsatları [?]")
         )
         _rule3_body = (
             "NBA 2K27'de maç içinde <b>barem aşağı düştüyse</b> (<b>+385 TL</b>), <b>1. ve 2. Fav oran farkı <=0.45</b> ise (<b>+173 TL</b>) veya oran <b>2.50+</b> ise (<b>+945 TL</b>) doğrudan <b>2. Favori Barem</b> oynanır."
@@ -1871,7 +1901,7 @@ with tab_smart35:
             else (
                 "Euro'da 29. dk fark <b>21+ sayı</b> olduğunda maç rölantiye girer ve <b>2. Favori</b> 1.000 TL başı <b>+270 TL</b> kazandırır. Ayrıca <b>2.10–2.50</b> bandında üst kanat açıkken <b>2. Favori +433 TL</b> üretir."
                 if IS_EURO
-                else "NBA 2K26'da 1.Fav oranı <b>1.50 altı</b> (<b>+338 TL</b>), <b>2.10–2.30</b> (<b>+162 TL</b>), <b>2.50+</b> (<b>+407 TL</b>) veya önceki maç <b>+1 Üst</b> bittiyse (<b>+265 TL</b>) doğrudan <b>2. Favori</b> oynanır."
+                else "NBA 2K26'da <b>2.10–2.30</b> bandında sadece <b>10+ fark ve simetri sinyali varken</b> (6–9 fark pas geçilir!), <b>2.30–2.50 alt kanatta (+310 TL)</b> ve <b>2.50+ kaymalı maçlarda (%61.5 / +750 TL)</b> doğrudan <b>2. Favori</b> oynanır."
             )
         )
         _rule4_body = (

@@ -21,6 +21,7 @@ import pandas as pd
 from period_predictor import (
     BAREM_RANGES,
     analyze_barem_symmetry,
+    analyze_smart_35m_decision,
     build_q3_q4_streak_signal,
     get_csv_headers,
     get_league_config,
@@ -1046,8 +1047,253 @@ def _scrape_single_league(domain: str, league: str = "nba", force_manual: bool =
     except Exception as e:
         print(f"[{tag}] Auto-settle warning: {e}")
 
+    if cfg["key"] == "nba":
+        try:
+            _update_live_bet_signal_file(live_cards, paths, domain)
+        except Exception as e:
+            print(f"[{tag}] Live bet signal update warning: {e}")
+
     print(f"[{tag} POLL_SPEED] {live_poll_speed} (Completed in {round(time.time() - start_ts, 2)}s)")
     return live_poll_speed
+
+
+_BAREM_META_2K26 = {
+    "160_or_less": {"tr": "160 veya daha az", "en": "160 or less", "t_id": 1838},
+    "161-170": {"tr": "161-170", "en": "161-170", "t_id": 1839},
+    "171-180": {"tr": "171-180", "en": "171-180", "t_id": 1840},
+    "181-190": {"tr": "181-190", "en": "181-190", "t_id": 1841},
+    "191-200": {"tr": "191-200", "en": "191-200", "t_id": 1842},
+    "201-210": {"tr": "201-210", "en": "201-210", "t_id": 1843},
+    "211-220": {"tr": "211-220", "en": "211-220", "t_id": 1844},
+    "221-230": {"tr": "221-230", "en": "221-230", "t_id": 1845},
+    "231+": {"tr": "231 veya daha fazla", "en": "231 or more", "t_id": 1846},
+}
+
+
+def _send_telegram_alert_if_configured(sig: dict):
+    """Send a Telegram push notification when a new 35m OYNA signal triggers (if configured)."""
+    token = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+    chat_id = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
+    cfg_file = os.path.join(BASE_DIR, "telegram_config.json")
+    if (not token or not chat_id) and os.path.exists(cfg_file):
+        try:
+            with open(cfg_file, "r", encoding="utf-8") as f:
+                tcfg = json.load(f)
+                token = token or str(tcfg.get("bot_token", "")).strip()
+                chat_id = chat_id or str(tcfg.get("chat_id", "")).strip()
+        except Exception:
+            pass
+    if not token or not chat_id:
+        return
+    sent_file = os.path.join(BASE_DIR, "sent_telegram_signals.json")
+    sent_ids = []
+    if os.path.exists(sent_file):
+        try:
+            with open(sent_file, "r", encoding="utf-8") as f:
+                sent_ids = json.load(f)
+        except Exception:
+            sent_ids = []
+    sid = sig.get("signal_id", "")
+    if not sid or sid in sent_ids:
+        return
+    msg = (
+        f"🚨 *NBA 2K26 GECE OTO-PİLOT — OYNA SİNYALİ!*\n\n"
+        f"🏀 *Maç:* {sig.get('game_name')}\n"
+        f"⏱ *Dakika:* {sig.get('elapsed_mins')} dk | *Skor:* `{sig.get('current_score')}` (Fark: {sig.get('score_gap')})\n"
+        f"🎯 *Seçilen Barem:* `{sig.get('target_barem_tr')}` ({sig.get('pick_type')})\n"
+        f"📈 *Canlı Oran:* *{sig.get('target_odd'):.2f}*\n"
+        f"💰 *Önerilen Tutar:*\n"
+        f"  • 8.000 TL Kasa: `{sig.get('stakes', {}).get('kasa_8000', 400)} TL`\n"
+        f"  • 10.000 TL Kasa: `{sig.get('stakes', {}).get('kasa_10000', 500)} TL`\n"
+        f"  • 20.000 TL Kasa: `{sig.get('stakes', {}).get('kasa_20000', 1000)} TL`\n"
+        f"📌 *Kural:* {sig.get('zone_badge')}"
+    )
+    try:
+        url = f"https://api.telegram.org/bot{token}/sendMessage"
+        payload = json.dumps({"chat_id": chat_id, "text": msg, "parse_mode": "Markdown"}).encode("utf-8")
+        req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
+        urllib.request.urlopen(req, timeout=6)
+        sent_ids.append(sid)
+        with open(sent_file, "w", encoding="utf-8") as f:
+            json.dump(sent_ids[-100:], f)
+    except Exception as e:
+        print(f"[TELEGRAM] Notification warning: {e}")
+
+
+def _update_live_bet_signal_file(live_cards: list, paths: dict, domain: str):
+    """Build live_bet_signal.json for mobile 1xBet/Melbet night auto-pilot (works 24/7 while PC is off)."""
+    cfg = get_league_config("nba")
+    barems = [b[0] for b in cfg["barem_ranges"]]
+    odd_cols = cfg["barem_odd_cols"]
+    csv_path = paths["csv_path"]
+    df_log = pd.read_csv(csv_path) if (os.path.exists(csv_path) and os.path.getsize(csv_path) > 0) else pd.DataFrame()
+
+    chain_hist = []
+    recent_history = []
+    if not df_log.empty and "status" in df_log.columns:
+        df_c = df_log.copy()
+        df_c["_min"] = df_c["check_time"].astype(str).str.extract(r"Minute\s+(\d+)", expand=False).astype(float).fillna(0.0)
+        df_c["_gid_num"] = df_c["game_id"].astype(str).str.extract(r"(\d+)", expand=False).astype(float).fillna(0.0)
+        df_cl = df_c[df_c["_min"] >= 32].sort_values(["_gid_num", "_min"]).groupby("game_id", as_index=False).last().sort_values(["_gid_num", "_min"]).reset_index(drop=True)
+        for _, r in df_cl.iterrows():
+            gid = str(r.get("game_id", "")).strip()
+            act_b = str(r.get("actual_range", "")).strip()
+            om = {b: float(r.get(odd_cols[b], 99) or 99) for b in barems}
+            valid_om = sorted([(b, v) for b, v in om.items() if 1.001 < v < 85.0], key=lambda x: x[1])
+            f1 = valid_om[0][0] if valid_om else str(r.get("highest_prob_range", "")).strip()
+            o1 = valid_om[0][1] if valid_om else 99.0
+            f2 = valid_om[1][0] if len(valid_om) >= 2 else "-"
+            o2 = valid_om[1][1] if len(valid_om) >= 2 else 99.0
+            try:
+                p1, p2 = str(r.get("current_score", "0-0")).split("-")
+                cur_tot = int(p1.strip()) + int(p2.strip())
+                gap = abs(int(p1.strip()) - int(p2.strip()))
+            except Exception:
+                cur_tot, gap = 0, 0
+            g_this = df_c[(df_c["game_id"] == gid) & (df_c["_min"] <= r["_min"])].sort_values("_min")
+            sm = analyze_smart_35m_decision(
+                fav1_barem=f1,
+                fav1_odd=o1,
+                fav2_barem=f2,
+                fav2_odd=o2,
+                game_id=gid,
+                df_log=g_this,
+                recent_chain=chain_hist[-10:],
+                score_gap=gap,
+                cur_tot=cur_tot,
+                elapsed_mins=float(r["_min"]) + 0.5,
+                odds_map=om,
+                league="nba",
+                proj_tot=208.2,
+            )
+            is_pass = str(sm.get("zone_type", "")).startswith("PASS_")
+            p_bs = sm.get("primary_barems") or [f1]
+            tb = p_bs[0] if p_bs else f1
+            is_f2 = (tb == f2)
+            to = o2 if is_f2 else o1
+            meta = _BAREM_META_2K26.get(tb, {"tr": tb, "en": tb, "t_id": 0})
+            st_done = str(r.get("status", "")) == "COMPLETED" and act_b in barems
+            recent_history.append({
+                "signal_id": f"{gid}_35m",
+                "game_id": gid,
+                "raw_game_id": gid.replace("CB-", ""),
+                "date": str(r.get("date", ""))[:10],
+                "game_name": str(r.get("game_name", "")).replace(" (cyber)", ""),
+                "current_score": str(r.get("current_score", "")),
+                "score_gap": gap,
+                "decision": "PAS" if is_pass else "OYNA",
+                "pick_type": "PAS" if is_pass else ("2. Favori" if is_f2 else "1. Favori"),
+                "target_barem": "" if is_pass else tb,
+                "target_barem_tr": "" if is_pass else meta["tr"],
+                "target_t_id": 0 if is_pass else meta["t_id"],
+                "target_odd": 0.0 if is_pass else round(float(to), 2),
+                "zone_badge": sm.get("zone_badge", ""),
+                "actual_score": str(r.get("actual_score", "")) if st_done else "",
+                "actual_range": act_b if st_done else "",
+                "result": ("PAS" if is_pass else ("TUTTU" if act_b == tb else "YATTI")) if st_done else "BEKLIYOR",
+            })
+            if st_done and f1 in barems:
+                chain_hist.append({"raw_shift": barems.index(act_b) - barems.index(f1)})
+
+    prev_sh = chain_hist[-1]["raw_shift"] if chain_hist else 0
+    prev2_sh = chain_hist[-2]["raw_shift"] if len(chain_hist) >= 2 else 0
+
+    active_signals = []
+    live_matches_35m = []
+    for lc in live_cards:
+        gid = str(lc.get("game_id", "")).strip()
+        el = float(lc.get("elapsed_mins", 0.0) or 0.0)
+        om = lc.get("odds", {}) or {}
+        f1 = str(lc.get("bookie_fav_1") or lc.get("highest_prob_range") or "-")
+        o1 = float(lc.get("bookie_fav_1_odd", 99.0) or 99.0)
+        f2 = str(lc.get("bookie_fav_2") or "-")
+        o2 = float(lc.get("bookie_fav_2_odd", 99.0) or 99.0)
+        h_sc = int(lc.get("home_score", 0) or 0)
+        a_sc = int(lc.get("away_score", 0) or 0)
+        gap = abs(h_sc - a_sc)
+        g_this = df_log[df_log["game_id"] == gid] if (not df_log.empty and "game_id" in df_log.columns) else pd.DataFrame()
+        sm = analyze_smart_35m_decision(
+            fav1_barem=f1,
+            fav1_odd=o1,
+            fav2_barem=f2,
+            fav2_odd=o2,
+            game_id=gid,
+            df_log=g_this,
+            recent_chain=chain_hist[-10:],
+            score_gap=gap,
+            cur_tot=h_sc + a_sc,
+            elapsed_mins=el,
+            odds_map=om,
+            league="nba",
+            proj_tot=float(lc.get("predicted_total", 208.2) or 208.2),
+        )
+        is_pass = str(sm.get("zone_type", "")).startswith("PASS_")
+        p_bs = sm.get("primary_barems") or [f1]
+        tb = p_bs[0] if p_bs else f1
+        is_f2 = (tb == f2)
+        to = o2 if is_f2 else o1
+        meta = _BAREM_META_2K26.get(tb, {"tr": tb, "en": tb, "t_id": 0})
+        in_window = (33.0 <= el <= 35.9) and bool(lc.get("is_barem_open", False))
+        sig_item = {
+            "signal_id": f"{gid}_35m",
+            "game_id": gid,
+            "raw_game_id": gid.replace("CB-", ""),
+            "game_name": f"{lc.get('team_home', '')} vs {lc.get('team_away', '')}".replace(" (cyber)", ""),
+            "home_team": str(lc.get("team_home", "")).replace(" (cyber)", "").strip(),
+            "away_team": str(lc.get("team_away", "")).replace(" (cyber)", "").strip(),
+            "quarter": int(lc.get("quarter", 1) or 1),
+            "elapsed_mins": round(el, 1),
+            "in_decision_window_35m": in_window,
+            "is_barem_open": bool(lc.get("is_barem_open", False)),
+            "current_score": f"{h_sc}-{a_sc}",
+            "score_gap": gap,
+            "fav1_barem": f1,
+            "fav1_odd": round(o1, 2) if o1 < 85 else 0.0,
+            "fav2_barem": f2,
+            "fav2_odd": round(o2, 2) if o2 < 85 else 0.0,
+            "decision": "PAS" if is_pass else "OYNA",
+            "pick_type": "PAS" if is_pass else ("2. Favori" if is_f2 else "1. Favori"),
+            "target_barem": "" if is_pass else tb,
+            "target_barem_tr": "" if is_pass else meta["tr"],
+            "target_barem_en": "" if is_pass else meta["en"],
+            "target_t_id": 0 if is_pass else meta["t_id"],
+            "target_odd": 0.0 if is_pass else round(float(to), 2),
+            "min_acceptable_odd": 0.0 if is_pass else round(max(1.50, float(to) - 0.15), 2),
+            "zone_type": sm.get("zone_type", ""),
+            "zone_badge": sm.get("zone_badge", ""),
+            "stakes": {
+                "kasa_8000": 0 if is_pass else (320 if is_f2 else 400),
+                "kasa_10000": 0 if is_pass else (400 if is_f2 else 500),
+                "kasa_15000": 0 if is_pass else (600 if is_f2 else 750),
+                "kasa_20000": 0 if is_pass else (800 if is_f2 else 1000),
+            },
+            "updated_at_tr": datetime.now(TR_TZ).strftime("%Y-%m-%d %H:%M:%S"),
+        }
+        live_matches_35m.append(sig_item)
+        if in_window and not is_pass and 1.50 <= to < 85.0:
+            active_signals.append(sig_item)
+            _send_telegram_alert_if_configured(sig_item)
+
+    payload = {
+        "engine_version": "v7.1-selective-calibrated",
+        "updated_at_tr": datetime.now(TR_TZ).strftime("%Y-%m-%d %H:%M:%S"),
+        "timestamp": round(time.time(), 2),
+        "active_domain": domain,
+        "chain_state": {
+            "prev_shift": prev_sh,
+            "prev2_shift": prev2_sh,
+        },
+        "has_active_play_signal": len(active_signals) > 0,
+        "current_play_signal": active_signals[0] if active_signals else None,
+        "active_signals": active_signals,
+        "live_matches": live_matches_35m,
+        "recent_history": recent_history[-18:][::-1],
+    }
+    sig_path = os.path.join(BASE_DIR, "live_bet_signal.json")
+    tmp_sig = sig_path + ".tmp"
+    with open(tmp_sig, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+    os.replace(tmp_sig, sig_path)
 
 
 def run_auto_scraper(force_manual=False, league: str = "all"):

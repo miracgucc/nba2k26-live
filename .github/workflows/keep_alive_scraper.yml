@@ -11,6 +11,7 @@ on:
       - 'cloud_euro_symmetry_backup.csv'
       - 'cloud_euro_matches_backup.csv'
       - 'cloud_status.json'
+      - 'live_bet_signal.json'
   schedule:
     - cron: '*/10 * * * *'
   workflow_dispatch:
@@ -83,7 +84,7 @@ jobs:
               if os.path.exists('euro_matches_data.csv'):
                   shutil.copyfile('euro_matches_data.csv', 'cloud_euro_matches_backup.csv')
               try:
-                  subprocess.run(['git', 'add', '-f', 'cloud_symmetry_backup.csv', 'cloud_matches_backup.csv', 'cloud_nba2k27_symmetry_backup.csv', 'cloud_nba2k27_matches_backup.csv', 'cloud_euro_symmetry_backup.csv', 'cloud_euro_matches_backup.csv'], timeout=10)
+                  subprocess.run(['git', 'add', '-f', 'cloud_symmetry_backup.csv', 'cloud_matches_backup.csv', 'cloud_nba2k27_symmetry_backup.csv', 'cloud_nba2k27_matches_backup.csv', 'cloud_euro_symmetry_backup.csv', 'cloud_euro_matches_backup.csv', 'live_bet_signal.json'], timeout=10)
                   subprocess.run(['git', 'checkout', '--', '.'], timeout=10)
                   diff_res = subprocess.run(['git', 'diff', '--staged', '--quiet'])
                   if diff_res.returncode != 0:
