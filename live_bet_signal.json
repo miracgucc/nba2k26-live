@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 23:16:05",
-  "timestamp": 1795464965.07,
+  "updated_at_tr": "2026-11-23 23:16:43",
+  "timestamp": 1795465003.71,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 23:16:03"
+      "updated_at_tr": "2026-11-23 23:16:42"
     },
     {
       "signal_id": "CB-773579238_35m",
@@ -56,32 +56,32 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Atlanta Hawks",
       "quarter": 2,
-      "elapsed_mins": 23.3,
+      "elapsed_mins": 23.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "48-52",
       "score_gap": 4,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.19,
+      "fav1_odd": 2.95,
       "fav2_barem": "211-220",
-      "fav2_odd": 3.44,
+      "fav2_odd": 3.48,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "211-220",
       "target_barem_tr": "211-220",
       "target_barem_en": "211-220",
       "target_t_id": 1844,
-      "target_odd": 3.44,
-      "min_acceptable_odd": 3.29,
+      "target_odd": 3.48,
+      "min_acceptable_odd": 3.33,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (3.44)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (3.48)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 23:16:03"
+      "updated_at_tr": "2026-11-23 23:16:42"
     },
     {
       "signal_id": "CB-773570537_35m",
@@ -94,8 +94,8 @@
       "elapsed_mins": 47.7,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "118-113",
-      "score_gap": 5,
+      "current_score": "119-113",
+      "score_gap": 6,
       "fav1_barem": "231+",
       "fav1_odd": 1.01,
       "fav2_barem": "-",
@@ -108,15 +108,15 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 5 Sayı Fark)",
+      "zone_type": "PASS_SELECTIVE",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.01)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 23:16:03"
+      "updated_at_tr": "2026-11-23 23:16:42"
     }
   ],
   "recent_history": [
