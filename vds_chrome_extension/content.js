@@ -118,7 +118,7 @@
     });
 
     testBtn.addEventListener("click", () => {
-        const testBarems = ["201-210", "211-220", "191-200", "221-230", "181-190", "171-180"];
+        const testBarems = ["201-210", "211-220", "191-200", "221-230", "181-190", "171-180", "231+"];
         let found = null;
         for (const b of testBarems) {
             const res = tryClickBaremOnPage({
@@ -128,14 +128,16 @@
                 min_acceptable_odd: 1.05
             });
             if (res.clicked) {
-                found = { barem: b, odd: res.liveOdd };
+                found = { barem: b, odd: res.liveOdd, txt: res.matchedText || b };
                 break;
             }
         }
         if (found) {
-            statusBox.innerHTML = `<div style="color:#34d399;font-weight:700;">✅ TEST BAŞARILI (0 TL)!</div><div>🎯 <b>${found.barem}</b> @ <b>${found.odd}</b> otomatik tıklandı! Sağdaki Kupona eklendiyse sistem %100 çalışıyor demektir.</div>`;
+            statusBox.innerHTML = `<div style="color:#34d399;font-weight:700;">✅ TEST BAŞARILI (0 TL)!</div><div>🎯 <b>${found.txt}</b> (Oran: <b>${found.odd}</b>) tıklandı! Sağdaki kupona eklendiyse sistem %100 tamamdır.</div>`;
         } else {
-            statusBox.innerHTML = `<div style="color:#fbbf24;font-weight:700;">⚠️ Barem Bulunamadı!</div><div>Önce canlı bir NBA 2K26 maçının içine tıklayıp 'Toplam Sayı Aralığı' listesinin açık olduğundan emin olun ve tekrar Test'e basın.</div>`;
+            const pageTxt = (document.body ? document.body.innerText : "");
+            const sample = pageTxt.match(/.{0,20}(201|211|191|Aralı|aralı|Toplam).{0,25}/i);
+            statusBox.innerHTML = `<div style="color:#fbbf24;font-weight:700;">⚠️ Barem Ekranda Görünmüyor!</div><div>Maçın içine girip aşağı kaydırarak 'Sayı Aralığı' başlığını açın ve tekrar Test'e basın.<br/><span style="font-size:10px;color:#94a3b8;">Bulunan ipucu: ${sample ? sample[0].replace(/\s+/g,' ') : 'Maç içi sayfa değil'}</span></div>`;
         }
     });
 
@@ -164,37 +166,62 @@
     requestScreenWakeLock();
 
     function tryClickBaremOnPage(sig) {
-        const trLabel = (sig.target_barem_tr || "").toLowerCase();
-        const enLabel = (sig.target_barem_en || "").toLowerCase();
-        const rawBarem = (sig.target_barem || "").toLowerCase();
-        const minOdd = parseFloat(sig.min_acceptable_odd || 1.50);
+        const rawBarem = (sig.target_barem || "").trim().toLowerCase();
+        const minOdd = parseFloat(sig.min_acceptable_odd || 1.05);
 
+        let matcher = null;
+        if (rawBarem.includes("-")) {
+            const parts = rawBarem.split("-");
+            const lo = parts[0].trim();
+            const hi = parts[1].trim();
+            matcher = new RegExp("\\b" + lo + "\\b.{0,22}\\b" + hi + "\\b", "i");
+        } else if (rawBarem.includes("160")) {
+            matcher = /\b160\b.{0,25}(az|alt|less|under|veya|kadar|<=)/i;
+        } else if (rawBarem.includes("231")) {
+            matcher = /\b231\b.{0,25}(fazla|üst|üzeri|more|over|\+|veya|>=)/i;
+        }
+        if (!matcher) return { clicked: false, liveOdd: 0 };
+
+        // Scan clickable market elements (Melbet v3 + 1xBet Desktop & Mobile)
         const candidates = document.querySelectorAll(
-            ".c-bets__bet, .bet_type, .ui-market__toggle, [data-market], .market-odd, .c-bet-box, button, a, div"
+            "button, [role='button'], .ui-market, .c-bets__bet, .bet_type, .market-odd, .c-bet-box, [class*='market'], [class*='bet'], [class*='coef'], li, a, div, span"
         );
 
+        let bestMatch = null;
         for (const el of candidates) {
-            const txt = (el.innerText || el.textContent || "").trim().toLowerCase();
-            if (!txt || txt.length > 80) continue;
+            if (!el.offsetParent) continue; // skip hidden elements
+            const txt = (el.innerText || el.textContent || "").replace(/\s+/g, " ").trim();
+            if (!txt || txt.length > 90) continue;
 
-            const matchesBarem =
-                (trLabel && txt.includes(trLabel)) ||
-                (enLabel && txt.includes(enLabel)) ||
-                (rawBarem && rawBarem.includes("-") && txt.includes(rawBarem));
-
-            if (matchesBarem) {
-                const container = el.closest(".c-bets__bet, .ui-market__item, .c-bet-box, li, tr, div") || el.parentElement;
-                const fullTxt = (container ? container.innerText : txt).replace(",", ".");
-                const nums = fullTxt.match(/\b([1-9]\.\d{1,3})\b/g);
-                if (nums && nums.length > 0) {
-                    const liveOdd = parseFloat(nums[nums.length - 1]);
-                    if (liveOdd >= minOdd && liveOdd < 25.0) {
-                        const clickTarget = container.querySelector(".c-bets__inner, .ui-market__value, .bet_type, button") || el;
-                        clickTarget.click();
-                        return { clicked: true, liveOdd: liveOdd };
+            if (matcher.test(txt)) {
+                // Find the smallest clickable parent containing both the barem label AND the odd value
+                let box = el;
+                for (let depth = 0; depth < 4 && box; depth++) {
+                    const bTxt = (box.innerText || "").replace(/\s+/g, " ").replace(",", ".").trim();
+                    if (bTxt.length <= 120) {
+                        // Remove barem numbers (160..231) before searching for odd (e.g. 1.85, 3.45, 13)
+                        const withoutRange = bTxt.replace(/\b(1[5-9]\d|2[0-4]\d)\b/g, " ");
+                        const nums = withoutRange.match(/\b([1-9]\d?(?:\.\d{1,3})?)\b/g);
+                        if (nums && nums.length > 0) {
+                            const liveOdd = parseFloat(nums[nums.length - 1]);
+                            if (liveOdd >= minOdd && liveOdd < 35.0) {
+                                // Prefer the most specific (shortest text) element
+                                if (!bestMatch || bTxt.length < bestMatch.len) {
+                                    bestMatch = { el: box, liveOdd: liveOdd, len: bTxt.length, text: bTxt };
+                                }
+                                break;
+                            }
+                        }
                     }
+                    box = box.parentElement;
                 }
             }
+        }
+
+        if (bestMatch) {
+            bestMatch.el.scrollIntoView({ behavior: "instant", block: "center" });
+            bestMatch.el.click();
+            return { clicked: true, liveOdd: bestMatch.liveOdd, matchedText: bestMatch.text };
         }
         return { clicked: false, liveOdd: 0 };
     }
