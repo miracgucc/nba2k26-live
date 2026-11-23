@@ -78,9 +78,12 @@
         <div id="nba2k26-status-box" style="background:#1e293b;padding:6px 8px;border-radius:8px;margin-bottom:6px;line-height:1.35;">
             ⏳ 7/24 Bulut sinyal motoruna bağlanıyor...
         </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-            <button id="nba2k26-melbet-btn" style="width:100%;background:#2563eb;color:#fff;border:none;border-radius:6px;padding:5px 8px;font-weight:700;font-size:11px;cursor:pointer;">
-                🚀 Güncel Melbet NBA 2K26 Sayfasına Git
+        <div style="display:flex;gap:5px;align-items:center;margin-bottom:6px;">
+            <button id="nba2k26-melbet-btn" style="flex:1;background:#2563eb;color:#fff;border:none;border-radius:6px;padding:5px 6px;font-weight:700;font-size:11px;cursor:pointer;">
+                🚀 Güncel Melbet'e Git
+            </button>
+            <button id="nba2k26-test-btn" title="0 TL ile açık maçtaki baremi kupona eklemeyi test eder" style="background:#d97706;color:#fff;border:none;border-radius:6px;padding:5px 7px;font-weight:700;font-size:11px;cursor:pointer;">
+                🧪 Test (0 TL)
             </button>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#94a3b8;">
@@ -93,6 +96,7 @@
 
     const toggleBtn = document.getElementById("nba2k26-toggle-btn");
     const melbetBtn = document.getElementById("nba2k26-melbet-btn");
+    const testBtn = document.getElementById("nba2k26-test-btn");
     const statusBox = document.getElementById("nba2k26-status-box");
     const countLbl = document.getElementById("nba2k26-count-lbl");
     const maxInp = document.getElementById("nba2k26-max-inp");
@@ -111,6 +115,28 @@
 
     melbetBtn.addEventListener("click", () => {
         window.location.href = latestMelbetUrl;
+    });
+
+    testBtn.addEventListener("click", () => {
+        const testBarems = ["201-210", "211-220", "191-200", "221-230", "181-190", "171-180"];
+        let found = null;
+        for (const b of testBarems) {
+            const res = tryClickBaremOnPage({
+                target_barem: b,
+                target_barem_tr: b,
+                target_barem_en: b,
+                min_acceptable_odd: 1.05
+            });
+            if (res.clicked) {
+                found = { barem: b, odd: res.liveOdd };
+                break;
+            }
+        }
+        if (found) {
+            statusBox.innerHTML = `<div style="color:#34d399;font-weight:700;">✅ TEST BAŞARILI (0 TL)!</div><div>🎯 <b>${found.barem}</b> @ <b>${found.odd}</b> otomatik tıklandı! Sağdaki Kupona eklendiyse sistem %100 çalışıyor demektir.</div>`;
+        } else {
+            statusBox.innerHTML = `<div style="color:#fbbf24;font-weight:700;">⚠️ Barem Bulunamadı!</div><div>Önce canlı bir NBA 2K26 maçının içine tıklayıp 'Toplam Sayı Aralığı' listesinin açık olduğundan emin olun ve tekrar Test'e basın.</div>`;
+        }
     });
 
     toggleBtn.addEventListener("click", () => {
