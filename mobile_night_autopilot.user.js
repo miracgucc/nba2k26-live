@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         NBA 2K26 Gece Oto-Pilot v7.1 (Melbet & 1xBet Mobil - Bilgisayar Kapalı)
 // @namespace    https://github.com/miracgucc/nba2k26-live
-// @version      7.1.0
-// @description  35. dakikada v7.1 seçici kurallara uyan NBA 2K26 maçlarına Tek Tıkla Bahis (1-Click Bet) ile otomatik basar, pas geçilen maçlara dokunmaz.
+// @version      7.1.1
+// @description  35. dakikada v7.1 seçici kurallara uyan NBA 2K26 maçlarına Tek Tıkla Bahis (1-Click Bet) ile otomatik basar. Otomatik Uyku Kilidi (WakeLock) ve OLED Simsiyah Gece Ekranı içerir.
 // @author       NBA2K26-CloudBot
 // @match        *://*melbet*/*
 // @match        *://*1xbet*/*
@@ -18,6 +18,25 @@
     const STORAGE_KEY_ENABLED = "nba2k26_v71_autopilot_enabled";
     const STORAGE_KEY_MAX_BETS = "nba2k26_v71_max_night_bets";
     const STORAGE_KEY_LOG = "nba2k26_v71_bet_log";
+
+    let wakeLockSentinel = null;
+
+    async function requestScreenWakeLock() {
+        try {
+            if ('wakeLock' in navigator && isAutoEnabled() && !wakeLockSentinel) {
+                wakeLockSentinel = await navigator.wakeLock.request('screen');
+                wakeLockSentinel.addEventListener('release', () => {
+                    wakeLockSentinel = null;
+                });
+            }
+        } catch (e) {}
+    }
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible' && isAutoEnabled()) {
+            requestScreenWakeLock();
+        }
+    });
 
     function getPlayedSignals() {
         try {
@@ -48,6 +67,42 @@
         return parseInt(localStorage.getItem(STORAGE_KEY_MAX_BETS) || "15", 10) || 15;
     }
 
+    // OLED Pitch-Black Night Overlay (Screen looks 100% off while browser stays active)
+    const blackOverlay = document.createElement("div");
+    blackOverlay.id = "nba2k26-oled-blackout";
+    blackOverlay.style.cssText = [
+        "display:none",
+        "position:fixed",
+        "inset:0",
+        "z-index:1000000",
+        "background:#000000",
+        "color:rgba(255,255,255,0.18)",
+        "font-family:system-ui,sans-serif",
+        "font-size:12px",
+        "flex-direction:column",
+        "justify-content:center",
+        "align-items:center",
+        "text-align:center",
+        "user-select:none"
+    ].join(";");
+    blackOverlay.innerHTML = `
+        <div id="nba2k26-oled-info" style="padding:16px;">
+            🌙 NBA 2K26 Gece Oto-Pilot Çalışıyor (Simsiyah OLED Modu)<br/>
+            <span id="nba2k26-oled-sub">Gece Oynanan Kupon: 0</span><br/><br/>
+            <span style="font-size:11px;color:rgba(255,255,255,0.12);">(Ekranı açmak için iki kez dokunun)</span>
+        </div>
+    `;
+    document.body.appendChild(blackOverlay);
+
+    let lastTapTime = 0;
+    blackOverlay.addEventListener("click", () => {
+        const now = Date.now();
+        if (now - lastTapTime < 450) {
+            blackOverlay.style.display = "none";
+        }
+        lastTapTime = now;
+    });
+
     // Floating Mobile UI Panel
     const panel = document.createElement("div");
     panel.id = "nba2k26-autopilot-panel";
@@ -56,7 +111,7 @@
         "bottom:12px",
         "right:12px",
         "z-index:999999",
-        "width:290px",
+        "width:295px",
         "background:rgba(15,23,42,0.96)",
         "color:#f8fafc",
         "border:2px solid #10b981",
@@ -70,7 +125,10 @@
     panel.innerHTML = `
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
             <strong style="color:#34d399;font-size:13px;">🌙 NBA 2K26 Oto-Pilot v7.1</strong>
-            <button id="nba2k26-toggle-btn" style="border:none;border-radius:6px;padding:4px 8px;font-weight:700;font-size:11px;cursor:pointer;"></button>
+            <div style="display:flex;gap:4px;">
+                <button id="nba2k26-dim-btn" title="Ekranı simsiyah yapar ama arka planda bahis almaya devam eder" style="background:#1e293b;color:#e2e8f0;border:1px solid #475569;border-radius:6px;padding:4px 7px;font-weight:600;font-size:11px;cursor:pointer;">🌑 Karart</button>
+                <button id="nba2k26-toggle-btn" style="border:none;border-radius:6px;padding:4px 8px;font-weight:700;font-size:11px;cursor:pointer;"></button>
+            </div>
         </div>
         <div id="nba2k26-status-box" style="background:#1e293b;padding:6px 8px;border-radius:8px;margin-bottom:6px;line-height:1.35;">
             ⏳ Bulut sinyal motoruna bağlanıyor...
@@ -84,11 +142,13 @@
     document.body.appendChild(panel);
 
     const toggleBtn = document.getElementById("nba2k26-toggle-btn");
+    const dimBtn = document.getElementById("nba2k26-dim-btn");
     const statusBox = document.getElementById("nba2k26-status-box");
     const countLbl = document.getElementById("nba2k26-count-lbl");
     const maxInp = document.getElementById("nba2k26-max-inp");
     const resetBtn = document.getElementById("nba2k26-reset-btn");
     const lastBetBox = document.getElementById("nba2k26-last-bet");
+    const oledSub = document.getElementById("nba2k26-oled-sub");
 
     maxInp.value = getMaxBets();
     maxInp.addEventListener("change", () => {
@@ -100,9 +160,15 @@
         updateUI();
     });
 
+    dimBtn.addEventListener("click", () => {
+        requestScreenWakeLock();
+        blackOverlay.style.display = "flex";
+    });
+
     toggleBtn.addEventListener("click", () => {
         const next = !isAutoEnabled();
         localStorage.setItem(STORAGE_KEY_ENABLED, next ? "true" : "false");
+        if (next) requestScreenWakeLock();
         updateUI();
     });
 
@@ -112,24 +178,32 @@
         toggleBtn.style.background = on ? "#10b981" : "#ef4444";
         toggleBtn.style.color = "#ffffff";
         panel.style.borderColor = on ? "#10b981" : "#ef4444";
-        countLbl.textContent = String(getPlayedSignals().length);
+        const cnt = getPlayedSignals().length;
+        countLbl.textContent = String(cnt);
+        let lastStr = "";
         try {
             const logs = JSON.parse(localStorage.getItem(STORAGE_KEY_LOG) || "[]");
             if (logs.length > 0) {
-                lastBetBox.textContent = "Son: " + logs[0].time + " • " + logs[0].text;
+                lastStr = "Son: " + logs[0].time + " • " + logs[0].text;
+                lastBetBox.textContent = lastStr;
             }
         } catch (e) {}
+        if (oledSub) {
+            oledSub.textContent = `Gece Oynanan Kupon: ${cnt} ${lastStr ? '(' + lastStr + ')' : ''}`;
+        }
     }
     updateUI();
+    requestScreenWakeLock();
 
-    // Find and click barem button on 1xBet / Melbet mobile or desktop DOM
     function tryClickBaremOnPage(sig) {
         const trLabel = (sig.target_barem_tr || "").toLowerCase();
         const enLabel = (sig.target_barem_en || "").toLowerCase();
         const rawBarem = (sig.target_barem || "").toLowerCase();
         const minOdd = parseFloat(sig.min_acceptable_odd || 1.50);
 
-        // Scan all market outcome elements on Melbet / 1xBet
+        const wasBlackout = blackOverlay.style.display === "flex";
+        if (wasBlackout) blackOverlay.style.display = "none";
+
         const candidates = document.querySelectorAll(
             ".c-bets__bet, .bet_type, .ui-market__toggle, [data-market], .market-odd, .c-bet-box, button, a, div"
         );
@@ -144,7 +218,6 @@
                 (rawBarem && rawBarem.includes("-") && txt.includes(rawBarem));
 
             if (matchesBarem) {
-                // Extract odd number from element or sibling
                 const container = el.closest(".c-bets__bet, .ui-market__item, .c-bet-box, li, tr, div") || el.parentElement;
                 const fullTxt = (container ? container.innerText : txt).replace(",", ".");
                 const nums = fullTxt.match(/\b([1-9]\.\d{1,3})\b/g);
@@ -153,16 +226,19 @@
                     if (liveOdd >= minOdd && liveOdd < 25.0) {
                         const clickTarget = container.querySelector(".c-bets__inner, .ui-market__value, .bet_type, button") || el;
                         clickTarget.click();
+                        if (wasBlackout) blackOverlay.style.display = "flex";
                         return { clicked: true, liveOdd: liveOdd };
                     }
                 }
             }
         }
+        if (wasBlackout) blackOverlay.style.display = "flex";
         return { clicked: false, liveOdd: 0 };
     }
 
     async function pollCloudSignal() {
         updateUI();
+        requestScreenWakeLock();
         try {
             const res = await fetch(SIGNAL_URL + "?t=" + Date.now(), { cache: "no-store" });
             if (!res.ok) return;
@@ -183,9 +259,7 @@
 
                 if (isAutoEnabled() && !alreadyPlayed && played.length < getMaxBets()) {
                     const curUrl = window.location.href;
-                    // Check if we are on the right match page or need to navigate
                     if (sig.raw_game_id && !curUrl.includes(sig.raw_game_id)) {
-                        // Look for match link on current live list
                         const links = document.querySelectorAll("a[href]");
                         for (const a of links) {
                             const href = a.getAttribute("href") || "";
