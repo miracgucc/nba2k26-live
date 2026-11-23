@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "NBA 2K26 7/24 VDS & Mobil Gece Oto-Pilot v7.1",
+  "version": "7.1.1",
+  "description": "35. dakikada v7.1 seçici kurallara uyan NBA 2K26 maçlarına Tek Tıkla Bahis (1-Click Bet) ile otomatik basar.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://raw.githubusercontent.com/*",
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

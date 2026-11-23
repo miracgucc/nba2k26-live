@@ -1839,23 +1839,25 @@ with tab_smart35:
         )
         st.caption(f"🔎 Veri kaynağı: {len(df_sym_all)} dakika kaydı • {_n_games} maç • {_n_done} sonuçlanmış • sürüm {ENGINE_VERSION}")
 
-        with st.expander("🌙📱 Telefon Gece Oto-Pilot Kurulumu (Bilgisayar Kapalı — 1xBet Mobil & Melbet)", expanded=False):
+        with st.expander("🌙☁️ 7/24 Ücretsiz VDS (Google Cloud / AWS + Tailscale) & Telefon Gece Oto-Pilot Kurulumu", expanded=False):
             st.markdown(
                 """
-                **Evdeki bilgisayarınız tamamen kapalıyken** gece siz uyuduğunuzda 35. dakikada sadece seçici kurallara (`v7.1`) uyan **NBA 2K26** maçlarına otomatik bahis almak için 2 yöntem hazırlandı:
-                - **Canlı Bulut Sinyal Adresi (7/24 Bilgisayar Kapalıyken Güncellenir):**  
+                **Evdeki bilgisayarınız ve telefonunuz tamamen kapalıyken** 7/24 buluttaki ücretsiz sanal bilgisayardan (VDS) veya telefonunuzdan otomatik bahis almak için:
+                - **Canlı Bulut Sinyal Adresi (7/24 Otomatik Güncellenir):**  
                   `https://raw.githubusercontent.com/miracgucc/nba2k26-live/main/live_bet_signal.json`
                 ---
-                #### 📲 1. Yöntem: Melbet / 1xBet Mobil Tarayıcı Oto-Pilot (Android Kiwi Browser / Firefox Mobil)
-                1. Telefonunuza Google Play'den ücretsiz **Kiwi Browser** (veya **Firefox + Tampermonkey**) indirin.
-                2. Aşağıdaki **"📥 Telefon Gece Oto-Pilot Scriptini İndir (.user.js)"** butonuna basıp Tampermonkey içine ekleyin.
-                3. Melbet (veya 1xBet) mobil sayfasında **"Tek Tıkla Bahis (1-Click Bet)"** özelliğini açıp bahis tutarınızı (`400 TL`, `500 TL` vb.) kaydedin.
-                4. Gece yatarken ekranın sağ altındaki **`🌙 NBA 2K26 Oto-Pilot v7.1 -> 🟢 AÇIK`** kutusunu açık bırakın; buluttan `35. dakika OYNA` sinyali geldiği saniye seçilen bareme otomatik tıklar, pas geçilen maçlara dokunmaz!
+                #### ☁️ Çözüm B: 7/24 Ücretsiz VDS (Google Cloud / AWS) + Tailscale Tek Komut Kurulumu
+                1. **Google Cloud (`$300` Ücretsiz Kredi)** veya **Amazon AWS (`12 Ay Ücretsiz Free Tier`)** üzerinden ücretsiz bir **Windows Server** sanal bilgisayarı (VDS) açın ve Windows'un **"Uzak Masaüstü Bağlantısı"** ile bağlanın.
+                2. VDS içinde **PowerShell**'i açıp şu **tek satırlık komutu** yapıştırıp Enter'a basın *(Chrome, Tailscale ve NBA 2K26 v7.1 Oto-Pilot eklentisini otomatik kurar)*:
+                   ```powershell
+                   irm https://raw.githubusercontent.com/miracgucc/nba2k26-live/main/install_vds_windows.ps1 | iex
+                   ```
+                3. **Tailscale Ev/Telefon IP Köprüsü:** VDS'te ve kendi telefonunuzda ücretsiz **Tailscale** uygulamasına aynı Gmail ile giriş yapın; telefonunuzda `Use as Exit Node` seçeneğini açıp VDS'te telefonunuzu seçin (böylece Melbet/1xBet sizi %100 kendi ev/mobil internetinizden bağlanıyor görür).
+                4. VDS masaüstüne gelen **`NBA2K26_7_24_OtoPilot_Baslat`** kısayoluna çift tıklayın, Melbet'e girip **"Tek Tıkla Bahis (1-Click Bet)"** özelliğini açın ve Uzak Masaüstü penceresini kapatıp uyuyun!
 
-                #### 🤖 2. Yöntem: 1xBet Android Mobil Uygulaması İçin MacroDroid Oto-Tıklayıcı
-                1. 1xBet TR'de sadece mobil uygulama üzerinden bahis yapıyorsanız Google Play'den ücretsiz **MacroDroid** uygulamasını kurun.
-                2. **Tetikleyici (Trigger):** `Düzenli Aralık (Her 15 Saniye)` ➔ **Eylem (Action):** `HTTP GET` ile yukarıdaki `live_bet_signal.json` adresini okuyun.
-                3. **Koşul:** `has_active_play_signal == true` olduğunda **1xBet uygulamasında** `"Tek Tıkla Bahis"` açıkken `current_play_signal.target_barem_tr` (`201-210`, `211-220` vb.) metninin yanındaki orana `UI Click (Ekranda Metne Tıkla)` komutu verin.
+                ---
+                #### 📲 Çözüm A: Telefon Tarayıcısı (Kiwi Browser) veya 1xBet Mobil Uygulaması (`MacroDroid`)
+                - **Melbet Mobil Tarayıcı:** Android'de **Kiwi Browser + Tampermonkey** kurup aşağıdaki butondan scripti indirin; gece yatarken sağ alttaki **`🌑 Karart`** butonuna basarak ekranı simsiyah yapın.
                 """
             )
             _autopilot_js_path = os.path.join(BASE_DIR, "mobile_night_autopilot.user.js")
