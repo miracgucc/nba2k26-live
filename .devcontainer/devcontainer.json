@@ -1,0 +1,27 @@
+{
+  "name": "NBA 2K26 7/24 Gece Oto-Pilot Sanal Ekran (v7.1)",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": {
+      "version": "latest",
+      "noVncVersion": "1.4.0",
+      "password": "nba2k26"
+    }
+  },
+  "forwardPorts": [6080],
+  "portsAttributes": {
+    "6080": {
+      "label": "NBA 2K26 Sanal Masaustu Ekrani (Tikla Ac - Sifre: nba2k26)",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/setup_autopilot.sh",
+  "postStartCommand": "bash .devcontainer/start_autopilot.sh",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  }
+}
