@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 18:14:20",
-  "timestamp": 1795446860.88,
+  "updated_at_tr": "2026-11-23 18:15:08",
+  "timestamp": 1795446908.12,
   "active_domain": "https://fswin-best.icu",
   "chain_state": {
     "prev_shift": -1,
@@ -19,12 +19,12 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Indiana Pacers",
       "quarter": 4,
-      "elapsed_mins": 37.3,
+      "elapsed_mins": 38.2,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "73-94",
-      "score_gap": 21,
-      "fav1_barem": "211-220",
+      "current_score": "75-94",
+      "score_gap": 19,
+      "fav1_barem": "201-210",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
       "fav2_odd": 0.0,
@@ -44,7 +44,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 18:14:20"
+      "updated_at_tr": "2026-11-23 18:15:08"
     },
     {
       "signal_id": "CB-773520393_35m",
@@ -54,7 +54,7 @@
       "home_team": "New York Knicks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 1,
-      "elapsed_mins": 9.7,
+      "elapsed_mins": 9.8,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "19-23",
@@ -79,7 +79,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 18:14:20"
+      "updated_at_tr": "2026-11-23 18:15:08"
     }
   ],
   "recent_history": [
