@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 19:02:35",
-  "timestamp": 1795449755.88,
+  "updated_at_tr": "2026-11-23 19:03:44",
+  "timestamp": 1795449824.19,
   "active_domain": "https://fswin-best.icu",
   "chain_state": {
     "prev_shift": 0,
@@ -19,11 +19,11 @@
       "home_team": "Golden State Warriors",
       "away_team": "Houston Rockets",
       "quarter": 2,
-      "elapsed_mins": 15.8,
+      "elapsed_mins": 16.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "49-25",
-      "score_gap": 24,
+      "current_score": "49-27",
+      "score_gap": 22,
       "fav1_barem": "231+",
       "fav1_odd": 1.7,
       "fav2_barem": "221-230",
@@ -44,7 +44,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 19:02:35"
+      "updated_at_tr": "2026-11-23 19:03:44"
     },
     {
       "signal_id": "CB-773520393_35m",
@@ -54,11 +54,11 @@
       "home_team": "New York Knicks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 4,
-      "elapsed_mins": 39.7,
+      "elapsed_mins": 40.5,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "67-82",
-      "score_gap": 15,
+      "current_score": "70-82",
+      "score_gap": 12,
       "fav1_barem": "181-190",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -79,7 +79,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 19:02:35"
+      "updated_at_tr": "2026-11-23 19:03:44"
     }
   ],
   "recent_history": [
