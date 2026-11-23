@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 23:10:19",
-  "timestamp": 1795464619.87,
+  "updated_at_tr": "2026-11-23 23:10:56",
+  "timestamp": 1795464656.5,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -13,6 +13,41 @@
   "current_play_signal": null,
   "active_signals": [],
   "live_matches": [
+    {
+      "signal_id": "CB-773589685_35m",
+      "game_id": "CB-773589685",
+      "raw_game_id": "773589685",
+      "game_name": "Houston Rockets vs Golden State Warriors",
+      "home_team": "Houston Rockets",
+      "away_team": "Golden State Warriors",
+      "quarter": 1,
+      "elapsed_mins": 0.0,
+      "in_decision_window_35m": false,
+      "is_barem_open": false,
+      "current_score": "0-0",
+      "score_gap": 0,
+      "fav1_barem": "-",
+      "fav1_odd": 0.0,
+      "fav2_barem": "-",
+      "fav2_odd": 0.0,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_barem_en": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "min_acceptable_odd": 0.0,
+      "zone_type": "PASS_CLUTCH",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 0 Sayı Fark)",
+      "stakes": {
+        "kasa_8000": 0,
+        "kasa_10000": 0,
+        "kasa_15000": 0,
+        "kasa_20000": 0
+      },
+      "updated_at_tr": "2026-11-23 23:10:55"
+    },
     {
       "signal_id": "CB-773579238_35m",
       "game_id": "CB-773579238",
@@ -46,7 +81,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 23:10:18"
+      "updated_at_tr": "2026-11-23 23:10:55"
     },
     {
       "signal_id": "CB-773570537_35m",
@@ -56,10 +91,10 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Denver Nuggets",
       "quarter": 4,
-      "elapsed_mins": 46.4,
+      "elapsed_mins": 46.9,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "112-103",
+      "current_score": "114-105",
       "score_gap": 9,
       "fav1_barem": "221-230",
       "fav1_odd": 0.0,
@@ -81,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 23:10:18"
+      "updated_at_tr": "2026-11-23 23:10:55"
     }
   ],
   "recent_history": [
