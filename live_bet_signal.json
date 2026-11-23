@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 21:35:53",
-  "timestamp": 1795458953.28,
+  "updated_at_tr": "2026-11-23 21:36:31",
+  "timestamp": 1795458991.77,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -43,7 +43,7 @@
       "kasa_15000": 750,
       "kasa_20000": 1000
     },
-    "updated_at_tr": "2026-11-23 21:35:52"
+    "updated_at_tr": "2026-11-23 21:36:30"
   },
   "active_signals": [
     {
@@ -79,7 +79,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-23 21:35:52"
+      "updated_at_tr": "2026-11-23 21:36:30"
     }
   ],
   "live_matches": [
@@ -91,32 +91,32 @@
       "home_team": "Detroit Pistons",
       "away_team": "Minnesota Timberwolves",
       "quarter": 1,
-      "elapsed_mins": 10.6,
+      "elapsed_mins": 11.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "28-24",
-      "score_gap": 4,
+      "current_score": "31-26",
+      "score_gap": 5,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.56,
+      "fav1_odd": 3.49,
       "fav2_barem": "221-230",
-      "fav2_odd": 4.29,
+      "fav2_odd": 3.85,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "221-230",
       "target_barem_tr": "221-230",
       "target_barem_en": "221-230",
       "target_t_id": 1845,
-      "target_odd": 4.29,
-      "min_acceptable_odd": 4.14,
+      "target_odd": 3.85,
+      "min_acceptable_odd": 3.7,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 221-230 (4.29)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 221-230 (3.85)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 21:35:52"
+      "updated_at_tr": "2026-11-23 21:36:30"
     },
     {
       "signal_id": "CB-773554184_35m",
@@ -151,7 +151,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-23 21:35:52"
+      "updated_at_tr": "2026-11-23 21:36:30"
     }
   ],
   "recent_history": [
