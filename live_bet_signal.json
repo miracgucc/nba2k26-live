@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 00:18:16",
-  "timestamp": 1795468696.15,
+  "updated_at_tr": "2026-11-24 00:18:50",
+  "timestamp": 1795468730.39,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
       "quarter": 4,
-      "elapsed_mins": 37.0,
+      "elapsed_mins": 37.5,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "71-97",
-      "score_gap": 26,
+      "current_score": "71-100",
+      "score_gap": 29,
       "fav1_barem": "211-220",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 00:18:15"
+      "updated_at_tr": "2026-11-24 00:18:49"
     },
     {
       "signal_id": "CB-773596651_35m",
@@ -56,13 +56,13 @@
       "home_team": "New York Knicks",
       "away_team": "Indiana Pacers",
       "quarter": 2,
-      "elapsed_mins": 12.6,
+      "elapsed_mins": 13.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "30-20",
-      "score_gap": 10,
+      "current_score": "30-22",
+      "score_gap": 8,
       "fav1_barem": "191-200",
-      "fav1_odd": 2.79,
+      "fav1_odd": 2.78,
       "fav2_barem": "201-210",
       "fav2_odd": 3.29,
       "decision": "OYNA",
@@ -72,7 +72,7 @@
       "target_barem_en": "201-210",
       "target_t_id": 1843,
       "target_odd": 3.29,
-      "min_acceptable_odd": 3.15,
+      "min_acceptable_odd": 3.14,
       "zone_type": "TRAP_EXTREME",
       "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.29)",
       "stakes": {
@@ -81,7 +81,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 00:18:15"
+      "updated_at_tr": "2026-11-24 00:18:49"
     }
   ],
   "recent_history": [
