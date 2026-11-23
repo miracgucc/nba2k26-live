@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 22:23:42",
-  "timestamp": 1795461822.43,
+  "updated_at_tr": "2026-11-23 22:24:16",
+  "timestamp": 1795461856.33,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Detroit Pistons",
       "away_team": "Minnesota Timberwolves",
       "quarter": 4,
-      "elapsed_mins": 40.5,
+      "elapsed_mins": 40.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "97-87",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 22:23:41"
+      "updated_at_tr": "2026-11-23 22:24:15"
     },
     {
       "signal_id": "CB-773570537_35m",
@@ -56,32 +56,32 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Denver Nuggets",
       "quarter": 2,
-      "elapsed_mins": 15.9,
+      "elapsed_mins": 16.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "42-30",
       "score_gap": 12,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.77,
+      "fav1_odd": 3.64,
       "fav2_barem": "221-230",
-      "fav2_odd": 4.31,
+      "fav2_odd": 3.77,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "221-230",
       "target_barem_tr": "221-230",
       "target_barem_en": "221-230",
       "target_t_id": 1845,
-      "target_odd": 4.31,
-      "min_acceptable_odd": 4.16,
+      "target_odd": 3.77,
+      "min_acceptable_odd": 3.62,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 221-230 (4.31)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 221-230 (3.77)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 22:23:41"
+      "updated_at_tr": "2026-11-23 22:24:15"
     }
   ],
   "recent_history": [
