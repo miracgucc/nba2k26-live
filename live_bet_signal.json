@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 20:31:05",
-  "timestamp": 1795455065.78,
+  "updated_at_tr": "2026-11-23 20:31:45",
+  "timestamp": 1795455105.27,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Denver Nuggets",
       "away_team": "Los Angeles Lakers",
       "quarter": 2,
-      "elapsed_mins": 21.0,
+      "elapsed_mins": 21.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "45-58",
-      "score_gap": 13,
+      "current_score": "45-60",
+      "score_gap": 15,
       "fav1_barem": "231+",
-      "fav1_odd": 2.32,
+      "fav1_odd": 2.4,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.14,
+      "fav2_odd": 3.15,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "231+",
       "target_barem_tr": "231 veya daha fazla",
       "target_barem_en": "231 or more",
       "target_t_id": 1846,
-      "target_odd": 2.32,
-      "min_acceptable_odd": 2.17,
+      "target_odd": 2.4,
+      "min_acceptable_odd": 2.25,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (10–15 Fark (%60.0 / +415 TL)): 231+ (2.32)",
+      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (10–15 Fark (%60.0 / +415 TL)): 231+ (2.40)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-23 20:31:04"
+      "updated_at_tr": "2026-11-23 20:31:44"
     },
     {
       "signal_id": "CB-773554184_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 20:31:04"
+      "updated_at_tr": "2026-11-23 20:31:44"
     }
   ],
   "recent_history": [
