@@ -242,9 +242,23 @@
         }
 
         if (bestMatch) {
-            bestMatch.el.scrollIntoView({ behavior: "instant", block: "center" });
-            bestMatch.el.click();
-            return { clicked: true, liveOdd: bestMatch.liveOdd, matchedText: bestMatch.text };
+            const targetBtn =
+                bestMatch.el.closest("button, [role='button'], a") ||
+                bestMatch.el.querySelector("button, [role='button'], [class*='coef'], [class*='value'], [class*='odd']") ||
+                bestMatch.el;
+            targetBtn.scrollIntoView({ behavior: "instant", block: "center" });
+            ["pointerdown", "mousedown", "pointerup", "mouseup", "click"].forEach((evType) => {
+                try {
+                    targetBtn.dispatchEvent(new MouseEvent(evType, { bubbles: true, cancelable: true, view: window }));
+                } catch (e) {}
+            });
+            try { targetBtn.click(); } catch (e) {}
+            return {
+                clicked: true,
+                liveOdd: bestMatch.liveOdd,
+                matchedText: bestMatch.text,
+                debugTag: targetBtn.tagName + "." + String(targetBtn.className || "").slice(0, 30)
+            };
         }
 
         // If not found yet, try clicking collapsed "Tam Puan Sayısı" header or "Tümü"/"Toplam" tab
