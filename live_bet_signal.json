@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 23:35:22",
-  "timestamp": 1795466122.58,
+  "updated_at_tr": "2026-11-23 23:36:04",
+  "timestamp": 1795466164.45,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
       "quarter": 1,
-      "elapsed_mins": 8.6,
+      "elapsed_mins": 9.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "13-21",
+      "current_score": "15-23",
       "score_gap": 8,
       "fav1_barem": "231+",
-      "fav1_odd": 2.43,
+      "fav1_odd": 2.39,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.67,
+      "fav2_odd": 3.58,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Üst Kanat Riskli — 231+: 2.43)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Üst Kanat Riskli — 231+: 2.39)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 23:35:21"
+      "updated_at_tr": "2026-11-23 23:36:03"
     },
     {
       "signal_id": "CB-773579238_35m",
@@ -55,16 +55,16 @@
       "game_name": "Los Angeles Clippers vs Atlanta Hawks",
       "home_team": "Los Angeles Clippers",
       "away_team": "Atlanta Hawks",
-      "quarter": 3,
-      "elapsed_mins": 36.0,
+      "quarter": 4,
+      "elapsed_mins": 36.2,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "76-78",
       "score_gap": 2,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.17,
-      "fav2_barem": "211-220",
-      "fav2_odd": 3.89,
+      "fav1_odd": 0.0,
+      "fav2_barem": "-",
+      "fav2_odd": 0.0,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 23:35:21"
+      "updated_at_tr": "2026-11-23 23:36:03"
     }
   ],
   "recent_history": [
