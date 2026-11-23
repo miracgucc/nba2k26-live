@@ -117,27 +117,50 @@
         window.location.href = latestMelbetUrl;
     });
 
-    testBtn.addEventListener("click", () => {
-        const testBarems = ["201-210", "211-220", "191-200", "221-230", "181-190", "171-180", "231+"];
+    testBtn.addEventListener("click", async () => {
+        const curUrl = window.location.href;
+        // Check if on league list page instead of inside a specific match
+        const isInsideMatch = /\/\d{7,}/.test(curUrl.replace("2935701", ""));
+        if (!isInsideMatch && curUrl.includes("melbet")) {
+            statusBox.innerHTML = `<div style="color:#fbbf24;font-weight:700;">ℹ️ Önce Bir Maçın İçine Girin!</div><div>Şu an maç listesi sayfasındasınız. Listeden canlı bir NBA 2K26 maçına (ör. Knicks vs Pacers) tıklayıp içine girin, sonra tekrar <b>Test</b>'e basın!</div>`;
+            return;
+        }
+
+        const testBarems = ["191-200", "201-210", "211-220", "221-230", "181-190", "171-180", "231+"];
         let found = null;
-        for (const b of testBarems) {
-            const res = tryClickBaremOnPage({
-                target_barem: b,
-                target_barem_tr: b,
-                target_barem_en: b,
-                min_acceptable_odd: 1.05
-            });
-            if (res.clicked) {
-                found = { barem: b, odd: res.liveOdd, txt: res.matchedText || b };
-                break;
+        for (let attempt = 0; attempt < 2 && !found; attempt++) {
+            for (const b of testBarems) {
+                const res = tryClickBaremOnPage({
+                    target_barem: b,
+                    target_barem_tr: b,
+                    target_barem_en: b,
+                    min_acceptable_odd: 1.05
+                });
+                if (res.clicked) {
+                    found = { barem: b, odd: res.liveOdd, txt: res.matchedText || b };
+                    break;
+                }
+            }
+            if (!found && attempt === 0) {
+                // Auto-click "Toplam" tab or scroll down to load lazy-rendered "Tam Puan Sayısı"
+                const tabs = document.querySelectorAll("button, [role='tab'], a, span, div");
+                for (const t of tabs) {
+                    const tt = (t.innerText || "").trim().toLowerCase();
+                    if (tt === "toplam" || tt === "totals" || tt === "tam puan sayısı") {
+                        t.click();
+                        break;
+                    }
+                }
+                window.scrollBy(0, 600);
+                await new Promise(r => setTimeout(r, 600));
             }
         }
         if (found) {
             statusBox.innerHTML = `<div style="color:#34d399;font-weight:700;">✅ TEST BAŞARILI (0 TL)!</div><div>🎯 <b>${found.txt}</b> (Oran: <b>${found.odd}</b>) tıklandı! Sağdaki kupona eklendiyse sistem %100 tamamdır.</div>`;
         } else {
             const pageTxt = (document.body ? document.body.innerText : "");
-            const sample = pageTxt.match(/.{0,20}(201|211|191|Aralı|aralı|Toplam).{0,25}/i);
-            statusBox.innerHTML = `<div style="color:#fbbf24;font-weight:700;">⚠️ Barem Ekranda Görünmüyor!</div><div>Maçın içine girip aşağı kaydırarak 'Sayı Aralığı' başlığını açın ve tekrar Test'e basın.<br/><span style="font-size:10px;color:#94a3b8;">Bulunan ipucu: ${sample ? sample[0].replace(/\s+/g,' ') : 'Maç içi sayfa değil'}</span></div>`;
+            const sample = pageTxt.match(/.{0,25}(Tam Puan|Puan Sayı|191|201|211).{0,25}/i);
+            statusBox.innerHTML = `<div style="color:#fbbf24;font-weight:700;">⚠️ Barem Ekranda Görünmüyor!</div><div>Sayfayı aşağı kaydırıp <b>'Tam Puan Sayısı'</b> başlığının açık olduğunu (ve maçın 4. çeyrekte olmadığını) kontrol edin.<br/><span style="font-size:10px;color:#94a3b8;">İpucu: ${sample ? sample[0].replace(/\s+/g,' ') : 'Sayfada Tam Puan Sayısı kapalı'}</span></div>`;
         }
     });
 
@@ -295,7 +318,20 @@
                             }
                         }
                     }
-                    const clickRes = tryClickBaremOnPage(sig);
+                    let clickRes = tryClickBaremOnPage(sig);
+                    if (!clickRes.clicked) {
+                        const tabs = document.querySelectorAll("button, [role='tab'], a, span, div");
+                        for (const t of tabs) {
+                            const tt = (t.innerText || "").trim().toLowerCase();
+                            if (tt === "toplam" || tt === "totals" || tt === "tam puan sayısı") {
+                                t.click();
+                                break;
+                            }
+                        }
+                        window.scrollBy(0, 600);
+                        await new Promise(r => setTimeout(r, 700));
+                        clickRes = tryClickBaremOnPage(sig);
+                    }
                     if (clickRes.clicked) {
                         markSignalPlayed(sig.signal_id, `${sig.target_barem_tr} @ ${clickRes.liveOdd}`);
                         updateUI();
