@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 18:40:44",
-  "timestamp": 1795448444.56,
+  "updated_at_tr": "2026-11-23 18:41:36",
+  "timestamp": 1795448496.07,
   "active_domain": "https://fswin-best.icu",
   "chain_state": {
     "prev_shift": 0,
@@ -19,15 +19,15 @@
       "home_team": "Golden State Warriors",
       "away_team": "Houston Rockets",
       "quarter": 1,
-      "elapsed_mins": 0.3,
+      "elapsed_mins": 1.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "2-0",
-      "score_gap": 2,
+      "current_score": "2-5",
+      "score_gap": 3,
       "fav1_barem": "231+",
-      "fav1_odd": 1.62,
+      "fav1_odd": 1.67,
       "fav2_barem": "221-230",
-      "fav2_odd": 4.57,
+      "fav2_odd": 4.5,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -37,14 +37,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.62)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.67)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 18:40:44"
+      "updated_at_tr": "2026-11-23 18:41:36"
     },
     {
       "signal_id": "CB-773520393_35m",
@@ -79,7 +79,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 18:40:44"
+      "updated_at_tr": "2026-11-23 18:41:36"
     }
   ],
   "recent_history": [
