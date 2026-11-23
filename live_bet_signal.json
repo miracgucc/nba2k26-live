@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 18:57:59",
-  "timestamp": 1795449479.3,
+  "updated_at_tr": "2026-11-23 18:58:48",
+  "timestamp": 1795449528.88,
   "active_domain": "https://fswin-best.icu",
   "chain_state": {
     "prev_shift": 0,
@@ -18,33 +18,33 @@
       "game_name": "Golden State Warriors vs Houston Rockets",
       "home_team": "Golden State Warriors",
       "away_team": "Houston Rockets",
-      "quarter": 1,
-      "elapsed_mins": 11.9,
+      "quarter": 2,
+      "elapsed_mins": 12.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "39-23",
       "score_gap": 16,
       "fav1_barem": "231+",
-      "fav1_odd": 1.63,
+      "fav1_odd": 1.64,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.68,
+      "fav2_odd": 3.67,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "231+",
       "target_barem_tr": "231 veya daha fazla",
       "target_barem_en": "231 or more",
       "target_t_id": 1846,
-      "target_odd": 1.63,
+      "target_odd": 1.64,
       "min_acceptable_odd": 1.5,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA KONTROLLÜ TEK FAVORİ: 231+ (1.63)",
+      "zone_badge": "💎 NBA KONTROLLÜ TEK FAVORİ: 231+ (1.64)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-23 18:57:59"
+      "updated_at_tr": "2026-11-23 18:58:48"
     },
     {
       "signal_id": "CB-773520393_35m",
@@ -54,11 +54,11 @@
       "home_team": "New York Knicks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 4,
-      "elapsed_mins": 37.2,
+      "elapsed_mins": 38.1,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "62-80",
-      "score_gap": 18,
+      "current_score": "64-80",
+      "score_gap": 16,
       "fav1_barem": "181-190",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -79,7 +79,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 18:57:59"
+      "updated_at_tr": "2026-11-23 18:58:48"
     }
   ],
   "recent_history": [
