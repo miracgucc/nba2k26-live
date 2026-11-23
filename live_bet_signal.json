@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 18:36:40",
-  "timestamp": 1795448200.98,
+  "updated_at_tr": "2026-11-23 18:37:20",
+  "timestamp": 1795448240.79,
   "active_domain": "https://fswin-best.icu",
   "chain_state": {
     "prev_shift": 0,
@@ -44,7 +44,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 18:36:40"
+      "updated_at_tr": "2026-11-23 18:37:20"
     },
     {
       "signal_id": "CB-773520393_35m",
@@ -79,7 +79,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 18:36:40"
+      "updated_at_tr": "2026-11-23 18:37:20"
     }
   ],
   "recent_history": [
