@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 21:14:52",
-  "timestamp": 1795457692.13,
+  "updated_at_tr": "2026-11-23 21:15:35",
+  "timestamp": 1795457735.6,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 21:14:51"
+      "updated_at_tr": "2026-11-23 21:15:34"
     },
     {
       "signal_id": "CB-773554184_35m",
@@ -56,11 +56,11 @@
       "home_team": "New York Knicks",
       "away_team": "Indiana Pacers",
       "quarter": 2,
-      "elapsed_mins": 23.6,
+      "elapsed_mins": 23.8,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "52-38",
-      "score_gap": 14,
+      "current_score": "52-40",
+      "score_gap": 12,
       "fav1_barem": "191-200",
       "fav1_odd": 2.18,
       "fav2_barem": "181-190",
@@ -81,7 +81,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 21:14:51"
+      "updated_at_tr": "2026-11-23 21:15:34"
     }
   ],
   "recent_history": [
