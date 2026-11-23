@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 18:45:04",
-  "timestamp": 1795448704.19,
+  "updated_at_tr": "2026-11-23 18:45:42",
+  "timestamp": 1795448742.93,
   "active_domain": "https://fswin-best.icu",
   "chain_state": {
     "prev_shift": 0,
@@ -44,7 +44,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-23 18:45:04"
+      "updated_at_tr": "2026-11-23 18:45:42"
     },
     {
       "signal_id": "CB-773520393_35m",
@@ -54,11 +54,11 @@
       "home_team": "New York Knicks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 3,
-      "elapsed_mins": 29.5,
+      "elapsed_mins": 29.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "46-57",
-      "score_gap": 11,
+      "current_score": "46-60",
+      "score_gap": 14,
       "fav1_barem": "181-190",
       "fav1_odd": 2.55,
       "fav2_barem": "171-180",
@@ -79,7 +79,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 18:45:04"
+      "updated_at_tr": "2026-11-23 18:45:42"
     }
   ],
   "recent_history": [
