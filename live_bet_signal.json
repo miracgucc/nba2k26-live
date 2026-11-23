@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 20:12:55",
-  "timestamp": 1795453975.46,
+  "updated_at_tr": "2026-11-23 20:13:20",
+  "timestamp": 1795454000.78,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,13 +21,13 @@
       "home_team": "Denver Nuggets",
       "away_team": "Los Angeles Lakers",
       "quarter": 1,
-      "elapsed_mins": 8.4,
+      "elapsed_mins": 8.8,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "21-24",
       "score_gap": 3,
       "fav1_barem": "231+",
-      "fav1_odd": 3.63,
+      "fav1_odd": 3.56,
       "fav2_barem": "211-220",
       "fav2_odd": 3.67,
       "decision": "OYNA",
@@ -46,7 +46,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 20:12:54"
+      "updated_at_tr": "2026-11-23 20:13:19"
     },
     {
       "signal_id": "CB-773537280_35m",
@@ -56,10 +56,10 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Dallas Mavericks",
       "quarter": 4,
-      "elapsed_mins": 37.5,
+      "elapsed_mins": 37.9,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "77-76",
+      "current_score": "77-78",
       "score_gap": 1,
       "fav1_barem": "201-210",
       "fav1_odd": 0.0,
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 20:12:54"
+      "updated_at_tr": "2026-11-23 20:13:19"
     }
   ],
   "recent_history": [
