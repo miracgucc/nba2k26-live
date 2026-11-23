@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 00:41:27",
-  "timestamp": 1795470087.64,
+  "updated_at_tr": "2026-11-24 00:42:08",
+  "timestamp": 1795470128.64,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Minnesota Timberwolves",
       "quarter": 1,
-      "elapsed_mins": 0.9,
+      "elapsed_mins": 1.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "4-0",
-      "score_gap": 4,
+      "current_score": "6-0",
+      "score_gap": 6,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.75,
+      "fav1_odd": 3.81,
       "fav2_barem": "211-220",
-      "fav2_odd": 4.17,
+      "fav2_odd": 3.93,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.75)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.81)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 00:41:26"
+      "updated_at_tr": "2026-11-24 00:42:07"
     },
     {
       "signal_id": "CB-773596651_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 00:41:26"
+      "updated_at_tr": "2026-11-24 00:42:07"
     }
   ],
   "recent_history": [
