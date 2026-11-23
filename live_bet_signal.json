@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 20:26:40",
-  "timestamp": 1795454800.02,
+  "updated_at_tr": "2026-11-23 20:27:17",
+  "timestamp": 1795454837.63,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Denver Nuggets",
       "away_team": "Los Angeles Lakers",
       "quarter": 2,
-      "elapsed_mins": 18.7,
+      "elapsed_mins": 19.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "39-55",
       "score_gap": 16,
       "fav1_barem": "231+",
-      "fav1_odd": 2.14,
+      "fav1_odd": 2.38,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.3,
-      "decision": "OYNA",
-      "pick_type": "2. Favori",
-      "target_barem": "221-230",
-      "target_barem_tr": "221-230",
-      "target_barem_en": "221-230",
-      "target_t_id": 1845,
-      "target_odd": 3.3,
-      "min_acceptable_odd": 3.15,
-      "zone_type": "TRAP_LOW",
-      "zone_badge": "🔥 NBA 2.10–2.30 SEÇİCİ 2. FAVORİ (Üst Kanat Düşük (+185 TL)): 221-230 (3.30)",
+      "fav2_odd": 3.18,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_barem_en": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "min_acceptable_odd": 0.0,
+      "zone_type": "PASS_SELECTIVE",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Üst Kanat Riskli — 231+: 2.38)",
       "stakes": {
-        "kasa_8000": 320,
-        "kasa_10000": 400,
-        "kasa_15000": 600,
-        "kasa_20000": 800
+        "kasa_8000": 0,
+        "kasa_10000": 0,
+        "kasa_15000": 0,
+        "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 20:26:38"
+      "updated_at_tr": "2026-11-23 20:27:16"
     },
     {
       "signal_id": "CB-773537280_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 20:26:38"
+      "updated_at_tr": "2026-11-23 20:27:16"
     }
   ],
   "recent_history": [
