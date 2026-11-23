@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 21:48:55",
-  "timestamp": 1795459735.51,
+  "updated_at_tr": "2026-11-23 21:49:36",
+  "timestamp": 1795459776.88,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Detroit Pistons",
       "away_team": "Minnesota Timberwolves",
       "quarter": 2,
-      "elapsed_mins": 18.9,
+      "elapsed_mins": 19.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "47-42",
+      "current_score": "49-44",
       "score_gap": 5,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.21,
+      "fav1_odd": 3.12,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.68,
+      "fav2_odd": 3.87,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "221-230",
       "target_barem_tr": "221-230",
       "target_barem_en": "221-230",
       "target_t_id": 1845,
-      "target_odd": 3.68,
-      "min_acceptable_odd": 3.53,
+      "target_odd": 3.87,
+      "min_acceptable_odd": 3.72,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 221-230 (3.68)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 221-230 (3.87)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 21:48:54"
+      "updated_at_tr": "2026-11-23 21:49:35"
     },
     {
       "signal_id": "CB-773554184_35m",
@@ -56,11 +56,11 @@
       "home_team": "New York Knicks",
       "away_team": "Indiana Pacers",
       "quarter": 4,
-      "elapsed_mins": 43.9,
+      "elapsed_mins": 44.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "93-78",
-      "score_gap": 15,
+      "current_score": "96-80",
+      "score_gap": 16,
       "fav1_barem": "181-190",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 21:48:54"
+      "updated_at_tr": "2026-11-23 21:49:35"
     }
   ],
   "recent_history": [
