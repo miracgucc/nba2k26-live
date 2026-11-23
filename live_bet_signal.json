@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 00:16:30",
-  "timestamp": 1795468590.69,
+  "updated_at_tr": "2026-11-24 00:17:16",
+  "timestamp": 1795468636.44,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
       "quarter": 4,
-      "elapsed_mins": 36.1,
+      "elapsed_mins": 36.5,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "71-94",
-      "score_gap": 23,
+      "current_score": "71-97",
+      "score_gap": 26,
       "fav1_barem": "211-220",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 00:16:29"
+      "updated_at_tr": "2026-11-24 00:17:15"
     },
     {
       "signal_id": "CB-773596651_35m",
@@ -56,32 +56,32 @@
       "home_team": "New York Knicks",
       "away_team": "Indiana Pacers",
       "quarter": 2,
-      "elapsed_mins": 12.1,
+      "elapsed_mins": 12.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "28-20",
       "score_gap": 8,
       "fav1_barem": "191-200",
-      "fav1_odd": 2.86,
+      "fav1_odd": 2.9,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.31,
+      "fav2_odd": 3.26,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_barem_en": "201-210",
       "target_t_id": 1843,
-      "target_odd": 3.31,
-      "min_acceptable_odd": 3.16,
+      "target_odd": 3.26,
+      "min_acceptable_odd": 3.11,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.31)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.26)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 00:16:29"
+      "updated_at_tr": "2026-11-24 00:17:15"
     }
   ],
   "recent_history": [
