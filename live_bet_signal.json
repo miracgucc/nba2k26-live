@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 23:05:58",
-  "timestamp": 1795464358.1,
+  "updated_at_tr": "2026-11-23 23:06:53",
+  "timestamp": 1795464413.51,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Atlanta Hawks",
       "quarter": 2,
-      "elapsed_mins": 15.6,
+      "elapsed_mins": 16.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "30-35",
+      "current_score": "32-37",
       "score_gap": 5,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.31,
+      "fav1_odd": 3.37,
       "fav2_barem": "211-220",
-      "fav2_odd": 4.22,
+      "fav2_odd": 3.73,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "211-220",
       "target_barem_tr": "211-220",
       "target_barem_en": "211-220",
       "target_t_id": 1844,
-      "target_odd": 4.22,
-      "min_acceptable_odd": 4.07,
+      "target_odd": 3.73,
+      "min_acceptable_odd": 3.58,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (4.22)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (3.73)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 23:05:56"
+      "updated_at_tr": "2026-11-23 23:06:52"
     },
     {
       "signal_id": "CB-773570537_35m",
@@ -56,12 +56,12 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Denver Nuggets",
       "quarter": 4,
-      "elapsed_mins": 42.4,
+      "elapsed_mins": 43.0,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "97-88",
+      "current_score": "99-90",
       "score_gap": 9,
-      "fav1_barem": "201-210",
+      "fav1_barem": "211-220",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
       "fav2_odd": 0.0,
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 23:05:56"
+      "updated_at_tr": "2026-11-23 23:06:52"
     }
   ],
   "recent_history": [
