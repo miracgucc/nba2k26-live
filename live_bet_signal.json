@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 21:43:40",
-  "timestamp": 1795459420.04,
+  "updated_at_tr": "2026-11-23 21:44:29",
+  "timestamp": 1795459469.79,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Detroit Pistons",
       "away_team": "Minnesota Timberwolves",
       "quarter": 2,
-      "elapsed_mins": 15.9,
+      "elapsed_mins": 16.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "43-29",
-      "score_gap": 14,
+      "current_score": "43-31",
+      "score_gap": 12,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.17,
+      "fav1_odd": 3.26,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.86,
+      "fav2_odd": 4.11,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_barem_en": "201-210",
       "target_t_id": 1843,
-      "target_odd": 3.86,
-      "min_acceptable_odd": 3.71,
+      "target_odd": 4.11,
+      "min_acceptable_odd": 3.96,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.86)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (4.11)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 21:43:38"
+      "updated_at_tr": "2026-11-23 21:44:28"
     },
     {
       "signal_id": "CB-773554184_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 21:43:38"
+      "updated_at_tr": "2026-11-23 21:44:28"
     }
   ],
   "recent_history": [
