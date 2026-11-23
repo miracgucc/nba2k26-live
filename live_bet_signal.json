@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 21:05:20",
-  "timestamp": 1795457120.58,
+  "updated_at_tr": "2026-11-23 21:05:55",
+  "timestamp": 1795457155.71,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 21:05:19"
+      "updated_at_tr": "2026-11-23 21:05:54"
     },
     {
       "signal_id": "CB-773554184_35m",
@@ -56,32 +56,32 @@
       "home_team": "New York Knicks",
       "away_team": "Indiana Pacers",
       "quarter": 2,
-      "elapsed_mins": 16.9,
+      "elapsed_mins": 17.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "32-24",
-      "score_gap": 8,
+      "current_score": "34-24",
+      "score_gap": 10,
       "fav1_barem": "191-200",
-      "fav1_odd": 3.05,
+      "fav1_odd": 2.58,
       "fav2_barem": "181-190",
-      "fav2_odd": 3.32,
+      "fav2_odd": 3.46,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "181-190",
       "target_barem_tr": "181-190",
       "target_barem_en": "181-190",
       "target_t_id": 1841,
-      "target_odd": 3.32,
-      "min_acceptable_odd": 3.17,
+      "target_odd": 3.46,
+      "min_acceptable_odd": 3.31,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 181-190 (3.32)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 181-190 (3.46)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 21:05:19"
+      "updated_at_tr": "2026-11-23 21:05:54"
     }
   ],
   "recent_history": [
