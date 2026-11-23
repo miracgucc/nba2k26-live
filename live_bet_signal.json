@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 18:13:31",
-  "timestamp": 1795446811.69,
+  "updated_at_tr": "2026-11-23 18:14:20",
+  "timestamp": 1795446860.88,
   "active_domain": "https://fswin-best.icu",
   "chain_state": {
     "prev_shift": -1,
@@ -19,12 +19,12 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Indiana Pacers",
       "quarter": 4,
-      "elapsed_mins": 36.5,
+      "elapsed_mins": 37.3,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "70-92",
-      "score_gap": 22,
-      "fav1_barem": "201-210",
+      "current_score": "73-94",
+      "score_gap": 21,
+      "fav1_barem": "211-220",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
       "fav2_odd": 0.0,
@@ -44,7 +44,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 18:13:31"
+      "updated_at_tr": "2026-11-23 18:14:20"
     },
     {
       "signal_id": "CB-773520393_35m",
@@ -54,32 +54,32 @@
       "home_team": "New York Knicks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 1,
-      "elapsed_mins": 9.0,
+      "elapsed_mins": 9.7,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "16-23",
-      "score_gap": 7,
+      "current_score": "19-23",
+      "score_gap": 4,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.55,
+      "fav1_odd": 3.57,
       "fav2_barem": "211-220",
-      "fav2_odd": 4.06,
+      "fav2_odd": 4.04,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "211-220",
       "target_barem_tr": "211-220",
       "target_barem_en": "211-220",
       "target_t_id": 1844,
-      "target_odd": 4.06,
-      "min_acceptable_odd": 3.91,
+      "target_odd": 4.04,
+      "min_acceptable_odd": 3.89,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (4.06)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (4.04)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 18:13:31"
+      "updated_at_tr": "2026-11-23 18:14:20"
     }
   ],
   "recent_history": [
