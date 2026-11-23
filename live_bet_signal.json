@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 20:18:09",
-  "timestamp": 1795454289.39,
+  "updated_at_tr": "2026-11-23 20:18:56",
+  "timestamp": 1795454336.69,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Denver Nuggets",
       "away_team": "Los Angeles Lakers",
       "quarter": 2,
-      "elapsed_mins": 12.8,
+      "elapsed_mins": 13.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "25-40",
-      "score_gap": 15,
+      "current_score": "28-40",
+      "score_gap": 12,
       "fav1_barem": "231+",
-      "fav1_odd": 2.75,
+      "fav1_odd": 2.16,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.57,
+      "fav2_odd": 3.43,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "221-230",
       "target_barem_tr": "221-230",
       "target_barem_en": "221-230",
       "target_t_id": 1845,
-      "target_odd": 3.57,
-      "min_acceptable_odd": 3.42,
-      "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 221-230 (3.57)",
+      "target_odd": 3.43,
+      "min_acceptable_odd": 3.28,
+      "zone_type": "TRAP_LOW",
+      "zone_badge": "🔥 NBA 2.10–2.30 SEÇİCİ 2. FAVORİ (10–15 İdeal Fark (+569 TL)): 221-230 (3.43)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 20:18:08"
+      "updated_at_tr": "2026-11-23 20:18:55"
     },
     {
       "signal_id": "CB-773537280_35m",
@@ -56,7 +56,7 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Dallas Mavericks",
       "quarter": 4,
-      "elapsed_mins": 41.0,
+      "elapsed_mins": 41.5,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "85-82",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 20:18:08"
+      "updated_at_tr": "2026-11-23 20:18:55"
     }
   ],
   "recent_history": [
