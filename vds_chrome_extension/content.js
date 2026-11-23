@@ -268,6 +268,11 @@
                 if (isAutoEnabled() && !alreadyPlayed && played.length < getMaxBets()) {
                     const curUrl = window.location.href;
                     if (sig.raw_game_id && !curUrl.includes(sig.raw_game_id)) {
+                        // Direct jump to the exact Melbet/1xBet match URL by game_id (works from any page!)
+                        if (window.location.hostname.toLowerCase().includes("melbet") || window.location.hostname.toLowerCase().includes("1xbet")) {
+                            window.location.href = window.location.origin + "/tr/live/basketball/2935701-nba-2k26-cyber-league/" + sig.raw_game_id;
+                            return;
+                        }
                         const links = document.querySelectorAll("a[href]");
                         for (const a of links) {
                             const href = a.getAttribute("href") || "";

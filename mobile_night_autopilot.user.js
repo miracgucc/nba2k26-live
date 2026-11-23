@@ -196,41 +196,59 @@
     requestScreenWakeLock();
 
     function tryClickBaremOnPage(sig) {
-        const trLabel = (sig.target_barem_tr || "").toLowerCase();
-        const enLabel = (sig.target_barem_en || "").toLowerCase();
-        const rawBarem = (sig.target_barem || "").toLowerCase();
-        const minOdd = parseFloat(sig.min_acceptable_odd || 1.50);
+        const rawBarem = (sig.target_barem || "").trim().toLowerCase();
+        const minOdd = parseFloat(sig.min_acceptable_odd || 1.05);
+
+        let matcher = null;
+        if (rawBarem.includes("-")) {
+            const parts = rawBarem.split("-");
+            matcher = new RegExp("\\b" + parts[0].trim() + "\\b.{0,22}\\b" + parts[1].trim() + "\\b", "i");
+        } else if (rawBarem.includes("160")) {
+            matcher = /\b160\b.{0,25}(az|alt|less|under|veya|kadar|<=)/i;
+        } else if (rawBarem.includes("231")) {
+            matcher = /\b231\b.{0,25}(fazla|üst|üzeri|more|over|\+|veya|>=)/i;
+        }
+        if (!matcher) return { clicked: false, liveOdd: 0 };
 
         const wasBlackout = blackOverlay.style.display === "flex";
         if (wasBlackout) blackOverlay.style.display = "none";
 
         const candidates = document.querySelectorAll(
-            ".c-bets__bet, .bet_type, .ui-market__toggle, [data-market], .market-odd, .c-bet-box, button, a, div"
+            "button, [role='button'], .ui-market, .c-bets__bet, .bet_type, .market-odd, .c-bet-box, [class*='market'], [class*='bet'], [class*='coef'], li, a, div, span"
         );
 
+        let bestMatch = null;
         for (const el of candidates) {
-            const txt = (el.innerText || el.textContent || "").trim().toLowerCase();
-            if (!txt || txt.length > 80) continue;
+            if (!el.offsetParent) continue;
+            const txt = (el.innerText || el.textContent || "").replace(/\s+/g, " ").trim();
+            if (!txt || txt.length > 90) continue;
 
-            const matchesBarem =
-                (trLabel && txt.includes(trLabel)) ||
-                (enLabel && txt.includes(enLabel)) ||
-                (rawBarem && rawBarem.includes("-") && txt.includes(rawBarem));
-
-            if (matchesBarem) {
-                const container = el.closest(".c-bets__bet, .ui-market__item, .c-bet-box, li, tr, div") || el.parentElement;
-                const fullTxt = (container ? container.innerText : txt).replace(",", ".");
-                const nums = fullTxt.match(/\b([1-9]\.\d{1,3})\b/g);
-                if (nums && nums.length > 0) {
-                    const liveOdd = parseFloat(nums[nums.length - 1]);
-                    if (liveOdd >= minOdd && liveOdd < 25.0) {
-                        const clickTarget = container.querySelector(".c-bets__inner, .ui-market__value, .bet_type, button") || el;
-                        clickTarget.click();
-                        if (wasBlackout) blackOverlay.style.display = "flex";
-                        return { clicked: true, liveOdd: liveOdd };
+            if (matcher.test(txt)) {
+                let box = el;
+                for (let depth = 0; depth < 4 && box; depth++) {
+                    const bTxt = (box.innerText || "").replace(/\s+/g, " ").replace(",", ".").trim();
+                    if (bTxt.length <= 120) {
+                        const withoutRange = bTxt.replace(/\b(1[5-9]\d|2[0-4]\d)\b/g, " ");
+                        const nums = withoutRange.match(/\b([1-9]\d?(?:\.\d{1,3})?)\b/g);
+                        if (nums && nums.length > 0) {
+                            const liveOdd = parseFloat(nums[nums.length - 1]);
+                            if (liveOdd >= minOdd && liveOdd < 35.0) {
+                                if (!bestMatch || bTxt.length < bestMatch.len) {
+                                    bestMatch = { el: box, liveOdd: liveOdd, len: bTxt.length };
+                                }
+                                break;
+                            }
+                        }
                     }
+                    box = box.parentElement;
                 }
             }
+        }
+        if (bestMatch) {
+            bestMatch.el.scrollIntoView({ behavior: "instant", block: "center" });
+            bestMatch.el.click();
+            if (wasBlackout) blackOverlay.style.display = "flex";
+            return { clicked: true, liveOdd: bestMatch.liveOdd };
         }
         if (wasBlackout) blackOverlay.style.display = "flex";
         return { clicked: false, liveOdd: 0 };
