@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 19:03:44",
-  "timestamp": 1795449824.19,
+  "updated_at_tr": "2026-11-23 19:04:41",
+  "timestamp": 1795449881.6,
   "active_domain": "https://fswin-best.icu",
   "chain_state": {
     "prev_shift": 0,
@@ -19,32 +19,32 @@
       "home_team": "Golden State Warriors",
       "away_team": "Houston Rockets",
       "quarter": 2,
-      "elapsed_mins": 16.1,
+      "elapsed_mins": 16.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "49-27",
       "score_gap": 22,
       "fav1_barem": "231+",
-      "fav1_odd": 1.7,
+      "fav1_odd": 1.92,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.56,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.70)",
+      "fav2_odd": 3.28,
+      "decision": "OYNA",
+      "pick_type": "1. Favori",
+      "target_barem": "231+",
+      "target_barem_tr": "231 veya daha fazla",
+      "target_barem_en": "231 or more",
+      "target_t_id": 1846,
+      "target_odd": 1.92,
+      "min_acceptable_odd": 1.77,
+      "zone_type": "GOLDEN",
+      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 231+ (1.92)",
       "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
+        "kasa_8000": 400,
+        "kasa_10000": 500,
+        "kasa_15000": 750,
+        "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-23 19:03:44"
+      "updated_at_tr": "2026-11-23 19:04:41"
     },
     {
       "signal_id": "CB-773520393_35m",
@@ -54,11 +54,11 @@
       "home_team": "New York Knicks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 4,
-      "elapsed_mins": 40.5,
+      "elapsed_mins": 41.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "70-82",
-      "score_gap": 12,
+      "current_score": "70-87",
+      "score_gap": 17,
       "fav1_barem": "181-190",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -79,7 +79,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 19:03:44"
+      "updated_at_tr": "2026-11-23 19:04:41"
     }
   ],
   "recent_history": [
