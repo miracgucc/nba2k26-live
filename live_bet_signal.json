@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 00:11:04",
-  "timestamp": 1795468264.54,
+  "updated_at_tr": "2026-11-24 00:11:39",
+  "timestamp": 1795468299.15,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -18,11 +18,11 @@
     "home_team": "Houston Rockets",
     "away_team": "Golden State Warriors",
     "quarter": 3,
-    "elapsed_mins": 33.0,
+    "elapsed_mins": 33.1,
     "in_decision_window_35m": true,
     "is_barem_open": true,
-    "current_score": "65-87",
-    "score_gap": 22,
+    "current_score": "67-87",
+    "score_gap": 20,
     "fav1_barem": "231+",
     "fav1_odd": 2.04,
     "fav2_barem": "221-230",
@@ -43,7 +43,7 @@
       "kasa_15000": 750,
       "kasa_20000": 1000
     },
-    "updated_at_tr": "2026-11-24 00:11:03"
+    "updated_at_tr": "2026-11-24 00:11:38"
   },
   "active_signals": [
     {
@@ -54,11 +54,11 @@
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
       "quarter": 3,
-      "elapsed_mins": 33.0,
+      "elapsed_mins": 33.1,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "65-87",
-      "score_gap": 22,
+      "current_score": "67-87",
+      "score_gap": 20,
       "fav1_barem": "231+",
       "fav1_odd": 2.04,
       "fav2_barem": "221-230",
@@ -79,7 +79,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-24 00:11:03"
+      "updated_at_tr": "2026-11-24 00:11:38"
     }
   ],
   "live_matches": [
@@ -91,11 +91,11 @@
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
       "quarter": 3,
-      "elapsed_mins": 33.0,
+      "elapsed_mins": 33.1,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "65-87",
-      "score_gap": 22,
+      "current_score": "67-87",
+      "score_gap": 20,
       "fav1_barem": "231+",
       "fav1_odd": 2.04,
       "fav2_barem": "221-230",
@@ -116,7 +116,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-24 00:11:03"
+      "updated_at_tr": "2026-11-24 00:11:38"
     },
     {
       "signal_id": "CB-773596651_35m",
@@ -126,32 +126,32 @@
       "home_team": "New York Knicks",
       "away_team": "Indiana Pacers",
       "quarter": 1,
-      "elapsed_mins": 7.7,
+      "elapsed_mins": 8.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "17-15",
-      "score_gap": 2,
+      "current_score": "21-17",
+      "score_gap": 4,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.39,
+      "fav1_odd": 3.31,
       "fav2_barem": "191-200",
-      "fav2_odd": 3.9,
+      "fav2_odd": 3.88,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "191-200",
       "target_barem_tr": "191-200",
       "target_barem_en": "191-200",
       "target_t_id": 1842,
-      "target_odd": 3.9,
-      "min_acceptable_odd": 3.75,
+      "target_odd": 3.88,
+      "min_acceptable_odd": 3.73,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (3.90)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (3.88)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 00:11:03"
+      "updated_at_tr": "2026-11-24 00:11:38"
     }
   ],
   "recent_history": [
