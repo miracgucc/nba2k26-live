@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 02:23:33",
-  "timestamp": 1795476213.98,
+  "updated_at_tr": "2026-11-24 02:24:09",
+  "timestamp": 1795476249.76,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,13 +21,13 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Golden State Warriors",
       "quarter": 2,
-      "elapsed_mins": 15.1,
+      "elapsed_mins": 15.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "36-35",
-      "score_gap": 1,
+      "current_score": "38-35",
+      "score_gap": 3,
       "fav1_barem": "231+",
-      "fav1_odd": 2.44,
+      "fav1_odd": 2.31,
       "fav2_barem": "221-230",
       "fav2_odd": 3.66,
       "decision": "PAS",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Üst Kanat Riskli — 231+: 2.44)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Üst Kanat Riskli — 231+: 2.31)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 02:23:32"
+      "updated_at_tr": "2026-11-24 02:24:08"
     },
     {
       "signal_id": "CB-773609336_35m",
@@ -56,11 +56,11 @@
       "home_team": "Detroit Pistons",
       "away_team": "Oklahoma City Thunder",
       "quarter": 4,
-      "elapsed_mins": 39.9,
+      "elapsed_mins": 40.5,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "85-79",
-      "score_gap": 6,
+      "current_score": "85-81",
+      "score_gap": 4,
       "fav1_barem": "191-200",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -73,15 +73,15 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⏳ Oran Bekleniyor",
+      "zone_type": "PASS_CLUTCH",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 4 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 02:23:32"
+      "updated_at_tr": "2026-11-24 02:24:08"
     }
   ],
   "recent_history": [
