@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 20:07:49",
-  "timestamp": 1795453669.89,
+  "updated_at_tr": "2026-11-23 20:08:39",
+  "timestamp": 1795453719.43,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -18,11 +18,11 @@
     "home_team": "Oklahoma City Thunder",
     "away_team": "Dallas Mavericks",
     "quarter": 3,
-    "elapsed_mins": 34.4,
+    "elapsed_mins": 34.6,
     "in_decision_window_35m": true,
     "is_barem_open": true,
-    "current_score": "65-74",
-    "score_gap": 9,
+    "current_score": "68-74",
+    "score_gap": 6,
     "fav1_barem": "201-210",
     "fav1_odd": 2.4,
     "fav2_barem": "191-200",
@@ -43,7 +43,7 @@
       "kasa_15000": 600,
       "kasa_20000": 800
     },
-    "updated_at_tr": "2026-11-23 20:07:48"
+    "updated_at_tr": "2026-11-23 20:08:38"
   },
   "active_signals": [
     {
@@ -54,11 +54,11 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Dallas Mavericks",
       "quarter": 3,
-      "elapsed_mins": 34.4,
+      "elapsed_mins": 34.6,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "65-74",
-      "score_gap": 9,
+      "current_score": "68-74",
+      "score_gap": 6,
       "fav1_barem": "201-210",
       "fav1_odd": 2.4,
       "fav2_barem": "191-200",
@@ -79,7 +79,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 20:07:48"
+      "updated_at_tr": "2026-11-23 20:08:38"
     }
   ],
   "live_matches": [
@@ -91,32 +91,32 @@
       "home_team": "Denver Nuggets",
       "away_team": "Los Angeles Lakers",
       "quarter": 1,
-      "elapsed_mins": 5.2,
+      "elapsed_mins": 5.8,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "11-12",
-      "score_gap": 1,
+      "current_score": "11-17",
+      "score_gap": 6,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.64,
-      "fav2_barem": "201-210",
-      "fav2_odd": 4.47,
+      "fav1_odd": 3.67,
+      "fav2_barem": "221-230",
+      "fav2_odd": 4.29,
       "decision": "OYNA",
       "pick_type": "2. Favori",
-      "target_barem": "201-210",
-      "target_barem_tr": "201-210",
-      "target_barem_en": "201-210",
-      "target_t_id": 1843,
-      "target_odd": 4.47,
-      "min_acceptable_odd": 4.32,
+      "target_barem": "221-230",
+      "target_barem_tr": "221-230",
+      "target_barem_en": "221-230",
+      "target_t_id": 1845,
+      "target_odd": 4.29,
+      "min_acceptable_odd": 4.14,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (4.47)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 221-230 (4.29)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 20:07:48"
+      "updated_at_tr": "2026-11-23 20:08:38"
     },
     {
       "signal_id": "CB-773537280_35m",
@@ -126,11 +126,11 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Dallas Mavericks",
       "quarter": 3,
-      "elapsed_mins": 34.4,
+      "elapsed_mins": 34.6,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "65-74",
-      "score_gap": 9,
+      "current_score": "68-74",
+      "score_gap": 6,
       "fav1_barem": "201-210",
       "fav1_odd": 2.4,
       "fav2_barem": "191-200",
@@ -151,7 +151,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 20:07:48"
+      "updated_at_tr": "2026-11-23 20:08:38"
     }
   ],
   "recent_history": [
@@ -161,8 +161,8 @@
       "raw_game_id": "773537280",
       "date": "2026-11-23",
       "game_name": "Oklahoma City Thunder vs Dallas Mavericks",
-      "current_score": "65-74",
-      "score_gap": 9,
+      "current_score": "68-74",
+      "score_gap": 6,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "191-200",
