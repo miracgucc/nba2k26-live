@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 02:21:55",
-  "timestamp": 1795476115.5,
+  "updated_at_tr": "2026-11-24 02:22:32",
+  "timestamp": 1795476152.48,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,10 +21,10 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Golden State Warriors",
       "quarter": 2,
-      "elapsed_mins": 14.9,
+      "elapsed_mins": 15.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "34-35",
+      "current_score": "36-35",
       "score_gap": 1,
       "fav1_barem": "231+",
       "fav1_odd": 2.44,
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 02:21:54"
+      "updated_at_tr": "2026-11-24 02:22:31"
     },
     {
       "signal_id": "CB-773609336_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 02:21:54"
+      "updated_at_tr": "2026-11-24 02:22:31"
     }
   ],
   "recent_history": [
