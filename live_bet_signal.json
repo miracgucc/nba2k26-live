@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 22:48:52",
-  "timestamp": 1795463332.32,
+  "updated_at_tr": "2026-11-23 22:49:21",
+  "timestamp": 1795463361.59,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 22:48:50"
+      "updated_at_tr": "2026-11-23 22:49:20"
     },
     {
       "signal_id": "CB-773570537_35m",
@@ -56,32 +56,32 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Denver Nuggets",
       "quarter": 3,
-      "elapsed_mins": 30.5,
+      "elapsed_mins": 31.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "71-57",
-      "score_gap": 14,
+      "current_score": "71-63",
+      "score_gap": 8,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.33,
+      "fav1_odd": 2.96,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.34,
+      "fav2_odd": 3.94,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_barem_en": "201-210",
       "target_t_id": 1843,
-      "target_odd": 3.34,
-      "min_acceptable_odd": 3.19,
+      "target_odd": 3.94,
+      "min_acceptable_odd": 3.79,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.34)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.94)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 22:48:50"
+      "updated_at_tr": "2026-11-23 22:49:20"
     }
   ],
   "recent_history": [
