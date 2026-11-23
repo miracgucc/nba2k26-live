@@ -1,13 +1,13 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 20:29:26",
-  "timestamp": 1795454966.12,
+  "updated_at_tr": "2026-11-23 20:30:15",
+  "timestamp": 1795455016.0,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
   "chain_state": {
-    "prev_shift": -1,
-    "prev2_shift": 0
+    "prev_shift": -2,
+    "prev2_shift": -1
   },
   "has_active_play_signal": false,
   "current_play_signal": null,
@@ -21,32 +21,32 @@
       "home_team": "Denver Nuggets",
       "away_team": "Los Angeles Lakers",
       "quarter": 2,
-      "elapsed_mins": 19.5,
+      "elapsed_mins": 20.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "39-55",
-      "score_gap": 16,
+      "current_score": "42-55",
+      "score_gap": 13,
       "fav1_barem": "231+",
-      "fav1_odd": 2.38,
+      "fav1_odd": 2.16,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.18,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Üst Kanat Riskli — 231+: 2.38)",
+      "fav2_odd": 3.24,
+      "decision": "OYNA",
+      "pick_type": "2. Favori",
+      "target_barem": "221-230",
+      "target_barem_tr": "221-230",
+      "target_barem_en": "221-230",
+      "target_t_id": 1845,
+      "target_odd": 3.24,
+      "min_acceptable_odd": 3.09,
+      "zone_type": "TRAP_LOW",
+      "zone_badge": "🔥 NBA 2.10–2.30 SEÇİCİ 2. FAVORİ (10–15 İdeal Fark (+569 TL)): 221-230 (3.24)",
       "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
+        "kasa_8000": 320,
+        "kasa_10000": 400,
+        "kasa_15000": 600,
+        "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 20:29:24"
+      "updated_at_tr": "2026-11-23 20:30:14"
     },
     {
       "signal_id": "CB-773537280_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 20:29:24"
+      "updated_at_tr": "2026-11-23 20:30:14"
     }
   ],
   "recent_history": [
@@ -100,9 +100,9 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 3 Sayı Fark)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "99-91",
+      "actual_range": "181-190",
+      "result": "PAS"
     },
     {
       "signal_id": "CB-773528972_35m",
