@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 02:05:09",
-  "timestamp": 1795475109.37,
+  "updated_at_tr": "2026-11-24 02:05:43",
+  "timestamp": 1795475143.69,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -24,8 +24,8 @@
       "elapsed_mins": 4.7,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "9-9",
-      "score_gap": 0,
+      "current_score": "11-9",
+      "score_gap": 2,
       "fav1_barem": "231+",
       "fav1_odd": 2.9,
       "fav2_barem": "221-230",
@@ -46,7 +46,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 02:05:08"
+      "updated_at_tr": "2026-11-24 02:05:42"
     },
     {
       "signal_id": "CB-773609336_35m",
@@ -56,32 +56,32 @@
       "home_team": "Detroit Pistons",
       "away_team": "Oklahoma City Thunder",
       "quarter": 3,
-      "elapsed_mins": 29.6,
+      "elapsed_mins": 30.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "66-55",
       "score_gap": 11,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.65,
+      "fav1_odd": 2.78,
       "fav2_barem": "191-200",
-      "fav2_odd": 3.02,
+      "fav2_odd": 3.08,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "191-200",
       "target_barem_tr": "191-200",
       "target_barem_en": "191-200",
       "target_t_id": 1842,
-      "target_odd": 3.02,
-      "min_acceptable_odd": 2.87,
+      "target_odd": 3.08,
+      "min_acceptable_odd": 2.93,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (3.02)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (3.08)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 02:05:08"
+      "updated_at_tr": "2026-11-24 02:05:42"
     }
   ],
   "recent_history": [
