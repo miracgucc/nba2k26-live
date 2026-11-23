@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 00:08:58",
-  "timestamp": 1795468138.05,
+  "updated_at_tr": "2026-11-24 00:09:54",
+  "timestamp": 1795468194.75,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
       "quarter": 3,
-      "elapsed_mins": 31.4,
+      "elapsed_mins": 32.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "65-81",
-      "score_gap": 16,
-      "fav1_barem": "231+",
-      "fav1_odd": 2.21,
-      "fav2_barem": "221-230",
-      "fav2_odd": 2.66,
+      "current_score": "65-84",
+      "score_gap": 19,
+      "fav1_barem": "221-230",
+      "fav1_odd": 2.44,
+      "fav2_barem": "231+",
+      "fav2_odd": 2.51,
       "decision": "OYNA",
-      "pick_type": "2. Favori",
+      "pick_type": "1. Favori",
       "target_barem": "221-230",
       "target_barem_tr": "221-230",
       "target_barem_en": "221-230",
       "target_t_id": 1845,
-      "target_odd": 2.66,
-      "min_acceptable_odd": 2.51,
-      "zone_type": "TRAP_LOW",
-      "zone_badge": "🔥 NBA 2.10–2.30 SEÇİCİ 2. FAVORİ (Üst Kanat Düşük (+185 TL)): 221-230 (2.66)",
+      "target_odd": 2.44,
+      "min_acceptable_odd": 2.29,
+      "zone_type": "GOLDEN",
+      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Tam İkiz Oran (%56.2 / +331 TL)): 221-230 (2.44)",
       "stakes": {
-        "kasa_8000": 320,
-        "kasa_10000": 400,
-        "kasa_15000": 600,
-        "kasa_20000": 800
+        "kasa_8000": 400,
+        "kasa_10000": 500,
+        "kasa_15000": 750,
+        "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-24 00:08:56"
+      "updated_at_tr": "2026-11-24 00:09:53"
     },
     {
       "signal_id": "CB-773596651_35m",
@@ -81,10 +81,29 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 00:08:56"
+      "updated_at_tr": "2026-11-24 00:09:53"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-773589685_35m",
+      "game_id": "CB-773589685",
+      "raw_game_id": "773589685",
+      "date": "2026-11-24",
+      "game_name": "Houston Rockets vs Golden State Warriors",
+      "current_score": "65-84",
+      "score_gap": 19,
+      "decision": "OYNA",
+      "pick_type": "1. Favori",
+      "target_barem": "221-230",
+      "target_barem_tr": "221-230",
+      "target_t_id": 1845,
+      "target_odd": 2.44,
+      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Tam İkiz Oran (%56.2 / +331 TL)): 221-230 (2.44)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-773579238_35m",
       "game_id": "CB-773579238",
@@ -407,25 +426,6 @@
       "actual_score": "110-91",
       "actual_range": "201-210",
       "result": "PAS"
-    },
-    {
-      "signal_id": "CB-773445389_35m",
-      "game_id": "CB-773445389",
-      "raw_game_id": "773445389",
-      "date": "2026-11-23",
-      "game_name": "Detroit Pistons vs Denver Nuggets",
-      "current_score": "89-69",
-      "score_gap": 20,
-      "decision": "OYNA",
-      "pick_type": "2. Favori",
-      "target_barem": "211-220",
-      "target_barem_tr": "211-220",
-      "target_t_id": 1844,
-      "target_odd": 2.62,
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (2.62)",
-      "actual_score": "116-97",
-      "actual_range": "211-220",
-      "result": "TUTTU"
     }
   ]
 }
