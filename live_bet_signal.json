@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 20:10:19",
-  "timestamp": 1795453819.29,
+  "updated_at_tr": "2026-11-23 20:10:44",
+  "timestamp": 1795453844.27,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Denver Nuggets",
       "away_team": "Los Angeles Lakers",
       "quarter": 1,
-      "elapsed_mins": 5.8,
+      "elapsed_mins": 6.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "11-17",
       "score_gap": 6,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.67,
-      "fav2_barem": "221-230",
-      "fav2_odd": 4.29,
+      "fav1_odd": 3.65,
+      "fav2_barem": "201-210",
+      "fav2_odd": 4.12,
       "decision": "OYNA",
       "pick_type": "2. Favori",
-      "target_barem": "221-230",
-      "target_barem_tr": "221-230",
-      "target_barem_en": "221-230",
-      "target_t_id": 1845,
-      "target_odd": 4.29,
-      "min_acceptable_odd": 4.14,
+      "target_barem": "201-210",
+      "target_barem_tr": "201-210",
+      "target_barem_en": "201-210",
+      "target_t_id": 1843,
+      "target_odd": 4.12,
+      "min_acceptable_odd": 3.97,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 221-230 (4.29)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (4.12)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 20:10:18"
+      "updated_at_tr": "2026-11-23 20:10:43"
     },
     {
       "signal_id": "CB-773537280_35m",
@@ -56,9 +56,9 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Dallas Mavericks",
       "quarter": 3,
-      "elapsed_mins": 35.8,
-      "in_decision_window_35m": true,
-      "is_barem_open": true,
+      "elapsed_mins": 36.0,
+      "in_decision_window_35m": false,
+      "is_barem_open": false,
       "current_score": "71-74",
       "score_gap": 3,
       "fav1_barem": "201-210",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 20:10:18"
+      "updated_at_tr": "2026-11-23 20:10:43"
     }
   ],
   "recent_history": [
