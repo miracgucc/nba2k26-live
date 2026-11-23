@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-23 21:12:46",
-  "timestamp": 1795457566.11,
+  "updated_at_tr": "2026-11-23 21:13:53",
+  "timestamp": 1795457633.65,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 21:12:45"
+      "updated_at_tr": "2026-11-23 21:13:52"
     },
     {
       "signal_id": "CB-773562459_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-23 21:12:45"
+      "updated_at_tr": "2026-11-23 21:13:52"
     },
     {
       "signal_id": "CB-773554184_35m",
@@ -91,32 +91,32 @@
       "home_team": "New York Knicks",
       "away_team": "Indiana Pacers",
       "quarter": 2,
-      "elapsed_mins": 21.6,
+      "elapsed_mins": 22.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "47-32",
+      "current_score": "49-34",
       "score_gap": 15,
       "fav1_barem": "191-200",
-      "fav1_odd": 2.37,
+      "fav1_odd": 2.29,
       "fav2_barem": "181-190",
-      "fav2_odd": 3.18,
+      "fav2_odd": 3.26,
       "decision": "OYNA",
-      "pick_type": "1. Favori",
-      "target_barem": "191-200",
-      "target_barem_tr": "191-200",
-      "target_barem_en": "191-200",
-      "target_t_id": 1842,
-      "target_odd": 2.37,
-      "min_acceptable_odd": 2.22,
-      "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (10–15 Fark (%60.0 / +415 TL)): 191-200 (2.37)",
+      "pick_type": "2. Favori",
+      "target_barem": "181-190",
+      "target_barem_tr": "181-190",
+      "target_barem_en": "181-190",
+      "target_t_id": 1841,
+      "target_odd": 3.26,
+      "min_acceptable_odd": 3.11,
+      "zone_type": "TRAP_LOW",
+      "zone_badge": "🔥 NBA 2.10–2.30 SEÇİCİ 2. FAVORİ (10–15 İdeal Fark (+569 TL)): 181-190 (3.26)",
       "stakes": {
-        "kasa_8000": 400,
-        "kasa_10000": 500,
-        "kasa_15000": 750,
-        "kasa_20000": 1000
+        "kasa_8000": 320,
+        "kasa_10000": 400,
+        "kasa_15000": 600,
+        "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-23 21:12:45"
+      "updated_at_tr": "2026-11-23 21:13:52"
     }
   ],
   "recent_history": [
