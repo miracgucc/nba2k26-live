@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 16:35:13",
-  "timestamp": 1795527313.19,
+  "updated_at_tr": "2026-11-24 16:35:50",
+  "timestamp": 1795527350.36,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 16:35:12"
+      "updated_at_tr": "2026-11-24 16:35:49"
     },
     {
       "signal_id": "CB-773753047_35m",
@@ -56,32 +56,32 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Oklahoma City Thunder",
       "quarter": 2,
-      "elapsed_mins": 20.5,
+      "elapsed_mins": 20.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "50-45",
       "score_gap": 5,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.48,
+      "fav1_odd": 3.46,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.96,
+      "fav2_odd": 3.94,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "221-230",
       "target_barem_tr": "221-230",
       "target_barem_en": "221-230",
       "target_t_id": 1845,
-      "target_odd": 3.96,
-      "min_acceptable_odd": 3.81,
+      "target_odd": 3.94,
+      "min_acceptable_odd": 3.79,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 221-230 (3.96)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 221-230 (3.94)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 16:35:12"
+      "updated_at_tr": "2026-11-24 16:35:49"
     }
   ],
   "recent_history": [
