@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 15:36:19",
-  "timestamp": 1795523779.97,
+  "updated_at_tr": "2026-11-24 15:36:47",
+  "timestamp": 1795523807.47,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -18,15 +18,15 @@
     "home_team": "Detroit Pistons",
     "away_team": "Denver Nuggets",
     "quarter": 3,
-    "elapsed_mins": 35.5,
+    "elapsed_mins": 35.8,
     "in_decision_window_35m": true,
     "is_barem_open": true,
-    "current_score": "58-93",
-    "score_gap": 35,
+    "current_score": "58-95",
+    "score_gap": 37,
     "fav1_barem": "201-210",
     "fav1_odd": 2.31,
     "fav2_barem": "191-200",
-    "fav2_odd": 2.7,
+    "fav2_odd": 2.69,
     "decision": "OYNA",
     "pick_type": "1. Favori",
     "target_barem": "201-210",
@@ -43,7 +43,7 @@
       "kasa_15000": 750,
       "kasa_20000": 1000
     },
-    "updated_at_tr": "2026-11-24 15:36:19"
+    "updated_at_tr": "2026-11-24 15:36:46"
   },
   "active_signals": [
     {
@@ -54,15 +54,15 @@
       "home_team": "Detroit Pistons",
       "away_team": "Denver Nuggets",
       "quarter": 3,
-      "elapsed_mins": 35.5,
+      "elapsed_mins": 35.8,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "58-93",
-      "score_gap": 35,
+      "current_score": "58-95",
+      "score_gap": 37,
       "fav1_barem": "201-210",
       "fav1_odd": 2.31,
       "fav2_barem": "191-200",
-      "fav2_odd": 2.7,
+      "fav2_odd": 2.69,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "201-210",
@@ -79,7 +79,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-24 15:36:19"
+      "updated_at_tr": "2026-11-24 15:36:46"
     }
   ],
   "live_matches": [
@@ -91,15 +91,15 @@
       "home_team": "Detroit Pistons",
       "away_team": "Denver Nuggets",
       "quarter": 3,
-      "elapsed_mins": 35.5,
+      "elapsed_mins": 35.8,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "58-93",
-      "score_gap": 35,
+      "current_score": "58-95",
+      "score_gap": 37,
       "fav1_barem": "201-210",
       "fav1_odd": 2.31,
       "fav2_barem": "191-200",
-      "fav2_odd": 2.7,
+      "fav2_odd": 2.69,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "201-210",
@@ -116,7 +116,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-24 15:36:19"
+      "updated_at_tr": "2026-11-24 15:36:46"
     },
     {
       "signal_id": "CB-773744321_35m",
@@ -151,7 +151,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 15:36:19"
+      "updated_at_tr": "2026-11-24 15:36:46"
     }
   ],
   "recent_history": [
@@ -161,8 +161,8 @@
       "raw_game_id": "773736010",
       "date": "2026-11-24",
       "game_name": "Detroit Pistons vs Denver Nuggets",
-      "current_score": "58-93",
-      "score_gap": 35,
+      "current_score": "58-95",
+      "score_gap": 37,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "201-210",
