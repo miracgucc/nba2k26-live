@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 00:30:58",
-  "timestamp": 1795555858.45,
+  "updated_at_tr": "2026-11-25 00:31:48",
+  "timestamp": 1795555908.58,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Denver Nuggets",
       "away_team": "Indiana Pacers",
       "quarter": 4,
-      "elapsed_mins": 47.5,
+      "elapsed_mins": 48.0,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "116-99",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 00:30:55"
+      "updated_at_tr": "2026-11-25 00:31:47"
     },
     {
       "signal_id": "CB-773864633_35m",
@@ -56,32 +56,32 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Minnesota Timberwolves",
       "quarter": 2,
-      "elapsed_mins": 18.7,
+      "elapsed_mins": 19.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "33-51",
-      "score_gap": 18,
+      "current_score": "35-54",
+      "score_gap": 19,
       "fav1_barem": "211-220",
-      "fav1_odd": 2.98,
+      "fav1_odd": 2.94,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.02,
+      "fav2_odd": 3.23,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_barem_en": "201-210",
       "target_t_id": 1843,
-      "target_odd": 3.02,
-      "min_acceptable_odd": 2.87,
+      "target_odd": 3.23,
+      "min_acceptable_odd": 3.08,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.02)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.23)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 00:30:55"
+      "updated_at_tr": "2026-11-25 00:31:47"
     },
     {
       "signal_id": "CB-773871806_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 00:30:55"
+      "updated_at_tr": "2026-11-25 00:31:47"
     }
   ],
   "recent_history": [
