@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 11:22:51",
-  "timestamp": 1795508571.07,
+  "updated_at_tr": "2026-11-24 11:23:25",
+  "timestamp": 1795508605.61,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -28,8 +28,8 @@
       "score_gap": 6,
       "fav1_barem": "211-220",
       "fav1_odd": 2.94,
-      "fav2_barem": "221-230",
-      "fav2_odd": 3.95,
+      "fav2_barem": "201-210",
+      "fav2_odd": 3.72,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 11:22:49"
+      "updated_at_tr": "2026-11-24 11:23:24"
     },
     {
       "signal_id": "CB-773696990_35m",
@@ -56,15 +56,15 @@
       "home_team": "New York Knicks",
       "away_team": "Denver Nuggets",
       "quarter": 1,
-      "elapsed_mins": 2.3,
+      "elapsed_mins": 2.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "7-4",
       "score_gap": 3,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.94,
+      "fav1_odd": 3.78,
       "fav2_barem": "211-220",
-      "fav2_odd": 4.35,
+      "fav2_odd": 4.37,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.94)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.78)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 11:22:49"
+      "updated_at_tr": "2026-11-24 11:23:24"
     }
   ],
   "recent_history": [
