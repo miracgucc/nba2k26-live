@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 23:55:14",
-  "timestamp": 1795553714.9,
+  "updated_at_tr": "2026-11-24 23:55:52",
+  "timestamp": 1795553752.78,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -20,33 +20,33 @@
       "game_name": "Denver Nuggets vs Indiana Pacers",
       "home_team": "Denver Nuggets",
       "away_team": "Indiana Pacers",
-      "quarter": 2,
-      "elapsed_mins": 24.0,
+      "quarter": 3,
+      "elapsed_mins": 24.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "44-57",
-      "score_gap": 13,
+      "current_score": "47-57",
+      "score_gap": 10,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.02,
+      "fav1_odd": 3.15,
       "fav2_barem": "211-220",
-      "fav2_odd": 3.64,
+      "fav2_odd": 3.21,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "211-220",
       "target_barem_tr": "211-220",
       "target_barem_en": "211-220",
       "target_t_id": 1844,
-      "target_odd": 3.64,
-      "min_acceptable_odd": 3.49,
+      "target_odd": 3.21,
+      "min_acceptable_odd": 3.06,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (3.64)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (3.21)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 23:55:13"
+      "updated_at_tr": "2026-11-24 23:55:51"
     },
     {
       "signal_id": "CB-773864633_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 23:55:13"
+      "updated_at_tr": "2026-11-24 23:55:51"
     },
     {
       "signal_id": "CB-773841951_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 23:55:13"
+      "updated_at_tr": "2026-11-24 23:55:51"
     }
   ],
   "recent_history": [
