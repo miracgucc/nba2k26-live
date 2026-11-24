@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 16:10:08",
-  "timestamp": 1795525808.57,
+  "updated_at_tr": "2026-11-24 16:10:43",
+  "timestamp": 1795525843.46,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 16:10:07"
+      "updated_at_tr": "2026-11-24 16:10:42"
     },
     {
       "signal_id": "CB-773753047_35m",
@@ -56,7 +56,7 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Oklahoma City Thunder",
       "quarter": 1,
-      "elapsed_mins": 4.5,
+      "elapsed_mins": 4.7,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "10-10",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 16:10:07"
+      "updated_at_tr": "2026-11-24 16:10:42"
     }
   ],
   "recent_history": [
