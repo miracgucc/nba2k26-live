@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 04:09:25",
-  "timestamp": 1795482565.79,
+  "updated_at_tr": "2026-11-24 04:10:01",
+  "timestamp": 1795482601.76,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 04:09:24"
+      "updated_at_tr": "2026-11-24 04:10:00"
     },
     {
       "signal_id": "CB-773626590_35m",
@@ -56,15 +56,15 @@
       "home_team": "Miami Heat",
       "away_team": "Indiana Pacers",
       "quarter": 3,
-      "elapsed_mins": 31.4,
+      "elapsed_mins": 32.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "57-68",
       "score_gap": 11,
-      "fav1_barem": "191-200",
-      "fav1_odd": 3.07,
-      "fav2_barem": "181-190",
-      "fav2_odd": 3.11,
+      "fav1_barem": "181-190",
+      "fav1_odd": 2.96,
+      "fav2_barem": "191-200",
+      "fav2_odd": 3.17,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,17 +74,36 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 3.07)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 181-190: 2.96)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 04:09:24"
+      "updated_at_tr": "2026-11-24 04:10:00"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-773626590_35m",
+      "game_id": "CB-773626590",
+      "raw_game_id": "773626590",
+      "date": "2026-11-24",
+      "game_name": "Miami Heat vs Indiana Pacers",
+      "current_score": "57-68",
+      "score_gap": 11,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 181-190: 2.96)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-773620752_35m",
       "game_id": "CB-773620752",
@@ -406,25 +425,6 @@
       "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 4 Sayı Fark)",
       "actual_score": "104-108",
       "actual_range": "211-220",
-      "result": "PAS"
-    },
-    {
-      "signal_id": "CB-773488544_35m",
-      "game_id": "CB-773488544",
-      "raw_game_id": "773488544",
-      "date": "2026-11-23",
-      "game_name": "Golden State Warriors vs Minnesota Timberwolves",
-      "current_score": "78-81",
-      "score_gap": 3,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 3 Sayı Fark)",
-      "actual_score": "94-113",
-      "actual_range": "201-210",
       "result": "PAS"
     }
   ]
