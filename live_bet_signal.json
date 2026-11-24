@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 06:55:57",
-  "timestamp": 1795492557.97,
+  "updated_at_tr": "2026-11-24 06:56:27",
+  "timestamp": 1795492587.76,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -9,79 +9,9 @@
     "prev_shift": 0,
     "prev2_shift": 0
   },
-  "has_active_play_signal": true,
-  "current_play_signal": {
-    "signal_id": "CB-773648792_35m",
-    "game_id": "CB-773648792",
-    "raw_game_id": "773648792",
-    "game_name": "Indiana Pacers vs Atlanta Hawks",
-    "home_team": "Indiana Pacers",
-    "away_team": "Atlanta Hawks",
-    "quarter": 3,
-    "elapsed_mins": 35.8,
-    "in_decision_window_35m": true,
-    "is_barem_open": true,
-    "current_score": "55-71",
-    "score_gap": 16,
-    "fav1_barem": "171-180",
-    "fav1_odd": 2.06,
-    "fav2_barem": "181-190",
-    "fav2_odd": 2.62,
-    "decision": "OYNA",
-    "pick_type": "1. Favori",
-    "target_barem": "171-180",
-    "target_barem_tr": "171-180",
-    "target_barem_en": "171-180",
-    "target_t_id": 1840,
-    "target_odd": 2.06,
-    "min_acceptable_odd": 1.91,
-    "zone_type": "GOLDEN",
-    "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 171-180 (2.06)",
-    "stakes": {
-      "kasa_8000": 400,
-      "kasa_10000": 500,
-      "kasa_15000": 750,
-      "kasa_20000": 1000
-    },
-    "updated_at_tr": "2026-11-24 06:55:56"
-  },
-  "active_signals": [
-    {
-      "signal_id": "CB-773648792_35m",
-      "game_id": "CB-773648792",
-      "raw_game_id": "773648792",
-      "game_name": "Indiana Pacers vs Atlanta Hawks",
-      "home_team": "Indiana Pacers",
-      "away_team": "Atlanta Hawks",
-      "quarter": 3,
-      "elapsed_mins": 35.8,
-      "in_decision_window_35m": true,
-      "is_barem_open": true,
-      "current_score": "55-71",
-      "score_gap": 16,
-      "fav1_barem": "171-180",
-      "fav1_odd": 2.06,
-      "fav2_barem": "181-190",
-      "fav2_odd": 2.62,
-      "decision": "OYNA",
-      "pick_type": "1. Favori",
-      "target_barem": "171-180",
-      "target_barem_tr": "171-180",
-      "target_barem_en": "171-180",
-      "target_t_id": 1840,
-      "target_odd": 2.06,
-      "min_acceptable_odd": 1.91,
-      "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 171-180 (2.06)",
-      "stakes": {
-        "kasa_8000": 400,
-        "kasa_10000": 500,
-        "kasa_15000": 750,
-        "kasa_20000": 1000
-      },
-      "updated_at_tr": "2026-11-24 06:55:56"
-    }
-  ],
+  "has_active_play_signal": false,
+  "current_play_signal": null,
+  "active_signals": [],
   "live_matches": [
     {
       "signal_id": "CB-773653873_35m",
@@ -91,7 +21,7 @@
       "home_team": "Golden State Warriors",
       "away_team": "New York Knicks",
       "quarter": 1,
-      "elapsed_mins": 11.7,
+      "elapsed_mins": 12.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "14-27",
@@ -116,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 06:55:56"
+      "updated_at_tr": "2026-11-24 06:56:26"
     },
     {
       "signal_id": "CB-773648792_35m",
@@ -126,9 +56,9 @@
       "home_team": "Indiana Pacers",
       "away_team": "Atlanta Hawks",
       "quarter": 3,
-      "elapsed_mins": 35.8,
-      "in_decision_window_35m": true,
-      "is_barem_open": true,
+      "elapsed_mins": 36.0,
+      "in_decision_window_35m": false,
+      "is_barem_open": false,
       "current_score": "55-71",
       "score_gap": 16,
       "fav1_barem": "171-180",
@@ -151,7 +81,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-24 06:55:56"
+      "updated_at_tr": "2026-11-24 06:56:26"
     }
   ],
   "recent_history": [
