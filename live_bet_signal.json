@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 11:43:30",
-  "timestamp": 1795509810.57,
+  "updated_at_tr": "2026-11-24 11:44:17",
+  "timestamp": 1795509857.92,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Golden State Warriors",
       "away_team": "Minnesota Timberwolves",
       "quarter": 4,
-      "elapsed_mins": 38.9,
+      "elapsed_mins": 39.8,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "85-74",
-      "score_gap": 11,
+      "current_score": "87-74",
+      "score_gap": 13,
       "fav1_barem": "191-200",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 11:43:29"
+      "updated_at_tr": "2026-11-24 11:44:16"
     },
     {
       "signal_id": "CB-773696990_35m",
@@ -56,10 +56,10 @@
       "home_team": "New York Knicks",
       "away_team": "Denver Nuggets",
       "quarter": 2,
-      "elapsed_mins": 17.9,
+      "elapsed_mins": 18.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "40-29",
+      "current_score": "42-31",
       "score_gap": 11,
       "fav1_barem": "201-210",
       "fav1_odd": 3.04,
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 11:43:29"
+      "updated_at_tr": "2026-11-24 11:44:16"
     }
   ],
   "recent_history": [
