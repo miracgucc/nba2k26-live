@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 06:46:21",
-  "timestamp": 1795491981.92,
+  "updated_at_tr": "2026-11-24 06:47:12",
+  "timestamp": 1795492032.18,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Golden State Warriors",
       "away_team": "New York Knicks",
       "quarter": 1,
-      "elapsed_mins": 5.5,
+      "elapsed_mins": 5.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "6-14",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 06:46:20"
+      "updated_at_tr": "2026-11-24 06:47:10"
     },
     {
       "signal_id": "CB-773648792_35m",
@@ -56,32 +56,32 @@
       "home_team": "Indiana Pacers",
       "away_team": "Atlanta Hawks",
       "quarter": 3,
-      "elapsed_mins": 30.7,
+      "elapsed_mins": 31.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "40-64",
-      "score_gap": 24,
+      "current_score": "42-64",
+      "score_gap": 22,
       "fav1_barem": "171-180",
-      "fav1_odd": 2.12,
+      "fav1_odd": 2.1,
       "fav2_barem": "181-190",
-      "fav2_odd": 3.21,
+      "fav2_odd": 3.18,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "181-190",
       "target_barem_tr": "181-190",
       "target_barem_en": "181-190",
       "target_t_id": 1841,
-      "target_odd": 3.21,
-      "min_acceptable_odd": 3.06,
+      "target_odd": 3.18,
+      "min_acceptable_odd": 3.03,
       "zone_type": "TRAP_LOW",
-      "zone_badge": "🔥 NBA 2.10–2.30 SEÇİCİ 2. FAVORİ (Üst Kanat Düşük (+185 TL)): 181-190 (3.21)",
+      "zone_badge": "🔥 NBA 2.10–2.30 SEÇİCİ 2. FAVORİ (Üst Kanat Düşük (+185 TL)): 181-190 (3.18)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 06:46:20"
+      "updated_at_tr": "2026-11-24 06:47:10"
     }
   ],
   "recent_history": [
