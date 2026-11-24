@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 09:29:11",
-  "timestamp": 1795501751.85,
+  "updated_at_tr": "2026-11-24 09:29:42",
+  "timestamp": 1795501782.91,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 09:29:10"
+      "updated_at_tr": "2026-11-24 09:29:41"
     },
     {
       "signal_id": "CB-773670543_35m",
@@ -59,8 +59,8 @@
       "elapsed_mins": 34.2,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "67-88",
-      "score_gap": 21,
+      "current_score": "67-89",
+      "score_gap": 22,
       "fav1_barem": "211-220",
       "fav1_odd": 2.19,
       "fav2_barem": "201-210",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 09:29:10"
+      "updated_at_tr": "2026-11-24 09:29:41"
     }
   ],
   "recent_history": [
@@ -91,8 +91,8 @@
       "raw_game_id": "773670543",
       "date": "2026-11-24",
       "game_name": "Oklahoma City Thunder vs New York Knicks",
-      "current_score": "67-88",
-      "score_gap": 21,
+      "current_score": "67-89",
+      "score_gap": 22,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
