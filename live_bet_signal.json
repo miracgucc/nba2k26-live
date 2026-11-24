@@ -1,13 +1,13 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 14:34:32",
-  "timestamp": 1795520072.18,
+  "updated_at_tr": "2026-11-24 14:35:07",
+  "timestamp": 1795520107.51,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
   "chain_state": {
     "prev_shift": 0,
-    "prev2_shift": -1
+    "prev2_shift": 0
   },
   "has_active_play_signal": false,
   "current_play_signal": null,
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 14:34:30"
+      "updated_at_tr": "2026-11-24 14:35:06"
     },
     {
       "signal_id": "CB-773736010_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 14:34:30"
+      "updated_at_tr": "2026-11-24 14:35:06"
     },
     {
       "signal_id": "CB-773728306_35m",
@@ -91,7 +91,7 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Oklahoma City Thunder",
       "quarter": 2,
-      "elapsed_mins": 23.9,
+      "elapsed_mins": 24.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "31-51",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 14:34:30"
+      "updated_at_tr": "2026-11-24 14:35:06"
     }
   ],
   "recent_history": [
@@ -135,9 +135,9 @@
       "target_t_id": 1842,
       "target_odd": 3.46,
       "zone_badge": "🔥 NBA 2.10–2.30 SEÇİCİ 2. FAVORİ (10–15 İdeal Fark (+569 TL)): 191-200 (3.46)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "113-94",
+      "actual_range": "201-210",
+      "result": "YATTI"
     },
     {
       "signal_id": "CB-773712776_35m",
