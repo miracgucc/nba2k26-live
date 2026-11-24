@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 03:30:35",
-  "timestamp": 1795480235.28,
+  "updated_at_tr": "2026-11-24 03:31:11",
+  "timestamp": 1795480271.8,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Denver Nuggets",
       "away_team": "Minnesota Timberwolves",
       "quarter": 3,
-      "elapsed_mins": 32.0,
+      "elapsed_mins": 32.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "67-75",
-      "score_gap": 8,
+      "current_score": "67-78",
+      "score_gap": 11,
       "fav1_barem": "211-220",
-      "fav1_odd": 2.44,
+      "fav1_odd": 2.46,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.47,
+      "fav2_odd": 3.23,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "211-220",
       "target_barem_tr": "211-220",
       "target_barem_en": "211-220",
       "target_t_id": 1844,
-      "target_odd": 2.44,
-      "min_acceptable_odd": 2.29,
+      "target_odd": 2.46,
+      "min_acceptable_odd": 2.31,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Önceki Maç +1 Üst (%53.8 / +267 TL)): 211-220 (2.44)",
+      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (10–15 Fark (%60.0 / +415 TL)): 211-220 (2.46)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-24 03:30:34"
+      "updated_at_tr": "2026-11-24 03:31:10"
     },
     {
       "signal_id": "CB-773626590_35m",
@@ -81,10 +81,29 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 03:30:34"
+      "updated_at_tr": "2026-11-24 03:31:10"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-773620752_35m",
+      "game_id": "CB-773620752",
+      "raw_game_id": "773620752",
+      "date": "2026-11-24",
+      "game_name": "Denver Nuggets vs Minnesota Timberwolves",
+      "current_score": "67-78",
+      "score_gap": 11,
+      "decision": "OYNA",
+      "pick_type": "1. Favori",
+      "target_barem": "211-220",
+      "target_barem_tr": "211-220",
+      "target_t_id": 1844,
+      "target_odd": 2.46,
+      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (10–15 Fark (%60.0 / +415 TL)): 211-220 (2.46)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-773615155_35m",
       "game_id": "CB-773615155",
@@ -406,25 +425,6 @@
       "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 3 Sayı Fark)",
       "actual_score": "94-113",
       "actual_range": "201-210",
-      "result": "PAS"
-    },
-    {
-      "signal_id": "CB-773480701_35m",
-      "game_id": "CB-773480701",
-      "raw_game_id": "773480701",
-      "date": "2026-11-23",
-      "game_name": "Houston Rockets vs Oklahoma City Thunder",
-      "current_score": "62-81",
-      "score_gap": 19,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.21)",
-      "actual_score": "79-97",
-      "actual_range": "171-180",
       "result": "PAS"
     }
   ]
