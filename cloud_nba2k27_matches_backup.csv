@@ -1,6 +1,6 @@
 game_id,date,home_team,away_team,home_q1,away_q1,home_q2,away_q2,home_q3,away_q3,home_q4,away_q4,ot_home,ot_away,home_total,away_total,winner,total_score,margin,is_ot,top_scorer,top_scorer_points
-CB-770234048,2026-11-12 15:20,Detroit Pistons (cyber),Cleveland Cavaliers (cyber),30,14,22,30,31,27,25,24,0,0,108,95,Detroit Pistons (cyber),203,13,0,Duren Cyber,28
 CB-770239464,2026-11-12 15:20,New York Knicks (cyber),Toronto Raptors (cyber),39,27,24,25,25,27,26,15,0,0,114,94,New York Knicks (cyber),208,20,0,Anunoby Cyber,30
+CB-770234048,2026-11-12 15:20,Detroit Pistons (cyber),Cleveland Cavaliers (cyber),30,14,22,30,31,27,25,24,0,0,108,95,Detroit Pistons (cyber),203,13,0,Duren Cyber,28
 CB-770247550,2026-11-12 16:00,Atlanta Hawks (cyber),Miami Heat (cyber),28,37,16,31,23,25,28,18,0,0,95,111,Miami Heat (cyber),206,-16,0,Butler Cyber,38
 CB-770256128,2026-11-12 16:40,Boston Celtics (cyber),Philadelphia 76ers (cyber),27,24,23,30,19,22,19,24,0,0,88,100,Philadelphia 76ers (cyber),188,-12,0,Maxey Cyber,26
 CB-770277946,2026-11-12 18:10,Detroit Pistons (cyber),Cleveland Cavaliers (cyber),29,22,29,35,23,35,31,26,0,0,112,118,Cleveland Cavaliers (cyber),230,-6,0,Mitchell Cyber,25
@@ -130,3 +130,4 @@ CB-773603304,2026-11-24 00:40,Cleveland Cavaliers (cyber),New York Knicks (cyber
 CB-773615162,2026-11-24 02:00,Atlanta Hawks (cyber),Philadelphia 76ers (cyber),25,35,22,33,26,35,21,22,0,0,94,125,Philadelphia 76ers (cyber),219,-31,0,Maxey Cyber,23
 CB-773626597,2026-11-24 03:20,Miami Heat (cyber),Boston Celtics (cyber),21,21,20,21,27,22,26,25,0,0,94,89,Miami Heat (cyber),183,5,0,Adebayo Cyber,32
 CB-773638436,2026-11-24 04:40,Toronto Raptors (cyber),Detroit Pistons (cyber),22,30,19,27,21,32,22,20,0,0,84,109,Detroit Pistons (cyber),193,-25,0,Harris Cyber,36
+CB-773648799,2026-11-24 06:00,Philadelphia 76ers (cyber),Cleveland Cavaliers (cyber),17,22,33,29,18,24,24,31,0,0,92,106,Cleveland Cavaliers (cyber),198,-14,0,Allen Cyber,23
