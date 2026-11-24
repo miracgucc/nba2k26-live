@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 06:39:50",
-  "timestamp": 1795491590.27,
+  "updated_at_tr": "2026-11-24 06:40:29",
+  "timestamp": 1795491629.45,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 06:39:48"
+      "updated_at_tr": "2026-11-24 06:40:27"
     },
     {
       "signal_id": "CB-773648792_35m",
@@ -56,11 +56,11 @@
       "home_team": "Indiana Pacers",
       "away_team": "Atlanta Hawks",
       "quarter": 3,
-      "elapsed_mins": 25.2,
+      "elapsed_mins": 25.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "32-57",
-      "score_gap": 25,
+      "current_score": "32-60",
+      "score_gap": 28,
       "fav1_barem": "181-190",
       "fav1_odd": 2.77,
       "fav2_barem": "191-200",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 06:39:48"
+      "updated_at_tr": "2026-11-24 06:40:27"
     }
   ],
   "recent_history": [
