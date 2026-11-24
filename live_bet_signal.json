@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 21:15:01",
-  "timestamp": 1795544101.99,
+  "updated_at_tr": "2026-11-24 21:15:40",
+  "timestamp": 1795544140.75,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 21:15:01"
+      "updated_at_tr": "2026-11-24 21:15:39"
     },
     {
       "signal_id": "CB-773824475_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 21:15:01"
+      "updated_at_tr": "2026-11-24 21:15:39"
     },
     {
       "signal_id": "CB-773814232_35m",
@@ -91,7 +91,7 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Denver Nuggets",
       "quarter": 2,
-      "elapsed_mins": 23.0,
+      "elapsed_mins": 23.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "51-50",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 21:15:01"
+      "updated_at_tr": "2026-11-24 21:15:39"
     }
   ],
   "recent_history": [
@@ -135,9 +135,9 @@
       "target_t_id": 1844,
       "target_odd": 2.05,
       "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 211-220 (2.05)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "99-114",
+      "actual_range": "211-220",
+      "result": "TUTTU"
     },
     {
       "signal_id": "CB-773796550_35m",
