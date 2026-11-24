@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 13:33:13",
-  "timestamp": 1795516393.94,
+  "updated_at_tr": "2026-11-24 13:33:56",
+  "timestamp": 1795516436.69,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Cleveland Cavaliers",
       "quarter": 1,
-      "elapsed_mins": 10.1,
+      "elapsed_mins": 10.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "22-16",
-      "score_gap": 6,
+      "current_score": "22-19",
+      "score_gap": 3,
       "fav1_barem": "191-200",
-      "fav1_odd": 3.56,
+      "fav1_odd": 3.46,
       "fav2_barem": "201-210",
-      "fav2_odd": 4.28,
+      "fav2_odd": 4.4,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_barem_en": "201-210",
       "target_t_id": 1843,
-      "target_odd": 4.28,
-      "min_acceptable_odd": 4.13,
+      "target_odd": 4.4,
+      "min_acceptable_odd": 4.25,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (4.28)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (4.40)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 13:33:12"
+      "updated_at_tr": "2026-11-24 13:33:55"
     },
     {
       "signal_id": "CB-773712776_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 13:33:12"
+      "updated_at_tr": "2026-11-24 13:33:55"
     }
   ],
   "recent_history": [
