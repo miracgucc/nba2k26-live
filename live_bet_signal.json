@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 12:00:10",
-  "timestamp": 1795510810.38,
+  "updated_at_tr": "2026-11-24 12:00:50",
+  "timestamp": 1795510850.04,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -14,41 +14,6 @@
   "active_signals": [],
   "live_matches": [
     {
-      "signal_id": "CB-773689121_35m",
-      "game_id": "CB-773689121",
-      "raw_game_id": "773689121",
-      "game_name": "Golden State Warriors vs Minnesota Timberwolves",
-      "home_team": "Golden State Warriors",
-      "away_team": "Minnesota Timberwolves",
-      "quarter": 4,
-      "elapsed_mins": 47.9,
-      "in_decision_window_35m": false,
-      "is_barem_open": false,
-      "current_score": "110-101",
-      "score_gap": 9,
-      "fav1_barem": "211-220",
-      "fav1_odd": 0.0,
-      "fav2_barem": "-",
-      "fav2_odd": 0.0,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⏳ Oran Bekleniyor",
-      "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
-      },
-      "updated_at_tr": "2026-11-24 12:00:09"
-    },
-    {
       "signal_id": "CB-773696990_35m",
       "game_id": "CB-773696990",
       "raw_game_id": "773696990",
@@ -56,32 +21,32 @@
       "home_team": "New York Knicks",
       "away_team": "Denver Nuggets",
       "quarter": 3,
-      "elapsed_mins": 27.2,
+      "elapsed_mins": 27.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "68-46",
-      "score_gap": 22,
+      "current_score": "70-50",
+      "score_gap": 20,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.46,
+      "fav1_odd": 2.37,
       "fav2_barem": "191-200",
-      "fav2_odd": 3.29,
+      "fav2_odd": 3.63,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_barem_en": "201-210",
       "target_t_id": 1843,
-      "target_odd": 2.46,
-      "min_acceptable_odd": 2.31,
+      "target_odd": 2.37,
+      "min_acceptable_odd": 2.22,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Önceki Maç +1 Üst (%53.8 / +267 TL)): 201-210 (2.46)",
+      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Önceki Maç +1 Üst (%53.8 / +267 TL)): 201-210 (2.37)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-24 12:00:09"
+      "updated_at_tr": "2026-11-24 12:00:48"
     },
     {
       "signal_id": "CB-773704565_35m",
@@ -116,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 12:00:09"
+      "updated_at_tr": "2026-11-24 12:00:48"
     }
   ],
   "recent_history": [
