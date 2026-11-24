@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 17:37:07",
-  "timestamp": 1795531027.2,
+  "updated_at_tr": "2026-11-24 17:37:57",
+  "timestamp": 1795531077.99,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Detroit Pistons",
       "away_team": "New York Knicks",
       "quarter": 3,
-      "elapsed_mins": 35.6,
-      "in_decision_window_35m": true,
-      "is_barem_open": true,
-      "current_score": "81-82",
-      "score_gap": 1,
+      "elapsed_mins": 36.0,
+      "in_decision_window_35m": false,
+      "is_barem_open": false,
+      "current_score": "81-85",
+      "score_gap": 4,
       "fav1_barem": "211-220",
       "fav1_odd": 2.31,
       "fav2_barem": "221-230",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 1 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 4 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 17:37:06"
+      "updated_at_tr": "2026-11-24 17:37:56"
     },
     {
       "signal_id": "CB-773771866_35m",
@@ -56,7 +56,7 @@
       "home_team": "Houston Rockets",
       "away_team": "Los Angeles Clippers",
       "quarter": 2,
-      "elapsed_mins": 13.6,
+      "elapsed_mins": 13.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "17-29",
@@ -81,7 +81,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 17:37:06"
+      "updated_at_tr": "2026-11-24 17:37:56"
     }
   ],
   "recent_history": [
