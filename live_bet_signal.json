@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 11:14:08",
-  "timestamp": 1795508048.63,
+  "updated_at_tr": "2026-11-24 11:14:56",
+  "timestamp": 1795508096.2,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 11:14:07"
+      "updated_at_tr": "2026-11-24 11:14:55"
     },
     {
       "signal_id": "CB-773682253_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 11:14:07"
+      "updated_at_tr": "2026-11-24 11:14:55"
     },
     {
       "signal_id": "CB-773696990_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 11:14:07"
+      "updated_at_tr": "2026-11-24 11:14:55"
     }
   ],
   "recent_history": [
@@ -135,9 +135,9 @@
       "target_t_id": 1844,
       "target_odd": 2.06,
       "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 211-220 (2.06)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "110-103",
+      "actual_range": "211-220",
+      "result": "TUTTU"
     },
     {
       "signal_id": "CB-773676365_35m",
