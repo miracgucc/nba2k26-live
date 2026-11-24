@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 17:55:35",
-  "timestamp": 1795532135.53,
+  "updated_at_tr": "2026-11-24 17:56:19",
+  "timestamp": 1795532179.77,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Detroit Pistons",
       "away_team": "New York Knicks",
       "quarter": 4,
-      "elapsed_mins": 46.4,
+      "elapsed_mins": 47.0,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "108-117",
-      "score_gap": 9,
+      "current_score": "110-117",
+      "score_gap": 7,
       "fav1_barem": "231+",
       "fav1_odd": 1.01,
       "fav2_barem": "-",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 17:55:34"
+      "updated_at_tr": "2026-11-24 17:56:18"
     },
     {
       "signal_id": "CB-773771866_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 17:55:34"
+      "updated_at_tr": "2026-11-24 17:56:18"
     },
     {
       "signal_id": "CB-773779957_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 17:55:34"
+      "updated_at_tr": "2026-11-24 17:56:18"
     }
   ],
   "recent_history": [
