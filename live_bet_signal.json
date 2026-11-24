@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 08:40:53",
-  "timestamp": 1795498853.22,
+  "updated_at_tr": "2026-11-24 08:41:40",
+  "timestamp": 1795498900.36,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 08:40:51"
+      "updated_at_tr": "2026-11-24 08:41:39"
     },
     {
       "signal_id": "CB-773670543_35m",
@@ -56,15 +56,15 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "New York Knicks",
       "quarter": 1,
-      "elapsed_mins": 0.0,
+      "elapsed_mins": 1.1,
       "in_decision_window_35m": false,
-      "is_barem_open": false,
-      "current_score": "0-0",
-      "score_gap": 0,
-      "fav1_barem": "-",
-      "fav1_odd": 0.0,
-      "fav2_barem": "-",
-      "fav2_odd": 0.0,
+      "is_barem_open": true,
+      "current_score": "4-2",
+      "score_gap": 2,
+      "fav1_barem": "211-220",
+      "fav1_odd": 3.94,
+      "fav2_barem": "201-210",
+      "fav2_odd": 4.16,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -73,15 +73,15 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 0 Sayı Fark)",
+      "zone_type": "PASS_SELECTIVE",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.94)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 08:40:51"
+      "updated_at_tr": "2026-11-24 08:41:39"
     }
   ],
   "recent_history": [
