@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 05:40:17",
-  "timestamp": 1795488017.71,
+  "updated_at_tr": "2026-11-24 05:40:56",
+  "timestamp": 1795488056.1,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Cleveland Cavaliers",
       "away_team": "Minnesota Timberwolves",
       "quarter": 2,
-      "elapsed_mins": 12.4,
+      "elapsed_mins": 13.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "18-37",
       "score_gap": 19,
-      "fav1_barem": "211-220",
-      "fav1_odd": 4.09,
+      "fav1_barem": "191-200",
+      "fav1_odd": 4.04,
       "fav2_barem": "201-210",
-      "fav2_odd": 4.23,
+      "fav2_odd": 4.11,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_barem_en": "201-210",
       "target_t_id": 1843,
-      "target_odd": 4.23,
-      "min_acceptable_odd": 4.08,
+      "target_odd": 4.11,
+      "min_acceptable_odd": 3.96,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (4.23)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (4.11)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 05:40:16"
+      "updated_at_tr": "2026-11-24 05:40:55"
     },
     {
       "signal_id": "CB-773638429_35m",
@@ -56,12 +56,12 @@
       "home_team": "New York Knicks",
       "away_team": "Oklahoma City Thunder",
       "quarter": 4,
-      "elapsed_mins": 38.5,
+      "elapsed_mins": 39.0,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "75-73",
       "score_gap": 2,
-      "fav1_barem": "191-200",
+      "fav1_barem": "181-190",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
       "fav2_odd": 0.0,
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 05:40:16"
+      "updated_at_tr": "2026-11-24 05:40:55"
     }
   ],
   "recent_history": [
