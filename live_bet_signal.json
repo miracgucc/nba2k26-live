@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 00:23:32",
-  "timestamp": 1795555412.99,
+  "updated_at_tr": "2026-11-25 00:24:17",
+  "timestamp": 1795555457.85,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,12 +21,12 @@
       "home_team": "Denver Nuggets",
       "away_team": "Indiana Pacers",
       "quarter": 4,
-      "elapsed_mins": 42.7,
+      "elapsed_mins": 42.9,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "100-86",
-      "score_gap": 14,
-      "fav1_barem": "201-210",
+      "current_score": "103-86",
+      "score_gap": 17,
+      "fav1_barem": "211-220",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
       "fav2_odd": 0.0,
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 00:23:31"
+      "updated_at_tr": "2026-11-25 00:24:16"
     },
     {
       "signal_id": "CB-773864633_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 00:23:31"
+      "updated_at_tr": "2026-11-25 00:24:16"
     }
   ],
   "recent_history": [
