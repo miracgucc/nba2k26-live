@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 20:30:50",
-  "timestamp": 1795541450.17,
+  "updated_at_tr": "2026-11-24 20:31:31",
+  "timestamp": 1795541491.01,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Detroit Pistons",
       "away_team": "New York Knicks",
       "quarter": 2,
-      "elapsed_mins": 19.2,
+      "elapsed_mins": 19.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "42-45",
-      "score_gap": 3,
+      "current_score": "44-45",
+      "score_gap": 1,
       "fav1_barem": "211-220",
       "fav1_odd": 3.04,
       "fav2_barem": "221-230",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 20:30:48"
+      "updated_at_tr": "2026-11-24 20:31:29"
     },
     {
       "signal_id": "CB-773796550_35m",
@@ -56,11 +56,11 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Atlanta Hawks",
       "quarter": 4,
-      "elapsed_mins": 44.8,
+      "elapsed_mins": 45.5,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "99-95",
-      "score_gap": 4,
+      "current_score": "102-95",
+      "score_gap": 7,
       "fav1_barem": "201-210",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -73,15 +73,15 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 4 Sayı Fark)",
+      "zone_type": "PASS_SELECTIVE",
+      "zone_badge": "⏳ Oran Bekleniyor",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 20:30:48"
+      "updated_at_tr": "2026-11-24 20:31:29"
     },
     {
       "signal_id": "CB-773814232_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 20:30:48"
+      "updated_at_tr": "2026-11-24 20:31:29"
     }
   ],
   "recent_history": [
