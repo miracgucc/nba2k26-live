@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 09:41:36",
-  "timestamp": 1795502496.28,
+  "updated_at_tr": "2026-11-24 09:42:26",
+  "timestamp": 1795502546.39,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -24,8 +24,8 @@
       "elapsed_mins": 16.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "30-38",
-      "score_gap": 8,
+      "current_score": "30-39",
+      "score_gap": 9,
       "fav1_barem": "211-220",
       "fav1_odd": 3.39,
       "fav2_barem": "221-230",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 09:41:34"
+      "updated_at_tr": "2026-11-24 09:42:25"
     },
     {
       "signal_id": "CB-773670543_35m",
@@ -56,10 +56,10 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "New York Knicks",
       "quarter": 4,
-      "elapsed_mins": 41.7,
+      "elapsed_mins": 42.5,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "78-95",
+      "current_score": "80-97",
       "score_gap": 17,
       "fav1_barem": "191-200",
       "fav1_odd": 0.0,
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 09:41:34"
+      "updated_at_tr": "2026-11-24 09:42:25"
     }
   ],
   "recent_history": [
