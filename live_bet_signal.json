@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 15:36:47",
-  "timestamp": 1795523807.47,
+  "updated_at_tr": "2026-11-24 15:37:14",
+  "timestamp": 1795523834.3,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -9,79 +9,9 @@
     "prev_shift": 1,
     "prev2_shift": 0
   },
-  "has_active_play_signal": true,
-  "current_play_signal": {
-    "signal_id": "CB-773736010_35m",
-    "game_id": "CB-773736010",
-    "raw_game_id": "773736010",
-    "game_name": "Detroit Pistons vs Denver Nuggets",
-    "home_team": "Detroit Pistons",
-    "away_team": "Denver Nuggets",
-    "quarter": 3,
-    "elapsed_mins": 35.8,
-    "in_decision_window_35m": true,
-    "is_barem_open": true,
-    "current_score": "58-95",
-    "score_gap": 37,
-    "fav1_barem": "201-210",
-    "fav1_odd": 2.31,
-    "fav2_barem": "191-200",
-    "fav2_odd": 2.69,
-    "decision": "OYNA",
-    "pick_type": "1. Favori",
-    "target_barem": "201-210",
-    "target_barem_tr": "201-210",
-    "target_barem_en": "201-210",
-    "target_t_id": 1843,
-    "target_odd": 2.31,
-    "min_acceptable_odd": 2.16,
-    "zone_type": "GOLDEN",
-    "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Önceki Maç +1 Üst (%53.8 / +267 TL)): 201-210 (2.31)",
-    "stakes": {
-      "kasa_8000": 400,
-      "kasa_10000": 500,
-      "kasa_15000": 750,
-      "kasa_20000": 1000
-    },
-    "updated_at_tr": "2026-11-24 15:36:46"
-  },
-  "active_signals": [
-    {
-      "signal_id": "CB-773736010_35m",
-      "game_id": "CB-773736010",
-      "raw_game_id": "773736010",
-      "game_name": "Detroit Pistons vs Denver Nuggets",
-      "home_team": "Detroit Pistons",
-      "away_team": "Denver Nuggets",
-      "quarter": 3,
-      "elapsed_mins": 35.8,
-      "in_decision_window_35m": true,
-      "is_barem_open": true,
-      "current_score": "58-95",
-      "score_gap": 37,
-      "fav1_barem": "201-210",
-      "fav1_odd": 2.31,
-      "fav2_barem": "191-200",
-      "fav2_odd": 2.69,
-      "decision": "OYNA",
-      "pick_type": "1. Favori",
-      "target_barem": "201-210",
-      "target_barem_tr": "201-210",
-      "target_barem_en": "201-210",
-      "target_t_id": 1843,
-      "target_odd": 2.31,
-      "min_acceptable_odd": 2.16,
-      "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Önceki Maç +1 Üst (%53.8 / +267 TL)): 201-210 (2.31)",
-      "stakes": {
-        "kasa_8000": 400,
-        "kasa_10000": 500,
-        "kasa_15000": 750,
-        "kasa_20000": 1000
-      },
-      "updated_at_tr": "2026-11-24 15:36:46"
-    }
-  ],
+  "has_active_play_signal": false,
+  "current_play_signal": null,
+  "active_signals": [],
   "live_matches": [
     {
       "signal_id": "CB-773736010_35m",
@@ -91,9 +21,9 @@
       "home_team": "Detroit Pistons",
       "away_team": "Denver Nuggets",
       "quarter": 3,
-      "elapsed_mins": 35.8,
-      "in_decision_window_35m": true,
-      "is_barem_open": true,
+      "elapsed_mins": 36.0,
+      "in_decision_window_35m": false,
+      "is_barem_open": false,
       "current_score": "58-95",
       "score_gap": 37,
       "fav1_barem": "201-210",
@@ -116,7 +46,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-24 15:36:46"
+      "updated_at_tr": "2026-11-24 15:37:13"
     },
     {
       "signal_id": "CB-773744321_35m",
@@ -129,8 +59,8 @@
       "elapsed_mins": 13.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "18-25",
-      "score_gap": 7,
+      "current_score": "19-25",
+      "score_gap": 6,
       "fav1_barem": "201-210",
       "fav1_odd": 3.45,
       "fav2_barem": "191-200",
@@ -151,7 +81,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 15:36:46"
+      "updated_at_tr": "2026-11-24 15:37:13"
     }
   ],
   "recent_history": [
