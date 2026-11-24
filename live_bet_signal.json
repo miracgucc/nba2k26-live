@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 06:11:52",
-  "timestamp": 1795489912.97,
+  "updated_at_tr": "2026-11-24 06:12:30",
+  "timestamp": 1795489950.0,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -18,11 +18,11 @@
     "home_team": "Cleveland Cavaliers",
     "away_team": "Minnesota Timberwolves",
     "quarter": 3,
-    "elapsed_mins": 33.6,
+    "elapsed_mins": 33.7,
     "in_decision_window_35m": true,
     "is_barem_open": true,
-    "current_score": "42-78",
-    "score_gap": 36,
+    "current_score": "42-80",
+    "score_gap": 38,
     "fav1_barem": "171-180",
     "fav1_odd": 2.09,
     "fav2_barem": "161-170",
@@ -43,7 +43,7 @@
       "kasa_15000": 750,
       "kasa_20000": 1000
     },
-    "updated_at_tr": "2026-11-24 06:11:51"
+    "updated_at_tr": "2026-11-24 06:12:28"
   },
   "active_signals": [
     {
@@ -54,11 +54,11 @@
       "home_team": "Cleveland Cavaliers",
       "away_team": "Minnesota Timberwolves",
       "quarter": 3,
-      "elapsed_mins": 33.6,
+      "elapsed_mins": 33.7,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "42-78",
-      "score_gap": 36,
+      "current_score": "42-80",
+      "score_gap": 38,
       "fav1_barem": "171-180",
       "fav1_odd": 2.09,
       "fav2_barem": "161-170",
@@ -79,7 +79,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-24 06:11:51"
+      "updated_at_tr": "2026-11-24 06:12:28"
     }
   ],
   "live_matches": [
@@ -91,11 +91,11 @@
       "home_team": "Cleveland Cavaliers",
       "away_team": "Minnesota Timberwolves",
       "quarter": 3,
-      "elapsed_mins": 33.6,
+      "elapsed_mins": 33.7,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "42-78",
-      "score_gap": 36,
+      "current_score": "42-80",
+      "score_gap": 38,
       "fav1_barem": "171-180",
       "fav1_odd": 2.09,
       "fav2_barem": "161-170",
@@ -116,7 +116,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-24 06:11:51"
+      "updated_at_tr": "2026-11-24 06:12:28"
     },
     {
       "signal_id": "CB-773648792_35m",
@@ -129,8 +129,8 @@
       "elapsed_mins": 8.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "12-27",
-      "score_gap": 15,
+      "current_score": "13-27",
+      "score_gap": 14,
       "fav1_barem": "201-210",
       "fav1_odd": 3.49,
       "fav2_barem": "191-200",
@@ -151,7 +151,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 06:11:51"
+      "updated_at_tr": "2026-11-24 06:12:28"
     }
   ],
   "recent_history": [
