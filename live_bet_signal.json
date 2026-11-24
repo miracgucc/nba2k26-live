@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 11:44:17",
-  "timestamp": 1795509857.92,
+  "updated_at_tr": "2026-11-24 11:44:53",
+  "timestamp": 1795509893.96,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,12 +21,12 @@
       "home_team": "Golden State Warriors",
       "away_team": "Minnesota Timberwolves",
       "quarter": 4,
-      "elapsed_mins": 39.8,
+      "elapsed_mins": 40.3,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "87-74",
-      "score_gap": 13,
-      "fav1_barem": "191-200",
+      "current_score": "87-79",
+      "score_gap": 8,
+      "fav1_barem": "201-210",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
       "fav2_odd": 0.0,
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 11:44:16"
+      "updated_at_tr": "2026-11-24 11:44:53"
     },
     {
       "signal_id": "CB-773696990_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 11:44:16"
+      "updated_at_tr": "2026-11-24 11:44:53"
     }
   ],
   "recent_history": [
