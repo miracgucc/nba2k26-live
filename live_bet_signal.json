@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 00:49:35",
-  "timestamp": 1795556975.48,
+  "updated_at_tr": "2026-11-25 00:50:15",
+  "timestamp": 1795557015.54,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Minnesota Timberwolves",
       "quarter": 3,
-      "elapsed_mins": 30.2,
+      "elapsed_mins": 30.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "56-81",
+      "current_score": "58-83",
       "score_gap": 25,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.33,
+      "fav1_odd": 2.38,
       "fav2_barem": "211-220",
-      "fav2_odd": 2.55,
+      "fav2_odd": 2.4,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_barem_en": "201-210",
       "target_t_id": 1843,
-      "target_odd": 2.33,
-      "min_acceptable_odd": 2.18,
+      "target_odd": 2.38,
+      "min_acceptable_odd": 2.23,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Tam İkiz Oran (%56.2 / +331 TL)): 201-210 (2.33)",
+      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Tam İkiz Oran (%56.2 / +331 TL)): 201-210 (2.38)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-25 00:49:34"
+      "updated_at_tr": "2026-11-25 00:50:14"
     },
     {
       "signal_id": "CB-773871806_35m",
@@ -59,8 +59,8 @@
       "elapsed_mins": 7.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "22-17",
-      "score_gap": 5,
+      "current_score": "22-18",
+      "score_gap": 4,
       "fav1_barem": "201-210",
       "fav1_odd": 3.64,
       "fav2_barem": "211-220",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 00:49:34"
+      "updated_at_tr": "2026-11-25 00:50:14"
     }
   ],
   "recent_history": [
