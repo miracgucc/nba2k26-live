@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 08:21:13",
-  "timestamp": 1795497673.06,
+  "updated_at_tr": "2026-11-24 08:21:51",
+  "timestamp": 1795497711.72,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -20,12 +20,12 @@
       "game_name": "Miami Heat vs Los Angeles Clippers",
       "home_team": "Miami Heat",
       "away_team": "Los Angeles Clippers",
-      "quarter": 3,
-      "elapsed_mins": 36.0,
+      "quarter": 4,
+      "elapsed_mins": 36.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "78-66",
-      "score_gap": 12,
+      "current_score": "80-69",
+      "score_gap": 11,
       "fav1_barem": "191-200",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 08:21:11"
+      "updated_at_tr": "2026-11-24 08:21:50"
     },
     {
       "signal_id": "CB-773664424_35m",
@@ -62,26 +62,26 @@
       "current_score": "31-22",
       "score_gap": 9,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.6,
+      "fav1_odd": 3.38,
       "fav2_barem": "191-200",
-      "fav2_odd": 3.71,
+      "fav2_odd": 3.76,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "191-200",
       "target_barem_tr": "191-200",
       "target_barem_en": "191-200",
       "target_t_id": 1842,
-      "target_odd": 3.71,
-      "min_acceptable_odd": 3.56,
+      "target_odd": 3.76,
+      "min_acceptable_odd": 3.61,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (3.71)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (3.76)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 08:21:11"
+      "updated_at_tr": "2026-11-24 08:21:50"
     }
   ],
   "recent_history": [
