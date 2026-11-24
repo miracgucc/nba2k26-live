@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 11:57:51",
-  "timestamp": 1795510671.52,
+  "updated_at_tr": "2026-11-24 11:58:29",
+  "timestamp": 1795510709.92,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,12 +21,12 @@
       "home_team": "Golden State Warriors",
       "away_team": "Minnesota Timberwolves",
       "quarter": 4,
-      "elapsed_mins": 47.3,
+      "elapsed_mins": 47.8,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "105-99",
-      "score_gap": 6,
-      "fav1_barem": "201-210",
+      "current_score": "110-101",
+      "score_gap": 9,
+      "fav1_barem": "211-220",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
       "fav2_odd": 0.0,
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 11:57:50"
+      "updated_at_tr": "2026-11-24 11:58:28"
     },
     {
       "signal_id": "CB-773696990_35m",
@@ -56,11 +56,11 @@
       "home_team": "New York Knicks",
       "away_team": "Denver Nuggets",
       "quarter": 3,
-      "elapsed_mins": 26.8,
+      "elapsed_mins": 27.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "65-46",
-      "score_gap": 19,
+      "current_score": "68-46",
+      "score_gap": 22,
       "fav1_barem": "201-210",
       "fav1_odd": 2.46,
       "fav2_barem": "191-200",
@@ -81,7 +81,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 11:57:50"
+      "updated_at_tr": "2026-11-24 11:58:28"
     },
     {
       "signal_id": "CB-773704565_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 11:57:50"
+      "updated_at_tr": "2026-11-24 11:58:28"
     }
   ],
   "recent_history": [
