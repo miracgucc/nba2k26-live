@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 16:08:47",
-  "timestamp": 1795525727.68,
+  "updated_at_tr": "2026-11-24 16:09:23",
+  "timestamp": 1795525763.21,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Miami Heat",
       "away_team": "Indiana Pacers",
       "quarter": 3,
-      "elapsed_mins": 33.6,
+      "elapsed_mins": 33.9,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "61-71",
-      "score_gap": 10,
+      "current_score": "63-71",
+      "score_gap": 8,
       "fav1_barem": "181-190",
       "fav1_odd": 2.62,
       "fav2_barem": "191-200",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 16:08:46"
+      "updated_at_tr": "2026-11-24 16:09:22"
     },
     {
       "signal_id": "CB-773753047_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 16:08:46"
+      "updated_at_tr": "2026-11-24 16:09:22"
     }
   ],
   "recent_history": [
@@ -91,15 +91,15 @@
       "raw_game_id": "773744321",
       "date": "2026-11-24",
       "game_name": "Miami Heat vs Indiana Pacers",
-      "current_score": "61-71",
-      "score_gap": 10,
-      "decision": "OYNA",
-      "pick_type": "1. Favori",
-      "target_barem": "181-190",
-      "target_barem_tr": "181-190",
-      "target_t_id": 1841,
-      "target_odd": 2.48,
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (10–15 Fark (%60.0 / +415 TL)): 181-190 (2.48)",
+      "current_score": "63-71",
+      "score_gap": 8,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 181-190: 2.62)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
