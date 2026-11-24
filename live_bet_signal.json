@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 06:59:34",
-  "timestamp": 1795492774.77,
+  "updated_at_tr": "2026-11-24 07:00:15",
+  "timestamp": 1795492815.03,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Golden State Warriors",
       "away_team": "New York Knicks",
       "quarter": 2,
-      "elapsed_mins": 14.6,
+      "elapsed_mins": 14.8,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "18-31",
-      "score_gap": 13,
+      "current_score": "20-31",
+      "score_gap": 11,
       "fav1_barem": "211-220",
       "fav1_odd": 3.62,
       "fav2_barem": "231+",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 06:59:33"
+      "updated_at_tr": "2026-11-24 07:00:13"
     },
     {
       "signal_id": "CB-773648792_35m",
@@ -56,11 +56,11 @@
       "home_team": "Indiana Pacers",
       "away_team": "Atlanta Hawks",
       "quarter": 4,
-      "elapsed_mins": 38.6,
+      "elapsed_mins": 38.8,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "59-78",
-      "score_gap": 19,
+      "current_score": "59-80",
+      "score_gap": 21,
       "fav1_barem": "171-180",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 06:59:33"
+      "updated_at_tr": "2026-11-24 07:00:13"
     }
   ],
   "recent_history": [
