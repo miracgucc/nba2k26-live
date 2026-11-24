@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 06:30:50",
-  "timestamp": 1795491050.71,
+  "updated_at_tr": "2026-11-24 06:31:30",
+  "timestamp": 1795491090.5,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -13,41 +13,6 @@
   "current_play_signal": null,
   "active_signals": [],
   "live_matches": [
-    {
-      "signal_id": "CB-773643599_35m",
-      "game_id": "CB-773643599",
-      "raw_game_id": "773643599",
-      "game_name": "Cleveland Cavaliers vs Minnesota Timberwolves",
-      "home_team": "Cleveland Cavaliers",
-      "away_team": "Minnesota Timberwolves",
-      "quarter": 4,
-      "elapsed_mins": 48.0,
-      "in_decision_window_35m": false,
-      "is_barem_open": false,
-      "current_score": "56-107",
-      "score_gap": 51,
-      "fav1_barem": "161-170",
-      "fav1_odd": 0.0,
-      "fav2_barem": "-",
-      "fav2_odd": 0.0,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⏳ Oran Bekleniyor",
-      "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
-      },
-      "updated_at_tr": "2026-11-24 06:30:49"
-    },
     {
       "signal_id": "CB-773653873_35m",
       "game_id": "CB-773653873",
@@ -81,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 06:30:49"
+      "updated_at_tr": "2026-11-24 06:31:29"
     },
     {
       "signal_id": "CB-773648792_35m",
@@ -116,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 06:30:49"
+      "updated_at_tr": "2026-11-24 06:31:29"
     }
   ],
   "recent_history": [
