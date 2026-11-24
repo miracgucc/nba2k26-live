@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 22:40:09",
-  "timestamp": 1795549209.21,
+  "updated_at_tr": "2026-11-24 22:40:44",
+  "timestamp": 1795549244.64,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Detroit Pistons",
       "away_team": "Minnesota Timberwolves",
       "quarter": 3,
-      "elapsed_mins": 26.1,
+      "elapsed_mins": 26.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "50-53",
-      "score_gap": 3,
+      "current_score": "52-53",
+      "score_gap": 1,
       "fav1_barem": "191-200",
       "fav1_odd": 3.1,
       "fav2_barem": "201-210",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 22:40:08"
+      "updated_at_tr": "2026-11-24 22:40:43"
     },
     {
       "signal_id": "CB-773841951_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 22:40:08"
+      "updated_at_tr": "2026-11-24 22:40:43"
     }
   ],
   "recent_history": [
