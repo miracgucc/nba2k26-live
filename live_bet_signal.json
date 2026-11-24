@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 14:35:07",
-  "timestamp": 1795520107.51,
+  "updated_at_tr": "2026-11-24 14:35:54",
+  "timestamp": 1795520154.48,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -13,41 +13,6 @@
   "current_play_signal": null,
   "active_signals": [],
   "live_matches": [
-    {
-      "signal_id": "CB-773720827_35m",
-      "game_id": "CB-773720827",
-      "raw_game_id": "773720827",
-      "game_name": "Atlanta Hawks vs Cleveland Cavaliers",
-      "home_team": "Atlanta Hawks",
-      "away_team": "Cleveland Cavaliers",
-      "quarter": 4,
-      "elapsed_mins": 47.9,
-      "in_decision_window_35m": false,
-      "is_barem_open": false,
-      "current_score": "113-94",
-      "score_gap": 19,
-      "fav1_barem": "201-210",
-      "fav1_odd": 0.0,
-      "fav2_barem": "-",
-      "fav2_odd": 0.0,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⏳ Oran Bekleniyor",
-      "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
-      },
-      "updated_at_tr": "2026-11-24 14:35:06"
-    },
     {
       "signal_id": "CB-773736010_35m",
       "game_id": "CB-773736010",
@@ -81,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 14:35:06"
+      "updated_at_tr": "2026-11-24 14:35:53"
     },
     {
       "signal_id": "CB-773728306_35m",
@@ -116,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 14:35:06"
+      "updated_at_tr": "2026-11-24 14:35:53"
     }
   ],
   "recent_history": [
