@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 11:55:13",
-  "timestamp": 1795510513.5,
+  "updated_at_tr": "2026-11-24 11:55:52",
+  "timestamp": 1795510552.07,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Golden State Warriors",
       "away_team": "Minnesota Timberwolves",
       "quarter": 4,
-      "elapsed_mins": 45.2,
+      "elapsed_mins": 45.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "101-92",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 11:55:12"
+      "updated_at_tr": "2026-11-24 11:55:50"
     },
     {
       "signal_id": "CB-773696990_35m",
@@ -56,32 +56,32 @@
       "home_team": "New York Knicks",
       "away_team": "Denver Nuggets",
       "quarter": 3,
-      "elapsed_mins": 24.2,
+      "elapsed_mins": 24.8,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "58-43",
-      "score_gap": 15,
+      "current_score": "58-46",
+      "score_gap": 12,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.62,
+      "fav1_odd": 2.47,
       "fav2_barem": "211-220",
-      "fav2_odd": 3.54,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.62)",
+      "fav2_odd": 3.5,
+      "decision": "OYNA",
+      "pick_type": "1. Favori",
+      "target_barem": "201-210",
+      "target_barem_tr": "201-210",
+      "target_barem_en": "201-210",
+      "target_t_id": 1843,
+      "target_odd": 2.47,
+      "min_acceptable_odd": 2.32,
+      "zone_type": "GOLDEN",
+      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (10–15 Fark (%60.0 / +415 TL)): 201-210 (2.47)",
       "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
+        "kasa_8000": 400,
+        "kasa_10000": 500,
+        "kasa_15000": 750,
+        "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-24 11:55:12"
+      "updated_at_tr": "2026-11-24 11:55:50"
     },
     {
       "signal_id": "CB-773704565_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 11:55:12"
+      "updated_at_tr": "2026-11-24 11:55:50"
     }
   ],
   "recent_history": [
