@@ -1,13 +1,13 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-24 17:17:33",
-  "timestamp": 1795529853.09,
+  "updated_at_tr": "2026-11-24 17:18:14",
+  "timestamp": 1795529894.46,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
   "chain_state": {
-    "prev_shift": 1,
-    "prev2_shift": 0
+    "prev_shift": -2,
+    "prev2_shift": 1
   },
   "has_active_play_signal": false,
   "current_play_signal": null,
@@ -20,33 +20,33 @@
       "game_name": "Detroit Pistons vs New York Knicks",
       "home_team": "Detroit Pistons",
       "away_team": "New York Knicks",
-      "quarter": 2,
-      "elapsed_mins": 24.0,
+      "quarter": 3,
+      "elapsed_mins": 24.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "50-56",
-      "score_gap": 6,
+      "current_score": "52-56",
+      "score_gap": 4,
       "fav1_barem": "211-220",
-      "fav1_odd": 2.91,
+      "fav1_odd": 2.89,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.29,
+      "fav2_odd": 3.05,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_barem_en": "201-210",
       "target_t_id": 1843,
-      "target_odd": 3.29,
-      "min_acceptable_odd": 3.14,
+      "target_odd": 3.05,
+      "min_acceptable_odd": 2.9,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.29)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.05)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-24 17:17:31"
+      "updated_at_tr": "2026-11-24 17:18:12"
     },
     {
       "signal_id": "CB-773771866_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-24 17:17:31"
+      "updated_at_tr": "2026-11-24 17:18:12"
     }
   ],
   "recent_history": [
@@ -100,9 +100,9 @@
       "target_t_id": 1844,
       "target_odd": 3.67,
       "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (3.67)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "96-89",
+      "actual_range": "181-190",
+      "result": "YATTI"
     },
     {
       "signal_id": "CB-773744321_35m",
