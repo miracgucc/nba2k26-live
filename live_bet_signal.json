@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 12:26:00",
-  "timestamp": 1795598760.72,
+  "updated_at_tr": "2026-11-25 12:26:35",
+  "timestamp": 1795598795.69,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -24,8 +24,8 @@
       "elapsed_mins": 16.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "34-43",
-      "score_gap": 9,
+      "current_score": "34-44",
+      "score_gap": 10,
       "fav1_barem": "231+",
       "fav1_odd": 1.94,
       "fav2_barem": "221-230",
@@ -46,7 +46,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-25 12:25:59"
+      "updated_at_tr": "2026-11-25 12:26:34"
     },
     {
       "signal_id": "CB-773968286_35m",
@@ -56,10 +56,10 @@
       "home_team": "Houston Rockets",
       "away_team": "Minnesota Timberwolves",
       "quarter": 4,
-      "elapsed_mins": 40.9,
+      "elapsed_mins": 41.5,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "90-82",
+      "current_score": "92-84",
       "score_gap": 8,
       "fav1_barem": "201-210",
       "fav1_odd": 0.0,
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 12:25:59"
+      "updated_at_tr": "2026-11-25 12:26:34"
     }
   ],
   "recent_history": [
