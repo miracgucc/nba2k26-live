@@ -6999,18 +6999,18 @@ CB-774094699,Anadolu Efes (cyber) vs Baskonia (cyber),2026-11-25,Q3 - Minute 26,
 CB-774094699,Anadolu Efes (cyber) vs Baskonia (cyber),2026-11-25,Q3 - Minute 27,49-51,99.0,7.44,2.45,2.792,7.31,20.0,1.2,10.3,31.3,37.8,16.4,2.9,141-150,141-150,141-160,69.1,69-77,141-150,COMPLETED
 CB-774094699,Anadolu Efes (cyber) vs Baskonia (cyber),2026-11-25,Q3 - Minute 28,49-53,99.0,4.52,2.11,3.64,12.0,99.0,4.2,23.4,41.2,25.7,5.1,0.4,141-150,141-150,141-160,66.9,69-77,141-150,COMPLETED
 CB-774094699,Anadolu Efes (cyber) vs Baskonia (cyber),2026-11-25,Q3 - Minute 29,52-55,99.0,8.46,2.416,2.58,7.51,20.0,1.9,14.8,38.9,34.3,9.3,0.8,141-150,141-150,141-160,73.2,69-77,141-150,COMPLETED
-CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q1 - Minute 1,2-3,4.26,3.53,3.24,5.74,14.0,99.0,8.0,15.2,25.4,25.7,16.4,9.3,141-150,141-150,141-160,51.1,,,PENDING
-CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q1 - Minute 7,11-9,2.365,3.15,4.29,11.0,99.0,99.0,18.1,24.6,27.6,20.0,7.5,2.2,131'den Az,131'den Az,131-150,52.2,,,PENDING
-CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q2 - Minute 13,16-13,1.03,8.93,99.0,99.0,99.0,99.0,57.3,26.8,12.4,2.9,0.4,0.1,131'den Az,131'den Az,121-140,84.1,,,PENDING
-CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q2 - Minute 14,16-13,1.035,8.48,99.0,99.0,99.0,99.0,70.1,20.4,7.8,1.5,0.1,0.0,131'den Az,131'den Az,121-140,90.5,,,PENDING
-CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q2 - Minute 17,22-21,1.175,5.05,18.0,99.0,99.0,99.0,66.1,23.2,8.9,1.6,0.2,0.0,131'den Az,131'den Az,121-140,89.3,,,PENDING
-CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q2 - Minute 20,28-23,1.155,5.1,20.0,99.0,99.0,99.0,72.5,19.9,6.5,1.0,0.1,0.0,131'den Az,131'den Az,121-140,92.4,,,PENDING
-CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q3 - Minute 22,31-27,99.0,11.0,99.0,99.0,99.0,99.0,79.7,16.4,3.5,0.3,0.0,0.0,131'den Az,131'den Az,121-140,96.1,,,PENDING
-CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q3 - Minute 24,34-31,1.01,9.27,99.0,99.0,99.0,99.0,79.8,16.7,3.2,0.3,0.0,0.0,131'den Az,131'den Az,121-140,96.5,,,PENDING
-CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q3 - Minute 26,38-35,1.032,8.38,99.0,99.0,99.0,99.0,74.9,20.7,4.1,0.3,0.0,0.0,131'den Az,131'den Az,121-140,95.6,,,PENDING
-CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q3 - Minute 27,38-35,99.0,10.0,99.0,99.0,99.0,99.0,86.1,12.2,1.6,0.1,0.0,0.0,131'den Az,131'den Az,121-140,98.3,,,PENDING
-CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q3 - Minute 28,43-35,99.0,10.0,99.0,99.0,99.0,99.0,89.3,9.6,1.1,0.0,0.0,0.0,131'den Az,131'den Az,121-140,98.9,,,PENDING
-CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q3 - Minute 29,43-37,99.0,20.0,99.0,99.0,99.0,99.0,91.8,7.7,0.5,0.0,0.0,0.0,131'den Az,131'den Az,121-140,99.5,,,PENDING
+CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q1 - Minute 1,2-3,4.26,3.53,3.24,5.74,14.0,99.0,8.0,15.2,25.4,25.7,16.4,9.3,141-150,141-150,141-160,51.1,62-47,131'den Az,COMPLETED
+CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q1 - Minute 7,11-9,2.365,3.15,4.29,11.0,99.0,99.0,18.1,24.6,27.6,20.0,7.5,2.2,131'den Az,131'den Az,131-150,52.2,62-47,131'den Az,COMPLETED
+CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q2 - Minute 13,16-13,1.03,8.93,99.0,99.0,99.0,99.0,57.3,26.8,12.4,2.9,0.4,0.1,131'den Az,131'den Az,121-140,84.1,62-47,131'den Az,COMPLETED
+CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q2 - Minute 14,16-13,1.035,8.48,99.0,99.0,99.0,99.0,70.1,20.4,7.8,1.5,0.1,0.0,131'den Az,131'den Az,121-140,90.5,62-47,131'den Az,COMPLETED
+CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q2 - Minute 17,22-21,1.175,5.05,18.0,99.0,99.0,99.0,66.1,23.2,8.9,1.6,0.2,0.0,131'den Az,131'den Az,121-140,89.3,62-47,131'den Az,COMPLETED
+CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q2 - Minute 20,28-23,1.155,5.1,20.0,99.0,99.0,99.0,72.5,19.9,6.5,1.0,0.1,0.0,131'den Az,131'den Az,121-140,92.4,62-47,131'den Az,COMPLETED
+CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q3 - Minute 22,31-27,99.0,11.0,99.0,99.0,99.0,99.0,79.7,16.4,3.5,0.3,0.0,0.0,131'den Az,131'den Az,121-140,96.1,62-47,131'den Az,COMPLETED
+CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q3 - Minute 24,34-31,1.01,9.27,99.0,99.0,99.0,99.0,79.8,16.7,3.2,0.3,0.0,0.0,131'den Az,131'den Az,121-140,96.5,62-47,131'den Az,COMPLETED
+CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q3 - Minute 26,38-35,1.032,8.38,99.0,99.0,99.0,99.0,74.9,20.7,4.1,0.3,0.0,0.0,131'den Az,131'den Az,121-140,95.6,62-47,131'den Az,COMPLETED
+CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q3 - Minute 27,38-35,99.0,10.0,99.0,99.0,99.0,99.0,86.1,12.2,1.6,0.1,0.0,0.0,131'den Az,131'den Az,121-140,98.3,62-47,131'den Az,COMPLETED
+CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q3 - Minute 28,43-35,99.0,10.0,99.0,99.0,99.0,99.0,89.3,9.6,1.1,0.0,0.0,0.0,131'den Az,131'den Az,121-140,98.9,62-47,131'den Az,COMPLETED
+CB-774101237,Virtus Bologna (cyber) vs Crvena Zvezda (cyber),2026-11-25,Q3 - Minute 29,43-37,99.0,20.0,99.0,99.0,99.0,99.0,91.8,7.7,0.5,0.0,0.0,0.0,131'den Az,131'den Az,121-140,99.5,62-47,131'den Az,COMPLETED
 CB-774107715,Maccabi Tel Aviv (cyber) vs Paris (cyber),2026-11-25,Q1 - Minute 0,3-0,7.82,4.05,3.1,4.37,8.24,17.0,7.2,13.9,24.5,25.7,17.7,11.0,141-150,141-150,141-160,50.2,,,PENDING
 CB-774107715,Maccabi Tel Aviv (cyber) vs Paris (cyber),2026-11-25,Q1 - Minute 4,6-11,6.4,3.54,3.025,4.8,10.0,99.0,8.9,16.5,25.9,25.8,15.8,6.9,141-150,141-150,141-160,51.8,,,PENDING
 CB-774107715,Maccabi Tel Aviv (cyber) vs Paris (cyber),2026-11-25,Q1 - Minute 8,17-16,8.39,3.91,3.045,4.14,8.67,20.0,4.9,12.9,25.4,28.0,19.2,9.6,141-150,141-150,141-160,53.4,,,PENDING
