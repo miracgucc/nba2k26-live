@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 05:29:20",
-  "timestamp": 1795573760.34,
+  "updated_at_tr": "2026-11-25 05:29:57",
+  "timestamp": 1795573797.32,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 05:29:18"
+      "updated_at_tr": "2026-11-25 05:29:55"
     },
     {
       "signal_id": "CB-773907565_35m",
@@ -56,32 +56,32 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Denver Nuggets",
       "quarter": 3,
-      "elapsed_mins": 29.8,
+      "elapsed_mins": 30.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "71-60",
       "score_gap": 11,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.46,
-      "fav2_barem": "211-220",
-      "fav2_odd": 3.6,
+      "fav1_odd": 2.48,
+      "fav2_barem": "191-200",
+      "fav2_odd": 3.65,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_barem_en": "201-210",
       "target_t_id": 1843,
-      "target_odd": 2.46,
-      "min_acceptable_odd": 2.31,
+      "target_odd": 2.48,
+      "min_acceptable_odd": 2.33,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (10–15 Fark (%60.0 / +415 TL)): 201-210 (2.46)",
+      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (10–15 Fark (%60.0 / +415 TL)): 201-210 (2.48)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-25 05:29:18"
+      "updated_at_tr": "2026-11-25 05:29:55"
     }
   ],
   "recent_history": [
