@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 16:28:37",
-  "timestamp": 1795613317.46,
+  "updated_at_tr": "2026-11-25 16:29:12",
+  "timestamp": 1795613352.64,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Cleveland Cavaliers",
       "away_team": "Minnesota Timberwolves",
       "quarter": 4,
-      "elapsed_mins": 42.4,
+      "elapsed_mins": 43.0,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "87-77",
-      "score_gap": 10,
+      "current_score": "90-77",
+      "score_gap": 13,
       "fav1_barem": "181-190",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 16:28:36"
+      "updated_at_tr": "2026-11-25 16:29:11"
     },
     {
       "signal_id": "CB-774032836_35m",
@@ -56,32 +56,32 @@
       "home_team": "Golden State Warriors",
       "away_team": "Oklahoma City Thunder",
       "quarter": 2,
-      "elapsed_mins": 19.5,
+      "elapsed_mins": 20.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "24-44",
-      "score_gap": 20,
+      "current_score": "26-47",
+      "score_gap": 21,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.77,
+      "fav1_odd": 2.73,
       "fav2_barem": "211-220",
-      "fav2_odd": 3.88,
+      "fav2_odd": 3.62,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "211-220",
       "target_barem_tr": "211-220",
       "target_barem_en": "211-220",
       "target_t_id": 1844,
-      "target_odd": 3.88,
-      "min_acceptable_odd": 3.73,
+      "target_odd": 3.62,
+      "min_acceptable_odd": 3.47,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (3.88)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (3.62)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 16:28:36"
+      "updated_at_tr": "2026-11-25 16:29:11"
     }
   ],
   "recent_history": [
