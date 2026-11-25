@@ -1,13 +1,13 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 09:09:35",
-  "timestamp": 1795586975.14,
+  "updated_at_tr": "2026-11-25 09:10:12",
+  "timestamp": 1795587012.87,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
   "chain_state": {
-    "prev_shift": 2,
-    "prev2_shift": 1
+    "prev_shift": -2,
+    "prev2_shift": 2
   },
   "has_active_play_signal": false,
   "current_play_signal": null,
@@ -21,32 +21,32 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Los Angeles Clippers",
       "quarter": 2,
-      "elapsed_mins": 18.2,
+      "elapsed_mins": 18.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "25-50",
-      "score_gap": 25,
+      "current_score": "27-53",
+      "score_gap": 26,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.29,
+      "fav1_odd": 3.25,
       "fav2_barem": "191-200",
-      "fav2_odd": 3.52,
+      "fav2_odd": 3.66,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "191-200",
       "target_barem_tr": "191-200",
       "target_barem_en": "191-200",
       "target_t_id": 1842,
-      "target_odd": 3.52,
-      "min_acceptable_odd": 3.37,
+      "target_odd": 3.66,
+      "min_acceptable_odd": 3.51,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (3.52)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (3.66)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 09:09:33"
+      "updated_at_tr": "2026-11-25 09:10:11"
     },
     {
       "signal_id": "CB-773935088_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 09:09:33"
+      "updated_at_tr": "2026-11-25 09:10:11"
     }
   ],
   "recent_history": [
@@ -100,9 +100,9 @@
       "target_t_id": 1841,
       "target_odd": 2.02,
       "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 181-190 (2.02)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "97-70",
+      "actual_range": "161-170",
+      "result": "YATTI"
     },
     {
       "signal_id": "CB-773929710_35m",
