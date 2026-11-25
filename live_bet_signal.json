@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 18:30:36",
-  "timestamp": 1795620636.19,
+  "updated_at_tr": "2026-11-25 18:31:12",
+  "timestamp": 1795620672.59,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Golden State Warriors",
       "away_team": "Dallas Mavericks",
       "quarter": 2,
-      "elapsed_mins": 18.5,
+      "elapsed_mins": 19.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "44-43",
-      "score_gap": 1,
+      "current_score": "47-43",
+      "score_gap": 4,
       "fav1_barem": "231+",
-      "fav1_odd": 1.94,
+      "fav1_odd": 1.99,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.15,
+      "fav2_odd": 3.12,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "231+",
       "target_barem_tr": "231 veya daha fazla",
       "target_barem_en": "231 or more",
       "target_t_id": 1846,
-      "target_odd": 1.94,
-      "min_acceptable_odd": 1.79,
+      "target_odd": 1.99,
+      "min_acceptable_odd": 1.84,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 231+ (1.94)",
+      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 231+ (1.99)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-25 18:30:33"
+      "updated_at_tr": "2026-11-25 18:31:11"
     },
     {
       "signal_id": "CB-774067037_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 18:30:33"
+      "updated_at_tr": "2026-11-25 18:31:11"
     },
     {
       "signal_id": "CB-774049953_35m",
@@ -91,12 +91,12 @@
       "home_team": "New York Knicks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 4,
-      "elapsed_mins": 46.6,
+      "elapsed_mins": 47.1,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "89-94",
+      "current_score": "92-97",
       "score_gap": 5,
-      "fav1_barem": "181-190",
+      "fav1_barem": "191-200",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
       "fav2_odd": 0.0,
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 18:30:33"
+      "updated_at_tr": "2026-11-25 18:31:11"
     }
   ],
   "recent_history": [
