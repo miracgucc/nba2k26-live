@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 11:00:11",
-  "timestamp": 1795593611.88,
+  "updated_at_tr": "2026-11-25 11:00:47",
+  "timestamp": 1795593647.18,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Denver Nuggets",
       "away_team": "Detroit Pistons",
       "quarter": 4,
-      "elapsed_mins": 39.1,
+      "elapsed_mins": 39.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "94-88",
-      "score_gap": 6,
+      "current_score": "96-88",
+      "score_gap": 8,
       "fav1_barem": "221-230",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 11:00:10"
+      "updated_at_tr": "2026-11-25 11:00:46"
     },
     {
       "signal_id": "CB-773960703_35m",
@@ -56,32 +56,32 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "New York Knicks",
       "quarter": 2,
-      "elapsed_mins": 14.2,
+      "elapsed_mins": 14.8,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "28-40",
       "score_gap": 12,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.03,
+      "fav1_odd": 3.15,
       "fav2_barem": "211-220",
-      "fav2_odd": 4.02,
+      "fav2_odd": 4.11,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "211-220",
       "target_barem_tr": "211-220",
       "target_barem_en": "211-220",
       "target_t_id": 1844,
-      "target_odd": 4.02,
-      "min_acceptable_odd": 3.87,
+      "target_odd": 4.11,
+      "min_acceptable_odd": 3.96,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (4.02)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (4.11)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 11:00:10"
+      "updated_at_tr": "2026-11-25 11:00:46"
     }
   ],
   "recent_history": [
