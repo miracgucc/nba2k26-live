@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 18:42:48",
-  "timestamp": 1795621368.76,
+  "updated_at_tr": "2026-11-25 18:43:24",
+  "timestamp": 1795621404.99,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-25 18:42:47"
+      "updated_at_tr": "2026-11-25 18:43:23"
     },
     {
       "signal_id": "CB-774067037_35m",
@@ -56,32 +56,32 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Indiana Pacers",
       "quarter": 1,
-      "elapsed_mins": 2.3,
+      "elapsed_mins": 2.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "2-7",
-      "score_gap": 5,
+      "current_score": "4-7",
+      "score_gap": 3,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.67,
+      "fav1_odd": 3.6,
       "fav2_barem": "211-220",
-      "fav2_odd": 4.29,
+      "fav2_odd": 4.42,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "211-220",
       "target_barem_tr": "211-220",
       "target_barem_en": "211-220",
       "target_t_id": 1844,
-      "target_odd": 4.29,
-      "min_acceptable_odd": 4.14,
+      "target_odd": 4.42,
+      "min_acceptable_odd": 4.27,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (4.29)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (4.42)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 18:42:47"
+      "updated_at_tr": "2026-11-25 18:43:24"
     }
   ],
   "recent_history": [
