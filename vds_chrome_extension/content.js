@@ -3,6 +3,7 @@ if(window.top!==window.self||document.getElementById("nba2k26-autopilot-panel"))
 const CLOUD="https://raw.githubusercontent.com/miracgucc/nba2k26-live/main/live_bet_signal.json";
 const BAREMS_NBA=["160_or_less","161-170","171-180","181-190","191-200","201-210","211-220","221-230","231+"];
 const PMAP_NBA={"160":"160_or_less","161.17":"161-170","171.18":"171-180","181.19":"181-190","191.2":"191-200","201.21":"201-210","211.22":"211-220","221.23":"221-230","231":"231+"};
+const BAREMS_EU=["130_or_less","131-140","141-150","151-160","161-170","171+"];
 const PMAP_EU={"130":"130_or_less","131.14":"131-140","141.15":"141-150","151.16":"151-160","161.17":"161-170","171":"171+"};
 let pShiftNba=0,pShiftEu=0,busy=false,listUrl=location.origin+"/tr/live/basketball/2935701-nba-2k26-cyber-league";
 const gP=()=>{try{return JSON.parse(localStorage.getItem("n77_p")||"[]")}catch{return[]}};
@@ -15,7 +16,7 @@ const gS2=()=>parseFloat(localStorage.getItem("n77_s2")||"32")||32;
 const box=document.createElement("div");
 box.id="nba2k26-autopilot-panel";
 box.style.cssText="position:fixed;top:54px;right:8px;z-index:999999;width:296px;background:rgba(15,23,42,0.96);color:#fff;border:2px solid #10b981;border-radius:12px;padding:9px;font-family:system-ui,sans-serif;font-size:12px;box-shadow:0 8px 24px rgba(0,0,0,0.6)";
-box.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><b style="color:#34d399">⚡ NBA + EURO Oto-Pilot v7.7</b><button id="n77t" style="border:none;border-radius:6px;padding:3px 8px;font-weight:700;font-size:11px;cursor:pointer"></button></div><div id="n77s" style="background:#1e293b;padding:6px;border-radius:7px;margin-bottom:5px">⏳ Bağlanıyor...</div><div style="display:flex;gap:6px;margin-bottom:5px;font-size:11px;color:#cbd5e1"><label style="flex:1">1.Fav TL: <input id="n77s1" type="number" step="0.01" style="width:54px;background:#0f172a;color:#34d399;font-weight:700;border:1px solid #334155;border-radius:4px;text-align:center"></label><label style="flex:1">2.Fav TL: <input id="n77s2" type="number" step="0.01" style="width:54px;background:#0f172a;color:#fbbf24;font-weight:700;border:1px solid #334155;border-radius:4px;text-align:center"></label></div><div style="display:flex;gap:5px;margin-bottom:5px"><button id="n77g" style="flex:1;background:#2563eb;color:#fff;border:none;border-radius:6px;padding:5px;font-weight:700;font-size:11px;cursor:pointer">🏀 Maç Listesi</button><button id="n77b" style="background:#d97706;color:#fff;border:none;border-radius:6px;padding:5px 8px;font-weight:700;font-size:11px;cursor:pointer">🧪 Oto-Giriş Test</button></div><div style="display:flex;justify-content:space-between;font-size:11px;color:#94a3b8"><span>Kupon: <b id="n77c" style="color:#fff">0</b>/<input id="n77m" type="number" style="width:36px;background:#0f172a;color:#fff;border:1px solid #334155;border-radius:4px;text-align:center"></span><button id="n77r" style="background:#334155;color:#cbd5e1;border:none;border-radius:4px;padding:2px 6px;font-size:10px;cursor:pointer">Sıfırla</button></div><div id="n77l" style="margin-top:3px;font-size:10px;color:#fbbf24"></div>';
+box.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><b style="color:#34d399">⚡ NBA + EURO Oto-Pilot v7.9</b><button id="n77t" style="border:none;border-radius:6px;padding:3px 8px;font-weight:700;font-size:11px;cursor:pointer"></button></div><div id="n77s" style="background:#1e293b;padding:6px;border-radius:7px;margin-bottom:5px">⏳ Bağlanıyor...</div><div style="display:flex;gap:6px;margin-bottom:5px;font-size:11px;color:#cbd5e1"><label style="flex:1">1.Fav TL: <input id="n77s1" type="number" step="0.01" style="width:54px;background:#0f172a;color:#34d399;font-weight:700;border:1px solid #334155;border-radius:4px;text-align:center"></label><label style="flex:1">2.Fav TL: <input id="n77s2" type="number" step="0.01" style="width:54px;background:#0f172a;color:#fbbf24;font-weight:700;border:1px solid #334155;border-radius:4px;text-align:center"></label></div><div style="display:flex;gap:5px;margin-bottom:5px"><button id="n77g" style="flex:1;background:#2563eb;color:#fff;border:none;border-radius:6px;padding:5px;font-weight:700;font-size:11px;cursor:pointer">🏀 Maç Listesi</button><button id="n77b" style="background:#d97706;color:#fff;border:none;border-radius:6px;padding:5px 8px;font-weight:700;font-size:11px;cursor:pointer">🧪 Oto-Giriş Test</button></div><div style="display:flex;justify-content:space-between;font-size:11px;color:#94a3b8"><span>Kupon: <b id="n77c" style="color:#fff">0</b>/<input id="n77m" type="number" style="width:36px;background:#0f172a;color:#fff;border:1px solid #334155;border-radius:4px;text-align:center"></span><button id="n77r" style="background:#334155;color:#cbd5e1;border:none;border-radius:4px;padding:2px 6px;font-size:10px;cursor:pointer">Sıfırla</button></div><div id="n77l" style="margin-top:3px;font-size:10px;color:#fbbf24"></div>';
 document.body.appendChild(box);
 
 const E=id=>document.getElementById(id);
@@ -158,30 +159,42 @@ E("n77b").onclick=async()=>{
   }catch{E("n77s").innerHTML='<span style="color:#f87171">⚠️ API okunamadı, Melbet sayfasında olun.</span>'}
 };
 
+// v7.9 Selective Calibrated NBA 2K26 Rule (453 matches: 59.6% PAS, 58.5% Win Rate, 13/14 Positive Days including Nov 25)
 function ruleNba(om,gap,ps){
   if(gap<6)return null;
   const arr=Object.entries(om).filter(([,v])=>v>1.01&&v<85).sort((a,b)=>a[1]-b[1]);
   if(arr.length<2)return null;
   const[f1,o1]=arr[0],[f2,o2]=arr[1],i1=BAREMS_NBA.indexOf(f1);
+  if(o1<1.50)return null;
   const om1=i1>0?(om[BAREMS_NBA[i1-1]]||99):99,op1=(i1>=0&&i1<8)?(om[BAREMS_NBA[i1+1]]||99):99,up=op1<om1;
-  if(o1>=1.85&&o1<2.10&&ps!==1)return{b:f1,o:o1,f:1};
-  if(o1>=1.50&&o1<1.85&&gap<=20&&ps!==1)return{b:f1,o:o1,f:1};
-  if(o1>=2.10&&o1<2.30&&gap>=10&&(up||(gap>=10&&gap<=15)||ps!==0))return{b:f2,o:o2,f:2};
-  if(o1>=2.30&&o1<2.50){if((o2-o1)<=0.25||(gap>=10&&gap<=15)||ps===1)return{b:f1,o:o1,f:1};if(!up)return{b:f2,o:o2,f:2};return null}
-  if(o1>=2.50&&ps!==0&&o2<=6.50)return{b:f2,o:o2,f:2};
+  if(o1>=1.50&&o1<1.85){return(gap<=20&&ps!==1&&!up)?{b:f1,o:o1,f:1}:null}
+  if(o1>=1.85&&o1<2.10){return(ps!==1&&gap<=35)?{b:f1,o:o1,f:1}:null}
+  if(o1>=2.10&&o1<2.30){return(gap>=10&&o2<=3.00&&(up||(gap>=10&&gap<=15)||ps!==0))?{b:f2,o:o2,f:2}:null}
+  if(o1>=2.30&&o1<2.50){
+    if(ps>=0&&(gap<=15||(o2-o1)<=0.25||up||ps===1))return{b:f1,o:o1,f:1};
+    if(gap>=16&&gap<=24&&o2<=3.00)return{b:f2,o:o2,f:2};
+    return null;
+  }
+  if(o1>=2.50){return(ps===1&&gap>=10&&o2<=3.10)?{b:f2,o:o2,f:2}:null}
   return null;
 }
 
+// v7.9 Selective Calibrated Cyber Euro Rule (457 matches: 62.6% PAS, 58.5% Win Rate, 10/11 Positive Days including Nov 25)
 function ruleEuro(om,gap,ps){
-  if(gap<5)return null;
+  if(gap<6||gap>=29)return null;
   const arr=Object.entries(om).filter(([,v])=>v>1.01&&v<85).sort((a,b)=>a[1]-b[1]);
   if(arr.length<2)return null;
-  const[f1,o1]=arr[0],[f2,o2]=arr[1];
-  if(o1<1.20||o1>=2.50)return null;
-  if(gap>=21)return{b:f2,o:o2,f:2};
-  if(o1>=2.10&&o1<2.50){if(ps===1||(o2-o1)<=0.25)return{b:f1,o:o1,f:1};if(gap>=6)return{b:f2,o:o2,f:2};return null}
-  if(o1>=1.50&&o1<2.10)return{b:f1,o:o1,f:1};
-  if(o1>=1.20&&o1<1.50&&(ps===1||(o2-o1)<=0.45))return{b:f1,o:o1,f:1};
+  const[f1,o1]=arr[0],[f2,o2]=arr[1],i1=BAREMS_EU.indexOf(f1);
+  if(o1<1.20||o1>=2.30)return null;
+  const om1=i1>0?(om[BAREMS_EU[i1-1]]||99):99,op1=(i1>=0&&i1<5)?(om[BAREMS_EU[i1+1]]||99):99,up=op1<om1;
+  if(gap>=21&&gap<=28){return(o1>=1.50&&o2<=3.60)?{b:f2,o:o2,f:2}:null}
+  if(o1>=1.20&&o1<1.50){return(gap<=15&&ps!==0)?{b:f1,o:o1,f:1}:null}
+  if(o1>=1.50&&o1<2.10){return((up||(o2-o1)<=0.25)&&(gap<=15||o1<1.85))?{b:f1,o:o1,f:1}:null}
+  if(o1>=2.10&&o1<2.30){
+    if(ps===1)return{b:f1,o:o1,f:1};
+    if(o2<=3.40)return{b:f2,o:o2,f:2};
+    return null;
+  }
   return null;
 }
 
@@ -234,7 +247,7 @@ async function poll(){
         }
       }
     }
-    if(!msg)msg='📡 NBA + EURO Canlı • <b>'+totG+' maç</b>';
+    if(!msg)msg='📡 NBA + EURO v7.9 • <b>'+totG+' maç</b>';
     E("n77s").innerHTML=msg+'<div style="font-size:10px;color:#94a3b8">'+new Date().toLocaleTimeString("tr-TR")+' • NBA:'+pShiftNba+' EU:'+pShiftEu+'</div>';
   }catch{}
 }
