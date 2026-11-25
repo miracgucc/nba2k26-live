@@ -198,7 +198,7 @@ function ruleEuro(om,gap,ps){
   return null;
 }
 
-async function syncC(){try{const r=await fetch(CLOUD+"?t="+Date.now(),{cache:"no-store"});if(r.ok){const d=await r.json();if(d.chain_state)pShiftNba=Number(d.chain_state.prev_shift||0);if(d.euro_chain_state)pShiftEu=Number(d.euro_chain_state.prev_shift||0);if(d.active_melbet_nba2k26_url)listUrl=d.active_melbet_nba2k26_url}}catch{}}
+async function syncC(){try{const r=await fetch(CLOUD+"?t="+Date.now(),{cache:"no-store"});if(r.ok){const d=await r.json();if(d.chain_state)pShiftNba=Number(d.chain_state.prev_shift||0);if(d.euro_chain_state)pShiftEu=Number(d.euro_chain_state.prev_shift||0)}}catch{}}
 
 async function poll(){
   if(busy)return;
