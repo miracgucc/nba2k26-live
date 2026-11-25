@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 13:25:37",
-  "timestamp": 1795602337.34,
+  "updated_at_tr": "2026-11-25 13:26:14",
+  "timestamp": 1795602374.67,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Detroit Pistons",
       "away_team": "New York Knicks",
       "quarter": 1,
-      "elapsed_mins": 5.0,
+      "elapsed_mins": 5.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "10-17",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 13:25:36"
+      "updated_at_tr": "2026-11-25 13:26:13"
     },
     {
       "signal_id": "CB-773984525_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 13:25:36"
+      "updated_at_tr": "2026-11-25 13:26:13"
     }
   ],
   "recent_history": [
@@ -91,15 +91,15 @@
       "raw_game_id": "773984525",
       "date": "2026-11-25",
       "game_name": "Los Angeles Lakers vs Indiana Pacers",
-      "current_score": "75-71",
-      "score_gap": 4,
+      "current_score": "75-73",
+      "score_gap": 2,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
       "target_barem_tr": "",
       "target_t_id": 0,
       "target_odd": 0.0,
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 4 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 2 Sayı Fark)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
