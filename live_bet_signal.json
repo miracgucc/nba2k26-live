@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 09:05:26",
-  "timestamp": 1795586726.28,
+  "updated_at_tr": "2026-11-25 09:06:02",
+  "timestamp": 1795586762.32,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Los Angeles Clippers",
       "quarter": 2,
-      "elapsed_mins": 16.5,
+      "elapsed_mins": 17.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "25-45",
-      "score_gap": 20,
+      "current_score": "25-47",
+      "score_gap": 22,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.2,
+      "fav1_odd": 3.37,
       "fav2_barem": "191-200",
-      "fav2_odd": 3.76,
+      "fav2_odd": 3.65,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "191-200",
       "target_barem_tr": "191-200",
       "target_barem_en": "191-200",
       "target_t_id": 1842,
-      "target_odd": 3.76,
-      "min_acceptable_odd": 3.61,
+      "target_odd": 3.65,
+      "min_acceptable_odd": 3.5,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (3.76)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (3.65)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 09:05:24"
+      "updated_at_tr": "2026-11-25 09:06:01"
     },
     {
       "signal_id": "CB-773935088_35m",
@@ -59,8 +59,8 @@
       "elapsed_mins": 45.1,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "93-67",
-      "score_gap": 26,
+      "current_score": "93-68",
+      "score_gap": 25,
       "fav1_barem": "171-180",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 09:05:24"
+      "updated_at_tr": "2026-11-25 09:06:01"
     }
   ],
   "recent_history": [
