@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 16:05:35",
-  "timestamp": 1795611935.13,
+  "updated_at_tr": "2026-11-25 16:06:15",
+  "timestamp": 1795611975.53,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 16:05:34"
+      "updated_at_tr": "2026-11-25 16:06:13"
     },
     {
       "signal_id": "CB-774032836_35m",
@@ -56,32 +56,32 @@
       "home_team": "Golden State Warriors",
       "away_team": "Oklahoma City Thunder",
       "quarter": 1,
-      "elapsed_mins": 5.0,
+      "elapsed_mins": 5.7,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "5-15",
+      "current_score": "7-17",
       "score_gap": 10,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.57,
-      "fav2_barem": "231+",
-      "fav2_odd": 3.67,
+      "fav1_odd": 3.68,
+      "fav2_barem": "221-230",
+      "fav2_odd": 3.8,
       "decision": "OYNA",
       "pick_type": "2. Favori",
-      "target_barem": "231+",
-      "target_barem_tr": "231 veya daha fazla",
-      "target_barem_en": "231 or more",
-      "target_t_id": 1846,
-      "target_odd": 3.67,
-      "min_acceptable_odd": 3.52,
+      "target_barem": "221-230",
+      "target_barem_tr": "221-230",
+      "target_barem_en": "221-230",
+      "target_t_id": 1845,
+      "target_odd": 3.8,
+      "min_acceptable_odd": 3.65,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 231+ (3.67)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 221-230 (3.80)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 16:05:34"
+      "updated_at_tr": "2026-11-25 16:06:13"
     }
   ],
   "recent_history": [
