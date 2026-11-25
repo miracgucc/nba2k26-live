@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 08:37:43",
-  "timestamp": 1795585063.65,
+  "updated_at_tr": "2026-11-25 08:38:20",
+  "timestamp": 1795585100.76,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 08:37:42"
+      "updated_at_tr": "2026-11-25 08:38:19"
     },
     {
       "signal_id": "CB-773929710_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 08:37:42"
+      "updated_at_tr": "2026-11-25 08:38:19"
     },
     {
       "signal_id": "CB-773935088_35m",
@@ -91,32 +91,32 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Indiana Pacers",
       "quarter": 3,
-      "elapsed_mins": 25.9,
+      "elapsed_mins": 26.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "61-40",
-      "score_gap": 21,
+      "current_score": "61-42",
+      "score_gap": 19,
       "fav1_barem": "191-200",
-      "fav1_odd": 2.5,
-      "fav2_barem": "201-210",
-      "fav2_odd": 3.59,
+      "fav1_odd": 2.49,
+      "fav2_barem": "181-190",
+      "fav2_odd": 3.38,
       "decision": "OYNA",
-      "pick_type": "2. Favori",
-      "target_barem": "201-210",
-      "target_barem_tr": "201-210",
-      "target_barem_en": "201-210",
-      "target_t_id": 1843,
-      "target_odd": 3.59,
-      "min_acceptable_odd": 3.44,
-      "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.59)",
+      "pick_type": "1. Favori",
+      "target_barem": "191-200",
+      "target_barem_tr": "191-200",
+      "target_barem_en": "191-200",
+      "target_t_id": 1842,
+      "target_odd": 2.49,
+      "min_acceptable_odd": 2.34,
+      "zone_type": "GOLDEN",
+      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Önceki Maç +1 Üst (%53.8 / +267 TL)): 191-200 (2.49)",
       "stakes": {
-        "kasa_8000": 320,
-        "kasa_10000": 400,
-        "kasa_15000": 600,
-        "kasa_20000": 800
+        "kasa_8000": 400,
+        "kasa_10000": 500,
+        "kasa_15000": 750,
+        "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-25 08:37:42"
+      "updated_at_tr": "2026-11-25 08:38:19"
     }
   ],
   "recent_history": [
