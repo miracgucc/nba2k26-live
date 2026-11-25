@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 21:38:43",
-  "timestamp": 1795631923.09,
+  "updated_at_tr": "2026-11-25 21:39:28",
+  "timestamp": 1795631968.09,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Detroit Pistons",
       "away_team": "Cleveland Cavaliers",
       "quarter": 1,
-      "elapsed_mins": 11.7,
+      "elapsed_mins": 12.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "23-30",
-      "score_gap": 7,
+      "current_score": "23-32",
+      "score_gap": 9,
       "fav1_barem": "201-210",
       "fav1_odd": 3.17,
       "fav2_barem": "191-200",
-      "fav2_odd": 3.75,
+      "fav2_odd": 3.64,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 21:38:42"
+      "updated_at_tr": "2026-11-25 21:39:27"
     },
     {
       "signal_id": "CB-774095735_35m",
@@ -55,16 +55,16 @@
       "game_name": "Houston Rockets vs Oklahoma City Thunder",
       "home_team": "Houston Rockets",
       "away_team": "Oklahoma City Thunder",
-      "quarter": 3,
-      "elapsed_mins": 36.0,
+      "quarter": 4,
+      "elapsed_mins": 36.7,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "68-98",
-      "score_gap": 30,
+      "current_score": "68-100",
+      "score_gap": 32,
       "fav1_barem": "211-220",
-      "fav1_odd": 1.74,
-      "fav2_barem": "221-230",
-      "fav2_odd": 3.45,
+      "fav1_odd": 0.0,
+      "fav2_barem": "-",
+      "fav2_odd": 0.0,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 1.74)",
+      "zone_badge": "⏳ Oran Bekleniyor",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 21:38:42"
+      "updated_at_tr": "2026-11-25 21:39:27"
     }
   ],
   "recent_history": [
