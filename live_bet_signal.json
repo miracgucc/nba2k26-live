@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 18:18:39",
-  "timestamp": 1795619919.08,
+  "updated_at_tr": "2026-11-25 18:19:30",
+  "timestamp": 1795619970.97,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Golden State Warriors",
       "away_team": "Dallas Mavericks",
       "quarter": 2,
-      "elapsed_mins": 12.4,
+      "elapsed_mins": 13.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "22-33",
+      "current_score": "24-35",
       "score_gap": 11,
       "fav1_barem": "231+",
-      "fav1_odd": 2.81,
+      "fav1_odd": 2.82,
       "fav2_barem": "211-220",
-      "fav2_odd": 3.45,
+      "fav2_odd": 3.4,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "211-220",
       "target_barem_tr": "211-220",
       "target_barem_en": "211-220",
       "target_t_id": 1844,
-      "target_odd": 3.45,
-      "min_acceptable_odd": 3.3,
+      "target_odd": 3.4,
+      "min_acceptable_odd": 3.25,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (3.45)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (3.40)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 18:18:37"
+      "updated_at_tr": "2026-11-25 18:19:29"
     },
     {
       "signal_id": "CB-774049953_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 18:18:37"
+      "updated_at_tr": "2026-11-25 18:19:29"
     }
   ],
   "recent_history": [
