@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 05:50:06",
-  "timestamp": 1795575006.16,
+  "updated_at_tr": "2026-11-25 05:50:44",
+  "timestamp": 1795575044.02,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,13 +21,13 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Los Angeles Clippers",
       "quarter": 2,
-      "elapsed_mins": 19.3,
+      "elapsed_mins": 19.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "48-33",
-      "score_gap": 15,
+      "current_score": "48-37",
+      "score_gap": 11,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.94,
+      "fav1_odd": 3.02,
       "fav2_barem": "211-220",
       "fav2_odd": 3.41,
       "decision": "PAS",
@@ -39,14 +39,49 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.94)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.02)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 05:50:05"
+      "updated_at_tr": "2026-11-25 05:50:42"
+    },
+    {
+      "signal_id": "CB-773918766_35m",
+      "game_id": "CB-773918766",
+      "raw_game_id": "773918766",
+      "game_name": "Golden State Warriors vs Houston Rockets",
+      "home_team": "Golden State Warriors",
+      "away_team": "Houston Rockets",
+      "quarter": 1,
+      "elapsed_mins": 0.0,
+      "in_decision_window_35m": false,
+      "is_barem_open": false,
+      "current_score": "0-0",
+      "score_gap": 0,
+      "fav1_barem": "-",
+      "fav1_odd": 0.0,
+      "fav2_barem": "-",
+      "fav2_odd": 0.0,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_barem_en": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "min_acceptable_odd": 0.0,
+      "zone_type": "PASS_CLUTCH",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 0 Sayı Fark)",
+      "stakes": {
+        "kasa_8000": 0,
+        "kasa_10000": 0,
+        "kasa_15000": 0,
+        "kasa_20000": 0
+      },
+      "updated_at_tr": "2026-11-25 05:50:42"
     },
     {
       "signal_id": "CB-773907565_35m",
@@ -56,11 +91,11 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Denver Nuggets",
       "quarter": 4,
-      "elapsed_mins": 42.8,
+      "elapsed_mins": 43.4,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "92-83",
-      "score_gap": 9,
+      "current_score": "92-85",
+      "score_gap": 7,
       "fav1_barem": "191-200",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -81,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 05:50:05"
+      "updated_at_tr": "2026-11-25 05:50:42"
     }
   ],
   "recent_history": [
