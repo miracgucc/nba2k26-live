@@ -35,6 +35,9 @@ const gS2=()=>parseFloat(localStorage.getItem("n77_s2")||"60")||60;
 const getCid=()=>localStorage.getItem("n78_cid")||DEFAULT_CID;
 const gStats=()=>jGet("n78_stats",{w:0,l:0,net:0,hist:[]});
 const gOpen=()=>jGet("n78_open",[]);
+const gPas=()=>jGet("n80_pas",[]);
+const mPas=id=>{const a=gPas();if(!a.includes(id)){a.push(id);jSet("n80_pas",a.slice(-150))}};
+const isPasTgOn=()=>localStorage.getItem("n80_pastg")!=="0";
 
 function readWallet(){
   const el=document.querySelector(".balance__wallet")||document.querySelector("[class*='balance__wallet']");
@@ -293,47 +296,62 @@ E("n77b").onclick=async()=>{
 };
 
 function ruleNba(om,gap,ps,curTot){
-  if(gap<6)return null;
   const arr=Object.entries(om).filter(([,v])=>v>1.01&&v<85).sort((a,b)=>a[1]-b[1]);
   if(arr.length<2)return null;
   const[f1,o1]=arr[0],[f2,o2]=arr[1],i1=BAREMS_NBA.indexOf(f1);
-  if(o1<1.50)return null;
   const om1=i1>0?(om[BAREMS_NBA[i1-1]]||99):99,op1=(i1>=0&&i1<8)?(om[BAREMS_NBA[i1+1]]||99):99,up=op1<om1;
   const req=(MID_NBA[f1]||205.5)-curTot,odiff=o2-o1;
-  if(o1>=1.50&&o1<1.85){return(gap<=20&&ps!==1&&!up&&req<=55.5)?{b:f1,o:o1,f:1}:null}
-  if(o1>=1.85&&o1<2.10){return(ps!==1&&gap<=35)?{b:f1,o:o1,f:1}:null}
+  const pas=r=>({play:false,reason:r,f1,o1,f2,o2,req});
+  if(gap<6)return pas("Skor farkı çok yakın ("+gap+" sayı < 6, uzatma riski)");
+  if(o1<1.50)return pas("1.Favori oranı çok düşük ("+o1+" < 1.50)");
+  if(o1>=1.50&&o1<1.85){
+    return(gap<=20&&ps!==1&&!up&&req<=55.5)?{play:true,b:f1,o:o1,f:1,req}:pas("1.50-1.85 filtresi (Fark:"+gap+", Kalan:"+req.toFixed(1)+", Kayma:"+ps+")");
+  }
+  if(o1>=1.85&&o1<2.10){
+    return(ps!==1&&gap<=35)?{play:true,b:f1,o:o1,f:1,req}:pas("1.85-2.10 filtresi (Önceki maç üst kayma veya fark > 35)");
+  }
   if(o1>=2.10&&o1<2.30){
-    if(req<=48.5&&ps!==1&&gap<=25)return{b:f1,o:o1,f:1};
-    if(req>48.5&&req<=56.5&&gap>=10&&o2<=3.05&&(up||(gap>=10&&gap<=15)||ps!==0))return{b:f2,o:o2,f:2};
-    return null;
+    if(req<=48.5&&ps!==1&&gap<=25)return{play:true,b:f1,o:o1,f:1,req};
+    if(req>48.5&&req<=56.5&&gap>=10&&o2<=3.05&&(up||(gap>=10&&gap<=15)||ps!==0))return{play:true,b:f2,o:o2,f:2,req};
+    return pas("2.10-2.30 beklenti dışı (Kalan:"+req.toFixed(1)+", Fark:"+gap+", 2.Fav:"+o2+")");
   }
   if(o1>=2.30&&o1<2.50){
-    if(req<=50.5&&ps!==-1)return{b:f1,o:o1,f:1};
-    if(ps>=0&&req<=56.5&&(gap<=15||odiff<=0.25||up||ps===1))return{b:f1,o:o1,f:1};
-    if((req>56.5||(gap>=16&&gap<=24))&&gap>=10&&o2<=3.05)return{b:f2,o:o2,f:2};
-    return null;
+    if(req<=50.5&&ps!==-1)return{play:true,b:f1,o:o1,f:1,req};
+    if(ps>=0&&req<=56.5&&(gap<=15||odiff<=0.25||up||ps===1))return{play:true,b:f1,o:o1,f:1,req};
+    if((req>56.5||(gap>=16&&gap<=24))&&gap>=10&&o2<=3.05)return{play:true,b:f2,o:o2,f:2,req};
+    return pas("2.30-2.50 beklenti dışı (Kalan:"+req.toFixed(1)+", Fark:"+gap+", 2.Fav:"+o2+")");
   }
-  if(o1>=2.50){return((ps===1||req<=50.5)&&gap>=10&&o2<=3.10)?{b:f2,o:o2,f:2}:null}
-  return null;
+  if(o1>=2.50){
+    return((ps===1||req<=50.5)&&gap>=10&&o2<=3.10)?{play:true,b:f2,o:o2,f:2,req}:pas("2.50+ yüksek risk (Kalan:"+req.toFixed(1)+", Fark:"+gap+", 2.Fav:"+o2+")");
+  }
+  return pas("Kural dışı oran yapısı");
 }
 
 function ruleEuro(om,gap,ps,curTot){
-  if(gap<6||gap>=29)return null;
   const arr=Object.entries(om).filter(([,v])=>v>1.01&&v<85).sort((a,b)=>a[1]-b[1]);
   if(arr.length<2)return null;
   const[f1,o1]=arr[0],[f2,o2]=arr[1],i1=BAREMS_EU.indexOf(f1);
-  if(o1<1.20||o1>=2.30)return null;
   const om1=i1>0?(om[BAREMS_EU[i1-1]]||99):99,op1=(i1>=0&&i1<5)?(om[BAREMS_EU[i1+1]]||99):99,up=op1<om1;
   const req=(MID_EU[f1]||155.5)-curTot,odiff=o2-o1;
-  if(gap>=21&&gap<=28){return(o1>=1.50&&o2<=3.60)?{b:f2,o:o2,f:2}:null}
-  if(o1>=1.20&&o1<1.50){return(gap<=15&&ps!==0&&req<=39.5)?{b:f1,o:o1,f:1}:null}
-  if(o1>=1.50&&o1<2.10){return((up||odiff<=0.25)&&(gap<=15||o1<1.85)&&req<=41.5)?{b:f1,o:o1,f:1}:null}
-  if(o1>=2.10&&o1<2.30){
-    if(req<=36.5||ps===1)return{b:f1,o:o1,f:1};
-    if(req>36.5&&req<=41.5&&o2<=3.40)return{b:f2,o:o2,f:2};
-    return null;
+  const pas=r=>({play:false,reason:r,f1,o1,f2,o2,req});
+  if(gap<6)return pas("Skor farkı çok yakın ("+gap+" sayı < 6, uzatma riski)");
+  if(gap>=29)return pas("Aşırı fark ("+gap+" >= 29 sayı, rölanti riski)");
+  if(o1<1.20||o1>=2.30)return pas("Euro oran aralığı dışı (1.Fav: "+o1+")");
+  if(gap>=21&&gap<=28){
+    return(o1>=1.50&&o2<=3.60)?{play:true,b:f2,o:o2,f:2,req}:pas("Euro 21-28 fark filtresi (1.Fav:"+o1+", 2.Fav:"+o2+")");
   }
-  return null;
+  if(o1>=1.20&&o1<1.50){
+    return(gap<=15&&ps!==0&&req<=39.5)?{play:true,b:f1,o:o1,f:1,req}:pas("Euro 1.20-1.50 filtresi (Fark:"+gap+", Kalan:"+req.toFixed(1)+")");
+  }
+  if(o1>=1.50&&o1<2.10){
+    return((up||odiff<=0.25)&&(gap<=15||o1<1.85)&&req<=41.5)?{play:true,b:f1,o:o1,f:1,req}:pas("Euro 1.50-2.10 alt barem/tempo riski (Kalan:"+req.toFixed(1)+", Fark:"+gap+")");
+  }
+  if(o1>=2.10&&o1<2.30){
+    if(req<=36.5||ps===1)return{play:true,b:f1,o:o1,f:1,req};
+    if(req>36.5&&req<=41.5&&o2<=3.40)return{play:true,b:f2,o:o2,f:2,req};
+    return pas("Euro 2.10-2.30 beklenti dışı (Kalan:"+req.toFixed(1)+", 2.Fav:"+o2+")");
+  }
+  return pas("Kural dışı oran yapısı");
 }
 
 async function checkResults(){
@@ -420,6 +438,10 @@ async function pollTg(){
       }else if(low.startsWith("/sifirla")){
         jSet("n78_stats",{w:0,l:0,net:0,hist:[]});ui();
         await sendTg("🔄 <b>Kazanç / kayıp sayacı sıfırlandı.</b>",cid);
+      }else if(low.startsWith("/pas")){
+        const nx=isPasTgOn()?"0":"1";
+        localStorage.setItem("n80_pastg",nx);
+        await sendTg(nx==="1"?"🟢 <b>PAS geçilen maç bildirimleri AÇILDI.</b>":"🔴 <b>PAS geçilen maç bildirimleri KAPATILDI.</b>",cid);
       }
     }
   }catch{}
@@ -458,7 +480,7 @@ async function poll(){
           }
           const dec=lg.k==="NBA"?ruleNba(om,gap,pShiftNba,curTot):ruleEuro(om,gap,pShiftEu,curTot);
           const sid="CB-"+gid+"_"+lg.k,pl=gP();
-          if(dec){
+          if(dec&&dec.play){
             const stTL=dec.f===1?gS1():gS2();
             msg='<b style="color:#34d399">🚨 ['+lg.k+'] '+el.toFixed(1)+'.DK OYNA!</b><br>🎯 '+dec.b+' @ '+dec.o+' ('+stTL+' TL)';
             if(isOn()&&!pl.includes(sid)&&pl.length<gMax()){
@@ -472,7 +494,23 @@ async function poll(){
               const cr=await placeMelbetBet(dec.b,Math.max(1.2,dec.o-0.18),stTL);
               if(cr.ok)await recordAndNotifyBet(pObj,cr);
             }
-          }else msg='⛔ ['+lg.k+'] '+el.toFixed(1)+'.dk PAS ('+s1+'-'+s2+')';
+          }else if(dec&&!dec.play){
+            msg='⛔ ['+lg.k+'] '+el.toFixed(1)+'.dk PAS ('+s1+'-'+s2+')';
+            const pasMin=lg.k==="NBA"?34.75:28.75;
+            if(el>=pasMin&&!pl.includes(sid)&&!gPas().includes(sid)){
+              mPas(sid);
+              if(isPasTgOn()){
+                await sendTg(
+                  "⛔ <b>MAÇ PAS GEÇİLDİ ["+lg.k+"]</b>\n\n"+
+                  "🏀 <b>"+teams+"</b>\n"+
+                  "⏱️ Dakika: <b>"+el.toFixed(1)+".dk</b> | Skor: <code>"+s1+"-"+s2+"</code> (Toplam: <b>"+curTot+"</b>, Fark: <b>"+gap+"</b>)\n"+
+                  "📊 1.Fav: <code>"+dec.f1+"</code> (@<b>"+dec.o1+"</b>) | 2.Fav: <code>"+dec.f2+"</code> (@<b>"+dec.o2+"</b>)\n"+
+                  "🎯 Kalan Sayı Beklentisi: <b>"+dec.req.toFixed(1)+" sayı</b>\n"+
+                  "🛡️ <b>Pas Sebebi:</b> "+dec.reason
+                );
+              }
+            }
+          }
         }
       }
     }
