@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 09:41:45",
-  "timestamp": 1795588905.46,
+  "updated_at_tr": "2026-11-25 09:42:22",
+  "timestamp": 1795588942.62,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Los Angeles Clippers",
       "quarter": 4,
-      "elapsed_mins": 42.5,
+      "elapsed_mins": 43.1,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "57-104",
-      "score_gap": 47,
+      "current_score": "59-104",
+      "score_gap": 45,
       "fav1_barem": "181-190",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 09:41:44"
+      "updated_at_tr": "2026-11-25 09:42:21"
     },
     {
       "signal_id": "CB-773947061_35m",
@@ -56,32 +56,32 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Oklahoma City Thunder",
       "quarter": 2,
-      "elapsed_mins": 13.4,
+      "elapsed_mins": 14.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "24-39",
       "score_gap": 15,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.14,
-      "fav2_barem": "211-220",
-      "fav2_odd": 3.84,
+      "fav1_odd": 3.1,
+      "fav2_barem": "191-200",
+      "fav2_odd": 4.28,
       "decision": "OYNA",
       "pick_type": "2. Favori",
-      "target_barem": "211-220",
-      "target_barem_tr": "211-220",
-      "target_barem_en": "211-220",
-      "target_t_id": 1844,
-      "target_odd": 3.84,
-      "min_acceptable_odd": 3.69,
+      "target_barem": "191-200",
+      "target_barem_tr": "191-200",
+      "target_barem_en": "191-200",
+      "target_t_id": 1842,
+      "target_odd": 4.28,
+      "min_acceptable_odd": 4.13,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (3.84)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (4.28)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 09:41:44"
+      "updated_at_tr": "2026-11-25 09:42:21"
     }
   ],
   "recent_history": [
