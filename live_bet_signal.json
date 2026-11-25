@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 10:57:22",
-  "timestamp": 1795593442.15,
+  "updated_at_tr": "2026-11-25 10:57:57",
+  "timestamp": 1795593477.79,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 10:57:21"
+      "updated_at_tr": "2026-11-25 10:57:56"
     },
     {
       "signal_id": "CB-773960703_35m",
@@ -55,8 +55,8 @@
       "game_name": "Los Angeles Clippers vs New York Knicks",
       "home_team": "Los Angeles Clippers",
       "away_team": "New York Knicks",
-      "quarter": 1,
-      "elapsed_mins": 12.0,
+      "quarter": 2,
+      "elapsed_mins": 12.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "21-35",
@@ -64,24 +64,24 @@
       "fav1_barem": "201-210",
       "fav1_odd": 3.12,
       "fav2_barem": "191-200",
-      "fav2_odd": 4.13,
+      "fav2_odd": 4.06,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "191-200",
       "target_barem_tr": "191-200",
       "target_barem_en": "191-200",
       "target_t_id": 1842,
-      "target_odd": 4.13,
-      "min_acceptable_odd": 3.98,
+      "target_odd": 4.06,
+      "min_acceptable_odd": 3.91,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (4.13)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (4.06)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 10:57:21"
+      "updated_at_tr": "2026-11-25 10:57:56"
     }
   ],
   "recent_history": [
