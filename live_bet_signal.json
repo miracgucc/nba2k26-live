@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 04:16:16",
-  "timestamp": 1795569376.52,
+  "updated_at_tr": "2026-11-25 04:17:04",
+  "timestamp": 1795569424.45,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Golden State Warriors",
       "away_team": "New York Knicks",
       "quarter": 1,
-      "elapsed_mins": 11.5,
+      "elapsed_mins": 12.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "27-19",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 04:16:15"
+      "updated_at_tr": "2026-11-25 04:17:02"
     },
     {
       "signal_id": "CB-773895918_35m",
@@ -56,10 +56,10 @@
       "home_team": "Miami Heat",
       "away_team": "Detroit Pistons",
       "quarter": 4,
-      "elapsed_mins": 36.0,
+      "elapsed_mins": 36.9,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "68-82",
+      "current_score": "70-84",
       "score_gap": 14,
       "fav1_barem": "201-210",
       "fav1_odd": 0.0,
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 04:16:15"
+      "updated_at_tr": "2026-11-25 04:17:02"
     }
   ],
   "recent_history": [
