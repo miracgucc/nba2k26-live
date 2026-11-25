@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 15:23:39",
-  "timestamp": 1795609419.37,
+  "updated_at_tr": "2026-11-25 15:24:24",
+  "timestamp": 1795609464.96,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 15:23:38"
+      "updated_at_tr": "2026-11-25 15:24:23"
     },
     {
       "signal_id": "CB-774013924_35m",
@@ -56,11 +56,11 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Denver Nuggets",
       "quarter": 3,
-      "elapsed_mins": 26.4,
+      "elapsed_mins": 26.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "52-50",
-      "score_gap": 2,
+      "current_score": "52-51",
+      "score_gap": 1,
       "fav1_barem": "191-200",
       "fav1_odd": 2.95,
       "fav2_barem": "201-210",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 15:23:38"
+      "updated_at_tr": "2026-11-25 15:24:23"
     }
   ],
   "recent_history": [
