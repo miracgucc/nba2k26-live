@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 04:52:17",
-  "timestamp": 1795571537.07,
+  "updated_at_tr": "2026-11-25 04:53:04",
+  "timestamp": 1795571584.36,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 04:52:16"
+      "updated_at_tr": "2026-11-25 04:53:03"
     },
     {
       "signal_id": "CB-773907565_35m",
@@ -56,32 +56,32 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Denver Nuggets",
       "quarter": 1,
-      "elapsed_mins": 7.5,
+      "elapsed_mins": 8.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "21-9",
-      "score_gap": 12,
+      "current_score": "26-9",
+      "score_gap": 17,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.46,
+      "fav1_odd": 3.48,
       "fav2_barem": "191-200",
-      "fav2_odd": 3.57,
+      "fav2_odd": 3.5,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "191-200",
       "target_barem_tr": "191-200",
       "target_barem_en": "191-200",
       "target_t_id": 1842,
-      "target_odd": 3.57,
-      "min_acceptable_odd": 3.42,
+      "target_odd": 3.5,
+      "min_acceptable_odd": 3.35,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (3.57)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (3.50)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 04:52:16"
+      "updated_at_tr": "2026-11-25 04:53:03"
     }
   ],
   "recent_history": [
@@ -91,8 +91,8 @@
       "raw_game_id": "773901676",
       "date": "2026-11-25",
       "game_name": "Golden State Warriors vs New York Knicks",
-      "current_score": "67-85",
-      "score_gap": 18,
+      "current_score": "70-85",
+      "score_gap": 15,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
