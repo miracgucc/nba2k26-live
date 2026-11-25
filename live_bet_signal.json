@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 09:29:41",
-  "timestamp": 1795588181.81,
+  "updated_at_tr": "2026-11-25 09:30:26",
+  "timestamp": 1795588226.71,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -18,32 +18,32 @@
     "home_team": "Atlanta Hawks",
     "away_team": "Los Angeles Clippers",
     "quarter": 3,
-    "elapsed_mins": 33.2,
+    "elapsed_mins": 33.7,
     "in_decision_window_35m": true,
     "is_barem_open": true,
     "current_score": "42-82",
     "score_gap": 40,
     "fav1_barem": "181-190",
-    "fav1_odd": 2.02,
+    "fav1_odd": 2.05,
     "fav2_barem": "171-180",
-    "fav2_odd": 3.6,
+    "fav2_odd": 4.06,
     "decision": "OYNA",
     "pick_type": "1. Favori",
     "target_barem": "181-190",
     "target_barem_tr": "181-190",
     "target_barem_en": "181-190",
     "target_t_id": 1841,
-    "target_odd": 2.02,
-    "min_acceptable_odd": 1.88,
+    "target_odd": 2.05,
+    "min_acceptable_odd": 1.9,
     "zone_type": "GOLDEN",
-    "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 181-190 (2.02)",
+    "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 181-190 (2.05)",
     "stakes": {
       "kasa_8000": 400,
       "kasa_10000": 500,
       "kasa_15000": 750,
       "kasa_20000": 1000
     },
-    "updated_at_tr": "2026-11-25 09:29:40"
+    "updated_at_tr": "2026-11-25 09:30:25"
   },
   "active_signals": [
     {
@@ -54,32 +54,32 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Los Angeles Clippers",
       "quarter": 3,
-      "elapsed_mins": 33.2,
+      "elapsed_mins": 33.7,
       "in_decision_window_35m": true,
       "is_barem_open": true,
       "current_score": "42-82",
       "score_gap": 40,
       "fav1_barem": "181-190",
-      "fav1_odd": 2.02,
+      "fav1_odd": 2.05,
       "fav2_barem": "171-180",
-      "fav2_odd": 3.6,
+      "fav2_odd": 4.06,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "181-190",
       "target_barem_tr": "181-190",
       "target_barem_en": "181-190",
       "target_t_id": 1841,
-      "target_odd": 2.02,
-      "min_acceptable_odd": 1.88,
+      "target_odd": 2.05,
+      "min_acceptable_odd": 1.9,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 181-190 (2.02)",
+      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 181-190 (2.05)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-25 09:29:40"
+      "updated_at_tr": "2026-11-25 09:30:25"
     }
   ],
   "live_matches": [
@@ -91,32 +91,32 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Los Angeles Clippers",
       "quarter": 3,
-      "elapsed_mins": 33.2,
+      "elapsed_mins": 33.7,
       "in_decision_window_35m": true,
       "is_barem_open": true,
       "current_score": "42-82",
       "score_gap": 40,
       "fav1_barem": "181-190",
-      "fav1_odd": 2.02,
+      "fav1_odd": 2.05,
       "fav2_barem": "171-180",
-      "fav2_odd": 3.6,
+      "fav2_odd": 4.06,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "181-190",
       "target_barem_tr": "181-190",
       "target_barem_en": "181-190",
       "target_t_id": 1841,
-      "target_odd": 2.02,
-      "min_acceptable_odd": 1.88,
+      "target_odd": 2.05,
+      "min_acceptable_odd": 1.9,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 181-190 (2.02)",
+      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 181-190 (2.05)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-25 09:29:40"
+      "updated_at_tr": "2026-11-25 09:30:25"
     },
     {
       "signal_id": "CB-773947061_35m",
@@ -151,7 +151,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 09:29:40"
+      "updated_at_tr": "2026-11-25 09:30:25"
     }
   ],
   "recent_history": [
