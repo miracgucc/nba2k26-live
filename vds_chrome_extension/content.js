@@ -1,5 +1,7 @@
 (function(){
 if(window.top!==window.self||document.getElementById("nba2k26-autopilot-panel"))return;
+const TG_TOK="__TG_TOKEN__";
+const DEFAULT_CID="1244842635";
 const CLOUD="https://raw.githubusercontent.com/miracgucc/nba2k26-live/main/live_bet_signal.json";
 const BAREMS_NBA=["160_or_less","161-170","171-180","181-190","191-200","201-210","211-220","221-230","231+"];
 const MID_NBA={"160_or_less":155.5,"161-170":165.5,"171-180":175.5,"181-190":185.5,"191-200":195.5,"201-210":205.5,"211-220":215.5,"221-230":225.5,"231+":235.5};
@@ -7,7 +9,11 @@ const PMAP_NBA={"160":"160_or_less","161.17":"161-170","171.18":"171-180","181.1
 const BAREMS_EU=["130_or_less","131-140","141-150","151-160","161-170","171+"];
 const MID_EU={"130_or_less":125.5,"131-140":135.5,"141-150":145.5,"151-160":155.5,"161-170":165.5,"171+":175.5};
 const PMAP_EU={"130":"130_or_less","131.14":"131-140","141.15":"141-150","151.16":"151-160","161.17":"161-170","171":"171+"};
-let pShiftNba=0,pShiftEu=0,busy=false,listUrl=location.origin+"/tr/live/basketball/2935701-nba-2k26-cyber-league";
+
+let pShiftNba=Number(localStorage.getItem("n80_ps_nba")||"0")||0;
+let pShiftEu=Number(localStorage.getItem("n80_ps_eu")||"0")||0;
+let busy=false,listUrl=location.origin+"/tr/live/basketball/2935701-nba-2k26-cyber-league";
+
 if(!localStorage.getItem("n80_init1500")){
   localStorage.setItem("n77_s1","75");
   localStorage.setItem("n77_s2","60");
@@ -16,30 +22,124 @@ if(!localStorage.getItem("n80_init1500")){
   localStorage.setItem("n77_on","1");
   localStorage.setItem("n80_init1500","1");
 }
-const gP=()=>{try{return JSON.parse(localStorage.getItem("n77_p")||"[]")}catch{return[]}};
-const mP=(id,t)=>{const a=gP();if(!a.includes(id)){a.push(id);localStorage.setItem("n77_p",JSON.stringify(a.slice(-150)))}localStorage.setItem("n77_l",new Date().toLocaleTimeString("tr-TR")+" "+t)};
+if(!localStorage.getItem("n78_cid"))localStorage.setItem("n78_cid",DEFAULT_CID);
+
+const jGet=(k,d)=>{try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(d))}catch{return d}};
+const jSet=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const gP=()=>jGet("n77_p",[]);
+const mP=(id,t)=>{const a=gP();if(!a.includes(id)){a.push(id);jSet("n77_p",a.slice(-150))}localStorage.setItem("n77_l",new Date().toLocaleTimeString("tr-TR")+" "+t)};
 const isOn=()=>localStorage.getItem("n77_on")!=="0";
 const gMax=()=>parseInt(localStorage.getItem("n77_m")||"100",10)||100;
 const gS1=()=>parseFloat(localStorage.getItem("n77_s1")||"75")||75;
 const gS2=()=>parseFloat(localStorage.getItem("n77_s2")||"60")||60;
+const getCid=()=>localStorage.getItem("n78_cid")||DEFAULT_CID;
+const gStats=()=>jGet("n78_stats",{w:0,l:0,net:0,hist:[]});
+const gOpen=()=>jGet("n78_open",[]);
+
+function readWallet(){
+  const el=document.querySelector(".balance__wallet")||document.querySelector("[class*='balance__wallet']");
+  const raw=(el?el.textContent:"").replace(/\s+/g," ").trim();
+  const m=raw.match(/[\d]+([.,]\d+)?/);
+  const num=m?parseFloat(m[0].replace(",",".")):null;
+  return{txt:raw||"Melbet Açık",num};
+}
+
+function getTier1500(b){
+  if(!b||b<2100)return{k:1,s1:75,s2:60};
+  if(b<2850)return{k:2,s1:105,s2:85};
+  if(b<3800)return{k:3,s1:140,s2:110};
+  if(b<5200)return{k:4,s1:190,s2:150};
+  if(b<7100)return{k:5,s1:260,s2:210};
+  if(b<9700)return{k:6,s1:355,s2:285};
+  if(b<13200)return{k:7,s1:485,s2:390};
+  if(b<18000)return{k:8,s1:660,s2:530};
+  return{k:9,s1:850,s2:680};
+}
+
+function scoreToBarem(tot,lg){
+  if(lg==="EURO"){
+    if(tot<=130)return"130_or_less";
+    if(tot<=140)return"131-140";
+    if(tot<=150)return"141-150";
+    if(tot<=160)return"151-160";
+    if(tot<=170)return"161-170";
+    return"171+";
+  }
+  if(tot<=160)return"160_or_less";
+  if(tot<=170)return"161-170";
+  if(tot<=180)return"171-180";
+  if(tot<=190)return"181-190";
+  if(tot<=200)return"191-200";
+  if(tot<=210)return"201-210";
+  if(tot<=220)return"211-220";
+  if(tot<=230)return"221-230";
+  return"231+";
+}
+
+async function sendTg(text,cidOverride){
+  const cid=cidOverride||getCid();
+  if(!cid||TG_TOK.includes("__TG_"))return false;
+  try{
+    const r=await fetch("https://api.telegram.org/bot"+TG_TOK+"/sendMessage",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({chat_id:cid,text,parse_mode:"HTML",disable_web_page_preview:true})
+    });
+    return r.ok;
+  }catch{return false}
+}
 
 const box=document.createElement("div");
 box.id="nba2k26-autopilot-panel";
-box.style.cssText="position:fixed;top:54px;right:8px;z-index:999999;width:296px;background:rgba(15,23,42,0.96);color:#fff;border:2px solid #10b981;border-radius:12px;padding:9px;font-family:system-ui,sans-serif;font-size:12px;box-shadow:0 8px 24px rgba(0,0,0,0.6)";
-box.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><b style="color:#34d399">⚡ NBA + EURO Oto-Pilot v8.0</b><button id="n77t" style="border:none;border-radius:6px;padding:3px 8px;font-weight:700;font-size:11px;cursor:pointer"></button></div><div id="n77s" style="background:#1e293b;padding:6px;border-radius:7px;margin-bottom:5px">⏳ Bağlanıyor...</div><div style="display:flex;gap:6px;margin-bottom:5px;font-size:11px;color:#cbd5e1"><label style="flex:1">1.Fav TL: <input id="n77s1" type="number" step="0.01" style="width:54px;background:#0f172a;color:#34d399;font-weight:700;border:1px solid #334155;border-radius:4px;text-align:center"></label><label style="flex:1">2.Fav TL: <input id="n77s2" type="number" step="0.01" style="width:54px;background:#0f172a;color:#fbbf24;font-weight:700;border:1px solid #334155;border-radius:4px;text-align:center"></label></div><div style="display:flex;gap:5px;margin-bottom:5px"><button id="n77g" style="flex:1;background:#2563eb;color:#fff;border:none;border-radius:6px;padding:5px;font-weight:700;font-size:11px;cursor:pointer">🏀 Maç Listesi</button><button id="n77b" style="background:#d97706;color:#fff;border:none;border-radius:6px;padding:5px 8px;font-weight:700;font-size:11px;cursor:pointer">🧪 Oto-Giriş Test</button></div><div style="display:flex;justify-content:space-between;font-size:11px;color:#94a3b8"><span>Kupon: <b id="n77c" style="color:#fff">0</b>/<input id="n77m" type="number" style="width:36px;background:#0f172a;color:#fff;border:1px solid #334155;border-radius:4px;text-align:center"></span><button id="n77r" style="background:#334155;color:#cbd5e1;border:none;border-radius:4px;padding:2px 6px;font-size:10px;cursor:pointer">Sıfırla</button></div><div id="n77l" style="margin-top:3px;font-size:10px;color:#fbbf24"></div>';
+box.style.cssText="position:fixed;top:54px;right:8px;z-index:999999;width:298px;background:rgba(15,23,42,0.96);color:#fff;border:2px solid #10b981;border-radius:12px;padding:9px;font-family:system-ui,sans-serif;font-size:12px;box-shadow:0 8px 24px rgba(0,0,0,0.6)";
+box.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><b style="color:#34d399">⚡ NBA + EURO v8.0 + TG</b><button id="n77t" style="border:none;border-radius:6px;padding:3px 8px;font-weight:700;font-size:11px;cursor:pointer"></button></div><div id="n77s" style="background:#1e293b;padding:6px;border-radius:7px;margin-bottom:5px">⏳ Bağlanıyor...</div><div style="display:flex;gap:6px;margin-bottom:5px;font-size:11px;color:#cbd5e1"><label style="flex:1">1.Fav TL: <input id="n77s1" type="number" step="0.01" style="width:54px;background:#0f172a;color:#34d399;font-weight:700;border:1px solid #334155;border-radius:4px;text-align:center"></label><label style="flex:1">2.Fav TL: <input id="n77s2" type="number" step="0.01" style="width:54px;background:#0f172a;color:#fbbf24;font-weight:700;border:1px solid #334155;border-radius:4px;text-align:center"></label></div><div style="display:flex;gap:4px;margin-bottom:5px"><button id="n77g" style="flex:1;background:#2563eb;color:#fff;border:none;border-radius:6px;padding:5px;font-weight:700;font-size:11px;cursor:pointer">🏀 Liste</button><button id="n78tg" style="flex:1;background:#0284c7;color:#fff;border:none;border-radius:6px;padding:5px;font-weight:700;font-size:11px;cursor:pointer">📲 TG Test</button><button id="n77b" style="background:#d97706;color:#fff;border:none;border-radius:6px;padding:5px 6px;font-weight:700;font-size:11px;cursor:pointer">🧪 Test</button></div><div style="display:flex;justify-content:space-between;font-size:11px;color:#94a3b8"><span>Kupon: <b id="n77c" style="color:#fff">0</b>/<input id="n77m" type="number" style="width:36px;background:#0f172a;color:#fff;border:1px solid #334155;border-radius:4px;text-align:center"></span><span id="n78st" style="color:#38bdf8"></span><button id="n77r" style="background:#334155;color:#cbd5e1;border:none;border-radius:4px;padding:2px 6px;font-size:10px;cursor:pointer">Sıfırla</button></div><div id="n77l" style="margin-top:3px;font-size:10px;color:#fbbf24"></div>';
 document.body.appendChild(box);
 
 const E=id=>document.getElementById(id);
-E("n77m").value=gMax();E("n77s1").value=gS1();E("n77s2").value=gS2();
-E("n77m").oninput=E("n77m").onchange=()=>localStorage.setItem("n77_m",E("n77m").value||"100");
-E("n77s1").oninput=E("n77s1").onchange=()=>localStorage.setItem("n77_s1",E("n77s1").value||"40");
-E("n77s2").oninput=E("n77s2").onchange=()=>localStorage.setItem("n77_s2",E("n77s2").value||"32");
-E("n77r").onclick=()=>{localStorage.setItem("n77_p","[]");ui()};
+function ui(){
+  const o=isOn(),st=gStats();
+  if(document.activeElement!==E("n77m"))E("n77m").value=gMax();
+  if(document.activeElement!==E("n77s1"))E("n77s1").value=gS1();
+  if(document.activeElement!==E("n77s2"))E("n77s2").value=gS2();
+  E("n77t").textContent=o?"🟢 7/24 AKTİF":"🔴 DURDU";
+  E("n77t").style.background=o?"#10b981":"#ef4444";
+  E("n77t").style.color="#fff";
+  box.style.borderColor=o?"#10b981":"#ef4444";
+  E("n77c").textContent=gP().length;
+  E("n78st").textContent=st.w+"K/"+st.l+"Y ("+(st.net>=0?"+":"")+st.net.toFixed(0)+"₺)";
+  E("n77l").textContent="📲 TG Aktif • "+(localStorage.getItem("n77_l")||"Nöbette");
+}
+E("n77m").oninput=E("n77m").onchange=()=>{const v=parseInt(E("n77m").value,10);if(v>0)localStorage.setItem("n77_m",String(v))};
+E("n77s1").oninput=E("n77s1").onchange=()=>{const v=parseFloat(E("n77s1").value);if(v>0)localStorage.setItem("n77_s1",String(v))};
+E("n77s2").oninput=E("n77s2").onchange=()=>{const v=parseFloat(E("n77s2").value);if(v>0)localStorage.setItem("n77_s2",String(v))};
+E("n77r").onclick=()=>{jSet("n77_p",[]);ui()};
 E("n77g").onclick=()=>{location.href=listUrl};
 E("n77t").onclick=()=>{localStorage.setItem("n77_on",isOn()?"0":"1");ui()};
-
-function ui(){const o=isOn();E("n77t").textContent=o?"🟢 7/24 AKTİF":"🔴 DURDU";E("n77t").style.background=o?"#10b981":"#ef4444";E("n77t").style.color="#fff";box.style.borderColor=o?"#10b981":"#ef4444";E("n77c").textContent=gP().length;E("n77l").textContent=localStorage.getItem("n77_l")||""}
+E("n78tg").onclick=async()=>{
+  const ok=await sendTg(buildStatusMsg("📲 <b>NBA + EURO v8.0 Telegram Testi Başarılı!</b>"));
+  E("n77l").textContent=ok?"✅ Telegram mesajı gönderildi!":"⚠️ Mesaj gönderilemedi";
+};
 ui();
+
+function buildStatusMsg(hdr){
+  const w=readWallet(),st=gStats(),op=gOpen(),tr=getTier1500(w.num);
+  let m=(hdr||"📊 <b>NBA 2K26 + EURO v8.0 Kasa Raporu</b>")+"\n\n";
+  m+="💰 <b>Melbet Bakiye:</b> "+w.txt+"\n";
+  m+="⚙️ <b>Mod:</b> "+(isOn()?"🟢 7/24 AKTİF":"🔴 DURDURULDU")+"\n";
+  m+="💵 <b>Aktif Tutar:</b> 1.Fav <b>"+gS1()+" TL</b> | 2.Fav <b>"+gS2()+" TL</b>\n";
+  if(w.num)m+="📈 <b>1.500 TL Kademe Planı:</b> Kademe "+tr.k+" ("+tr.s1+" / "+tr.s2+" TL)\n";
+  m+="🏆 <b>Toplam Sonuç:</b> "+st.w+" Kazandı / "+st.l+" Kaybetti\n";
+  m+="📈 <b>Toplam Net:</b> <b>"+(st.net>=0?"+":"")+st.net.toFixed(1)+" TL</b>\n";
+  if(op.length){
+    m+="\n⏳ <b>Sonuç Bekleyen Kupon ("+op.length+"):</b>\n";
+    for(const b of op)m+="• ["+b.lg+"] "+b.teams+" | "+b.barem+" @ "+b.odd+" ("+b.stake+" TL)\n";
+  }
+  if(st.hist&&st.hist.length){
+    m+="\n📝 <b>Son Sonuçlananlar:</b>\n";
+    for(const h of st.hist.slice(-5).reverse())m+="• "+h+"\n";
+  }
+  return m;
+}
 
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 function setVueVal(inp,val){
@@ -115,6 +215,25 @@ async function placeMelbetBet(key,minO,stakeTL){
   }finally{busy=false}
 }
 
+async function recordAndNotifyBet(p,cr){
+  mP(p.sid,"["+p.lg+"] "+p.b+" @ "+cr.od+" ("+p.stTL+"TL)");
+  const op=gOpen();
+  if(!op.some(x=>x.gid===p.gid)){
+    op.push({gid:p.gid,lg:p.lg,teams:p.teams||p.gid,sc:p.sc||"-",favType:p.f===1?"1. Favori":"2. Favori",barem:p.b,odd:cr.od,stake:p.stTL,ts:Date.now()});
+    jSet("n78_open",op);
+  }
+  ui();
+  const w=readWallet();
+  await sendTg(
+    "🚨 <b>YENİ BAHİS ALINDI! ["+p.lg+"]</b>\n\n"+
+    "🏀 <b>"+(p.teams||p.gid)+"</b>\n"+
+    "⏱️ Karar Skoru: <code>"+(p.sc||"-")+"</code>\n"+
+    "🎯 Seçim: <b>"+(p.f===1?"1. Favori":"2. Favori")+" ("+p.b+")</b>\n"+
+    "📈 Oran: <b>"+cr.od+"</b> | Tutar: <b>"+p.stTL+" TL</b>\n"+
+    "💰 Melbet Bakiye: "+w.txt
+  );
+}
+
 async function checkPendingAutoTest(){
   const rawP=sessionStorage.getItem("n77_pend");
   if(rawP){
@@ -125,7 +244,7 @@ async function checkPendingAutoTest(){
         E("n77s").innerHTML='<b style="color:#38bdf8">⚡ ['+p.lg+'] Maça girildi, kupon basılıyor...</b><br>🎯 '+p.b+' ('+p.stTL+' TL)';
         await sleep(1400);
         const cr=await placeMelbetBet(p.b,Math.max(1.2,p.o-0.18),p.stTL);
-        if(cr.ok){mP(p.sid,"["+p.lg+"] "+p.b+" @ "+cr.od+" ("+p.stTL+"TL)");ui()}
+        if(cr.ok)await recordAndNotifyBet(p,cr);
         return;
       }
     }catch{}
@@ -138,7 +257,11 @@ async function checkPendingAutoTest(){
   await openTamPuanSection();
   for(const k of["201-210","211-220","191-200","181-190","151-160","141-150","161-170","131-140","221-230","171-180","231+"]){
     const r=await placeMelbetBet(k,1.01,gS1());
-    if(r.ok){E("n77s").innerHTML='<b style="color:#34d399">✅ OTO-GİRİŞ + BAHİS BAŞARILI!</b><br>🎯 '+r.nt+' @ '+r.od+' ('+r.stake+' TL)';return}
+    if(r.ok){
+      E("n77s").innerHTML='<b style="color:#34d399">✅ OTO-GİRİŞ + BAHİS BAŞARILI!</b><br>🎯 '+r.nt+' @ '+r.od+' ('+r.stake+' TL)';
+      await sendTg("🧪 <b>Test Bahsi Basıldı:</b> "+r.nt+" @ "+r.od+" ("+r.stake+" TL)");
+      return;
+    }
   }
   E("n77s").innerHTML='<span style="color:#fbbf24">⚠️ Bu maçta barem kapalı, başka maç denenebilir.</span>';
 }
@@ -169,7 +292,6 @@ E("n77b").onclick=async()=>{
   }catch{E("n77s").innerHTML='<span style="color:#f87171">⚠️ API okunamadı, Melbet sayfasında olun.</span>'}
 };
 
-// v8.0 Master NBA 2K26 Rule (Expectation req = fmid - curTot + Odds + Gap + Shift: 14/14 Positive Days!)
 function ruleNba(om,gap,ps,curTot){
   if(gap<6)return null;
   const arr=Object.entries(om).filter(([,v])=>v>1.01&&v<85).sort((a,b)=>a[1]-b[1]);
@@ -195,7 +317,6 @@ function ruleNba(om,gap,ps,curTot){
   return null;
 }
 
-// v8.0 Master Cyber Euro Rule (Expectation req = fmid - curTot + Odds + Gap + Shift: 61.0% Win Rate!)
 function ruleEuro(om,gap,ps,curTot){
   if(gap<6||gap>=29)return null;
   const arr=Object.entries(om).filter(([,v])=>v>1.01&&v<85).sort((a,b)=>a[1]-b[1]);
@@ -213,6 +334,95 @@ function ruleEuro(om,gap,ps,curTot){
     return null;
   }
   return null;
+}
+
+async function checkResults(){
+  const op=gOpen();
+  if(!op.length)return;
+  try{
+    const wTo=Math.floor(Date.now()/300000)*300+300,wFrom=wTo-86400;
+    const resMap={};
+    for(const lg of[{k:"NBA",c:"2935701",minT:100},{k:"EURO",c:"2983166",minT:60}]){
+      const url=location.origin+"/service-api/result/web/api/v3/games?champId="+lg.c+"&dateFrom="+wFrom+"&dateTo="+wTo+"&lng=en&ref=110";
+      const r=await fetch(url,{cache:"no-store"});
+      if(!r.ok)continue;
+      const items=(await r.json()).items||[];
+      for(const it of items){
+        const m=String(it.score||"").match(/^(\d+):(\d+)/);
+        if(it.id&&m){
+          const h=parseInt(m[1],10),a=parseInt(m[2],10);
+          if(h!==a&&(h+a)>=lg.minT)resMap[String(it.id)]={h,a,tot:h+a,b:scoreToBarem(h+a,lg.k)};
+        }
+      }
+    }
+    const rem=[];
+    let settled=false;
+    for(const b of op){
+      const rs=resMap[String(b.gid)];
+      if(!rs){if(Date.now()-b.ts<43200000)rem.push(b);continue}
+      settled=true;
+      const won=(rs.b===b.barem);
+      const net=won?+(b.stake*(b.odd-1)).toFixed(2):-b.stake;
+      const st=gStats();
+      if(won)st.w+=1;else st.l+=1;
+      st.net=+(st.net+net).toFixed(2);
+      st.hist=(st.hist||[]).slice(-19);
+      st.hist.push((won?"✅":"❌")+" ["+b.lg+"] "+b.barem+" @"+b.odd+" ("+(net>=0?"+":"")+net.toFixed(1)+"₺)");
+      jSet("n78_stats",st);
+      await sleep(3500);
+      const w=readWallet(),tr=getTier1500(w.num);
+      let kMsg="";
+      if(w.num&&tr.s1!==gS1())kMsg="\n💡 <b>Kademe Bilgisi:</b> Bakiyen Kademe "+tr.k+" aralığında (<code>/tutar "+tr.s1+" "+tr.s2+"</code> yazarak güncelleyebilirsin).";
+      await sendTg(
+        (won?"✅ <b>KUPON KAZANDI! (+"+net.toFixed(1)+" TL)</b>":"❌ <b>KUPON KAYBETTİ ("+net.toFixed(1)+" TL)</b>")+"\n\n"+
+        "🏀 <b>["+b.lg+"] "+b.teams+"</b>\n"+
+        "🏁 Maç Sonu: <code>"+rs.h+"-"+rs.a+"</code> (Toplam: <b>"+rs.tot+"</b> ➔ <code>"+rs.b+"</code>)\n"+
+        "🎯 Oynanan: "+b.favType+" <b>"+b.barem+"</b> @ <b>"+b.odd+"</b> ("+b.stake+" TL)\n\n"+
+        "📊 <b>Toplam:</b> "+st.w+" Kazandı / "+st.l+" Kaybetti (Net: <b>"+(st.net>=0?"+":"")+st.net.toFixed(1)+" TL</b>)\n"+
+        "💰 <b>Güncel Melbet Bakiye:</b> "+w.txt+kMsg
+      );
+    }
+    if(settled){jSet("n78_open",rem);ui()}
+  }catch{}
+}
+
+async function pollTg(){
+  if(TG_TOK.includes("__TG_"))return;
+  const lockTs=Number(localStorage.getItem("n78_tglk")||"0");
+  if(Date.now()-lockTs<5000)return;
+  localStorage.setItem("n78_tglk",String(Date.now()));
+  try{
+    const off=Number(localStorage.getItem("n78_upd")||"0");
+    const r=await fetch("https://api.telegram.org/bot"+TG_TOK+"/getUpdates?offset="+(off+1)+"&timeout=0",{cache:"no-store"});
+    if(!r.ok)return;
+    const arr=(await r.json()).result||[];
+    for(const u of arr){
+      localStorage.setItem("n78_upd",String(u.update_id));
+      const m=u.message;
+      if(!m||!m.chat)continue;
+      const cid=String(m.chat.id);
+      localStorage.setItem("n78_cid",cid);
+      const txt=String(m.text||"").trim(),low=txt.toLowerCase();
+      if(low.startsWith("/start")||low==="merhaba"||low.startsWith("/kasa")||low.startsWith("/durum")){
+        await sendTg(buildStatusMsg(),cid);
+      }else if(low.startsWith("/tutar")){
+        const p=txt.split(/\s+/),v1=parseFloat(p[1]),v2=parseFloat(p[2]);
+        if(v1>0&&v2>0){
+          localStorage.setItem("n77_s1",String(v1));localStorage.setItem("n77_s2",String(v2));ui();
+          await sendTg("✅ <b>Bahis Tutarları Güncellendi!</b>\n1. Favori: <b>"+v1+" TL</b>\n2. Favori: <b>"+v2+" TL</b>",cid);
+        }else await sendTg("⚠️ Örnek kullanım: <code>/tutar 105 85</code>",cid);
+      }else if(low.startsWith("/durdur")){
+        localStorage.setItem("n77_on","0");ui();
+        await sendTg("🔴 <b>Otomatik Bahis Durduruldu.</b> (/baslat ile açabilirsin)",cid);
+      }else if(low.startsWith("/baslat")){
+        localStorage.setItem("n77_on","1");ui();
+        await sendTg("🟢 <b>7/24 Otomatik Bahis Aktif!</b>",cid);
+      }else if(low.startsWith("/sifirla")){
+        jSet("n78_stats",{w:0,l:0,net:0,hist:[]});ui();
+        await sendTg("🔄 <b>Kazanç / kayıp sayacı sıfırlandı.</b>",cid);
+      }
+    }
+  }catch{}
 }
 
 async function syncC(){try{const r=await fetch(CLOUD+"?t="+Date.now(),{cache:"no-store"});if(r.ok){const d=await r.json();if(d.chain_state)pShiftNba=Number(d.chain_state.prev_shift||0);if(d.euro_chain_state)pShiftEu=Number(d.euro_chain_state.prev_shift||0)}}catch{}}
@@ -234,6 +444,7 @@ async function poll(){
       for(const g of games){
         const gid=String(g.I),sc=g.SC||{},ts=Number(sc.TS||0),cp=Number(sc.CP||1);
         const el=ts>lg.qSec?ts/60:(cp-1)*lg.qMin+ts/60,s1=Number((sc.FS||{}).S1||0),s2=Number((sc.FS||{}).S2||0),gap=Math.abs(s1-s2),curTot=s1+s2;
+        const teams=String(g.O1||"").replace(" (cyber)","")+" vs "+String(g.O2||"").replace(" (cyber)","");
         if(el>=lg.minLo&&el<=lg.minHi){
           const r2=await fetch(location.origin+"/service-api/LiveFeed/GetGameZip?id="+gid+"&lng=tr&isSubGames=true&GroupEvents=true",{cache:"no-store"});
           if(!r2.ok)continue;
@@ -251,23 +462,28 @@ async function poll(){
             const stTL=dec.f===1?gS1():gS2();
             msg='<b style="color:#34d399">🚨 ['+lg.k+'] '+el.toFixed(1)+'.DK OYNA!</b><br>🎯 '+dec.b+' @ '+dec.o+' ('+stTL+' TL)';
             if(isOn()&&!pl.includes(sid)&&pl.length<gMax()){
+              const pObj={gid,sid,lg:lg.k,b:dec.b,o:dec.o,f:dec.f,stTL,teams,sc:s1+"-"+s2,ts:Date.now()};
               if(!location.href.includes(gid)){
-                sessionStorage.setItem("n77_pend",JSON.stringify({gid,sid,lg:lg.k,b:dec.b,o:dec.o,stTL,ts:Date.now()}));
+                sessionStorage.setItem("n77_pend",JSON.stringify(pObj));
                 location.href=location.origin+"/tr/live/basketball/"+lg.s+"/"+gid;
                 return;
               }
               await sleep(1200);
               const cr=await placeMelbetBet(dec.b,Math.max(1.2,dec.o-0.18),stTL);
-              if(cr.ok){mP(sid,"["+lg.k+"] "+dec.b+" @ "+cr.od+" ("+stTL+"TL)");ui()}
+              if(cr.ok)await recordAndNotifyBet(pObj,cr);
             }
           }else msg='⛔ ['+lg.k+'] '+el.toFixed(1)+'.dk PAS ('+s1+'-'+s2+')';
         }
       }
     }
     if(!msg)msg='📡 NBA + EURO v8.0 • <b>'+totG+' maç</b>';
-    E("n77s").innerHTML=msg+'<div style="font-size:10px;color:#94a3b8">'+new Date().toLocaleTimeString("tr-TR")+' • NBA:'+pShiftNba+' EU:'+pShiftEu+'</div>';
+    E("n77s").innerHTML=msg+'<div style="font-size:10px;color:#94a3b8">'+new Date().toLocaleTimeString("tr-TR")+' • NBA:'+pShiftNba+' EU:'+pShiftEu+' • Bekleyen:'+gOpen().length+'</div>';
   }catch{}
 }
-syncC();setInterval(syncC,30000);setInterval(poll,5000);
-checkPendingAutoTest().then(()=>poll());
+syncC();
+setInterval(syncC,30000);
+setInterval(poll,5000);
+setInterval(pollTg,6000);
+setInterval(checkResults,15000);
+checkPendingAutoTest().then(()=>{poll();pollTg();checkResults()});
 })();
