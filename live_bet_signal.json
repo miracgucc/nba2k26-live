@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 02:56:57",
-  "timestamp": 1795651017.73,
+  "updated_at_tr": "2026-11-26 02:57:25",
+  "timestamp": 1795651045.36,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Golden State Warriors",
       "away_team": "Houston Rockets",
       "quarter": 3,
-      "elapsed_mins": 35.5,
+      "elapsed_mins": 35.9,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "99-72",
-      "score_gap": 27,
+      "current_score": "101-72",
+      "score_gap": 29,
       "fav1_barem": "221-230",
-      "fav1_odd": 2.18,
-      "fav2_barem": "211-220",
-      "fav2_odd": 3.3,
+      "fav1_odd": 2.15,
+      "fav2_barem": "231+",
+      "fav2_odd": 3.01,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 221-230: 2.18)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 221-230: 2.15)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 02:56:56"
+      "updated_at_tr": "2026-11-26 02:57:24"
     },
     {
       "signal_id": "CB-774169006_35m",
@@ -59,8 +59,8 @@
       "elapsed_mins": 12.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "27-24",
-      "score_gap": 3,
+      "current_score": "29-24",
+      "score_gap": 5,
       "fav1_barem": "201-210",
       "fav1_odd": 3.6,
       "fav2_barem": "211-220",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 02:56:56"
+      "updated_at_tr": "2026-11-26 02:57:24"
     }
   ],
   "recent_history": [
@@ -91,15 +91,15 @@
       "raw_game_id": "774162408",
       "date": "2026-11-26",
       "game_name": "Golden State Warriors vs Houston Rockets",
-      "current_score": "99-72",
-      "score_gap": 27,
+      "current_score": "101-72",
+      "score_gap": 29,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
       "target_barem_tr": "",
       "target_t_id": 0,
       "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 221-230: 2.18)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 221-230: 2.15)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
