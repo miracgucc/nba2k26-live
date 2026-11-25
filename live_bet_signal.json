@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 09:48:00",
-  "timestamp": 1795589280.49,
+  "updated_at_tr": "2026-11-25 09:48:37",
+  "timestamp": 1795589317.18,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 09:47:59"
+      "updated_at_tr": "2026-11-25 09:48:36"
     },
     {
       "signal_id": "CB-773947061_35m",
@@ -56,32 +56,32 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Oklahoma City Thunder",
       "quarter": 2,
-      "elapsed_mins": 17.9,
+      "elapsed_mins": 18.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "28-44",
-      "score_gap": 16,
+      "current_score": "33-46",
+      "score_gap": 13,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.02,
+      "fav1_odd": 3.09,
       "fav2_barem": "191-200",
-      "fav2_odd": 3.67,
+      "fav2_odd": 3.4,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "191-200",
       "target_barem_tr": "191-200",
       "target_barem_en": "191-200",
       "target_t_id": 1842,
-      "target_odd": 3.67,
-      "min_acceptable_odd": 3.52,
+      "target_odd": 3.4,
+      "min_acceptable_odd": 3.25,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (3.67)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (3.40)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 09:47:59"
+      "updated_at_tr": "2026-11-25 09:48:36"
     }
   ],
   "recent_history": [
