@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 10:14:56",
-  "timestamp": 1795590896.4,
+  "updated_at_tr": "2026-11-25 10:15:59",
+  "timestamp": 1795590959.63,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Denver Nuggets",
       "away_team": "Detroit Pistons",
       "quarter": 1,
-      "elapsed_mins": 9.7,
+      "elapsed_mins": 10.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "26-17",
-      "score_gap": 9,
+      "current_score": "32-19",
+      "score_gap": 13,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.26,
+      "fav1_odd": 3.44,
       "fav2_barem": "211-220",
-      "fav2_odd": 3.87,
+      "fav2_odd": 3.57,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "211-220",
       "target_barem_tr": "211-220",
       "target_barem_en": "211-220",
       "target_t_id": 1844,
-      "target_odd": 3.87,
-      "min_acceptable_odd": 3.72,
+      "target_odd": 3.57,
+      "min_acceptable_odd": 3.42,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (3.87)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (3.57)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 10:14:55"
+      "updated_at_tr": "2026-11-25 10:15:58"
     },
     {
       "signal_id": "CB-773947061_35m",
@@ -56,11 +56,11 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Oklahoma City Thunder",
       "quarter": 4,
-      "elapsed_mins": 37.2,
+      "elapsed_mins": 37.3,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "88-86",
-      "score_gap": 2,
+      "current_score": "90-86",
+      "score_gap": 4,
       "fav1_barem": "221-230",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 2 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 4 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 10:14:55"
+      "updated_at_tr": "2026-11-25 10:15:58"
     }
   ],
   "recent_history": [
