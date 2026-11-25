@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 17:19:00",
-  "timestamp": 1795616340.26,
+  "updated_at_tr": "2026-11-25 17:19:34",
+  "timestamp": 1795616374.46,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Miami Heat",
       "away_team": "Los Angeles Clippers",
       "quarter": 3,
-      "elapsed_mins": 25.7,
+      "elapsed_mins": 26.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "47-54",
-      "score_gap": 7,
+      "current_score": "49-54",
+      "score_gap": 5,
       "fav1_barem": "191-200",
-      "fav1_odd": 2.85,
+      "fav1_odd": 2.91,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.4,
+      "fav2_odd": 3.58,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_barem_en": "201-210",
       "target_t_id": 1843,
-      "target_odd": 3.4,
-      "min_acceptable_odd": 3.25,
+      "target_odd": 3.58,
+      "min_acceptable_odd": 3.43,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.40)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.58)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 17:18:59"
+      "updated_at_tr": "2026-11-25 17:19:33"
     },
     {
       "signal_id": "CB-774049953_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 17:18:59"
+      "updated_at_tr": "2026-11-25 17:19:33"
     }
   ],
   "recent_history": [
