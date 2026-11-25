@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 02:25:28",
-  "timestamp": 1795649128.79,
+  "updated_at_tr": "2026-11-26 02:26:11",
+  "timestamp": 1795649171.07,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 02:25:27"
+      "updated_at_tr": "2026-11-26 02:26:10"
     },
     {
       "signal_id": "CB-774162408_35m",
@@ -56,7 +56,7 @@
       "home_team": "Golden State Warriors",
       "away_team": "Houston Rockets",
       "quarter": 2,
-      "elapsed_mins": 14.5,
+      "elapsed_mins": 14.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "41-22",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 02:25:27"
+      "updated_at_tr": "2026-11-26 02:26:10"
     }
   ],
   "recent_history": [
