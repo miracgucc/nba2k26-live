@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 21:05:53",
-  "timestamp": 1795629953.08,
+  "updated_at_tr": "2026-11-25 21:06:31",
+  "timestamp": 1795629991.04,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Los Angeles Clippers",
       "quarter": 4,
-      "elapsed_mins": 41.9,
+      "elapsed_mins": 42.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "60-102",
-      "score_gap": 42,
+      "current_score": "63-104",
+      "score_gap": 41,
       "fav1_barem": "181-190",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 21:05:52"
+      "updated_at_tr": "2026-11-25 21:06:30"
     },
     {
       "signal_id": "CB-774095735_35m",
@@ -56,13 +56,13 @@
       "home_team": "Houston Rockets",
       "away_team": "Oklahoma City Thunder",
       "quarter": 2,
-      "elapsed_mins": 15.4,
+      "elapsed_mins": 16.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "32-43",
-      "score_gap": 11,
+      "current_score": "32-45",
+      "score_gap": 13,
       "fav1_barem": "221-230",
-      "fav1_odd": 3.3,
+      "fav1_odd": 3.4,
       "fav2_barem": "211-220",
       "fav2_odd": 3.48,
       "decision": "PAS",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 221-230: 3.30)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 221-230: 3.40)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 21:05:52"
+      "updated_at_tr": "2026-11-25 21:06:30"
     }
   ],
   "recent_history": [
