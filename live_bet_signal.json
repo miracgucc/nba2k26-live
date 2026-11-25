@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 08:21:51",
-  "timestamp": 1795584111.4,
+  "updated_at_tr": "2026-11-25 08:22:31",
+  "timestamp": 1795584151.0,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Denver Nuggets",
       "quarter": 4,
-      "elapsed_mins": 40.5,
+      "elapsed_mins": 40.7,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "87-68",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 08:21:50"
+      "updated_at_tr": "2026-11-25 08:22:29"
     },
     {
       "signal_id": "CB-773935088_35m",
@@ -56,32 +56,32 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Indiana Pacers",
       "quarter": 2,
-      "elapsed_mins": 16.7,
+      "elapsed_mins": 17.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "35-33",
+      "current_score": "38-36",
       "score_gap": 2,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.63,
+      "fav1_odd": 3.42,
       "fav2_barem": "211-220",
-      "fav2_odd": 3.81,
+      "fav2_odd": 3.74,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "211-220",
       "target_barem_tr": "211-220",
       "target_barem_en": "211-220",
       "target_t_id": 1844,
-      "target_odd": 3.81,
-      "min_acceptable_odd": 3.66,
+      "target_odd": 3.74,
+      "min_acceptable_odd": 3.59,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (3.81)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (3.74)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 08:21:50"
+      "updated_at_tr": "2026-11-25 08:22:29"
     }
   ],
   "recent_history": [
