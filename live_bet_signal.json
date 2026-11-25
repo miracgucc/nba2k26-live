@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 15:09:43",
-  "timestamp": 1795608583.4,
+  "updated_at_tr": "2026-11-25 15:10:24",
+  "timestamp": 1795608624.17,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -13,6 +13,41 @@
   "current_play_signal": null,
   "active_signals": [],
   "live_matches": [
+    {
+      "signal_id": "CB-774023442_35m",
+      "game_id": "CB-774023442",
+      "raw_game_id": "774023442",
+      "game_name": "Cleveland Cavaliers vs Minnesota Timberwolves",
+      "home_team": "Cleveland Cavaliers",
+      "away_team": "Minnesota Timberwolves",
+      "quarter": 1,
+      "elapsed_mins": 0.0,
+      "in_decision_window_35m": false,
+      "is_barem_open": false,
+      "current_score": "0-0",
+      "score_gap": 0,
+      "fav1_barem": "-",
+      "fav1_odd": 0.0,
+      "fav2_barem": "-",
+      "fav2_odd": 0.0,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_barem_en": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "min_acceptable_odd": 0.0,
+      "zone_type": "PASS_CLUTCH",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 0 Sayı Fark)",
+      "stakes": {
+        "kasa_8000": 0,
+        "kasa_10000": 0,
+        "kasa_15000": 0,
+        "kasa_20000": 0
+      },
+      "updated_at_tr": "2026-11-25 15:10:22"
+    },
     {
       "signal_id": "CB-774004195_35m",
       "game_id": "CB-774004195",
@@ -46,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 15:09:42"
+      "updated_at_tr": "2026-11-25 15:10:22"
     },
     {
       "signal_id": "CB-774013924_35m",
@@ -81,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 15:09:42"
+      "updated_at_tr": "2026-11-25 15:10:22"
     }
   ],
   "recent_history": [
@@ -100,9 +135,9 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 1.67)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "93-122",
+      "actual_range": "211-220",
+      "result": "PAS"
     },
     {
       "signal_id": "CB-773994968_35m",
