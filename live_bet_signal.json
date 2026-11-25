@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 17:26:49",
-  "timestamp": 1795616809.64,
+  "updated_at_tr": "2026-11-25 17:27:31",
+  "timestamp": 1795616851.3,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Miami Heat",
       "away_team": "Los Angeles Clippers",
       "quarter": 3,
-      "elapsed_mins": 30.7,
+      "elapsed_mins": 31.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "56-65",
-      "score_gap": 9,
+      "current_score": "58-68",
+      "score_gap": 10,
       "fav1_barem": "191-200",
-      "fav1_odd": 2.67,
+      "fav1_odd": 2.43,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.17,
+      "fav2_odd": 3.48,
       "decision": "OYNA",
-      "pick_type": "2. Favori",
-      "target_barem": "201-210",
-      "target_barem_tr": "201-210",
-      "target_barem_en": "201-210",
-      "target_t_id": 1843,
-      "target_odd": 3.17,
-      "min_acceptable_odd": 3.02,
-      "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.17)",
+      "pick_type": "1. Favori",
+      "target_barem": "191-200",
+      "target_barem_tr": "191-200",
+      "target_barem_en": "191-200",
+      "target_t_id": 1842,
+      "target_odd": 2.43,
+      "min_acceptable_odd": 2.28,
+      "zone_type": "GOLDEN",
+      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (10–15 Fark (%60.0 / +415 TL)): 191-200 (2.43)",
       "stakes": {
-        "kasa_8000": 320,
-        "kasa_10000": 400,
-        "kasa_15000": 600,
-        "kasa_20000": 800
+        "kasa_8000": 400,
+        "kasa_10000": 500,
+        "kasa_15000": 750,
+        "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-25 17:26:48"
+      "updated_at_tr": "2026-11-25 17:27:30"
     },
     {
       "signal_id": "CB-774049953_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 17:26:48"
+      "updated_at_tr": "2026-11-25 17:27:30"
     }
   ],
   "recent_history": [
