@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 01:59:39",
-  "timestamp": 1795647579.66,
+  "updated_at_tr": "2026-11-26 02:00:20",
+  "timestamp": 1795647620.46,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Detroit Pistons",
       "away_team": "Denver Nuggets",
       "quarter": 3,
-      "elapsed_mins": 27.3,
+      "elapsed_mins": 27.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "59-49",
-      "score_gap": 10,
+      "current_score": "59-52",
+      "score_gap": 7,
       "fav1_barem": "201-210",
       "fav1_odd": 2.7,
       "fav2_barem": "191-200",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 01:59:38"
+      "updated_at_tr": "2026-11-26 02:00:18"
     },
     {
       "signal_id": "CB-774162408_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 01:59:38"
+      "updated_at_tr": "2026-11-26 02:00:18"
     },
     {
       "signal_id": "CB-774148924_35m",
@@ -91,11 +91,11 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "New York Knicks",
       "quarter": 4,
-      "elapsed_mins": 47.9,
+      "elapsed_mins": 48.0,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "103-103",
-      "score_gap": 0,
+      "current_score": "103-105",
+      "score_gap": 2,
       "fav1_barem": "201-210",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -109,14 +109,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 0 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 2 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 01:59:38"
+      "updated_at_tr": "2026-11-26 02:00:18"
     }
   ],
   "recent_history": [
