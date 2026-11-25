@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 17:06:53",
-  "timestamp": 1795615613.53,
+  "updated_at_tr": "2026-11-25 17:07:42",
+  "timestamp": 1795615662.09,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Golden State Warriors",
       "away_team": "Oklahoma City Thunder",
       "quarter": 4,
-      "elapsed_mins": 45.4,
+      "elapsed_mins": 46.0,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "90-115",
-      "score_gap": 25,
+      "current_score": "92-115",
+      "score_gap": 23,
       "fav1_barem": "211-220",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 17:06:52"
+      "updated_at_tr": "2026-11-25 17:07:41"
     },
     {
       "signal_id": "CB-774041821_35m",
@@ -56,32 +56,32 @@
       "home_team": "Miami Heat",
       "away_team": "Los Angeles Clippers",
       "quarter": 2,
-      "elapsed_mins": 17.5,
+      "elapsed_mins": 17.8,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "34-30",
       "score_gap": 4,
       "fav1_barem": "191-200",
-      "fav1_odd": 3.42,
+      "fav1_odd": 3.35,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.73,
+      "fav2_odd": 3.52,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_barem_en": "201-210",
       "target_t_id": 1843,
-      "target_odd": 3.73,
-      "min_acceptable_odd": 3.58,
+      "target_odd": 3.52,
+      "min_acceptable_odd": 3.37,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.73)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.52)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 17:06:52"
+      "updated_at_tr": "2026-11-25 17:07:41"
     }
   ],
   "recent_history": [
