@@ -8,12 +8,20 @@ const BAREMS_EU=["130_or_less","131-140","141-150","151-160","161-170","171+"];
 const MID_EU={"130_or_less":125.5,"131-140":135.5,"141-150":145.5,"151-160":155.5,"161-170":165.5,"171+":175.5};
 const PMAP_EU={"130":"130_or_less","131.14":"131-140","141.15":"141-150","151.16":"151-160","161.17":"161-170","171":"171+"};
 let pShiftNba=0,pShiftEu=0,busy=false,listUrl=location.origin+"/tr/live/basketball/2935701-nba-2k26-cyber-league";
+if(!localStorage.getItem("n80_init1500")){
+  localStorage.setItem("n77_s1","75");
+  localStorage.setItem("n77_s2","60");
+  localStorage.setItem("n77_m","100");
+  localStorage.setItem("n77_p","[]");
+  localStorage.setItem("n77_on","1");
+  localStorage.setItem("n80_init1500","1");
+}
 const gP=()=>{try{return JSON.parse(localStorage.getItem("n77_p")||"[]")}catch{return[]}};
 const mP=(id,t)=>{const a=gP();if(!a.includes(id)){a.push(id);localStorage.setItem("n77_p",JSON.stringify(a.slice(-150)))}localStorage.setItem("n77_l",new Date().toLocaleTimeString("tr-TR")+" "+t)};
 const isOn=()=>localStorage.getItem("n77_on")!=="0";
 const gMax=()=>parseInt(localStorage.getItem("n77_m")||"100",10)||100;
-const gS1=()=>parseFloat(localStorage.getItem("n77_s1")||"40")||40;
-const gS2=()=>parseFloat(localStorage.getItem("n77_s2")||"32")||32;
+const gS1=()=>parseFloat(localStorage.getItem("n77_s1")||"75")||75;
+const gS2=()=>parseFloat(localStorage.getItem("n77_s2")||"60")||60;
 
 const box=document.createElement("div");
 box.id="nba2k26-autopilot-panel";
