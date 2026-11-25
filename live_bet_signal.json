@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 18:35:06",
-  "timestamp": 1795620906.97,
+  "updated_at_tr": "2026-11-25 18:35:58",
+  "timestamp": 1795620958.25,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Golden State Warriors",
       "away_team": "Dallas Mavericks",
       "quarter": 2,
-      "elapsed_mins": 21.9,
+      "elapsed_mins": 22.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "57-45",
       "score_gap": 12,
       "fav1_barem": "231+",
-      "fav1_odd": 2.31,
+      "fav1_odd": 2.02,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.02,
+      "fav2_odd": 2.94,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "231+",
       "target_barem_tr": "231 veya daha fazla",
       "target_barem_en": "231 or more",
       "target_t_id": 1846,
-      "target_odd": 2.31,
-      "min_acceptable_odd": 2.16,
+      "target_odd": 2.02,
+      "min_acceptable_odd": 1.87,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (10–15 Fark (%60.0 / +415 TL)): 231+ (2.31)",
+      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 231+ (2.02)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-25 18:35:05"
+      "updated_at_tr": "2026-11-25 18:35:57"
     },
     {
       "signal_id": "CB-774067037_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 18:35:05"
+      "updated_at_tr": "2026-11-25 18:35:57"
     },
     {
       "signal_id": "CB-774049953_35m",
@@ -91,7 +91,7 @@
       "home_team": "New York Knicks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 4,
-      "elapsed_mins": 47.6,
+      "elapsed_mins": 47.9,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "94-97",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 18:35:05"
+      "updated_at_tr": "2026-11-25 18:35:57"
     }
   ],
   "recent_history": [
