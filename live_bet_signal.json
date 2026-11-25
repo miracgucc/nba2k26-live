@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 10:32:08",
-  "timestamp": 1795591928.33,
+  "updated_at_tr": "2026-11-25 10:32:49",
+  "timestamp": 1795591969.09,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Denver Nuggets",
       "away_team": "Detroit Pistons",
       "quarter": 2,
-      "elapsed_mins": 20.4,
+      "elapsed_mins": 21.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "55-41",
       "score_gap": 14,
       "fav1_barem": "211-220",
-      "fav1_odd": 2.86,
+      "fav1_odd": 2.78,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.25,
+      "fav2_odd": 3.38,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_barem_en": "201-210",
       "target_t_id": 1843,
-      "target_odd": 3.25,
-      "min_acceptable_odd": 3.1,
+      "target_odd": 3.38,
+      "min_acceptable_odd": 3.23,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.25)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.38)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 10:32:07"
+      "updated_at_tr": "2026-11-25 10:32:47"
     },
     {
       "signal_id": "CB-773960703_35m",
@@ -81,42 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 10:32:07"
-    },
-    {
-      "signal_id": "CB-773947061_35m",
-      "game_id": "CB-773947061",
-      "raw_game_id": "773947061",
-      "game_name": "Los Angeles Lakers vs Oklahoma City Thunder",
-      "home_team": "Los Angeles Lakers",
-      "away_team": "Oklahoma City Thunder",
-      "quarter": 4,
-      "elapsed_mins": 48.0,
-      "in_decision_window_35m": false,
-      "is_barem_open": false,
-      "current_score": "112-105",
-      "score_gap": 7,
-      "fav1_barem": "211-220",
-      "fav1_odd": 0.0,
-      "fav2_barem": "-",
-      "fav2_odd": 0.0,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⏳ Oran Bekleniyor",
-      "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
-      },
-      "updated_at_tr": "2026-11-25 10:32:07"
+      "updated_at_tr": "2026-11-25 10:32:47"
     }
   ],
   "recent_history": [
