@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 00:11:48",
-  "timestamp": 1795641108.15,
+  "updated_at_tr": "2026-11-26 00:12:30",
+  "timestamp": 1795641150.31,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Detroit Pistons",
       "away_team": "Miami Heat",
       "quarter": 3,
-      "elapsed_mins": 32.3,
-      "in_decision_window_35m": false,
+      "elapsed_mins": 33.0,
+      "in_decision_window_35m": true,
       "is_barem_open": true,
       "current_score": "76-66",
       "score_gap": 10,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.74,
-      "fav2_barem": "211-220",
-      "fav2_odd": 3.76,
+      "fav1_odd": 2.63,
+      "fav2_barem": "191-200",
+      "fav2_odd": 3.61,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.74)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.63)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 00:11:46"
+      "updated_at_tr": "2026-11-26 00:12:28"
     },
     {
       "signal_id": "CB-774141383_35m",
@@ -56,15 +56,15 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Atlanta Hawks",
       "quarter": 1,
-      "elapsed_mins": 7.1,
+      "elapsed_mins": 7.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "15-8",
-      "score_gap": 7,
+      "current_score": "18-8",
+      "score_gap": 10,
       "fav1_barem": "191-200",
-      "fav1_odd": 3.47,
+      "fav1_odd": 3.63,
       "fav2_barem": "201-210",
-      "fav2_odd": 4.08,
+      "fav2_odd": 3.77,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,17 +74,36 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 3.47)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 3.63)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 00:11:46"
+      "updated_at_tr": "2026-11-26 00:12:28"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-774134072_35m",
+      "game_id": "CB-774134072",
+      "raw_game_id": "774134072",
+      "date": "2026-11-26",
+      "game_name": "Detroit Pistons vs Miami Heat",
+      "current_score": "76-66",
+      "score_gap": 10,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.63)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-774124102_35m",
       "game_id": "CB-774124102",
@@ -407,25 +426,6 @@
       "actual_score": "101-111",
       "actual_range": "211-220",
       "result": "YATTI"
-    },
-    {
-      "signal_id": "CB-773968286_35m",
-      "game_id": "CB-773968286",
-      "raw_game_id": "773968286",
-      "date": "2026-11-25",
-      "game_name": "Houston Rockets vs Minnesota Timberwolves",
-      "current_score": "83-76",
-      "score_gap": 7,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 211-220: 2.30)",
-      "actual_score": "111-104",
-      "actual_range": "211-220",
-      "result": "PAS"
     }
   ]
 }
