@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 06:32:45",
-  "timestamp": 1795577565.84,
+  "updated_at_tr": "2026-11-25 06:33:25",
+  "timestamp": 1795577605.67,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Los Angeles Clippers",
       "quarter": 4,
-      "elapsed_mins": 46.0,
+      "elapsed_mins": 46.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "97-107",
-      "score_gap": 10,
+      "current_score": "97-110",
+      "score_gap": 13,
       "fav1_barem": "211-220",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 06:32:44"
+      "updated_at_tr": "2026-11-25 06:33:24"
     },
     {
       "signal_id": "CB-773918766_35m",
@@ -56,32 +56,32 @@
       "home_team": "Golden State Warriors",
       "away_team": "Houston Rockets",
       "quarter": 2,
-      "elapsed_mins": 19.3,
+      "elapsed_mins": 19.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "40-40",
       "score_gap": 0,
       "fav1_barem": "231+",
-      "fav1_odd": 3.26,
+      "fav1_odd": 3.52,
       "fav2_barem": "211-220",
-      "fav2_odd": 3.62,
+      "fav2_odd": 3.66,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "211-220",
       "target_barem_tr": "211-220",
       "target_barem_en": "211-220",
       "target_t_id": 1844,
-      "target_odd": 3.62,
-      "min_acceptable_odd": 3.47,
+      "target_odd": 3.66,
+      "min_acceptable_odd": 3.51,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (3.62)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (3.66)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 06:32:44"
+      "updated_at_tr": "2026-11-25 06:33:24"
     },
     {
       "signal_id": "CB-773924272_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 06:32:44"
+      "updated_at_tr": "2026-11-25 06:33:24"
     }
   ],
   "recent_history": [
