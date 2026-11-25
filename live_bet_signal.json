@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 18:45:14",
-  "timestamp": 1795621514.84,
+  "updated_at_tr": "2026-11-25 18:46:08",
+  "timestamp": 1795621568.79,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Golden State Warriors",
       "away_team": "Dallas Mavericks",
       "quarter": 3,
-      "elapsed_mins": 27.9,
+      "elapsed_mins": 28.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "76-62",
-      "score_gap": 14,
+      "current_score": "79-62",
+      "score_gap": 17,
       "fav1_barem": "231+",
-      "fav1_odd": 1.6,
+      "fav1_odd": 1.68,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.06,
+      "fav2_odd": 2.95,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "231+",
       "target_barem_tr": "231 veya daha fazla",
       "target_barem_en": "231 or more",
       "target_t_id": 1846,
-      "target_odd": 1.6,
-      "min_acceptable_odd": 1.5,
+      "target_odd": 1.68,
+      "min_acceptable_odd": 1.53,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA KONTROLLÜ TEK FAVORİ: 231+ (1.60)",
+      "zone_badge": "💎 NBA KONTROLLÜ TEK FAVORİ: 231+ (1.68)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-25 18:45:13"
+      "updated_at_tr": "2026-11-25 18:46:07"
     },
     {
       "signal_id": "CB-774067037_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 18:45:13"
+      "updated_at_tr": "2026-11-25 18:46:07"
     }
   ],
   "recent_history": [
