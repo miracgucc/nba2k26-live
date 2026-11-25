@@ -1,13 +1,13 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 09:48:37",
-  "timestamp": 1795589317.18,
+  "updated_at_tr": "2026-11-25 09:49:13",
+  "timestamp": 1795589353.87,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
   "chain_state": {
-    "prev_shift": -2,
-    "prev2_shift": 2
+    "prev_shift": -1,
+    "prev2_shift": -2
   },
   "has_active_play_signal": false,
   "current_play_signal": null,
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 09:48:36"
+      "updated_at_tr": "2026-11-25 09:49:12"
     },
     {
       "signal_id": "CB-773947061_35m",
@@ -56,32 +56,32 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Oklahoma City Thunder",
       "quarter": 2,
-      "elapsed_mins": 18.6,
+      "elapsed_mins": 19.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "33-46",
       "score_gap": 13,
-      "fav1_barem": "201-210",
-      "fav1_odd": 3.09,
-      "fav2_barem": "191-200",
-      "fav2_odd": 3.4,
+      "fav1_barem": "191-200",
+      "fav1_odd": 3.15,
+      "fav2_barem": "201-210",
+      "fav2_odd": 3.24,
       "decision": "OYNA",
       "pick_type": "2. Favori",
-      "target_barem": "191-200",
-      "target_barem_tr": "191-200",
-      "target_barem_en": "191-200",
-      "target_t_id": 1842,
-      "target_odd": 3.4,
-      "min_acceptable_odd": 3.25,
+      "target_barem": "201-210",
+      "target_barem_tr": "201-210",
+      "target_barem_en": "201-210",
+      "target_t_id": 1843,
+      "target_odd": 3.24,
+      "min_acceptable_odd": 3.09,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 191-200 (3.40)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (3.24)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 09:48:36"
+      "updated_at_tr": "2026-11-25 09:49:12"
     }
   ],
   "recent_history": [
@@ -100,9 +100,9 @@
       "target_t_id": 1841,
       "target_odd": 1.91,
       "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 181-190 (1.91)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "67-110",
+      "actual_range": "171-180",
+      "result": "YATTI"
     },
     {
       "signal_id": "CB-773935088_35m",
