@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 00:01:39",
-  "timestamp": 1795640499.09,
+  "updated_at_tr": "2026-11-26 00:02:18",
+  "timestamp": 1795640538.0,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Detroit Pistons",
       "away_team": "Miami Heat",
       "quarter": 3,
-      "elapsed_mins": 24.7,
+      "elapsed_mins": 25.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "62-48",
-      "score_gap": 14,
+      "current_score": "64-51",
+      "score_gap": 13,
       "fav1_barem": "211-220",
       "fav1_odd": 3.25,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.66,
+      "fav2_odd": 3.53,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 00:01:37"
+      "updated_at_tr": "2026-11-26 00:02:16"
     },
     {
       "signal_id": "CB-774141383_35m",
@@ -56,15 +56,15 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Atlanta Hawks",
       "quarter": 1,
-      "elapsed_mins": 1.0,
+      "elapsed_mins": 1.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "2-3",
-      "score_gap": 1,
+      "current_score": "4-6",
+      "score_gap": 2,
       "fav1_barem": "201-210",
       "fav1_odd": 3.6,
       "fav2_barem": "191-200",
-      "fav2_odd": 3.93,
+      "fav2_odd": 3.84,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 00:01:37"
+      "updated_at_tr": "2026-11-26 00:02:16"
     }
   ],
   "recent_history": [
