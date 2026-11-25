@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 22:21:55",
-  "timestamp": 1795634515.85,
+  "updated_at_tr": "2026-11-25 22:22:40",
+  "timestamp": 1795634560.19,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Los Angeles Clippers",
       "quarter": 2,
-      "elapsed_mins": 15.2,
+      "elapsed_mins": 15.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "28-39",
-      "score_gap": 11,
+      "current_score": "28-41",
+      "score_gap": 13,
       "fav1_barem": "201-210",
       "fav1_odd": 2.96,
       "fav2_barem": "211-220",
-      "fav2_odd": 4.14,
+      "fav2_odd": 4.03,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 22:21:54"
+      "updated_at_tr": "2026-11-25 22:22:38"
     },
     {
       "signal_id": "CB-774104992_35m",
@@ -56,11 +56,11 @@
       "home_team": "Detroit Pistons",
       "away_team": "Cleveland Cavaliers",
       "quarter": 4,
-      "elapsed_mins": 40.0,
+      "elapsed_mins": 40.7,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "93-77",
-      "score_gap": 16,
+      "current_score": "95-77",
+      "score_gap": 18,
       "fav1_barem": "201-210",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 22:21:54"
+      "updated_at_tr": "2026-11-25 22:22:38"
     }
   ],
   "recent_history": [
