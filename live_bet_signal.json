@@ -1,13 +1,13 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 06:04:21",
-  "timestamp": 1795575861.45,
+  "updated_at_tr": "2026-11-25 06:05:03",
+  "timestamp": 1795575903.35,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
   "chain_state": {
-    "prev_shift": 0,
-    "prev2_shift": 1
+    "prev_shift": 1,
+    "prev2_shift": 0
   },
   "has_active_play_signal": false,
   "current_play_signal": null,
@@ -21,32 +21,32 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Los Angeles Clippers",
       "quarter": 3,
-      "elapsed_mins": 28.0,
+      "elapsed_mins": 28.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "60-62",
       "score_gap": 2,
-      "fav1_barem": "201-210",
-      "fav1_odd": 2.72,
-      "fav2_barem": "211-220",
-      "fav2_odd": 3.1,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.72)",
+      "fav1_barem": "211-220",
+      "fav1_odd": 2.79,
+      "fav2_barem": "201-210",
+      "fav2_odd": 2.88,
+      "decision": "OYNA",
+      "pick_type": "2. Favori",
+      "target_barem": "201-210",
+      "target_barem_tr": "201-210",
+      "target_barem_en": "201-210",
+      "target_t_id": 1843,
+      "target_odd": 2.88,
+      "min_acceptable_odd": 2.73,
+      "zone_type": "TRAP_EXTREME",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (2.88)",
       "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
+        "kasa_8000": 320,
+        "kasa_10000": 400,
+        "kasa_15000": 600,
+        "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-25 06:04:20"
+      "updated_at_tr": "2026-11-25 06:05:01"
     },
     {
       "signal_id": "CB-773918766_35m",
@@ -56,32 +56,32 @@
       "home_team": "Golden State Warriors",
       "away_team": "Houston Rockets",
       "quarter": 1,
-      "elapsed_mins": 3.8,
+      "elapsed_mins": 4.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "7-10",
-      "score_gap": 3,
+      "current_score": "7-12",
+      "score_gap": 5,
       "fav1_barem": "231+",
-      "fav1_odd": 2.01,
+      "fav1_odd": 2.3,
       "fav2_barem": "221-230",
-      "fav2_odd": 4.23,
+      "fav2_odd": 4.14,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "231+",
       "target_barem_tr": "231 veya daha fazla",
       "target_barem_en": "231 or more",
       "target_t_id": 1846,
-      "target_odd": 2.01,
-      "min_acceptable_odd": 1.86,
+      "target_odd": 2.3,
+      "min_acceptable_odd": 2.15,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 231+ (2.01)",
+      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Önceki Maç +1 Üst (%53.8 / +267 TL)): 231+ (2.30)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-25 06:04:20"
+      "updated_at_tr": "2026-11-25 06:05:01"
     },
     {
       "signal_id": "CB-773907565_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 06:04:20"
+      "updated_at_tr": "2026-11-25 06:05:01"
     }
   ],
   "recent_history": [
@@ -135,9 +135,9 @@
       "target_t_id": 1842,
       "target_odd": 1.95,
       "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 191-200 (1.95)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "108-102",
+      "actual_range": "201-210",
+      "result": "YATTI"
     },
     {
       "signal_id": "CB-773901676_35m",
