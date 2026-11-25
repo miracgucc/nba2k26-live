@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 14:46:57",
-  "timestamp": 1795607217.63,
+  "updated_at_tr": "2026-11-25 14:47:46",
+  "timestamp": 1795607266.81,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Golden State Warriors",
       "away_team": "Houston Rockets",
       "quarter": 3,
-      "elapsed_mins": 30.8,
+      "elapsed_mins": 31.7,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "51-86",
-      "score_gap": 35,
+      "current_score": "53-90",
+      "score_gap": 37,
       "fav1_barem": "211-220",
-      "fav1_odd": 1.82,
+      "fav1_odd": 2.03,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.32,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 1.82)",
+      "fav2_odd": 2.74,
+      "decision": "OYNA",
+      "pick_type": "1. Favori",
+      "target_barem": "211-220",
+      "target_barem_tr": "211-220",
+      "target_barem_en": "211-220",
+      "target_t_id": 1844,
+      "target_odd": 2.03,
+      "min_acceptable_odd": 1.88,
+      "zone_type": "GOLDEN",
+      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 211-220 (2.03)",
       "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
+        "kasa_8000": 400,
+        "kasa_10000": 500,
+        "kasa_15000": 750,
+        "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-25 14:46:56"
+      "updated_at_tr": "2026-11-25 14:47:45"
     },
     {
       "signal_id": "CB-774013924_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 14:46:56"
+      "updated_at_tr": "2026-11-25 14:47:45"
     }
   ],
   "recent_history": [
