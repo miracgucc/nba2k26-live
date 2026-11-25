@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-25 23:25:13",
-  "timestamp": 1795638313.43,
+  "updated_at_tr": "2026-11-25 23:25:56",
+  "timestamp": 1795638356.19,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 23:25:11"
+      "updated_at_tr": "2026-11-25 23:25:54"
     },
     {
       "signal_id": "CB-774124102_35m",
@@ -56,7 +56,7 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Indiana Pacers",
       "quarter": 3,
-      "elapsed_mins": 33.0,
+      "elapsed_mins": 33.2,
       "in_decision_window_35m": true,
       "is_barem_open": true,
       "current_score": "90-69",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-25 23:25:11"
+      "updated_at_tr": "2026-11-25 23:25:54"
     }
   ],
   "recent_history": [
@@ -91,15 +91,15 @@
       "raw_game_id": "774124102",
       "date": "2026-11-25",
       "game_name": "Los Angeles Lakers vs Indiana Pacers",
-      "current_score": "85-67",
-      "score_gap": 18,
+      "current_score": "90-69",
+      "score_gap": 21,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
       "target_barem_tr": "",
       "target_t_id": 0,
       "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 2.53)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 221-230: 2.77)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
