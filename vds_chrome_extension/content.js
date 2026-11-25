@@ -1,370 +1,243 @@
-(function () {
-    'use strict';
+(function(){
+if(window.top!==window.self||document.getElementById("nba2k26-autopilot-panel"))return;
+const CLOUD="https://raw.githubusercontent.com/miracgucc/nba2k26-live/main/live_bet_signal.json";
+const BAREMS_NBA=["160_or_less","161-170","171-180","181-190","191-200","201-210","211-220","221-230","231+"];
+const PMAP_NBA={"160":"160_or_less","161.17":"161-170","171.18":"171-180","181.19":"181-190","191.2":"191-200","201.21":"201-210","211.22":"211-220","221.23":"221-230","231":"231+"};
+const PMAP_EU={"130":"130_or_less","131.14":"131-140","141.15":"141-150","151.16":"151-160","161.17":"161-170","171":"171+"};
+let pShiftNba=0,pShiftEu=0,busy=false,listUrl=location.origin+"/tr/live/basketball/2935701-nba-2k26-cyber-league";
+const gP=()=>{try{return JSON.parse(localStorage.getItem("n77_p")||"[]")}catch{return[]}};
+const mP=(id,t)=>{const a=gP();if(!a.includes(id)){a.push(id);localStorage.setItem("n77_p",JSON.stringify(a.slice(-150)))}localStorage.setItem("n77_l",new Date().toLocaleTimeString("tr-TR")+" "+t)};
+const isOn=()=>localStorage.getItem("n77_on")!=="0";
+const gMax=()=>parseInt(localStorage.getItem("n77_m")||"100",10)||100;
+const gS1=()=>parseFloat(localStorage.getItem("n77_s1")||"40")||40;
+const gS2=()=>parseFloat(localStorage.getItem("n77_s2")||"32")||32;
 
-    if (document.getElementById("nba2k26-autopilot-panel")) return;
+const box=document.createElement("div");
+box.id="nba2k26-autopilot-panel";
+box.style.cssText="position:fixed;top:54px;right:8px;z-index:999999;width:296px;background:rgba(15,23,42,0.96);color:#fff;border:2px solid #10b981;border-radius:12px;padding:9px;font-family:system-ui,sans-serif;font-size:12px;box-shadow:0 8px 24px rgba(0,0,0,0.6)";
+box.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><b style="color:#34d399">⚡ NBA + EURO Oto-Pilot v7.7</b><button id="n77t" style="border:none;border-radius:6px;padding:3px 8px;font-weight:700;font-size:11px;cursor:pointer"></button></div><div id="n77s" style="background:#1e293b;padding:6px;border-radius:7px;margin-bottom:5px">⏳ Bağlanıyor...</div><div style="display:flex;gap:6px;margin-bottom:5px;font-size:11px;color:#cbd5e1"><label style="flex:1">1.Fav TL: <input id="n77s1" type="number" step="0.01" style="width:54px;background:#0f172a;color:#34d399;font-weight:700;border:1px solid #334155;border-radius:4px;text-align:center"></label><label style="flex:1">2.Fav TL: <input id="n77s2" type="number" step="0.01" style="width:54px;background:#0f172a;color:#fbbf24;font-weight:700;border:1px solid #334155;border-radius:4px;text-align:center"></label></div><div style="display:flex;gap:5px;margin-bottom:5px"><button id="n77g" style="flex:1;background:#2563eb;color:#fff;border:none;border-radius:6px;padding:5px;font-weight:700;font-size:11px;cursor:pointer">🏀 Maç Listesi</button><button id="n77b" style="background:#d97706;color:#fff;border:none;border-radius:6px;padding:5px 8px;font-weight:700;font-size:11px;cursor:pointer">🧪 Oto-Giriş Test</button></div><div style="display:flex;justify-content:space-between;font-size:11px;color:#94a3b8"><span>Kupon: <b id="n77c" style="color:#fff">0</b>/<input id="n77m" type="number" style="width:36px;background:#0f172a;color:#fff;border:1px solid #334155;border-radius:4px;text-align:center"></span><button id="n77r" style="background:#334155;color:#cbd5e1;border:none;border-radius:4px;padding:2px 6px;font-size:10px;cursor:pointer">Sıfırla</button></div><div id="n77l" style="margin-top:3px;font-size:10px;color:#fbbf24"></div>';
+document.body.appendChild(box);
 
-    const SIGNAL_URL = "https://raw.githubusercontent.com/miracgucc/nba2k26-live/main/live_bet_signal.json";
-    const STORAGE_KEY_PLAYED = "nba2k26_v71_played_signals";
-    const STORAGE_KEY_ENABLED = "nba2k26_v71_autopilot_enabled";
-    const STORAGE_KEY_MAX_BETS = "nba2k26_v71_max_night_bets";
-    const STORAGE_KEY_LOG = "nba2k26_v71_bet_log";
+const E=id=>document.getElementById(id);
+E("n77m").value=gMax();E("n77s1").value=gS1();E("n77s2").value=gS2();
+E("n77m").oninput=E("n77m").onchange=()=>localStorage.setItem("n77_m",E("n77m").value||"100");
+E("n77s1").oninput=E("n77s1").onchange=()=>localStorage.setItem("n77_s1",E("n77s1").value||"40");
+E("n77s2").oninput=E("n77s2").onchange=()=>localStorage.setItem("n77_s2",E("n77s2").value||"32");
+E("n77r").onclick=()=>{localStorage.setItem("n77_p","[]");ui()};
+E("n77g").onclick=()=>{location.href=listUrl};
+E("n77t").onclick=()=>{localStorage.setItem("n77_on",isOn()?"0":"1");ui()};
 
-    let latestMelbetUrl = "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league";
-    let wakeLockSentinel = null;
+function ui(){const o=isOn();E("n77t").textContent=o?"🟢 7/24 AKTİF":"🔴 DURDU";E("n77t").style.background=o?"#10b981":"#ef4444";E("n77t").style.color="#fff";box.style.borderColor=o?"#10b981":"#ef4444";E("n77c").textContent=gP().length;E("n77l").textContent=localStorage.getItem("n77_l")||""}
+ui();
 
-    async function requestScreenWakeLock() {
-        try {
-            if ('wakeLock' in navigator && isAutoEnabled() && !wakeLockSentinel) {
-                wakeLockSentinel = await navigator.wakeLock.request('screen');
-                wakeLockSentinel.addEventListener('release', () => {
-                    wakeLockSentinel = null;
-                });
-            }
-        } catch (e) {}
-    }
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function setVueVal(inp,val){
+  inp.focus();
+  const st=Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,"value").set;
+  st.call(inp,String(val));
+  inp.dispatchEvent(new InputEvent("input",{bubbles:true,data:String(val),inputType:"insertText"}));
+  inp.dispatchEvent(new Event("change",{bubbles:true}));
+}
 
-    function getPlayedSignals() {
-        try {
-            return JSON.parse(localStorage.getItem(STORAGE_KEY_PLAYED) || "[]");
-        } catch (e) {
-            return [];
-        }
-    }
-
-    function markSignalPlayed(sigId, infoText) {
-        const list = getPlayedSignals();
-        if (!list.includes(sigId)) {
-            list.push(sigId);
-            localStorage.setItem(STORAGE_KEY_PLAYED, JSON.stringify(list.slice(-100)));
-        }
-        try {
-            const logs = JSON.parse(localStorage.getItem(STORAGE_KEY_LOG) || "[]");
-            logs.unshift({ time: new Date().toLocaleTimeString("tr-TR"), text: infoText });
-            localStorage.setItem(STORAGE_KEY_LOG, JSON.stringify(logs.slice(0, 25)));
-        } catch (e) {}
-    }
-
-    function isAutoEnabled() {
-        return localStorage.getItem(STORAGE_KEY_ENABLED) !== "false";
-    }
-
-    function getMaxBets() {
-        return parseInt(localStorage.getItem(STORAGE_KEY_MAX_BETS) || "20", 10) || 20;
-    }
-
-    const panel = document.createElement("div");
-    panel.id = "nba2k26-autopilot-panel";
-    panel.style.cssText = [
-        "position:fixed",
-        "bottom:14px",
-        "right:14px",
-        "z-index:999999",
-        "width:315px",
-        "background:rgba(15,23,42,0.96)",
-        "color:#f8fafc",
-        "border:2px solid #10b981",
-        "border-radius:12px",
-        "padding:10px 12px",
-        "font-family:system-ui,-apple-system,sans-serif",
-        "font-size:12px",
-        "box-shadow:0 10px 25px rgba(0,0,0,0.55)"
-    ].join(";");
-
-    panel.innerHTML = `
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-            <strong style="color:#34d399;font-size:13px;">☁️ NBA 2K26 VDS Oto-Pilot v7.1</strong>
-            <button id="nba2k26-toggle-btn" style="border:none;border-radius:6px;padding:4px 8px;font-weight:700;font-size:11px;cursor:pointer;"></button>
-        </div>
-        <div id="nba2k26-status-box" style="background:#1e293b;padding:6px 8px;border-radius:8px;margin-bottom:6px;line-height:1.35;">
-            ⏳ 7/24 Bulut sinyal motoruna bağlanıyor...
-        </div>
-        <div style="display:flex;gap:5px;align-items:center;margin-bottom:6px;">
-            <button id="nba2k26-melbet-btn" style="flex:1;background:#2563eb;color:#fff;border:none;border-radius:6px;padding:5px 6px;font-weight:700;font-size:11px;cursor:pointer;">
-                🚀 Güncel Melbet'e Git
-            </button>
-            <button id="nba2k26-test-btn" title="0 TL ile açık maçtaki baremi kupona eklemeyi test eder" style="background:#d97706;color:#fff;border:none;border-radius:6px;padding:5px 7px;font-weight:700;font-size:11px;cursor:pointer;">
-                🧪 Test (0 TL)
-            </button>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#94a3b8;">
-            <span>Oynanan Kupon: <b id="nba2k26-count-lbl" style="color:#fff;">0</b> / <input id="nba2k26-max-inp" type="number" min="1" max="50" style="width:40px;background:#0f172a;color:#fff;border:1px solid #334155;border-radius:4px;padding:1px 3px;text-align:center;" /></span>
-            <button id="nba2k26-reset-btn" style="background:#334155;color:#cbd5e1;border:none;border-radius:4px;padding:2px 6px;font-size:10px;cursor:pointer;">Sayacı Sıfırla</button>
-        </div>
-        <div id="nba2k26-last-bet" style="margin-top:5px;font-size:10px;color:#fbbf24;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
-    `;
-    document.body.appendChild(panel);
-
-    const toggleBtn = document.getElementById("nba2k26-toggle-btn");
-    const melbetBtn = document.getElementById("nba2k26-melbet-btn");
-    const testBtn = document.getElementById("nba2k26-test-btn");
-    const statusBox = document.getElementById("nba2k26-status-box");
-    const countLbl = document.getElementById("nba2k26-count-lbl");
-    const maxInp = document.getElementById("nba2k26-max-inp");
-    const resetBtn = document.getElementById("nba2k26-reset-btn");
-    const lastBetBox = document.getElementById("nba2k26-last-bet");
-
-    maxInp.value = getMaxBets();
-    maxInp.addEventListener("change", () => {
-        localStorage.setItem(STORAGE_KEY_MAX_BETS, String(maxInp.value || 20));
+async function openTamPuanSection(){
+  for(const y of [800,1800,3000,4500]){
+    const hdr=[...document.querySelectorAll(".game-markets-group-header,button,div")].find(h=>{
+      const t=(h.textContent||"").replace(/\s+/g," ").trim().toLowerCase();
+      return t==="tam puan sayısı"||t.startsWith("tam puan sayısı");
     });
+    if(hdr){
+      hdr.scrollIntoView({behavior:"instant",block:"center"});
+      if(hdr.classList&&hdr.classList.contains("game-markets-group-header")&&!hdr.classList.contains("game-markets-group-header--is-opened")){
+        hdr.click();await sleep(400);
+      }
+      return true;
+    }
+    window.scrollTo(0,y);
+    await sleep(350);
+  }
+  return false;
+}
 
-    resetBtn.addEventListener("click", () => {
-        localStorage.setItem(STORAGE_KEY_PLAYED, "[]");
-        updateUI();
-    });
+async function placeMelbetBet(key,minO,stakeTL){
+  if(busy)return{ok:false};
+  busy=true;
+  try{
+    let rx=key.includes("-")?new RegExp("\\b"+key.split("-")[0]+"\\b.{0,12}\\b"+key.split("-")[1]+"\\b","i"):(key.includes("130")?/\b13[01]\b.*(az|less)/i:key.includes("171")?/\b17[01]\b.*(fazla|more|\+)/i:key.includes("160")?/\b160\b/:/\b231\b/);
+    let target=null,nt="",od=0;
+    for(let tryIdx=0;tryIdx<3&&!target;tryIdx++){
+      for(const b of document.querySelectorAll("button.ui-market")){
+        const n=b.querySelector(".ui-market__name"),v=b.querySelector(".ui-market__value");
+        if(!n||!v)continue;
+        const txt=n.textContent.replace(/\s+/g," ").trim();
+        if(!rx.test(txt))continue;
+        const val=parseFloat(v.textContent.replace(",","."));
+        if(val>=minO&&val<35){target=b;nt=txt;od=val;break}
+      }
+      if(!target){await openTamPuanSection();await sleep(400)}
+    }
+    if(!target)return{ok:false,reason:"Barem bulunamadı"};
 
-    melbetBtn.addEventListener("click", () => {
-        window.location.href = latestMelbetUrl;
-    });
+    for(const old of document.querySelectorAll("button.ui-market.ui-market--toggled")){
+      if(old!==target){old.click();await sleep(150)}
+    }
+    target.scrollIntoView({behavior:"instant",block:"center"});
+    if(!target.classList.contains("ui-market--toggled"))target.click();
+    await sleep(500);
 
-    testBtn.addEventListener("click", async () => {
-        const curUrl = window.location.href;
-        // Check if on league list page instead of inside a specific match
-        const isInsideMatch = /\/\d{7,}/.test(curUrl.replace("2935701", ""));
-        if (!isInsideMatch && curUrl.includes("melbet")) {
-            statusBox.innerHTML = `<div style="color:#fbbf24;font-weight:700;">ℹ️ Önce Bir Maçın İçine Girin!</div><div>Şu an maç listesi sayfasındasınız. Listeden canlı bir NBA 2K26 maçına (ör. Knicks vs Pacers) tıklayıp içine girin, sonra tekrar <b>Test</b>'e basın!</div>`;
+    let inp=document.querySelector("input.ui-number-input__field");
+    if(!inp){
+      const cBtn=[...document.querySelectorAll("button,a,div")].find(x=>/kupon/i.test(x.textContent||"")&&(x.textContent||"").length<20);
+      if(cBtn){cBtn.click();await sleep(450);inp=document.querySelector("input.ui-number-input__field")}
+    }
+    if(!inp)return{ok:false,reason:"Tutar kutusu açılmadı"};
+
+    setVueVal(inp,stakeTL);
+    await sleep(300);
+
+    const putBtn=document.querySelector("button.quick-coupon-put-bet-button")||[...document.querySelectorAll("button")].find(x=>/bahis yap/i.test(x.textContent||""));
+    if(!putBtn)return{ok:false,reason:"Bahis Yap butonu yok"};
+    putBtn.click();
+    await sleep(2500);
+    const okBtn=[...document.querySelectorAll("button")].find(x=>/^(tamam|ok|kapat)$/i.test((x.textContent||"").trim()));
+    if(okBtn)okBtn.click();
+    return{ok:true,od,nt,stake:stakeTL};
+  }finally{busy=false}
+}
+
+async function checkPendingAutoTest(){
+  const rawP=sessionStorage.getItem("n77_pend");
+  if(rawP){
+    sessionStorage.removeItem("n77_pend");
+    try{
+      const p=JSON.parse(rawP);
+      if(Date.now()-p.ts<45000&&location.href.includes(p.gid)&&!gP().includes(p.sid)){
+        E("n77s").innerHTML='<b style="color:#38bdf8">⚡ ['+p.lg+'] Maça girildi, kupon basılıyor...</b><br>🎯 '+p.b+' ('+p.stTL+' TL)';
+        await sleep(1400);
+        const cr=await placeMelbetBet(p.b,Math.max(1.2,p.o-0.18),p.stTL);
+        if(cr.ok){mP(p.sid,"["+p.lg+"] "+p.b+" @ "+cr.od+" ("+p.stTL+"TL)");ui()}
+        return;
+      }
+    }catch{}
+  }
+  const pend=sessionStorage.getItem("n77_autotest");
+  if(!pend)return;
+  sessionStorage.removeItem("n77_autotest");
+  E("n77s").innerHTML='<span style="color:#38bdf8">⚡ Maça otomatik girildi! Barem aranıp basılıyor...</span>';
+  await sleep(1800);
+  await openTamPuanSection();
+  for(const k of["201-210","211-220","191-200","181-190","151-160","141-150","161-170","131-140","221-230","171-180","231+"]){
+    const r=await placeMelbetBet(k,1.01,gS1());
+    if(r.ok){E("n77s").innerHTML='<b style="color:#34d399">✅ OTO-GİRİŞ + BAHİS BAŞARILI!</b><br>🎯 '+r.nt+' @ '+r.od+' ('+r.stake+' TL)';return}
+  }
+  E("n77s").innerHTML='<span style="color:#fbbf24">⚠️ Bu maçta barem kapalı, başka maç denenebilir.</span>';
+}
+
+E("n77b").onclick=async()=>{
+  E("n77s").innerHTML='<span style="color:#38bdf8">🔍 Canlı açık NBA / Euro maçı aranıyor...</span>';
+  try{
+    for(const lg of[{c:"2935701",s:"2935701-nba-2k26-cyber-league"},{c:"2983166",s:"2983166-nba-2k26-cyber-euro-league"}]){
+      const r=await fetch(location.origin+"/service-api/LiveFeed/Get1x2_VZip?sports=3&champs="+lg.c+"&count=10&lng=tr&mode=4",{cache:"no-store"});
+      const games=(await r.json()).Value||[];
+      for(const g of games){
+        const gid=String(g.I);
+        const r2=await fetch(location.origin+"/service-api/LiveFeed/GetGameZip?id="+gid+"&lng=tr&isSubGames=true&GroupEvents=true",{cache:"no-store"});
+        const g33=((await r2.json()).Value?.GE||[]).find(x=>x.G===3319);
+        if(g33&&(g33.E||[]).length){
+          if(!location.href.includes(gid)){
+            sessionStorage.setItem("n77_autotest","1");
+            location.href=location.origin+"/tr/live/basketball/"+lg.s+"/"+gid;
             return;
+          }
+          sessionStorage.setItem("n77_autotest","1");
+          await checkPendingAutoTest();
+          return;
         }
-
-        const testBarems = ["191-200", "201-210", "211-220", "221-230", "181-190", "171-180", "231+"];
-        let found = null;
-        for (let attempt = 0; attempt < 2 && !found; attempt++) {
-            for (const b of testBarems) {
-                const res = tryClickBaremOnPage({
-                    target_barem: b,
-                    target_barem_tr: b,
-                    target_barem_en: b,
-                    min_acceptable_odd: 1.05
-                });
-                if (res.clicked) {
-                    found = { barem: b, odd: res.liveOdd, txt: res.matchedText || b };
-                    break;
-                }
-            }
-            if (!found && attempt === 0) {
-                // Auto-click "Toplam" tab or scroll down to load lazy-rendered "Tam Puan Sayısı"
-                const tabs = document.querySelectorAll("button, [role='tab'], a, span, div");
-                for (const t of tabs) {
-                    const tt = (t.innerText || "").trim().toLowerCase();
-                    if (tt === "toplam" || tt === "totals" || tt === "tam puan sayısı") {
-                        t.click();
-                        break;
-                    }
-                }
-                window.scrollBy(0, 600);
-                await new Promise(r => setTimeout(r, 600));
-            }
-        }
-        if (found) {
-            statusBox.innerHTML = `<div style="color:#34d399;font-weight:700;">✅ TEST BAŞARILI (0 TL)!</div><div>🎯 <b>${found.txt}</b> (Oran: <b>${found.odd}</b>) tıklandı! Sağdaki kupona eklendiyse sistem %100 tamamdır.</div>`;
-        } else {
-            const pageTxt = (document.body ? document.body.innerText : "");
-            const sample = pageTxt.match(/.{0,25}(Tam Puan|Puan Sayı|191|201|211).{0,25}/i);
-            statusBox.innerHTML = `<div style="color:#fbbf24;font-weight:700;">⚠️ Barem Ekranda Görünmüyor!</div><div>Sayfayı aşağı kaydırıp <b>'Tam Puan Sayısı'</b> başlığının açık olduğunu (ve maçın 4. çeyrekte olmadığını) kontrol edin.<br/><span style="font-size:10px;color:#94a3b8;">İpucu: ${sample ? sample[0].replace(/\s+/g,' ') : 'Sayfada Tam Puan Sayısı kapalı'}</span></div>`;
-        }
-    });
-
-    toggleBtn.addEventListener("click", () => {
-        const next = !isAutoEnabled();
-        localStorage.setItem(STORAGE_KEY_ENABLED, next ? "true" : "false");
-        if (next) requestScreenWakeLock();
-        updateUI();
-    });
-
-    function updateUI() {
-        const on = isAutoEnabled();
-        toggleBtn.textContent = on ? "🟢 7/24 AKTİF" : "🔴 DURAKLATILDI";
-        toggleBtn.style.background = on ? "#10b981" : "#ef4444";
-        toggleBtn.style.color = "#ffffff";
-        panel.style.borderColor = on ? "#10b981" : "#ef4444";
-        countLbl.textContent = String(getPlayedSignals().length);
-        try {
-            const logs = JSON.parse(localStorage.getItem(STORAGE_KEY_LOG) || "[]");
-            if (logs.length > 0) {
-                lastBetBox.textContent = "Son: " + logs[0].time + " • " + logs[0].text;
-            }
-        } catch (e) {}
+      }
     }
-    updateUI();
-    requestScreenWakeLock();
+    E("n77s").innerHTML='<span style="color:#fbbf24">⚠️ Şu saniyede baremi açık maç yok, 1 dk sonra deneyin.</span>';
+  }catch{E("n77s").innerHTML='<span style="color:#f87171">⚠️ API okunamadı, Melbet sayfasında olun.</span>'}
+};
 
-    function tryClickBaremOnPage(sig) {
-        const rawBarem = (sig.target_barem || "").trim().toLowerCase();
-        const minOdd = parseFloat(sig.min_acceptable_odd || 1.05);
+function ruleNba(om,gap,ps){
+  if(gap<6)return null;
+  const arr=Object.entries(om).filter(([,v])=>v>1.01&&v<85).sort((a,b)=>a[1]-b[1]);
+  if(arr.length<2)return null;
+  const[f1,o1]=arr[0],[f2,o2]=arr[1],i1=BAREMS_NBA.indexOf(f1);
+  const om1=i1>0?(om[BAREMS_NBA[i1-1]]||99):99,op1=(i1>=0&&i1<8)?(om[BAREMS_NBA[i1+1]]||99):99,up=op1<om1;
+  if(o1>=1.85&&o1<2.10&&ps!==1)return{b:f1,o:o1,f:1};
+  if(o1>=1.50&&o1<1.85&&gap<=20&&ps!==1)return{b:f1,o:o1,f:1};
+  if(o1>=2.10&&o1<2.30&&gap>=10&&(up||(gap>=10&&gap<=15)||ps!==0))return{b:f2,o:o2,f:2};
+  if(o1>=2.30&&o1<2.50){if((o2-o1)<=0.25||(gap>=10&&gap<=15)||ps===1)return{b:f1,o:o1,f:1};if(!up)return{b:f2,o:o2,f:2};return null}
+  if(o1>=2.50&&ps!==0&&o2<=6.50)return{b:f2,o:o2,f:2};
+  return null;
+}
 
-        let matcher = null;
-        if (rawBarem.includes("-")) {
-            const parts = rawBarem.split("-");
-            const lo = parts[0].trim();
-            const hi = parts[1].trim();
-            matcher = new RegExp("\\b" + lo + "\\b.{0,22}\\b" + hi + "\\b", "i");
-        } else if (rawBarem.includes("160")) {
-            matcher = /\b160\b.{0,25}(az|alt|less|under|veya|kadar|<=)/i;
-        } else if (rawBarem.includes("231")) {
-            matcher = /\b231\b.{0,25}(fazla|üst|üzeri|more|over|\+|veya|>=)/i;
-        }
-        if (!matcher) return { clicked: false, liveOdd: 0 };
+function ruleEuro(om,gap,ps){
+  if(gap<5)return null;
+  const arr=Object.entries(om).filter(([,v])=>v>1.01&&v<85).sort((a,b)=>a[1]-b[1]);
+  if(arr.length<2)return null;
+  const[f1,o1]=arr[0],[f2,o2]=arr[1];
+  if(o1<1.20||o1>=2.50)return null;
+  if(gap>=21)return{b:f2,o:o2,f:2};
+  if(o1>=2.10&&o1<2.50){if(ps===1||(o2-o1)<=0.25)return{b:f1,o:o1,f:1};if(gap>=6)return{b:f2,o:o2,f:2};return null}
+  if(o1>=1.50&&o1<2.10)return{b:f1,o:o1,f:1};
+  if(o1>=1.20&&o1<1.50&&(ps===1||(o2-o1)<=0.45))return{b:f1,o:o1,f:1};
+  return null;
+}
 
-        // Scan clickable market elements (Melbet v3 + 1xBet Desktop & Mobile)
-        const candidates = document.querySelectorAll(
-            "button, [role='button'], .ui-market, .c-bets__bet, .bet_type, .market-odd, .c-bet-box, [class*='market'], [class*='bet'], [class*='coef'], li, a, div, span"
-        );
+async function syncC(){try{const r=await fetch(CLOUD+"?t="+Date.now(),{cache:"no-store"});if(r.ok){const d=await r.json();if(d.chain_state)pShiftNba=Number(d.chain_state.prev_shift||0);if(d.euro_chain_state)pShiftEu=Number(d.euro_chain_state.prev_shift||0);if(d.active_melbet_nba2k26_url)listUrl=d.active_melbet_nba2k26_url}}catch{}}
 
-        let bestMatch = null;
-        for (const el of candidates) {
-            if (!el.offsetParent) continue; // skip hidden elements
-            const txt = (el.innerText || el.textContent || "").replace(/\s+/g, " ").trim();
-            if (!txt || txt.length > 90) continue;
-
-            if (matcher.test(txt)) {
-                // Find the smallest clickable parent containing both the barem label AND the odd value
-                let box = el;
-                for (let depth = 0; depth < 4 && box; depth++) {
-                    const bTxt = (box.innerText || "").replace(/\s+/g, " ").replace(",", ".").trim();
-                    if (bTxt.length <= 120) {
-                        // Remove barem numbers (160..231) before searching for odd (e.g. 1.85, 3.45, 13)
-                        const withoutRange = bTxt.replace(/\b(1[5-9]\d|2[0-4]\d)\b/g, " ");
-                        const nums = withoutRange.match(/\b([1-9]\d?(?:\.\d{1,3})?)\b/g);
-                        if (nums && nums.length > 0) {
-                            const liveOdd = parseFloat(nums[nums.length - 1]);
-                            if (liveOdd >= minOdd && liveOdd < 35.0) {
-                                // Prefer the most specific (shortest text) element
-                                if (!bestMatch || bTxt.length < bestMatch.len) {
-                                    bestMatch = { el: box, liveOdd: liveOdd, len: bTxt.length, text: bTxt };
-                                }
-                                break;
-                            }
-                        }
-                    }
-                    box = box.parentElement;
-                }
-            }
-        }
-
-        if (bestMatch) {
-            const targetBtn =
-                bestMatch.el.closest("button, [role='button'], a") ||
-                bestMatch.el.querySelector("button, [role='button'], [class*='coef'], [class*='value'], [class*='odd']") ||
-                bestMatch.el;
-            targetBtn.scrollIntoView({ behavior: "instant", block: "center" });
-            ["pointerdown", "mousedown", "pointerup", "mouseup", "click"].forEach((evType) => {
-                try {
-                    targetBtn.dispatchEvent(new MouseEvent(evType, { bubbles: true, cancelable: true, view: window }));
-                } catch (e) {}
-            });
-            try { targetBtn.click(); } catch (e) {}
-            return {
-                clicked: true,
-                liveOdd: bestMatch.liveOdd,
-                matchedText: bestMatch.text,
-                debugTag: targetBtn.tagName + "." + String(targetBtn.className || "").slice(0, 30)
-            };
-        }
-
-        // If not found yet, try clicking collapsed "Tam Puan Sayısı" header or "Tümü"/"Toplam" tab
-        const headers = document.querySelectorAll("button, [role='tab'], .ui-market-group__header, .bets_group_title, span, div");
-        for (const h of headers) {
-            if (!h.offsetParent) continue;
-            const ht = (h.innerText || "").replace(/\s+/g, " ").trim().toLowerCase();
-            if (ht === "tam puan sayısı" || ht === "toplam puan aralığı" || ht === "tümü") {
-                h.scrollIntoView({ behavior: "instant", block: "center" });
-                h.click();
-                break;
-            }
-        }
-        return { clicked: false, liveOdd: 0 };
-    }
-
-    async function pollCloudSignal() {
-        updateUI();
-        requestScreenWakeLock();
-        try {
-            const res = await fetch(SIGNAL_URL + "?t=" + Date.now(), { cache: "no-store" });
-            if (!res.ok) return;
-            const data = await res.json();
-            const played = getPlayedSignals();
-
-            if (data.active_melbet_nba2k26_url) {
-                latestMelbetUrl = data.active_melbet_nba2k26_url;
-                melbetBtn.textContent = "🚀 Güncel Melbet'e Git (" + (data.active_melbet_domain || "").replace("https://", "") + ")";
-            }
-
-            // Auto domain-hop if current Melbet domain got BTK-blocked during the night
-            const curHost = (window.location.hostname || "").toLowerCase();
-            const bodyTxt = (document.body ? document.body.innerText : "").toLowerCase();
-            const isBlockedPage =
-                bodyTxt.includes("erisime_engellenmis") ||
-                bodyTxt.includes("ülkenizde kullanılamamaktadır") ||
-                bodyTxt.includes("err_connection") ||
-                bodyTxt.includes("bu siteye ulaşılamıyor");
-            if (curHost.includes("melbet") && isBlockedPage && data.active_melbet_domain && ! window.location.href.startsWith(data.active_melbet_domain)) {
-                window.location.href = latestMelbetUrl;
+async function poll(){
+  if(busy)return;
+  ui();
+  try{
+    let totG=0,msg="";
+    const leagues=[
+      {k:"NBA",c:"2935701",s:"2935701-nba-2k26-cyber-league",qSec:720,qMin:12,minLo:34.2,minHi:35.8},
+      {k:"EURO",c:"2983166",s:"2983166-nba-2k26-cyber-euro-league",qSec:600,qMin:10,minLo:28.2,minHi:29.8}
+    ];
+    for(const lg of leagues){
+      const r=await fetch(location.origin+"/service-api/LiveFeed/Get1x2_VZip?sports=3&champs="+lg.c+"&count=10&lng=tr&mode=4",{cache:"no-store"});
+      if(!r.ok)continue;
+      const games=(await r.json()).Value||[];
+      totG+=games.length;
+      for(const g of games){
+        const gid=String(g.I),sc=g.SC||{},ts=Number(sc.TS||0),cp=Number(sc.CP||1);
+        const el=ts>lg.qSec?ts/60:(cp-1)*lg.qMin+ts/60,s1=Number((sc.FS||{}).S1||0),s2=Number((sc.FS||{}).S2||0),gap=Math.abs(s1-s2);
+        if(el>=lg.minLo&&el<=lg.minHi){
+          const r2=await fetch(location.origin+"/service-api/LiveFeed/GetGameZip?id="+gid+"&lng=tr&isSubGames=true&GroupEvents=true",{cache:"no-store"});
+          if(!r2.ok)continue;
+          const g33=((await r2.json()).Value?.GE||[]).find(x=>x.G===3319);
+          if(!g33)continue;
+          const om={};
+          for(const rw of g33.E||[])for(const ev of rw){
+            if(ev.B||ev.L)continue;
+            const bk=lg.k==="NBA"?PMAP_NBA[String(ev.P||"")]:PMAP_EU[String(ev.P||"")];
+            if(bk&&ev.C>1.01)om[bk]=Number(ev.C);
+          }
+          const dec=lg.k==="NBA"?ruleNba(om,gap,pShiftNba):ruleEuro(om,gap,pShiftEu);
+          const sid="CB-"+gid+"_"+lg.k,pl=gP();
+          if(dec){
+            const stTL=dec.f===1?gS1():gS2();
+            msg='<b style="color:#34d399">🚨 ['+lg.k+'] '+el.toFixed(1)+'.DK OYNA!</b><br>🎯 '+dec.b+' @ '+dec.o+' ('+stTL+' TL)';
+            if(isOn()&&!pl.includes(sid)&&pl.length<gMax()){
+              if(!location.href.includes(gid)){
+                sessionStorage.setItem("n77_pend",JSON.stringify({gid,sid,lg:lg.k,b:dec.b,o:dec.o,stTL,ts:Date.now()}));
+                location.href=location.origin+"/tr/live/basketball/"+lg.s+"/"+gid;
                 return;
+              }
+              await sleep(1200);
+              const cr=await placeMelbetBet(dec.b,Math.max(1.2,dec.o-0.18),stTL);
+              if(cr.ok){mP(sid,"["+lg.k+"] "+dec.b+" @ "+cr.od+" ("+stTL+"TL)");ui()}
             }
-
-            if (data.has_active_play_signal && data.current_play_signal) {
-                const sig = data.current_play_signal;
-                const alreadyPlayed = played.includes(sig.signal_id);
-                statusBox.innerHTML = `
-                    <div style="color:#34d399;font-weight:700;">🚨 35.DK OYNA SİNYALİ!</div>
-                    <div><b>${sig.game_name}</b> (${sig.current_score})</div>
-                    <div>🎯 <b>${sig.target_barem_tr}</b> @ <b>${sig.target_odd}</b> (${sig.pick_type})</div>
-                    <div style="color:${alreadyPlayed ? '#38bdf8' : '#fbbf24'};">
-                        ${alreadyPlayed ? '✅ Bu maça kupon basıldı (Kilitli)' : '⚡ Tek Tıkla Bahis aranıyor...'}
-                    </div>
-                `;
-
-                if (isAutoEnabled() && !alreadyPlayed && played.length < getMaxBets()) {
-                    const curUrl = window.location.href;
-                    if (sig.raw_game_id && !curUrl.includes(sig.raw_game_id)) {
-                        // Direct jump to the exact Melbet/1xBet match URL by game_id (works from any page!)
-                        if (window.location.hostname.toLowerCase().includes("melbet") || window.location.hostname.toLowerCase().includes("1xbet")) {
-                            window.location.href = window.location.origin + "/tr/live/basketball/2935701-nba-2k26-cyber-league/" + sig.raw_game_id;
-                            return;
-                        }
-                        const links = document.querySelectorAll("a[href]");
-                        for (const a of links) {
-                            const href = a.getAttribute("href") || "";
-                            const aTxt = (a.innerText || "").toLowerCase();
-                            if (href.includes(sig.raw_game_id) || (sig.home_team && aTxt.includes(sig.home_team.toLowerCase()))) {
-                                a.click();
-                                return;
-                            }
-                        }
-                    }
-                    let clickRes = tryClickBaremOnPage(sig);
-                    if (!clickRes.clicked) {
-                        const tabs = document.querySelectorAll("button, [role='tab'], a, span, div");
-                        for (const t of tabs) {
-                            const tt = (t.innerText || "").trim().toLowerCase();
-                            if (tt === "toplam" || tt === "totals" || tt === "tam puan sayısı") {
-                                t.click();
-                                break;
-                            }
-                        }
-                        window.scrollBy(0, 600);
-                        await new Promise(r => setTimeout(r, 700));
-                        clickRes = tryClickBaremOnPage(sig);
-                    }
-                    if (clickRes.clicked) {
-                        markSignalPlayed(sig.signal_id, `${sig.target_barem_tr} @ ${clickRes.liveOdd}`);
-                        updateUI();
-                    }
-                }
-            } else {
-                const liveCount = (data.live_matches || []).length;
-                const lastHist = (data.recent_history || [])[0];
-                statusBox.innerHTML = `
-                    <div>📡 Bulut Aktif (${data.updated_at_tr.slice(11)}) • Canlı: <b>${liveCount} maç</b></div>
-                    <div style="color:#94a3b8;font-size:11px;">35. dakikada kurala uyan maç bekleniyor...</div>
-                    ${lastHist ? `<div style="font-size:10px;color:#cbd5e1;margin-top:2px;">Son Karar: ${lastHist.game_name.slice(0, 22)} ➔ <b>${lastHist.decision}</b> ${lastHist.target_barem_tr || ''}</div>` : ''}
-                `;
-            }
-        } catch (err) {
-            statusBox.innerHTML = `<span style="color:#f87171;">⚠️ Bağlantı bekleniyor...</span>`;
+          }else msg='⛔ ['+lg.k+'] '+el.toFixed(1)+'.dk PAS ('+s1+'-'+s2+')';
         }
+      }
     }
-
-    setInterval(pollCloudSignal, 10000);
-    pollCloudSignal();
+    if(!msg)msg='📡 NBA + EURO Canlı • <b>'+totG+' maç</b>';
+    E("n77s").innerHTML=msg+'<div style="font-size:10px;color:#94a3b8">'+new Date().toLocaleTimeString("tr-TR")+' • NBA:'+pShiftNba+' EU:'+pShiftEu+'</div>';
+  }catch{}
+}
+syncC();setInterval(syncC,30000);setInterval(poll,5000);
+checkPendingAutoTest().then(()=>poll());
 })();
