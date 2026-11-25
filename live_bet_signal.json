@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 00:35:35",
-  "timestamp": 1795642535.61,
+  "updated_at_tr": "2026-11-26 00:36:18",
+  "timestamp": 1795642578.03,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 00:35:34"
+      "updated_at_tr": "2026-11-26 00:36:16"
     },
     {
       "signal_id": "CB-774148924_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 00:35:34"
+      "updated_at_tr": "2026-11-26 00:36:16"
     },
     {
       "signal_id": "CB-774141383_35m",
@@ -91,11 +91,11 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Atlanta Hawks",
       "quarter": 2,
-      "elapsed_mins": 23.5,
+      "elapsed_mins": 24.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "47-30",
-      "score_gap": 17,
+      "current_score": "49-30",
+      "score_gap": 19,
       "fav1_barem": "171-180",
       "fav1_odd": 2.78,
       "fav2_barem": "181-190",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 00:35:34"
+      "updated_at_tr": "2026-11-26 00:36:16"
     }
   ],
   "recent_history": [
