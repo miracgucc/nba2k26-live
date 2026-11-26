@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 01:43:59",
-  "timestamp": 1795733039.12,
+  "updated_at_tr": "2026-11-27 01:44:41",
+  "timestamp": 1795733081.7,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Detroit Pistons",
       "away_team": "Denver Nuggets",
       "quarter": 2,
-      "elapsed_mins": 18.1,
+      "elapsed_mins": 18.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "37-31",
-      "score_gap": 6,
-      "fav1_barem": "191-200",
-      "fav1_odd": 3.44,
-      "fav2_barem": "201-210",
-      "fav2_odd": 3.49,
+      "current_score": "39-31",
+      "score_gap": 8,
+      "fav1_barem": "201-210",
+      "fav1_odd": 3.43,
+      "fav2_barem": "191-200",
+      "fav2_odd": 3.56,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 3.44)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.43)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 01:43:57"
+      "updated_at_tr": "2026-11-27 01:44:40"
     },
     {
       "signal_id": "CB-774423409_35m",
@@ -56,12 +56,12 @@
       "home_team": "Milwaukee Bucks",
       "away_team": "Los Angeles Clippers",
       "quarter": 4,
-      "elapsed_mins": 36.0,
+      "elapsed_mins": 36.8,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "84-84",
+      "current_score": "87-87",
       "score_gap": 0,
-      "fav1_barem": "221-230",
+      "fav1_barem": "231+",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
       "fav2_odd": 0.0,
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 01:43:57"
+      "updated_at_tr": "2026-11-27 01:44:40"
     }
   ],
   "recent_history": [
