@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 10:49:37",
-  "timestamp": 1795679377.97,
+  "updated_at_tr": "2026-11-26 10:50:19",
+  "timestamp": 1795679419.96,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -18,7 +18,7 @@
     "home_team": "Golden State Warriors",
     "away_team": "Houston Rockets",
     "quarter": 3,
-    "elapsed_mins": 33.7,
+    "elapsed_mins": 34.0,
     "in_decision_window_35m": true,
     "is_barem_open": true,
     "current_score": "61-83",
@@ -43,7 +43,7 @@
       "kasa_15000": 750,
       "kasa_20000": 1000
     },
-    "updated_at_tr": "2026-11-26 10:49:36"
+    "updated_at_tr": "2026-11-26 10:50:18"
   },
   "active_signals": [
     {
@@ -54,7 +54,7 @@
       "home_team": "Golden State Warriors",
       "away_team": "Houston Rockets",
       "quarter": 3,
-      "elapsed_mins": 33.7,
+      "elapsed_mins": 34.0,
       "in_decision_window_35m": true,
       "is_barem_open": true,
       "current_score": "61-83",
@@ -79,7 +79,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-26 10:49:36"
+      "updated_at_tr": "2026-11-26 10:50:18"
     }
   ],
   "live_matches": [
@@ -91,7 +91,7 @@
       "home_team": "Denver Nuggets",
       "away_team": "New York Knicks",
       "quarter": 1,
-      "elapsed_mins": 7.1,
+      "elapsed_mins": 7.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "19-13",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 10:49:36"
+      "updated_at_tr": "2026-11-26 10:50:18"
     },
     {
       "signal_id": "CB-774234871_35m",
@@ -126,7 +126,7 @@
       "home_team": "Golden State Warriors",
       "away_team": "Houston Rockets",
       "quarter": 3,
-      "elapsed_mins": 33.7,
+      "elapsed_mins": 34.0,
       "in_decision_window_35m": true,
       "is_barem_open": true,
       "current_score": "61-83",
@@ -151,7 +151,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-26 10:49:36"
+      "updated_at_tr": "2026-11-26 10:50:18"
     }
   ],
   "recent_history": [
