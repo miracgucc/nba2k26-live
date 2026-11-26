@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 07:55:30",
-  "timestamp": 1795668930.02,
+  "updated_at_tr": "2026-11-26 07:56:22",
+  "timestamp": 1795668982.06,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Houston Rockets",
       "quarter": 4,
-      "elapsed_mins": 47.8,
+      "elapsed_mins": 48.0,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "104-86",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 07:55:28"
+      "updated_at_tr": "2026-11-26 07:56:20"
     },
     {
       "signal_id": "CB-774211842_35m",
@@ -59,8 +59,8 @@
       "elapsed_mins": 21.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "52-37",
-      "score_gap": 15,
+      "current_score": "53-37",
+      "score_gap": 16,
       "fav1_barem": "211-220",
       "fav1_odd": 3.06,
       "fav2_barem": "201-210",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 07:55:28"
+      "updated_at_tr": "2026-11-26 07:56:20"
     },
     {
       "signal_id": "CB-774217302_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 07:55:28"
+      "updated_at_tr": "2026-11-26 07:56:20"
     }
   ],
   "recent_history": [
