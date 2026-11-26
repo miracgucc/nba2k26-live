@@ -14,13 +14,13 @@ let pShiftNba=Number(localStorage.getItem("n80_ps_nba")||"0")||0;
 let pShiftEu=Number(localStorage.getItem("n80_ps_eu")||"0")||0;
 let busy=false,listUrl=location.origin+"/tr/live/basketball/2935701-nba-2k26-cyber-league";
 
-if(!localStorage.getItem("n80_init1500")){
-  localStorage.setItem("n77_s1","75");
-  localStorage.setItem("n77_s2","60");
+if(!localStorage.getItem("n81_init3000")){
+  localStorage.setItem("n77_s1","150");
+  localStorage.setItem("n77_s2","120");
   localStorage.setItem("n77_m","100");
   localStorage.setItem("n77_p","[]");
   localStorage.setItem("n77_on","1");
-  localStorage.setItem("n80_init1500","1");
+  localStorage.setItem("n81_init3000","1");
 }
 if(!localStorage.getItem("n78_cid"))localStorage.setItem("n78_cid",DEFAULT_CID);
 
@@ -30,8 +30,8 @@ const gP=()=>jGet("n77_p",[]);
 const mP=(id,t)=>{const a=gP();if(!a.includes(id)){a.push(id);jSet("n77_p",a.slice(-150))}localStorage.setItem("n77_l",new Date().toLocaleTimeString("tr-TR")+" "+t)};
 const isOn=()=>localStorage.getItem("n77_on")!=="0";
 const gMax=()=>parseInt(localStorage.getItem("n77_m")||"100",10)||100;
-const gS1=()=>parseFloat(localStorage.getItem("n77_s1")||"75")||75;
-const gS2=()=>parseFloat(localStorage.getItem("n77_s2")||"60")||60;
+const gS1=()=>parseFloat(localStorage.getItem("n77_s1")||"150")||150;
+const gS2=()=>parseFloat(localStorage.getItem("n77_s2")||"120")||120;
 const getCid=()=>localStorage.getItem("n78_cid")||DEFAULT_CID;
 const gStats=()=>jGet("n78_stats",{w:0,l:0,net:0,hist:[]});
 const gOpen=()=>jGet("n78_open",[]);
@@ -48,15 +48,13 @@ function readWallet(){
 }
 
 function getTier1500(b){
-  if(!b||b<2100)return{k:1,s1:75,s2:60};
-  if(b<2850)return{k:2,s1:105,s2:85};
-  if(b<3800)return{k:3,s1:140,s2:110};
-  if(b<5200)return{k:4,s1:190,s2:150};
-  if(b<7100)return{k:5,s1:260,s2:210};
-  if(b<9700)return{k:6,s1:355,s2:285};
-  if(b<13200)return{k:7,s1:485,s2:390};
-  if(b<18000)return{k:8,s1:660,s2:530};
-  return{k:9,s1:850,s2:680};
+  if(!b||b<4200)return{k:1,s1:150,s2:120};
+  if(b<5700)return{k:2,s1:210,s2:170};
+  if(b<7600)return{k:3,s1:280,s2:220};
+  if(b<10400)return{k:4,s1:380,s2:300};
+  if(b<14200)return{k:5,s1:520,s2:420};
+  if(b<19400)return{k:6,s1:710,s2:570};
+  return{k:7,s1:850,s2:680};
 }
 
 function scoreToBarem(tot,lg){
@@ -95,7 +93,7 @@ async function sendTg(text,cidOverride){
 const box=document.createElement("div");
 box.id="nba2k26-autopilot-panel";
 box.style.cssText="position:fixed;top:54px;right:8px;z-index:999999;width:298px;background:rgba(15,23,42,0.96);color:#fff;border:2px solid #10b981;border-radius:12px;padding:9px;font-family:system-ui,sans-serif;font-size:12px;box-shadow:0 8px 24px rgba(0,0,0,0.6)";
-box.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><b style="color:#34d399">⚡ NBA + EURO v8.0 + TG</b><button id="n77t" style="border:none;border-radius:6px;padding:3px 8px;font-weight:700;font-size:11px;cursor:pointer"></button></div><div id="n77s" style="background:#1e293b;padding:6px;border-radius:7px;margin-bottom:5px">⏳ Bağlanıyor...</div><div style="display:flex;gap:6px;margin-bottom:5px;font-size:11px;color:#cbd5e1"><label style="flex:1">1.Fav TL: <input id="n77s1" type="number" step="0.01" style="width:54px;background:#0f172a;color:#34d399;font-weight:700;border:1px solid #334155;border-radius:4px;text-align:center"></label><label style="flex:1">2.Fav TL: <input id="n77s2" type="number" step="0.01" style="width:54px;background:#0f172a;color:#fbbf24;font-weight:700;border:1px solid #334155;border-radius:4px;text-align:center"></label></div><div style="display:flex;gap:4px;margin-bottom:5px"><button id="n77g" style="flex:1;background:#2563eb;color:#fff;border:none;border-radius:6px;padding:5px;font-weight:700;font-size:11px;cursor:pointer">🏀 Liste</button><button id="n78tg" style="flex:1;background:#0284c7;color:#fff;border:none;border-radius:6px;padding:5px;font-weight:700;font-size:11px;cursor:pointer">📲 TG Test</button><button id="n77b" style="background:#d97706;color:#fff;border:none;border-radius:6px;padding:5px 6px;font-weight:700;font-size:11px;cursor:pointer">🧪 Test</button></div><div style="display:flex;justify-content:space-between;font-size:11px;color:#94a3b8"><span>Kupon: <b id="n77c" style="color:#fff">0</b>/<input id="n77m" type="number" style="width:36px;background:#0f172a;color:#fff;border:1px solid #334155;border-radius:4px;text-align:center"></span><span id="n78st" style="color:#38bdf8"></span><button id="n77r" style="background:#334155;color:#cbd5e1;border:none;border-radius:4px;padding:2px 6px;font-size:10px;cursor:pointer">Sıfırla</button></div><div id="n77l" style="margin-top:3px;font-size:10px;color:#fbbf24"></div>';
+box.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><b style="color:#34d399">⚡ NBA + EURO v8.1 + TG</b><button id="n77t" style="border:none;border-radius:6px;padding:3px 8px;font-weight:700;font-size:11px;cursor:pointer"></button></div><div id="n77s" style="background:#1e293b;padding:6px;border-radius:7px;margin-bottom:5px">⏳ Bağlanıyor...</div><div style="display:flex;gap:6px;margin-bottom:5px;font-size:11px;color:#cbd5e1"><label style="flex:1">1.Fav TL: <input id="n77s1" type="number" step="0.01" style="width:54px;background:#0f172a;color:#34d399;font-weight:700;border:1px solid #334155;border-radius:4px;text-align:center"></label><label style="flex:1">2.Fav TL: <input id="n77s2" type="number" step="0.01" style="width:54px;background:#0f172a;color:#fbbf24;font-weight:700;border:1px solid #334155;border-radius:4px;text-align:center"></label></div><div style="display:flex;gap:4px;margin-bottom:5px"><button id="n77g" style="flex:1;background:#2563eb;color:#fff;border:none;border-radius:6px;padding:5px;font-weight:700;font-size:11px;cursor:pointer">🏀 Liste</button><button id="n78tg" style="flex:1;background:#0284c7;color:#fff;border:none;border-radius:6px;padding:5px;font-weight:700;font-size:11px;cursor:pointer">📲 TG Test</button><button id="n77b" style="background:#d97706;color:#fff;border:none;border-radius:6px;padding:5px 6px;font-weight:700;font-size:11px;cursor:pointer">🧪 Test</button></div><div style="display:flex;justify-content:space-between;font-size:11px;color:#94a3b8"><span>Kupon: <b id="n77c" style="color:#fff">0</b>/<input id="n77m" type="number" style="width:36px;background:#0f172a;color:#fff;border:1px solid #334155;border-radius:4px;text-align:center"></span><span id="n78st" style="color:#38bdf8"></span><button id="n77r" style="background:#334155;color:#cbd5e1;border:none;border-radius:4px;padding:2px 6px;font-size:10px;cursor:pointer">Sıfırla</button></div><div id="n77l" style="margin-top:3px;font-size:10px;color:#fbbf24"></div>';
 document.body.appendChild(box);
 
 const E=id=>document.getElementById(id);
@@ -119,18 +117,18 @@ E("n77r").onclick=()=>{jSet("n77_p",[]);ui()};
 E("n77g").onclick=()=>{location.href=listUrl};
 E("n77t").onclick=()=>{localStorage.setItem("n77_on",isOn()?"0":"1");ui()};
 E("n78tg").onclick=async()=>{
-  const ok=await sendTg(buildStatusMsg("📲 <b>NBA + EURO v8.0 Telegram Testi Başarılı!</b>"));
+  const ok=await sendTg(buildStatusMsg("📲 <b>NBA + EURO v8.1 Telegram Testi Başarılı!</b>"));
   E("n77l").textContent=ok?"✅ Telegram mesajı gönderildi!":"⚠️ Mesaj gönderilemedi";
 };
 ui();
 
 function buildStatusMsg(hdr){
   const w=readWallet(),st=gStats(),op=gOpen(),tr=getTier1500(w.num);
-  let m=(hdr||"📊 <b>NBA 2K26 + EURO v8.0 Kasa Raporu</b>")+"\n\n";
+  let m=(hdr||"📊 <b>NBA 2K26 + EURO v8.1 Kasa Raporu</b>")+"\n\n";
   m+="💰 <b>Melbet Bakiye:</b> "+w.txt+"\n";
   m+="⚙️ <b>Mod:</b> "+(isOn()?"🟢 7/24 AKTİF":"🔴 DURDURULDU")+"\n";
   m+="💵 <b>Aktif Tutar:</b> 1.Fav <b>"+gS1()+" TL</b> | 2.Fav <b>"+gS2()+" TL</b>\n";
-  if(w.num)m+="📈 <b>1.500 TL Kademe Planı:</b> Kademe "+tr.k+" ("+tr.s1+" / "+tr.s2+" TL)\n";
+  if(w.num)m+="📈 <b>3.000 TL Kademe Planı:</b> Kademe "+tr.k+" ("+tr.s1+" / "+tr.s2+" TL)\n";
   m+="🏆 <b>Toplam Sonuç:</b> "+st.w+" Kazandı / "+st.l+" Kaybetti\n";
   m+="📈 <b>Toplam Net:</b> <b>"+(st.net>=0?"+":"")+st.net.toFixed(1)+" TL</b>\n";
   if(op.length){
@@ -298,31 +296,40 @@ E("n77b").onclick=async()=>{
 function ruleNba(om,gap,ps,curTot){
   const arr=Object.entries(om).filter(([,v])=>v>1.01&&v<85).sort((a,b)=>a[1]-b[1]);
   if(arr.length<2)return null;
-  const[f1,o1]=arr[0],[f2,o2]=arr[1],i1=BAREMS_NBA.indexOf(f1);
-  const om1=i1>0?(om[BAREMS_NBA[i1-1]]||99):99,op1=(i1>=0&&i1<8)?(om[BAREMS_NBA[i1+1]]||99):99,up=op1<om1;
+  const[f1,o1]=arr[0],[f2,o2]=arr[1],i1=BAREMS_NBA.indexOf(f1),i2=BAREMS_NBA.indexOf(f2);
+  const om1=i1>0?(om[BAREMS_NBA[i1-1]]||99):99,op1=(i1>=0&&i1<8)?(om[BAREMS_NBA[i1+1]]||99):99,up=op1<om1,f2Up=i2>i1;
   const req=(MID_NBA[f1]||205.5)-curTot,odiff=o2-o1;
   const pas=r=>({play:false,reason:r,f1,o1,f2,o2,req});
   if(gap<6)return pas("Skor farkı çok yakın ("+gap+" sayı < 6, uzatma riski)");
   if(o1<1.50)return pas("1.Favori oranı çok düşük ("+o1+" < 1.50)");
   if(o1>=1.50&&o1<1.85){
-    return(gap<=20&&ps!==1&&!up&&req<=55.5)?{play:true,b:f1,o:o1,f:1,req}:pas("1.50-1.85 filtresi (Fark:"+gap+", Kalan:"+req.toFixed(1)+", Kayma:"+ps+")");
+    return(gap<=24&&ps!==1&&!f2Up&&req<=59.5)?{play:true,b:f1,o:o1,f:1,req}:pas("1.50-1.85 filtresi (Fark:"+gap+", 1.Fav İstediği:"+req.toFixed(1)+")");
   }
   if(o1>=1.85&&o1<2.10){
-    return(ps!==1&&gap<=35)?{play:true,b:f1,o:o1,f:1,req}:pas("1.85-2.10 filtresi (Önceki maç üst kayma veya fark > 35)");
+    if(ps!==1&&gap<=32){
+      if(gap>=20&&f2Up&&req<47.5)return pas("1.85-2.10 yüksek fark + düşük barem riski (Fark:"+gap+", İstenen:"+req.toFixed(1)+")");
+      return{play:true,b:f1,o:o1,f:1,req};
+    }
+    return pas("1.85-2.10 filtresi (Önceki maç üst kayma veya fark > 32)");
   }
   if(o1>=2.10&&o1<2.30){
-    if(req<=48.5&&ps!==1&&gap<=25)return{play:true,b:f1,o:o1,f:1,req};
-    if(req>48.5&&req<=56.5&&gap>=10&&o2<=3.05&&(up||(gap>=10&&gap<=15)||ps!==0))return{play:true,b:f2,o:o2,f:2,req};
-    return pas("2.10-2.30 beklenti dışı (Kalan:"+req.toFixed(1)+", Fark:"+gap+", 2.Fav:"+o2+")");
+    if(gap>=25&&f2Up&&req<=53.5)return{play:true,b:f1,o:o1,f:1,req};
+    if(req<=48.5&&ps!==1&&gap<=24)return{play:true,b:f1,o:o1,f:1,req};
+    if(req>48.5&&req<=56.5&&gap>=10&&gap<=24&&o2<=3.05){
+      if(gap>=16&&f2Up&&req<=50.5)return{play:true,b:f1,o:o1,f:1,req};
+      if(up||(gap>=10&&gap<=15)||!f2Up||ps!==0)return{play:true,b:f2,o:o2,f:2,req};
+    }
+    return pas("2.10-2.30 beklenti dışı (İstenen:"+req.toFixed(1)+", Fark:"+gap+", 2.Fav:"+o2+")");
   }
   if(o1>=2.30&&o1<2.50){
-    if(req<=50.5&&ps!==-1)return{play:true,b:f1,o:o1,f:1,req};
-    if(ps>=0&&req<=56.5&&(gap<=15||odiff<=0.25||up||ps===1))return{play:true,b:f1,o:o1,f:1,req};
-    if((req>56.5||(gap>=16&&gap<=24))&&gap>=10&&o2<=3.05)return{play:true,b:f2,o:o2,f:2,req};
-    return pas("2.30-2.50 beklenti dışı (Kalan:"+req.toFixed(1)+", Fark:"+gap+", 2.Fav:"+o2+")");
+    if(gap>=16&&gap<=28&&!f2Up&&req>=51.5&&o2<=3.10)return{play:true,b:f2,o:o2,f:2,req};
+    if(req<=50.5&&ps!==-1&&gap<=24)return{play:true,b:f1,o:o1,f:1,req};
+    if(gap<=15&&ps>=0&&req<=56.5&&(odiff<=0.25||up||ps===1||req<=54.5))return{play:true,b:f1,o:o1,f:1,req};
+    if(req>56.5&&gap>=10&&gap<=24&&!f2Up&&o2<=3.05)return{play:true,b:f2,o:o2,f:2,req};
+    return pas("2.30-2.50 beklenti dışı (İstenen:"+req.toFixed(1)+", Fark:"+gap+", 2.Fav:"+o2+")");
   }
   if(o1>=2.50){
-    return((ps===1||req<=50.5)&&gap>=10&&o2<=3.10)?{play:true,b:f2,o:o2,f:2,req}:pas("2.50+ yüksek risk (Kalan:"+req.toFixed(1)+", Fark:"+gap+", 2.Fav:"+o2+")");
+    return((ps===1||req<=50.5)&&gap>=10&&gap<=18&&o2<=3.10)?{play:true,b:f2,o:o2,f:2,req}:pas("2.50+ yüksek risk (İstenen:"+req.toFixed(1)+", Fark:"+gap+", 2.Fav:"+o2+")");
   }
   return pas("Kural dışı oran yapısı");
 }
@@ -330,26 +337,30 @@ function ruleNba(om,gap,ps,curTot){
 function ruleEuro(om,gap,ps,curTot){
   const arr=Object.entries(om).filter(([,v])=>v>1.01&&v<85).sort((a,b)=>a[1]-b[1]);
   if(arr.length<2)return null;
-  const[f1,o1]=arr[0],[f2,o2]=arr[1],i1=BAREMS_EU.indexOf(f1);
-  const om1=i1>0?(om[BAREMS_EU[i1-1]]||99):99,op1=(i1>=0&&i1<5)?(om[BAREMS_EU[i1+1]]||99):99,up=op1<om1;
+  const[f1,o1]=arr[0],[f2,o2]=arr[1],i1=BAREMS_EU.indexOf(f1),i2=BAREMS_EU.indexOf(f2);
+  const om1=i1>0?(om[BAREMS_EU[i1-1]]||99):99,op1=(i1>=0&&i1<5)?(om[BAREMS_EU[i1+1]]||99):99,up=op1<om1,f2Up=i2>i1;
   const req=(MID_EU[f1]||155.5)-curTot,odiff=o2-o1;
   const pas=r=>({play:false,reason:r,f1,o1,f2,o2,req});
   if(gap<6)return pas("Skor farkı çok yakın ("+gap+" sayı < 6, uzatma riski)");
   if(gap>=29)return pas("Aşırı fark ("+gap+" >= 29 sayı, rölanti riski)");
   if(o1<1.20||o1>=2.30)return pas("Euro oran aralığı dışı (1.Fav: "+o1+")");
-  if(gap>=21&&gap<=28){
-    return(o1>=1.50&&o2<=3.60)?{play:true,b:f2,o:o2,f:2,req}:pas("Euro 21-28 fark filtresi (1.Fav:"+o1+", 2.Fav:"+o2+")");
-  }
   if(o1>=1.20&&o1<1.50){
-    return(gap<=15&&ps!==0&&req<=39.5)?{play:true,b:f1,o:o1,f:1,req}:pas("Euro 1.20-1.50 filtresi (Fark:"+gap+", Kalan:"+req.toFixed(1)+")");
+    return(gap<=15&&f2Up&&req<=38.5)?{play:true,b:f1,o:o1,f:1,req}:pas("Euro 1.20-1.50 filtresi (Fark:"+gap+", İstenen:"+req.toFixed(1)+")");
   }
-  if(o1>=1.50&&o1<2.10){
-    return((up||odiff<=0.25)&&(gap<=15||o1<1.85)&&req<=41.5)?{play:true,b:f1,o:o1,f:1,req}:pas("Euro 1.50-2.10 alt barem/tempo riski (Kalan:"+req.toFixed(1)+", Fark:"+gap+")");
+  if(o1>=1.50&&o1<1.85){
+    if(f2Up&&req<=37.5)return{play:true,b:f1,o:o1,f:1,req};
+    if(gap>=21&&req<=41.5)return{play:true,b:f1,o:o1,f:1,req};
+    return pas("Euro 1.50-1.85 alt barem riski (Fark:"+gap+", İstenen:"+req.toFixed(1)+")");
+  }
+  if(o1>=1.85&&o1<2.10){
+    if(gap>=16&&gap<=28&&!f2Up&&req>=37.5&&o2<=3.40)return{play:true,b:f2,o:o2,f:2,req};
+    if(gap<=15&&((f2Up&&req<=39.5)||(odiff<=0.18&&req<=37.5)))return{play:true,b:f1,o:o1,f:1,req};
+    return pas("Euro 1.85-2.10 yön/tempo filtresi (1.Fav İstenen:"+req.toFixed(1)+", Fark:"+gap+")");
   }
   if(o1>=2.10&&o1<2.30){
-    if(req<=36.5||ps===1)return{play:true,b:f1,o:o1,f:1,req};
-    if(req>36.5&&req<=41.5&&o2<=3.40)return{play:true,b:f2,o:o2,f:2,req};
-    return pas("Euro 2.10-2.30 beklenti dışı (Kalan:"+req.toFixed(1)+", 2.Fav:"+o2+")");
+    if(req<=36.5&&(f2Up||ps===1||gap>=16))return{play:true,b:f1,o:o1,f:1,req};
+    if(req>36.5&&req<=41.5&&o2<=3.40&&gap<=24)return{play:true,b:f2,o:o2,f:2,req};
+    return pas("Euro 2.10-2.30 beklenti dışı (1.Fav İstenen:"+req.toFixed(1)+", 2.Fav:"+o2+")");
   }
   return pas("Kural dışı oran yapısı");
 }
@@ -500,12 +511,13 @@ async function poll(){
             if(el>=pasMin&&!pl.includes(sid)&&!gPas().includes(sid)){
               mPas(sid);
               if(isPasTgOn()){
+                const normTxt=lg.k==="EURO"?"~38.9":"~54.1";
                 await sendTg(
                   "⛔ <b>MAÇ PAS GEÇİLDİ ["+lg.k+"]</b>\n\n"+
                   "🏀 <b>"+teams+"</b>\n"+
                   "⏱️ Dakika: <b>"+el.toFixed(1)+".dk</b> | Skor: <code>"+s1+"-"+s2+"</code> (Toplam: <b>"+curTot+"</b>, Fark: <b>"+gap+"</b>)\n"+
                   "📊 1.Fav: <code>"+dec.f1+"</code> (@<b>"+dec.o1+"</b>) | 2.Fav: <code>"+dec.f2+"</code> (@<b>"+dec.o2+"</b>)\n"+
-                  "🎯 Kalan Sayı Beklentisi: <b>"+dec.req.toFixed(1)+" sayı</b>\n"+
+                  "🎯 1.Fav Baremin İstediği Kalan Sayı: <b>"+dec.req.toFixed(1)+" sayı</b> (Normali: "+normTxt+")\n"+
                   "🛡️ <b>Pas Sebebi:</b> "+dec.reason
                 );
               }
@@ -514,7 +526,7 @@ async function poll(){
         }
       }
     }
-    if(!msg)msg='📡 NBA + EURO v8.0 • <b>'+totG+' maç</b>';
+    if(!msg)msg='📡 NBA + EURO v8.1 • <b>'+totG+' maç</b>';
     E("n77s").innerHTML=msg+'<div style="font-size:10px;color:#94a3b8">'+new Date().toLocaleTimeString("tr-TR")+' • NBA:'+pShiftNba+' EU:'+pShiftEu+' • Bekleyen:'+gOpen().length+'</div>';
   }catch{}
 }
