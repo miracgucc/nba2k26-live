@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 13:16:52",
-  "timestamp": 1795688212.45,
+  "updated_at_tr": "2026-11-26 13:17:29",
+  "timestamp": 1795688249.32,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 13:16:51"
+      "updated_at_tr": "2026-11-26 13:17:28"
     },
     {
       "signal_id": "CB-774266656_35m",
@@ -55,33 +55,33 @@
       "game_name": "New York Knicks vs Boston Celtics",
       "home_team": "New York Knicks",
       "away_team": "Boston Celtics",
-      "quarter": 2,
-      "elapsed_mins": 24.0,
+      "quarter": 3,
+      "elapsed_mins": 24.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "53-42",
       "score_gap": 11,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.46,
+      "fav1_odd": 2.44,
       "fav2_barem": "191-200",
-      "fav2_odd": 4.05,
+      "fav2_odd": 3.71,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_barem_en": "201-210",
       "target_t_id": 1843,
-      "target_odd": 2.46,
-      "min_acceptable_odd": 2.31,
+      "target_odd": 2.44,
+      "min_acceptable_odd": 2.29,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (6–15 İdeal Fark): 201-210 (2.46)",
+      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (6–15 İdeal Fark): 201-210 (2.44)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-26 13:16:51"
+      "updated_at_tr": "2026-11-26 13:17:28"
     }
   ],
   "recent_history": [
