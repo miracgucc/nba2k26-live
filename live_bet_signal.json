@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 18:18:28",
-  "timestamp": 1795706308.87,
+  "updated_at_tr": "2026-11-26 18:18:59",
+  "timestamp": 1795706339.32,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -20,16 +20,16 @@
       "game_name": "Los Angeles Clippers vs Los Angeles Lakers",
       "home_team": "Los Angeles Clippers",
       "away_team": "Los Angeles Lakers",
-      "quarter": 1,
-      "elapsed_mins": 12.0,
+      "quarter": 2,
+      "elapsed_mins": 12.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "26-31",
-      "score_gap": 5,
+      "current_score": "26-34",
+      "score_gap": 8,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.35,
-      "fav2_barem": "201-210",
-      "fav2_odd": 4.08,
+      "fav1_odd": 3.21,
+      "fav2_barem": "221-230",
+      "fav2_odd": 3.89,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.35)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.21)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 18:18:27"
+      "updated_at_tr": "2026-11-26 18:18:57"
     },
     {
       "signal_id": "CB-774326007_35m",
@@ -56,7 +56,7 @@
       "home_team": "New York Knicks",
       "away_team": "Oklahoma City Thunder",
       "quarter": 4,
-      "elapsed_mins": 44.2,
+      "elapsed_mins": 44.7,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "74-116",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 18:18:27"
+      "updated_at_tr": "2026-11-26 18:18:57"
     }
   ],
   "recent_history": [
