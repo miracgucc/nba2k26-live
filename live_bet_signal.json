@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 19:31:45",
-  "timestamp": 1795710705.16,
+  "updated_at_tr": "2026-11-26 19:32:28",
+  "timestamp": 1795710748.37,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Detroit Pistons",
       "away_team": "Denver Nuggets",
       "quarter": 3,
-      "elapsed_mins": 32.6,
-      "in_decision_window_35m": false,
+      "elapsed_mins": 33.4,
+      "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "65-81",
-      "score_gap": 16,
+      "current_score": "70-81",
+      "score_gap": 11,
       "fav1_barem": "211-220",
-      "fav1_odd": 2.3,
+      "fav1_odd": 2.22,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.21,
+      "fav2_odd": 3.55,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 211-220: 2.30)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 211-220: 2.22)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 19:31:43"
+      "updated_at_tr": "2026-11-26 19:32:26"
     },
     {
       "signal_id": "CB-774351602_35m",
@@ -81,10 +81,29 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 19:31:43"
+      "updated_at_tr": "2026-11-26 19:32:26"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-774342012_35m",
+      "game_id": "CB-774342012",
+      "raw_game_id": "774342012",
+      "date": "2026-11-26",
+      "game_name": "Detroit Pistons vs Denver Nuggets",
+      "current_score": "70-81",
+      "score_gap": 11,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 211-220: 2.22)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-774333884_35m",
       "game_id": "CB-774333884",
@@ -406,25 +425,6 @@
       "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 211-220: 2.14)",
       "actual_score": "113-93",
       "actual_range": "201-210",
-      "result": "PAS"
-    },
-    {
-      "signal_id": "CB-774206307_35m",
-      "game_id": "CB-774206307",
-      "raw_game_id": "774206307",
-      "date": "2026-11-26",
-      "game_name": "Atlanta Hawks vs Houston Rockets",
-      "current_score": "76-66",
-      "score_gap": 10,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 191-200: 2.21)",
-      "actual_score": "104-86",
-      "actual_range": "181-190",
       "result": "PAS"
     }
   ]
