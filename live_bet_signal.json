@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 18:50:55",
-  "timestamp": 1795708255.67,
+  "updated_at_tr": "2026-11-26 18:51:50",
+  "timestamp": 1795708310.71,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 18:50:54"
+      "updated_at_tr": "2026-11-26 18:51:49"
     },
     {
       "signal_id": "CB-774333884_35m",
@@ -56,15 +56,15 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Los Angeles Lakers",
       "quarter": 3,
-      "elapsed_mins": 32.5,
-      "in_decision_window_35m": false,
+      "elapsed_mins": 33.5,
+      "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "63-84",
-      "score_gap": 21,
+      "current_score": "65-88",
+      "score_gap": 23,
       "fav1_barem": "211-220",
-      "fav1_odd": 2.32,
+      "fav1_odd": 2.25,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.38,
+      "fav2_odd": 3.57,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 211-220: 2.32)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 211-220: 2.25)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 18:50:54"
+      "updated_at_tr": "2026-11-26 18:51:49"
     }
   ],
   "recent_history": [
@@ -91,15 +91,15 @@
       "raw_game_id": "774333884",
       "date": "2026-11-26",
       "game_name": "Los Angeles Clippers vs Los Angeles Lakers",
-      "current_score": "63-84",
-      "score_gap": 21,
+      "current_score": "65-88",
+      "score_gap": 23,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
       "target_barem_tr": "",
       "target_t_id": 0,
       "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 211-220: 2.32)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 211-220: 2.25)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
