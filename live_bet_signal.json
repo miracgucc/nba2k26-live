@@ -1,13 +1,13 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 05:42:20",
-  "timestamp": 1795660940.34,
+  "updated_at_tr": "2026-11-26 05:42:55",
+  "timestamp": 1795660975.77,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
   "chain_state": {
-    "prev_shift": -1,
-    "prev2_shift": 0
+    "prev_shift": 0,
+    "prev2_shift": -1
   },
   "has_active_play_signal": false,
   "current_play_signal": null,
@@ -30,23 +30,23 @@
       "fav1_odd": 2.5,
       "fav2_barem": "201-210",
       "fav2_odd": 3.26,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 191-200: 2.50)",
+      "decision": "OYNA",
+      "pick_type": "1. Favori",
+      "target_barem": "191-200",
+      "target_barem_tr": "191-200",
+      "target_barem_en": "191-200",
+      "target_t_id": 1842,
+      "target_odd": 2.5,
+      "min_acceptable_odd": 2.35,
+      "zone_type": "GOLDEN",
+      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Üst Kanat Dengesi): 191-200 (2.50)",
       "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
+        "kasa_8000": 400,
+        "kasa_10000": 500,
+        "kasa_15000": 750,
+        "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-26 05:42:19"
+      "updated_at_tr": "2026-11-26 05:42:54"
     },
     {
       "signal_id": "CB-774188706_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 05:42:19"
+      "updated_at_tr": "2026-11-26 05:42:54"
     }
   ],
   "recent_history": [
@@ -100,9 +100,9 @@
       "target_t_id": 1842,
       "target_odd": 2.5,
       "zone_badge": "🔥 NBA 2.10–2.30 SEÇİCİ 2. FAVORİ (Üst Kanat Düşük): 191-200 (2.50)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "73-115",
+      "actual_range": "181-190",
+      "result": "YATTI"
     },
     {
       "signal_id": "CB-774182458_35m",
