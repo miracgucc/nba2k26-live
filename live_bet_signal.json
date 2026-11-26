@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 13:28:32",
-  "timestamp": 1795688912.77,
+  "updated_at_tr": "2026-11-26 13:29:13",
+  "timestamp": 1795688953.6,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 13:28:31"
+      "updated_at_tr": "2026-11-26 13:29:12"
     },
     {
       "signal_id": "CB-774266656_35m",
@@ -56,15 +56,15 @@
       "home_team": "New York Knicks",
       "away_team": "Boston Celtics",
       "quarter": 3,
-      "elapsed_mins": 32.5,
-      "in_decision_window_35m": false,
+      "elapsed_mins": 33.1,
+      "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "78-56",
-      "score_gap": 22,
+      "current_score": "78-59",
+      "score_gap": 19,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.16,
+      "fav1_odd": 2.19,
       "fav2_barem": "191-200",
-      "fav2_odd": 3.09,
+      "fav2_odd": 3.17,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,17 +74,36 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 201-210: 2.16)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 201-210: 2.19)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 13:28:31"
+      "updated_at_tr": "2026-11-26 13:29:12"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-774266656_35m",
+      "game_id": "CB-774266656",
+      "raw_game_id": "774266656",
+      "date": "2026-11-26",
+      "game_name": "New York Knicks vs Boston Celtics",
+      "current_score": "78-59",
+      "score_gap": 19,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 201-210: 2.19)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-774257221_35m",
       "game_id": "CB-774257221",
@@ -407,25 +426,6 @@
       "actual_score": "118-108",
       "actual_range": "221-230",
       "result": "YATTI"
-    },
-    {
-      "signal_id": "CB-774148924_35m",
-      "game_id": "CB-774148924",
-      "raw_game_id": "774148924",
-      "date": "2026-11-26",
-      "game_name": "Minnesota Timberwolves vs New York Knicks",
-      "current_score": "74-68",
-      "score_gap": 6,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.09)",
-      "actual_score": "103-105",
-      "actual_range": "201-210",
-      "result": "PAS"
     }
   ]
 }
