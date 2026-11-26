@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 06:39:04",
-  "timestamp": 1795664344.62,
+  "updated_at_tr": "2026-11-26 06:39:41",
+  "timestamp": 1795664381.35,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 06:39:03"
+      "updated_at_tr": "2026-11-26 06:39:40"
     },
     {
       "signal_id": "CB-774200486_35m",
@@ -56,32 +56,32 @@
       "home_team": "Detroit Pistons",
       "away_team": "Cleveland Cavaliers",
       "quarter": 3,
-      "elapsed_mins": 24.1,
+      "elapsed_mins": 24.7,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "51-21",
-      "score_gap": 30,
+      "current_score": "54-21",
+      "score_gap": 33,
       "fav1_barem": "160 Or Less",
-      "fav1_odd": 2.34,
+      "fav1_odd": 2.59,
       "fav2_barem": "161-170",
-      "fav2_odd": 2.76,
+      "fav2_odd": 2.73,
       "decision": "OYNA",
-      "pick_type": "1. Favori",
-      "target_barem": "160 Or Less",
-      "target_barem_tr": "160 Or Less",
-      "target_barem_en": "160 Or Less",
-      "target_t_id": 0,
-      "target_odd": 2.34,
-      "min_acceptable_odd": 2.19,
-      "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Önceki Maç +1 Üst): 160 Or Less (2.34)",
+      "pick_type": "2. Favori",
+      "target_barem": "161-170",
+      "target_barem_tr": "161-170",
+      "target_barem_en": "161-170",
+      "target_t_id": 1839,
+      "target_odd": 2.73,
+      "min_acceptable_odd": 2.58,
+      "zone_type": "TRAP_EXTREME",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 161-170 (2.73)",
       "stakes": {
-        "kasa_8000": 400,
-        "kasa_10000": 500,
-        "kasa_15000": 750,
-        "kasa_20000": 1000
+        "kasa_8000": 320,
+        "kasa_10000": 400,
+        "kasa_15000": 600,
+        "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-26 06:39:03"
+      "updated_at_tr": "2026-11-26 06:39:40"
     }
   ],
   "recent_history": [
