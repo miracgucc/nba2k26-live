@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 16:06:26",
-  "timestamp": 1795698386.56,
+  "updated_at_tr": "2026-11-26 16:07:21",
+  "timestamp": 1795698441.04,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,14 +21,14 @@
       "home_team": "Denver Nuggets",
       "away_team": "Detroit Pistons",
       "quarter": 1,
-      "elapsed_mins": 4.0,
+      "elapsed_mins": 4.7,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "8-4",
       "score_gap": 4,
-      "fav1_barem": "201-210",
-      "fav1_odd": 3.61,
-      "fav2_barem": "191-200",
+      "fav1_barem": "191-200",
+      "fav1_odd": 3.63,
+      "fav2_barem": "201-210",
       "fav2_odd": 3.77,
       "decision": "PAS",
       "pick_type": "PAS",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.61)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 3.63)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 16:06:25"
+      "updated_at_tr": "2026-11-26 16:07:20"
     },
     {
       "signal_id": "CB-774300045_35m",
@@ -56,15 +56,15 @@
       "home_team": "New York Knicks",
       "away_team": "Boston Celtics",
       "quarter": 3,
-      "elapsed_mins": 31.2,
+      "elapsed_mins": 32.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "62-57",
-      "score_gap": 5,
+      "current_score": "64-57",
+      "score_gap": 7,
       "fav1_barem": "191-200",
-      "fav1_odd": 2.56,
+      "fav1_odd": 2.52,
       "fav2_barem": "181-190",
-      "fav2_odd": 3.66,
+      "fav2_odd": 3.68,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -73,18 +73,37 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 5 Sayı Fark)",
+      "zone_type": "PASS_SELECTIVE",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.52)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 16:06:25"
+      "updated_at_tr": "2026-11-26 16:07:20"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-774300045_35m",
+      "game_id": "CB-774300045",
+      "raw_game_id": "774300045",
+      "date": "2026-11-26",
+      "game_name": "New York Knicks vs Boston Celtics",
+      "current_score": "64-57",
+      "score_gap": 7,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.52)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-774291376_35m",
       "game_id": "CB-774291376",
@@ -406,25 +425,6 @@
       "zone_badge": "🧊 NBA 2.30–2.50 KOPMUŞ MAÇ ALT BAREM 2. FAVORİ: 191-200 (2.46)",
       "actual_score": "111-82",
       "actual_range": "191-200",
-      "result": "TUTTU"
-    },
-    {
-      "signal_id": "CB-774175562_35m",
-      "game_id": "CB-774175562",
-      "raw_game_id": "774175562",
-      "date": "2026-11-26",
-      "game_name": "Miami Heat vs Detroit Pistons",
-      "current_score": "65-72",
-      "score_gap": 7,
-      "decision": "OYNA",
-      "pick_type": "1. Favori",
-      "target_barem": "181-190",
-      "target_barem_tr": "181-190",
-      "target_t_id": 1841,
-      "target_odd": 2.09,
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 181-190 (2.09)",
-      "actual_score": "90-100",
-      "actual_range": "181-190",
       "result": "TUTTU"
     }
   ]
