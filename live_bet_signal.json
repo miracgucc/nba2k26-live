@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 01:34:35",
-  "timestamp": 1795732475.11,
+  "updated_at_tr": "2026-11-27 01:35:17",
+  "timestamp": 1795732517.11,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -20,8 +20,8 @@
       "game_name": "Detroit Pistons vs Denver Nuggets",
       "home_team": "Detroit Pistons",
       "away_team": "Denver Nuggets",
-      "quarter": 1,
-      "elapsed_mins": 12.0,
+      "quarter": 2,
+      "elapsed_mins": 12.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "22-22",
@@ -29,7 +29,7 @@
       "fav1_barem": "191-200",
       "fav1_odd": 3.68,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.87,
+      "fav2_odd": 3.68,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 01:34:33"
+      "updated_at_tr": "2026-11-27 01:35:15"
     },
     {
       "signal_id": "CB-774423409_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 01:34:33"
+      "updated_at_tr": "2026-11-27 01:35:15"
     }
   ],
   "recent_history": [
