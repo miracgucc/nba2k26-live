@@ -36,6 +36,7 @@ from period_predictor import (
     get_range_from_score,
     predict_live_inplay,
     predict_period_scores,
+    resolve_effective_barem_odds,
     simulate_35m_strategies,
     validate_symmetry_log,
 )
