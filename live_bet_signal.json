@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 09:16:44",
-  "timestamp": 1795673804.77,
+  "updated_at_tr": "2026-11-26 09:17:21",
+  "timestamp": 1795673841.46,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -14,41 +14,6 @@
   "active_signals": [],
   "live_matches": [
     {
-      "signal_id": "CB-774217302_35m",
-      "game_id": "CB-774217302",
-      "raw_game_id": "774217302",
-      "game_name": "Golden State Warriors vs Dallas Mavericks",
-      "home_team": "Golden State Warriors",
-      "away_team": "Dallas Mavericks",
-      "quarter": 4,
-      "elapsed_mins": 47.9,
-      "in_decision_window_35m": false,
-      "is_barem_open": false,
-      "current_score": "107-124",
-      "score_gap": 17,
-      "fav1_barem": "231+",
-      "fav1_odd": 1.01,
-      "fav2_barem": "-",
-      "fav2_odd": 0.0,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.01)",
-      "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
-      },
-      "updated_at_tr": "2026-11-26 09:16:43"
-    },
-    {
       "signal_id": "CB-774223193_35m",
       "game_id": "CB-774223193",
       "raw_game_id": "774223193",
@@ -56,7 +21,7 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "New York Knicks",
       "quarter": 2,
-      "elapsed_mins": 21.5,
+      "elapsed_mins": 21.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "64-46",
@@ -81,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 09:16:43"
+      "updated_at_tr": "2026-11-26 09:17:20"
     },
     {
       "signal_id": "CB-774229082_35m",
@@ -116,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 09:16:43"
+      "updated_at_tr": "2026-11-26 09:17:20"
     }
   ],
   "recent_history": [
