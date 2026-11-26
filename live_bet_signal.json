@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 12:12:26",
-  "timestamp": 1795684346.19,
+  "updated_at_tr": "2026-11-26 12:13:03",
+  "timestamp": 1795684383.11,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 3,
-      "elapsed_mins": 34.4,
+      "elapsed_mins": 35.0,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "61-60",
+      "current_score": "61-62",
       "score_gap": 1,
       "fav1_barem": "181-190",
-      "fav1_odd": 2.35,
+      "fav1_odd": 2.47,
       "fav2_barem": "171-180",
-      "fav2_odd": 3.01,
+      "fav2_odd": 2.71,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 12:12:24"
+      "updated_at_tr": "2026-11-26 12:13:01"
     },
     {
       "signal_id": "CB-774257221_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 12:12:24"
+      "updated_at_tr": "2026-11-26 12:13:01"
     }
   ],
   "recent_history": [
@@ -91,7 +91,7 @@
       "raw_game_id": "774248994",
       "date": "2026-11-26",
       "game_name": "Atlanta Hawks vs Minnesota Timberwolves",
-      "current_score": "61-60",
+      "current_score": "61-62",
       "score_gap": 1,
       "decision": "PAS",
       "pick_type": "PAS",
