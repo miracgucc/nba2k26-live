@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 00:58:01",
-  "timestamp": 1795730281.42,
+  "updated_at_tr": "2026-11-27 00:58:46",
+  "timestamp": 1795730326.85,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Milwaukee Bucks",
       "away_team": "Los Angeles Clippers",
       "quarter": 1,
-      "elapsed_mins": 10.5,
+      "elapsed_mins": 10.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "20-27",
-      "score_gap": 7,
+      "current_score": "22-27",
+      "score_gap": 5,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.44,
+      "fav1_odd": 3.37,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.45,
+      "fav2_odd": 3.61,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.44)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.37)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 00:57:59"
+      "updated_at_tr": "2026-11-27 00:58:45"
     },
     {
       "signal_id": "CB-774416401_35m",
@@ -56,7 +56,7 @@
       "home_team": "New York Knicks",
       "away_team": "Miami Heat",
       "quarter": 4,
-      "elapsed_mins": 38.3,
+      "elapsed_mins": 39.1,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "87-77",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 00:57:59"
+      "updated_at_tr": "2026-11-27 00:58:45"
     }
   ],
   "recent_history": [
