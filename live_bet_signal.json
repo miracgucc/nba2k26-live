@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 01:09:33",
-  "timestamp": 1795730973.02,
+  "updated_at_tr": "2026-11-27 01:10:12",
+  "timestamp": 1795731012.93,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -24,8 +24,8 @@
       "elapsed_mins": 18.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "34-40",
-      "score_gap": 6,
+      "current_score": "36-40",
+      "score_gap": 4,
       "fav1_barem": "211-220",
       "fav1_odd": 3.06,
       "fav2_barem": "201-210",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 01:09:31"
+      "updated_at_tr": "2026-11-27 01:10:11"
     },
     {
       "signal_id": "CB-774416401_35m",
@@ -56,7 +56,7 @@
       "home_team": "New York Knicks",
       "away_team": "Miami Heat",
       "quarter": 4,
-      "elapsed_mins": 44.9,
+      "elapsed_mins": 45.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "101-91",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 01:09:31"
+      "updated_at_tr": "2026-11-27 01:10:11"
     }
   ],
   "recent_history": [
