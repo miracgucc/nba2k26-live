@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 12:50:17",
-  "timestamp": 1795686617.67,
+  "updated_at_tr": "2026-11-26 12:50:55",
+  "timestamp": 1795686655.86,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Oklahoma City Thunder",
       "quarter": 3,
-      "elapsed_mins": 31.6,
+      "elapsed_mins": 32.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "57-76",
       "score_gap": 19,
       "fav1_barem": "191-200",
-      "fav1_odd": 2.38,
-      "fav2_barem": "201-210",
-      "fav2_odd": 3.42,
-      "decision": "OYNA",
-      "pick_type": "1. Favori",
-      "target_barem": "191-200",
-      "target_barem_tr": "191-200",
-      "target_barem_en": "191-200",
-      "target_t_id": 1842,
-      "target_odd": 2.38,
-      "min_acceptable_odd": 2.23,
-      "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Önceki Maç +1 Üst): 191-200 (2.38)",
+      "fav1_odd": 2.3,
+      "fav2_barem": "181-190",
+      "fav2_odd": 3.54,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_barem_en": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "min_acceptable_odd": 0.0,
+      "zone_type": "PASS_SELECTIVE",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.30)",
       "stakes": {
-        "kasa_8000": 400,
-        "kasa_10000": 500,
-        "kasa_15000": 750,
-        "kasa_20000": 1000
+        "kasa_8000": 0,
+        "kasa_10000": 0,
+        "kasa_15000": 0,
+        "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 12:50:16"
+      "updated_at_tr": "2026-11-26 12:50:54"
     },
     {
       "signal_id": "CB-774266656_35m",
@@ -81,10 +81,29 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 12:50:16"
+      "updated_at_tr": "2026-11-26 12:50:54"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-774257221_35m",
+      "game_id": "CB-774257221",
+      "raw_game_id": "774257221",
+      "date": "2026-11-26",
+      "game_name": "Los Angeles Lakers vs Oklahoma City Thunder",
+      "current_score": "57-76",
+      "score_gap": 19,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.30)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-774248994_35m",
       "game_id": "CB-774248994",
@@ -406,25 +425,6 @@
       "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.09)",
       "actual_score": "103-105",
       "actual_range": "201-210",
-      "result": "PAS"
-    },
-    {
-      "signal_id": "CB-774141383_35m",
-      "game_id": "CB-774141383",
-      "raw_game_id": "774141383",
-      "date": "2026-11-26",
-      "game_name": "Oklahoma City Thunder vs Atlanta Hawks",
-      "current_score": "82-55",
-      "score_gap": 27,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 181-190: 2.30)",
-      "actual_score": "114-78",
-      "actual_range": "191-200",
       "result": "PAS"
     }
   ]
