@@ -1293,8 +1293,8 @@ def render_live_dashboard():
             val_reason = sym_live.get("value_reason") or "Piyasa ve model simetrisine göre en yüksek beklenen değerli barem."
             wing_badge_live = sym_live.get("wing_badge") or ""
             sym_guidance_live = sym_live.get("sym_guidance") or ""
-            clu_name = m.get("best_cluster_name") or "-"
-            clu_prob = m.get("best_cluster_prob", 0.0)
+            clu_name = sym_live.get("best_cluster_name") or m.get("best_cluster_name") or "-"
+            clu_prob = sym_live.get("best_cluster_prob") or m.get("best_cluster_prob", 0.0)
             dutch_odd = m.get("dutch_odd", 0.0)
             sym_gap = m.get("symmetry_gap", 99.0)
 

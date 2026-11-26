@@ -11,6 +11,7 @@ const MID_EU={"130_or_less":125.5,"131-140":135.5,"141-150":145.5,"151-160":155.
 const PMAP_EU={"130":"130_or_less","131.14":"131-140","141.15":"141-150","151.16":"151-160","161.17":"161-170","171":"171+"};
 
 let pShiftNba=Number(localStorage.getItem("n80_ps_nba")||"0")||0;
+let pShift27=Number(localStorage.getItem("n80_ps_27")||"0")||0;
 let pShiftEu=Number(localStorage.getItem("n80_ps_eu")||"0")||0;
 let busy=false,listUrl=location.origin+"/tr/live/basketball/2935701-nba-2k26-cyber-league";
 
@@ -334,6 +335,35 @@ function ruleNba(om,gap,ps,curTot){
   return pas("Kural dışı oran yapısı");
 }
 
+function ruleNba27(om,gap,ps,curTot){
+  const arr=Object.entries(om).filter(([,v])=>v>1.01&&v<85).sort((a,b)=>a[1]-b[1]);
+  if(arr.length<2)return null;
+  const[f1,o1]=arr[0],[f2,o2]=arr[1],i1=BAREMS_NBA.indexOf(f1),i2=BAREMS_NBA.indexOf(f2);
+  const f2Up=i2>i1,req=(MID_NBA[f1]||205.5)-curTot;
+  const pas=r=>({play:false,reason:r,f1,o1,f2,o2,req});
+  if(gap<6)return pas("NBA 2K27 skor farkı çok yakın ("+gap+" < 6)");
+  if(o1<1.20)return pas("NBA 2K27 oran çok düşük ("+o1+")");
+  if(o1>=1.20&&o1<1.50)return(gap<=20)?{play:true,b:f1,o:o1,f:1,req}:pas("NBA 2K27 1.20-1.50 fark > 20");
+  if(o1>=1.50&&o1<1.85){
+    return(req<=49.5||!f2Up)?{play:true,b:f2,o:o2,f:2,req}:pas("NBA 2K27 1.50-1.85 filtresi");
+  }
+  if(o1>=1.85&&o1<2.10){
+    if(gap<=15&&!f2Up&&req<=52.5)return{play:true,b:f1,o:o1,f:1,req};
+    if((!f2Up||gap>=16||ps!==1)&&o2<=4.20)return{play:true,b:f2,o:o2,f:2,req};
+    return pas("NBA 2K27 1.85-2.10 beklenti dışı");
+  }
+  if(o1>=2.10&&o1<2.30){
+    return(gap>=16||req<=49.5||ps===1||f2Up)?{play:true,b:f1,o:o1,f:1,req}:pas("NBA 2K27 2.10-2.30 filtresi");
+  }
+  if(o1>=2.30&&o1<2.50){
+    if(req<=49.5||ps===1||(f2Up&&gap<=15))return{play:true,b:f1,o:o1,f:1,req};
+    if(!f2Up&&gap<=15&&o2<=3.40)return{play:true,b:f2,o:o2,f:2,req};
+    return pas("NBA 2K27 2.30-2.50 beklenti dışı");
+  }
+  if(o1>=2.50)return(o2<=4.50)?{play:true,b:f2,o:o2,f:2,req}:pas("NBA 2K27 2.50+ oran yüksek");
+  return pas("Kural dışı oran yapısı");
+}
+
 function ruleEuro(om,gap,ps,curTot){
   const arr=Object.entries(om).filter(([,v])=>v>1.01&&v<85).sort((a,b)=>a[1]-b[1]);
   if(arr.length<2)return null;
@@ -371,7 +401,7 @@ async function checkResults(){
   try{
     const wTo=Math.floor(Date.now()/300000)*300+300,wFrom=wTo-86400;
     const resMap={};
-    for(const lg of[{k:"NBA",c:"2935701",minT:100},{k:"EURO",c:"2983166",minT:60}]){
+    for(const lg of[{k:"NBA",c:"2935701",minT:100},{k:"NBA27",c:"3125701",minT:100},{k:"EURO",c:"2983166",minT:60}]){
       const url=location.origin+"/service-api/result/web/api/v3/games?champId="+lg.c+"&dateFrom="+wFrom+"&dateTo="+wTo+"&lng=en&ref=110";
       const r=await fetch(url,{cache:"no-store"});
       if(!r.ok)continue;
@@ -467,6 +497,7 @@ async function poll(){
     let totG=0,msg="";
     const leagues=[
       {k:"NBA",c:"2935701",s:"2935701-nba-2k26-cyber-league",qSec:720,qMin:12,minLo:34.2,minHi:35.8},
+      {k:"NBA27",c:"3125701",s:"3125701-nba-2k27-cyber-league",qSec:720,qMin:12,minLo:34.2,minHi:35.8},
       {k:"EURO",c:"2983166",s:"2983166-nba-2k26-cyber-euro-league",qSec:600,qMin:10,minLo:28.2,minHi:29.8}
     ];
     for(const lg of leagues){
@@ -486,10 +517,10 @@ async function poll(){
           const om={};
           for(const rw of g33.E||[])for(const ev of rw){
             if(ev.B||ev.L)continue;
-            const bk=lg.k==="NBA"?PMAP_NBA[String(ev.P||"")]:PMAP_EU[String(ev.P||"")];
+            const bk=lg.k==="EURO"?PMAP_EU[String(ev.P||"")]:PMAP_NBA[String(ev.P||"")];
             if(bk&&ev.C>1.01)om[bk]=Number(ev.C);
           }
-          const dec=lg.k==="NBA"?ruleNba(om,gap,pShiftNba,curTot):ruleEuro(om,gap,pShiftEu,curTot);
+          const dec=lg.k==="NBA"?ruleNba(om,gap,pShiftNba,curTot):(lg.k==="NBA27"?ruleNba27(om,gap,pShift27,curTot):ruleEuro(om,gap,pShiftEu,curTot));
           const sid="CB-"+gid+"_"+lg.k,pl=gP();
           if(dec&&dec.play){
             const stTL=dec.f===1?gS1():gS2();
@@ -507,7 +538,7 @@ async function poll(){
             }
           }else if(dec&&!dec.play){
             msg='⛔ ['+lg.k+'] '+el.toFixed(1)+'.dk PAS ('+s1+'-'+s2+')';
-            const pasMin=lg.k==="NBA"?34.75:28.75;
+            const pasMin=lg.k==="EURO"?28.75:34.75;
             if(el>=pasMin&&!pl.includes(sid)&&!gPas().includes(sid)){
               mPas(sid);
               if(isPasTgOn()){

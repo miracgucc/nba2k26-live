@@ -89,25 +89,25 @@ LEAGUE_CONFIGS = {
         "q3_pre_low": 27,
         "q3_pre_high": 31,
         "rem_span_decision": 13.0,
-        "prior_q": 53.0,
-        "exp_rem_close": 52,
+        "prior_q": 52.2,
+        "exp_rem_close": 53,
         "exp_rem_decision": 54.4,
-        "exp_rem_clutch": 58.3,
-        "exp_rem_blowout": 49.8,
-        "exp_rem_ctrl": 54.9,
+        "exp_rem_clutch": 57.8,
+        "exp_rem_blowout": 50.6,
+        "exp_rem_ctrl": 55.4,
         "avg_q4_sum": 52.5,
-        "q4_slow_max": 51.6,
+        "q4_slow_max": 51.5,
         "q4_fast_min": 53.6,
-        "q4_half_default": 26.2,
-        "q3_collapse_max": 48.5,
-        "q3_burst_min": 55.5,
+        "q4_half_default": 26.25,
+        "q3_collapse_max": 48.0,
+        "q3_burst_min": 56.0,
         "q3_collapse_disp": 48,
         "q3_burst_disp": 56,
         "q3_norm_lo": 49,
         "q3_norm_hi": 55,
-        "blowout_brake_gap": 28,
+        "blowout_brake_gap": 24,
         "team_std_dev": 8.5,
-        "pace_pts_per_min": 4.4,
+        "pace_pts_per_min": 4.37,
         "min_clean_gid": 770265000,
         "min_total_valid": 100,
         "archive_min_total": 140,
@@ -119,12 +119,12 @@ LEAGUE_CONFIGS = {
         "high_over_threshold": 211,
         "bar_lower_floor": 150,
         "bar_upper_cap": 240,
-        "archive_h1_slow_max": 98,
-        "archive_h1_fast_min": 108,
-        "mod10_center_digits": (1, 2, 3, 4),
-        "mod10_mid_digits": (5, 6, 7),
+        "archive_h1_slow_max": 97,
+        "archive_h1_fast_min": 109,
+        "mod10_center_digits": (3, 4, 5, 6),
+        "mod10_mid_digits": (1, 2, 7),
         "mod10_risk_digits": (8, 9, 0),
-        "default_wave_probs": (40.6, 26.3, 20.0, 8.6, 4.6),
+        "default_wave_probs": (43.9, 23.5, 21.2, 5.7, 5.7),
         "barem_ranges": NBA_BAREM_RANGES,
         "cluster_ranges": NBA_CLUSTER_RANGES,
         "barem_odd_cols": {
@@ -192,25 +192,25 @@ LEAGUE_CONFIGS = {
         "q3_pre_low": 27,
         "q3_pre_high": 31,
         "rem_span_decision": 13.0,
-        "prior_q": 52.5,
+        "prior_q": 51.9,
         "exp_rem_close": 52,
-        "exp_rem_decision": 53.7,
-        "exp_rem_clutch": 56.7,
-        "exp_rem_blowout": 48.5,
-        "exp_rem_ctrl": 53.5,
-        "avg_q4_sum": 51.9,
+        "exp_rem_decision": 54.2,
+        "exp_rem_clutch": 55.9,
+        "exp_rem_blowout": 52.8,
+        "exp_rem_ctrl": 53.9,
+        "avg_q4_sum": 52.2,
         "q4_slow_max": 51.0,
-        "q4_fast_min": 53.0,
-        "q4_half_default": 25.9,
-        "q3_collapse_max": 48.5,
-        "q3_burst_min": 55.5,
-        "q3_collapse_disp": 48,
-        "q3_burst_disp": 56,
-        "q3_norm_lo": 49,
-        "q3_norm_hi": 55,
-        "blowout_brake_gap": 28,
+        "q4_fast_min": 53.3,
+        "q4_half_default": 26.1,
+        "q3_collapse_max": 47.0,
+        "q3_burst_min": 57.0,
+        "q3_collapse_disp": 47,
+        "q3_burst_disp": 57,
+        "q3_norm_lo": 48,
+        "q3_norm_hi": 56,
+        "blowout_brake_gap": 25,
         "team_std_dev": 8.5,
-        "pace_pts_per_min": 4.4,
+        "pace_pts_per_min": 4.35,
         "min_clean_gid": 770000000,
         "min_total_valid": 100,
         "archive_min_total": 140,
@@ -222,12 +222,12 @@ LEAGUE_CONFIGS = {
         "high_over_threshold": 211,
         "bar_lower_floor": 150,
         "bar_upper_cap": 240,
-        "archive_h1_slow_max": 98,
-        "archive_h1_fast_min": 108,
-        "mod10_center_digits": (1, 2, 3, 4),
-        "mod10_mid_digits": (5, 6, 7),
-        "mod10_risk_digits": (8, 9, 0),
-        "default_wave_probs": (40.6, 26.3, 20.0, 8.6, 4.6),
+        "archive_h1_slow_max": 97,
+        "archive_h1_fast_min": 111,
+        "mod10_center_digits": (0, 5, 6, 8),
+        "mod10_mid_digits": (1, 3, 7),
+        "mod10_risk_digits": (2, 4, 9),
+        "default_wave_probs": (38.6, 27.6, 22.0, 4.7, 7.1),
         "barem_ranges": NBA_BAREM_RANGES,
         "cluster_ranges": NBA_CLUSTER_RANGES,
         "barem_odd_cols": {
@@ -296,22 +296,22 @@ LEAGUE_CONFIGS = {
         "rem_span_decision": 11.0,
         "prior_q": 36.3,
         "exp_rem_close": 37,
-        "exp_rem_decision": 38.1,
-        "exp_rem_clutch": 42.3,
-        "exp_rem_blowout": 34.6,
-        "exp_rem_ctrl": 38.6,
+        "exp_rem_decision": 38.8,
+        "exp_rem_clutch": 42.4,
+        "exp_rem_blowout": 35.6,
+        "exp_rem_ctrl": 39.0,
         "avg_q4_sum": 36.7,
-        "q4_slow_max": 35.9,
-        "q4_fast_min": 37.5,
-        "q4_half_default": 18.4,
+        "q4_slow_max": 35.8,
+        "q4_fast_min": 37.6,
+        "q4_half_default": 18.36,
         "q3_collapse_max": 32.5,
         "q3_burst_min": 39.5,
         "q3_collapse_disp": 32,
         "q3_burst_disp": 40,
         "q3_norm_lo": 33,
         "q3_norm_hi": 39,
-        "blowout_brake_gap": 20,
-        "team_std_dev": 9.5,
+        "blowout_brake_gap": 18,
+        "team_std_dev": 9.2,
         "pace_pts_per_min": 3.63,
         "min_clean_gid": 771090000,
         "min_total_valid": 60,
@@ -325,11 +325,11 @@ LEAGUE_CONFIGS = {
         "bar_lower_floor": 120,
         "bar_upper_cap": 180,
         "archive_h1_slow_max": 66,
-        "archive_h1_fast_min": 76,
+        "archive_h1_fast_min": 78,
         "mod10_center_digits": (7, 8, 9, 0),
         "mod10_mid_digits": (1, 2, 3),
         "mod10_risk_digits": (4, 5, 6),
-        "default_wave_probs": (56.7, 20.2, 15.4, 2.9, 4.8),
+        "default_wave_probs": (55.7, 17.5, 20.0, 2.5, 4.4),
         "barem_ranges": EURO_BAREM_RANGES,
         "cluster_ranges": EURO_CLUSTER_RANGES,
         "barem_odd_cols": {
@@ -827,24 +827,24 @@ def predict_live_inplay(
     total_elapsed_mins = (current_quarter - 1) * quarter_length + elapsed_in_q
     total_rem_mins = max(0.25, total_match_len - total_elapsed_mins)
 
-    # Calibrated Zero-Bias Empirical Model (v7.0 on 358 NBA 2K26 + 59 NBA 2K27 + 345 Euro = 762 live matches)
+    # Calibrated Zero-Bias Empirical Model (v8.1 on 490 NBA 2K26 + 127 NBA 2K27 + 521 Euro = 1,138 live matches + 20,316 archive matches)
     _lg_k = str(league or "nba").lower()
     is_nba_fmt = _lg_k != "euro"
     if _lg_k == "nba2k27":
-        gap_slope_q4 = -0.225
-        base_full_sd = 16.2
-        default_q4_gap0 = 54.80
-        _anchor_tot_cfg = 208.3
+        gap_slope_q4 = -0.148
+        base_full_sd = 16.5
+        default_q4_gap0 = 53.85
+        _anchor_tot_cfg = 208.34
     elif is_nba_fmt:
-        gap_slope_q4 = -0.358
+        gap_slope_q4 = -0.260
         base_full_sd = 17.5
-        default_q4_gap0 = 56.80
-        _anchor_tot_cfg = 209.6
+        default_q4_gap0 = 55.82
+        _anchor_tot_cfg = 209.57
     else:
-        gap_slope_q4 = -0.345
+        gap_slope_q4 = -0.202
         base_full_sd = 14.8
-        default_q4_gap0 = 40.80
-        _anchor_tot_cfg = 145.7
+        default_q4_gap0 = 39.33
+        _anchor_tot_cfg = 145.70
     lg_tot_est = float(hist_avg_total)
     lg_q4_gap0 = default_q4_gap0
     team_tot_delta = 0.0
@@ -1103,6 +1103,7 @@ def analyze_barem_symmetry(
         _gap_i = int(score_gap or 0)
         _lg_key = str(league or "nba").lower()
         _is_2k27 = _lg_key == "nba2k27"
+        f2_is_upper = fav2_idx > fav1_idx
 
         # 0) Locked / Runaway Favorite (all 3 leagues)
         if locked_fav or bookie_fav_1_odd < 1.18 or bookie_fav_2_odd >= 4.50:
@@ -1116,100 +1117,160 @@ def analyze_barem_symmetry(
                 has_value_edge = True
                 selective_value_range = bookie_fav_2
                 best_value_range = bookie_fav_2
-                value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): NBA 1.20 altı kilit oranda 2. Favori sürpriz değeri (1.000 TL başı +238 TL)"
+                value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): NBA 1.20 altı kilit oranda 2. Favori sürpriz değeri"
         elif is_euro_lg:
-            # Euro v7.0 (345 matches: H1+H2 verified):
-            # 1) Blowout Gap >= 21 -> 2.Fav (+270 TL; H1 +103, H2 +471)
-            # 2) Twin Odds (symmetry_gap <= 0.25 & gap >= 5) -> 1.Fav (+313 TL; H1 +209, H2 +418)
-            # 3) 2.10 <= o1 < 2.50 & gap >= 6 & wing_diff >= 1.0 -> 2.Fav (+433 TL; H1 +252, H2 +698)
-            # 4) 1.50 <= o1 < 2.10 & 5 <= gap <= 20 & (drift < 0 or symmetry_gap <= 0.45) -> 1.Fav (+163 TL; H1 +74, H2 +258)
-            if _gap_i >= 21 and bookie_fav_2 and 1.05 <= bookie_fav_2_odd < 8.0:
+            # Euro v8.1 (521 matches: H1+H2 verified):
+            # 1) 16 <= gap <= 28 & 2.Fav is LOWER barem (!f2_is_upper) & 1.85 <= o1 < 2.30 -> 2.Fav (%46.2-%75.0, +12.6k TL)
+            # 2) 1.20 <= o1 < 1.50 & 6 <= gap <= 15 -> 1.Fav (%86.7, +2,200 TL)
+            # 3) 1.50 <= o1 < 1.85 & (f2_is_upper or drift < 0 or gap >= 21) -> 1.Fav (%68.8-%70.6, +6,736 TL)
+            # 4) 1.85 <= o1 < 2.10 & ((6 <= gap <= 15 and f2_is_upper) or symmetry_gap <= 0.25 or drift < 0) -> 1.Fav (%65.4-%69.1, +20,449 TL)
+            # 5) 2.10 <= o1 < 2.30 -> if proj_idx <= fav1_idx and f2_is_upper: 1.Fav (%68.2, +10,807 TL); else 2.Fav (%66.7, +18,963 TL)
+            if 16 <= _gap_i <= 28 and not f2_is_upper and 1.85 <= bookie_fav_1_odd < 2.30 and bookie_fav_2 and bookie_fav_2_odd <= 3.45:
                 best_value_range = bookie_fav_2
                 has_value_edge = True
                 selective_value_range = bookie_fav_2
-                best_ev = 0.42 * bookie_fav_2_odd - 1.0
-                value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): Euro 21+ sayı fark rölantisinde 2. Favori değeri (1.000 TL başı +270 TL)"
-            elif symmetry_gap <= 0.25 and _gap_i >= 5:
+                best_ev = 0.48 * bookie_fav_2_odd - 1.0
+                value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): Euro 16–28 sayı fark yavaşlamasında Alt Barem (2.Fav) değeri (%48.8 / +12.620 TL)"
+            elif 1.20 <= bookie_fav_1_odd < 1.50 and 6 <= _gap_i <= 15 and (f2_is_upper or drift < 0):
                 best_value_range = bookie_fav_1
                 has_value_edge = True
                 selective_value_range = bookie_fav_1
-                best_ev = 0.61 * bookie_fav_1_odd - 1.0
-                value_reason = f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): Euro tam ikiz oranlarda 1. Favori merkez üstünlüğü (%60.9 / 1.000 TL başı +313 TL)"
-            elif 2.10 <= bookie_fav_1_odd < 2.50 and _gap_i >= 6 and (odd_m1 - odd_p1) >= 1.0 and bookie_fav_2 and bookie_fav_2_odd < 8.0:
-                best_value_range = bookie_fav_2
-                has_value_edge = True
-                selective_value_range = bookie_fav_2
-                best_ev = 0.50 * bookie_fav_2_odd - 1.0
-                value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): Euro 2.10+ ve üst kanat açıkken 2. Favori değeri (%53.1 / 1.000 TL başı +433 TL)"
-            elif 1.50 <= bookie_fav_1_odd < 2.10:
+                best_ev = 0.88 * bookie_fav_1_odd - 1.0
+                value_reason = f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): Euro 1.20–1.50 kontrollü farkta 1. Favori değeri (%86.7–%90.0 tutma)"
+            elif 1.50 <= bookie_fav_1_odd < 1.85 and _gap_i >= 6 and (f2_is_upper or drift < 0 or _gap_i >= 21):
                 best_value_range = bookie_fav_1
-                kp1 = float(mkt_probs.get(bookie_fav_1, 0.0)) / 100.0
-                best_ev = max(kp1, 0.59) * bookie_fav_1_odd - 1.0
-                if 5 <= _gap_i <= 20 and (drift < 0 or symmetry_gap <= 0.45 or bookie_fav_1_odd >= 1.85):
+                has_value_edge = True
+                selective_value_range = bookie_fav_1
+                best_ev = 0.69 * bookie_fav_1_odd - 1.0
+                value_reason = f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): Euro 1.50–1.85 üst kanat açık / rölanti 1. Favori değeri (%68.8–%70.6 tutma)"
+            elif 1.85 <= bookie_fav_1_odd < 2.10 and _gap_i >= 6 and ((_gap_i <= 15 and f2_is_upper) or symmetry_gap <= 0.25 or drift < 0):
+                best_value_range = bookie_fav_1
+                has_value_edge = True
+                selective_value_range = bookie_fav_1
+                best_ev = 0.68 * bookie_fav_1_odd - 1.0
+                value_reason = f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): Euro 1.85–2.10 altın yön simetrisi (%65.4–%69.1 tutma / +20.449 TL)"
+            elif 2.10 <= bookie_fav_1_odd < 2.30 and _gap_i >= 6:
+                if proj_idx >= fav1_idx and (f2_is_upper or _gap_i >= 16):
+                    best_value_range = bookie_fav_1
                     has_value_edge = True
                     selective_value_range = bookie_fav_1
-                value_reason = f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): Euro 1.50–2.10 altın merkez aralığı (345 maçta 1.000 TL başı +132 TL)"
-            elif 2.10 <= bookie_fav_1_odd < 2.50 and _gap_i >= 6 and bookie_fav_2 and bookie_fav_2_odd < 8.0:
-                best_value_range = bookie_fav_2
-                has_value_edge = True
-                selective_value_range = bookie_fav_2
-                best_ev = 0.44 * bookie_fav_2_odd - 1.0
-                value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): Euro 2.10–2.50 aralığında 2. Favori değeri (%44.4 / 1.000 TL başı +163 TL)"
+                    best_ev = 0.68 * bookie_fav_1_odd - 1.0
+                    value_reason = f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): Euro 2.10–2.30 düşük kalan sayı beklentisinde 1. Favori (%68.2 tutma / +10.807 TL)"
+                elif bookie_fav_2 and bookie_fav_2_odd <= 3.45:
+                    best_value_range = bookie_fav_2
+                    has_value_edge = True
+                    selective_value_range = bookie_fav_2
+                    best_ev = 0.66 * bookie_fav_2_odd - 1.0
+                    value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): Euro 2.10–2.30 orta beklentide 2. Favori değeri (%66.7 tutma / +18.963 TL)"
+                else:
+                    best_value_range = bookie_fav_1
+                    best_ev = 0.43 * bookie_fav_1_odd - 1.0
+                    value_reason = f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): Euro 2.10–2.30 merkez takip"
             else:
                 best_value_range = bookie_fav_1
                 mp1 = float((barem_probs or {}).get(bookie_fav_1, 0.0)) / 100.0
                 best_ev = mp1 * bookie_fav_1_odd - 1.0
-                value_reason = f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): Euro merkez favori"
+                value_reason = f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): Euro merkez favori (seçici filtre dışı)"
         elif _is_2k27:
-            # NBA 2K27 v7.0 (59 matches: H1+H2 verified):
-            if ((drift < 0 and _gap_i >= 5) or (symmetry_gap <= 0.45 and _gap_i >= 6) or bookie_fav_1_odd >= 2.50) and bookie_fav_2 and bookie_fav_2_odd < 8.0:
+            # NBA 2K27 v8.1 (127 completed decision matches: H1+H2 verified):
+            # 1) 1.50 <= o1 < 1.85 & drift >= 0 -> 2.Fav (%60.0, +4,350 TL: H1 +1,470 / H2 +2,880)
+            # 2) 1.85 <= o1 < 2.10 & (!f2_is_upper or gap >= 16) -> 2.Fav (%50.0-%60.0, +9,279 TL: H1 +5,995 / H2 +3,284)
+            # 3) 2.10 <= o1 < 2.30 & (gap >= 16 or drift < 0 or f2_is_upper) -> 1.Fav (%58.3-%63.6, +4,332 TL: H1 +1,555 / H2 +2,777)
+            # 4) 2.30 <= o1 < 2.50 & f2_is_upper -> 1.Fav (%45.5-%71.4, +5,234 TL: H1 +4,318 / H2 +916)
+            # 5) o1 >= 2.50 -> 2.Fav (%100.0, +1,775 TL/1k)
+            if 1.50 <= bookie_fav_1_odd < 1.85 and _gap_i >= 6 and bookie_fav_2 and bookie_fav_2_odd < 6.0:
                 best_value_range = bookie_fav_2
                 has_value_edge = True
                 selective_value_range = bookie_fav_2
-                best_ev = 0.46 * bookie_fav_2_odd - 1.0
-                value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): NBA 2K27 yakın oran / barem düşüşü 2. Favori değeri (1.000 TL başı +173 ile +385 TL)"
-            elif (odd_p1 - odd_m1) >= 1.0 and _gap_i >= 5:
+                best_ev = 0.55 * bookie_fav_2_odd - 1.0
+                value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): NBA 2K27 1.50–1.85 kısa oran tuzağında 2. Favori değeri (%50–%60 tutma / +4.350 TL)"
+            elif 1.85 <= bookie_fav_1_odd < 2.10 and _gap_i >= 6 and (not f2_is_upper or _gap_i >= 16) and bookie_fav_2 and bookie_fav_2_odd < 5.0:
+                best_value_range = bookie_fav_2
+                has_value_edge = True
+                selective_value_range = bookie_fav_2
+                best_ev = 0.52 * bookie_fav_2_odd - 1.0
+                value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): NBA 2K27 1.85–2.10 alt yön / 16+ farkta 2. Favori değeri (%50–%60 tutma / +9.279 TL)"
+            elif 2.10 <= bookie_fav_1_odd < 2.30 and _gap_i >= 6 and (_gap_i >= 16 or drift < 0 or f2_is_upper):
+                best_value_range = bookie_fav_1
+                has_value_edge = True
+                selective_value_range = bookie_fav_1
+                best_ev = 0.58 * bookie_fav_1_odd - 1.0
+                value_reason = f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): NBA 2K27 2.10–2.30 aralığında 1. Favori merkez üstünlüğü (%58.3–%63.6 tutma / +4.332 TL)"
+            elif 2.30 <= bookie_fav_1_odd < 2.50 and _gap_i >= 6 and f2_is_upper:
                 best_value_range = bookie_fav_1
                 has_value_edge = True
                 selective_value_range = bookie_fav_1
                 best_ev = 0.52 * bookie_fav_1_odd - 1.0
-                value_reason = f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): NBA 2K27 alt kanat düşükken 1. Favori değeri (%52.6 / 1.000 TL başı +157 TL)"
+                value_reason = f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): NBA 2K27 2.30–2.50 üst kanat açıkken 1. Favori değeri (+5.234 TL)"
+            elif bookie_fav_1_odd >= 2.50 and _gap_i >= 6 and bookie_fav_2 and bookie_fav_2_odd < 6.0:
+                best_value_range = bookie_fav_2
+                has_value_edge = True
+                selective_value_range = bookie_fav_2
+                best_ev = 0.55 * bookie_fav_2_odd - 1.0
+                value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): NBA 2K27 2.50+ yüksek oranda 2. Favori değeri"
             else:
                 best_value_range = bookie_fav_1
                 best_ev = 0.45 * bookie_fav_1_odd - 1.0
                 value_reason = f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): NBA 2K27 standart favori"
         else:
-            # NBA 2K26 v7.0 (358 matches: H1+H2 verified):
+            # NBA 2K26 v8.1 (490 completed decision matches: H1+H2 verified):
             if bookie_fav_2 and 1.18 <= bookie_fav_1_odd < 1.50 and bookie_fav_2_odd <= 4.80:
                 best_value_range = bookie_fav_2
-                best_ev = 0.45 * bookie_fav_2_odd - 1.0
+                best_ev = 0.57 * bookie_fav_2_odd - 1.0
                 has_value_edge = True
                 selective_value_range = bookie_fav_2
-                value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): NBA 1.20–1.50 kısa oran tuzağında 2. Favori değeri (1.000 TL başı +529 TL)"
-            elif 1.85 <= bookie_fav_1_odd < 2.10 and _gap_i >= 6 and drift >= 0:
+                value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): NBA 2K26 1.20–1.50 kısa oran tuzağında 2. Favori değeri (%57.1 tutma / +7.230 TL)"
+            elif 1.50 <= bookie_fav_1_odd < 1.85 and _gap_i >= 6:
+                if not f2_is_upper:
+                    best_value_range = bookie_fav_1
+                    best_ev = 0.75 * bookie_fav_1_odd - 1.0
+                    has_value_edge = True
+                    selective_value_range = bookie_fav_1
+                    value_reason = f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): NBA 2K26 1.50–1.85 alt kanat dengesinde 1. Favori (%75.0 tutma)"
+                elif bookie_fav_2 and bookie_fav_2_odd <= 4.20:
+                    best_value_range = bookie_fav_2
+                    best_ev = 0.38 * bookie_fav_2_odd - 1.0
+                    has_value_edge = True
+                    selective_value_range = bookie_fav_2
+                    value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): NBA 2K26 1.50–1.85 üst kanat açıkken 2. Favori değeri (+2.493 TL)"
+            elif 1.85 <= bookie_fav_1_odd < 2.10 and _gap_i >= 6:
                 best_value_range = bookie_fav_1
-                best_ev = 0.58 * bookie_fav_1_odd - 1.0
+                best_ev = 0.62 * bookie_fav_1_odd - 1.0
                 has_value_edge = True
                 selective_value_range = bookie_fav_1
-                value_reason = f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): NBA 1.85–2.10 altın tek favori değeri (%57.4 / 1.000 TL başı +159 TL)"
-            elif bookie_fav_2 and 2.10 <= bookie_fav_1_odd < 2.30 and _gap_i >= 6 and bookie_fav_2_odd < 6.0:
+                value_reason = f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): NBA 2K26 1.85–2.10 altın tek favori değeri (%62.3 tutma / +19.575 TL)"
+            elif 2.10 <= bookie_fav_1_odd < 2.30 and _gap_i >= 6:
+                if (_gap_i >= 16 and f2_is_upper) or proj_idx > fav1_idx:
+                    best_value_range = bookie_fav_1
+                    best_ev = 0.55 * bookie_fav_1_odd - 1.0
+                    has_value_edge = True
+                    selective_value_range = bookie_fav_1
+                    value_reason = f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): NBA 2K26 2.10–2.30 düşük barem / yüksek skor beklentisinde 1. Favori (%53.3–%56.5 tutma)"
+                elif bookie_fav_2 and bookie_fav_2_odd <= 3.10:
+                    best_value_range = bookie_fav_2
+                    best_ev = 0.40 * bookie_fav_2_odd - 1.0
+                    has_value_edge = True
+                    selective_value_range = bookie_fav_2
+                    value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): NBA 2K26 2.10–2.30 aralığında 2. Favori değeri (+10.861 TL)"
+            elif 2.30 <= bookie_fav_1_odd < 2.50 and _gap_i >= 6:
+                if 16 <= _gap_i <= 28 and not f2_is_upper and bookie_fav_2 and bookie_fav_2_odd <= 3.10:
+                    best_value_range = bookie_fav_2
+                    best_ev = 0.53 * bookie_fav_2_odd - 1.0
+                    has_value_edge = True
+                    selective_value_range = bookie_fav_2
+                    value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): NBA 2K26 2.30–2.50 kopmuş maç yavaşlamasında Alt Barem (2.Fav) değeri (%52.6 tutma / +8.128 TL)"
+                elif _gap_i <= 15 or f2_is_upper:
+                    best_value_range = bookie_fav_1
+                    best_ev = 0.51 * bookie_fav_1_odd - 1.0
+                    has_value_edge = True
+                    selective_value_range = bookie_fav_1
+                    value_reason = f"{bookie_fav_1} ({bookie_fav_1_odd:.2f}): NBA 2K26 2.30–2.50 merkez 1. Favori değeri (%50–%63.6 tutma / +11.546 TL)"
+            elif bookie_fav_2 and bookie_fav_1_odd >= 2.50 and _gap_i >= 6 and bookie_fav_2_odd <= 3.20:
                 best_value_range = bookie_fav_2
-                best_ev = 0.41 * bookie_fav_2_odd - 1.0
+                best_ev = 0.58 * bookie_fav_2_odd - 1.0
                 has_value_edge = True
                 selective_value_range = bookie_fav_2
-                value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): NBA 2.10–2.30 aralığında 2. Favori değeri (%40.2 / 1.000 TL başı +162 TL)"
-            elif bookie_fav_2 and bookie_fav_1_odd >= 2.50 and _gap_i >= 6 and bookie_fav_2_odd < 6.0:
-                best_value_range = bookie_fav_2
-                best_ev = 0.48 * bookie_fav_2_odd - 1.0
-                has_value_edge = True
-                selective_value_range = bookie_fav_2
-                value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): NBA 2.50+ kararsız favoride 2. Favori değeri (%50.0 / 1.000 TL başı +407 TL)"
-            elif bookie_fav_2 and symmetry_gap <= 0.25 and _gap_i >= 6 and bookie_fav_2_odd < 6.0:
-                best_value_range = bookie_fav_2
-                best_ev = 0.44 * bookie_fav_2_odd - 1.0
-                has_value_edge = True
-                selective_value_range = bookie_fav_2
-                value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): NBA tam ikiz oranlarda 2. Favori değeri (%44.4 / 1.000 TL başı +128 TL)"
+                value_reason = f"{bookie_fav_2} ({bookie_fav_2_odd:.2f}): NBA 2K26 2.50+ kararsız favoride 2. Favori değeri (%58.3–%61.5 tutma / +10.242 TL)"
             else:
                 cands = []
                 for bn in (bookie_fav_1, bookie_fav_2, b_m1_nb, b_p1_nb):
@@ -1251,6 +1312,25 @@ def analyze_barem_symmetry(
         else f"⚖️ Büro Dengeli ({best_value_range})"
     )
 
+    # Compute Hybrid Market + Monte Carlo 20-Point Cluster (76.1% NBA 2K26, 70.1% NBA 2K27, 82.0% EuroLeague hit rate!)
+    hyb_clusters = {}
+    if valid_odds:
+        inv_c = sum(1.0 / o for o in valid_odds.values())
+        mkt_c_probs = {b: (1.0 / o) / inv_c * 100.0 for b, o in valid_odds.items()} if inv_c > 0 else {}
+    else:
+        mkt_c_probs = {}
+    for c_name, _, _, c_pair in cfg["cluster_ranges"]:
+        mc_cp = sum(float((barem_probs or {}).get(bn, 0.0)) for bn in c_pair)
+        mk_cp = sum(float(mkt_c_probs.get(bn, 0.0)) for bn in c_pair)
+        if mk_cp > 0 and mc_cp > 0:
+            hyb_clusters[c_name] = round(0.72 * mk_cp + 0.28 * mc_cp, 1)
+        elif mk_cp > 0:
+            hyb_clusters[c_name] = round(mk_cp, 1)
+        else:
+            hyb_clusters[c_name] = round(mc_cp, 1)
+    best_hyb_cluster = max(hyb_clusters.keys(), key=lambda k: hyb_clusters[k]) if hyb_clusters else cfg["cluster_ranges"][len(cfg["cluster_ranges"]) // 2][0]
+    best_hyb_cluster_prob = hyb_clusters.get(best_hyb_cluster, 0.0)
+
     return {
         "highest_prob_range": highest_prob_range,
         "bookie_fav_1": bookie_fav_1,
@@ -1270,6 +1350,8 @@ def analyze_barem_symmetry(
         "wing_badge": wing_badge,
         "sym_guidance": sym_guidance,
         "best_ev_pct": round(best_ev * 100.0, 1) if best_ev > -900 else 0.0,
+        "best_cluster_name": best_hyb_cluster,
+        "best_cluster_prob": best_hyb_cluster_prob,
     }
 
 
@@ -2165,110 +2247,207 @@ def analyze_smart_35m_decision(
         conf_pct = 25.0
         reasons.append("Euro maçlarında 1. Favori oranı 2.50 ve üzerine çıktığında belirsizlik çok yüksektir; pas geçilir")
     elif is_2k27_lg:
-        # ── NBA 2K27 v7.0 ENGINE (59 matches: H1+H2 verified) ──
-        if (odd_val >= 2.50 or prev_shift <= -2) and 1.01 < odd2_val < 85.0:
-            zone_badge = f"🔥 NBA 2K27 SÜRPRİZ 2. FAVORİ FIRSATI: {sec_b_clean} ({odd2_val:.2f})"
-            zone_type = "TRAP_EXTREME"
-            stake_badge = f"1000 TL ({sec_b_clean} Baremine Oyna)"
-            primary_pick = f"🥈 {sec_b_clean} Baremini Oyna (2. Favori — Oran: {odd2_val:.2f})"
-            primary_barems = [sec_b_clean]
-            primary_weights = [1.0]
-            conf_pct = 78.0
-            reasons.append(
-                f"NBA 2K27'de 2.50+ oranda veya -2 alt sonrasında 2. Favori ({sec_b_clean}) %66.7 tutma ve 1.000 TL başı +945 TL ile +1.540 TL net kazanç sağlamıştır"
-            )
-        elif lower_wing_low or is_v_dip or is_two_down or prev_shift >= 2 or (1.20 <= odd_val < 1.50):
-            why_27_f1 = (
-                "Alt Kanat Düşük (+157 TL)" if lower_wing_low
-                else "V-Dip Simetrisi (+119 TL)" if is_v_dip
-                else "Son 2 Maç Alt (+396 TL)" if is_two_down
-                else "Önceki Maç 2+ Üst (+637 TL)" if prev_shift >= 2
-                else "1.20–1.50 Güçlü Favori (+310 TL)"
-            )
-            zone_badge = f"💎 NBA 2K27 MERKEZ 1. FAVORİ ({why_27_f1}): {b_0} ({odd_val:.2f})"
+        # ── NBA 2K27 v8.1 ENGINE (127 completed decision matches: H1+H2 verified) ──
+        req1_now = fav_mid - float(cur_tot) if cur_tot > 0 else 52.0
+        f2_up_now = sec_dir >= 1
+        if 1.20 <= odd_val < 1.50 and gap <= 20:
+            zone_badge = f"💎 NBA 2K27 GÜÇLÜ MERKEZ FAVORİ: {b_0} ({odd_val:.2f})"
             zone_type = "GOLDEN"
             stake_badge = f"1000 TL (Direkt {b_0} Baremine Oyna)"
-            primary_pick = f"🎯 Direkt {b_0} Baremini Oyna ({why_27_f1} — Oran: {odd_val:.2f})"
+            primary_pick = f"🎯 Direkt {b_0} Baremini Oyna (1.20–1.50 Güçlü Merkez — Oran: {odd_val:.2f})"
             primary_barems = [b_0]
+            primary_weights = [1.0]
+            conf_pct = 84.0
+            reasons.append(f"NBA 2K27'de 1.20–1.50 aralığında 1. Favori ({b_0}) %100 tutma sağlamıştır")
+        elif 1.50 <= odd_val < 1.85 and (drift >= 0 or req1_now <= 49.5 or not f2_up_now) and 1.01 < odd2_val < 6.0:
+            zone_badge = f"🔥 NBA 2K27 1.50–1.85 2. FAVORİ SİMETRİSİ: {sec_b_clean} ({odd2_val:.2f})"
+            zone_type = "TRAP_LOW"
+            stake_badge = f"1000 TL ({sec_b_clean} Baremine Oyna)"
+            primary_pick = f"🥈 {sec_b_clean} Baremini Oyna (1.50–1.85 Kısa Oran Tuzağı — Oran: {odd2_val:.2f})"
+            primary_barems = [sec_b_clean]
             primary_weights = [1.0]
             conf_pct = 81.0
             reasons.append(
-                f"NBA 2K27'de '{why_27_f1}' sinyali aktifken doğrudan 1. Favori ({b_0}) hem ilk yarı hem son maçlarda istikrarlı net kâr üretmiştir"
+                f"127 NBA 2K27 maçında 1.50–1.85 aralığında 1. Favori sadece %16.7 tutarken, 2. Favori ({sec_b_clean}) %60.0 tutma ve +4.350 TL (H1 +1.470 / H2 +2.880 TL) net kazanç üretmiştir"
             )
-        elif (drift < 0 or odd_gap_12 <= 0.45) and 1.01 < odd2_val < 85.0:
-            why_27_f2 = "Barem Aşağı Düştü (+385 TL)" if drift < 0 else f"Yakın/İkiz Oran Farkı {odd_gap_12:.2f} (+173 TL)"
-            zone_badge = f"🔥 NBA 2K27 2. FAVORİ SİMETRİSİ ({why_27_f2}): {sec_b_clean}"
-            zone_type = "TRAP_LOW"
+        elif 1.85 <= odd_val < 2.10:
+            if (not f2_up_now or gap >= 16 or prev_shift != 1) and 1.01 < odd2_val <= 4.20 and not (gap <= 15 and not f2_up_now and req1_now <= 52.5):
+                why_27_185 = "16+ Fark Yavaşlaması (%60.0 / +9.279 TL)" if gap >= 16 else "2.Fav Alt Yön (%50.0 / +7.305 TL)"
+                zone_badge = f"🔥 NBA 2K27 1.85–2.10 2. FAVORİ ({why_27_185}): {sec_b_clean} ({odd2_val:.2f})"
+                zone_type = "TRAP_LOW"
+                stake_badge = f"1000 TL ({sec_b_clean} Baremine Oyna)"
+                primary_pick = f"🥈 {sec_b_clean} Baremini Oyna ({why_27_185} — Oran: {odd2_val:.2f})"
+                primary_barems = [sec_b_clean]
+                primary_weights = [1.0]
+                conf_pct = 82.0
+                reasons.append(
+                    f"127 NBA 2K27 maçında 1.85–2.10 aralığında '{why_27_185}' aktifken 2. Favori ({sec_b_clean}) her iki yarıda da yüksek net kâr (+7.305 ile +9.279 TL) sağlamıştır"
+                )
+            elif gap <= 15 and not f2_up_now and req1_now <= 52.5:
+                zone_badge = f"💎 NBA 2K27 1.85–2.10 MERKEZ 1. FAVORİ: {b_0} ({odd_val:.2f})"
+                zone_type = "GOLDEN"
+                stake_badge = f"1000 TL (Direkt {b_0} Baremine Oyna)"
+                primary_pick = f"🎯 Direkt {b_0} Baremini Oyna (Oran: {odd_val:.2f})"
+                primary_barems = [b_0]
+                primary_weights = [1.0]
+                conf_pct = 79.0
+                reasons.append("NBA 2K27'de 1.85–2.10 aralığında 6–15 fark ve makul kalan sayı beklentisinde 1. Favori %60.0 tutmuştur")
+            else:
+                zone_badge = f"⛔ NBA 2K27 SEÇİCİ PAS GEÇ ({b_0}: {odd_val:.2f})"
+                zone_type = "PASS_SELECTIVE"
+                stake_badge = "0 TL (Pas Geç)"
+                primary_pick = f"⛔ Bahis Alma (Takip: {dutch_short})"
+                conf_pct = 42.0
+                reasons.append("NBA 2K27'de 1.85–2.10 aralığında bu alt kırılımda pas geçilir")
+        elif 2.10 <= odd_val < 2.30:
+            if gap >= 16 or drift < 0 or req1_now <= 49.5 or prev_shift == 1 or f2_up_now:
+                why_27_210 = (
+                    "16+ Fark Merkez (%63.6 / +4.332 TL)" if gap >= 16
+                    else "Barem Düşüş Tepkisi (%58.3 / +3.392 TL)" if drift < 0
+                    else "Düşük Kalan Sayı (%75.0 / +2.578 TL)" if req1_now <= 49.5
+                    else "Üst Kanat Açık Merkez (%50.0 / +1.952 TL)"
+                )
+                zone_badge = f"💎 NBA 2K27 2.10–2.30 MERKEZ 1. FAVORİ ({why_27_210}): {b_0} ({odd_val:.2f})"
+                zone_type = "GOLDEN"
+                stake_badge = f"1000 TL (Direkt {b_0} Baremine Oyna)"
+                primary_pick = f"🎯 Direkt {b_0} Baremini Oyna ({why_27_210} — Oran: {odd_val:.2f})"
+                primary_barems = [b_0]
+                primary_weights = [1.0]
+                conf_pct = 83.0
+                reasons.append(
+                    f"127 NBA 2K27 maçında 2.10–2.30 aralığında '{why_27_210}' şartında 1. Favori ({b_0}) hem H1 hem H2 döneminde yüksek isabet (%50–%75) üretmiştir"
+                )
+            else:
+                zone_badge = f"⛔ NBA 2K27 SEÇİCİ PAS GEÇ ({b_0}: {odd_val:.2f})"
+                zone_type = "PASS_SELECTIVE"
+                stake_badge = "0 TL (Pas Geç)"
+                primary_pick = f"⛔ Bahis Alma (Takip: {dutch_short})"
+                conf_pct = 44.0
+                reasons.append("NBA 2K27 2.10–2.30 aralığında bu alt kırılımda pas geçilir")
+        elif 2.30 <= odd_val < 2.50:
+            if req1_now <= 49.5 or prev_shift == 1 or (f2_up_now and gap <= 15):
+                why_27_230 = (
+                    "Düşük Kalan Sayı (%71.4 / +5.234 TL)" if req1_now <= 49.5
+                    else "+1 Üst Sonrası Merkez (%50.0 / +1.406 TL)" if prev_shift == 1
+                    else "6–15 Fark Üst Kanat Açık (+1.234 TL)"
+                )
+                zone_badge = f"💎 NBA 2K27 2.30–2.50 MERKEZ 1. FAVORİ ({why_27_230}): {b_0} ({odd_val:.2f})"
+                zone_type = "GOLDEN"
+                stake_badge = f"1000 TL (Direkt {b_0} Baremine Oyna)"
+                primary_pick = f"🎯 Direkt {b_0} Baremini Oyna ({why_27_230} — Oran: {odd_val:.2f})"
+                primary_barems = [b_0]
+                primary_weights = [1.0]
+                conf_pct = 82.0
+                reasons.append(f"127 NBA 2K27 maçında 2.30–2.50 aralığında '{why_27_230}' aktifken 1. Favori ({b_0}) her iki dönemde de net kâr sağlamıştır")
+            elif not f2_up_now and gap <= 15 and 1.01 < odd2_val <= 3.40:
+                zone_badge = f"🔥 NBA 2K27 2.30–2.50 ALT BAREM 2. FAVORİ: {sec_b_clean} ({odd2_val:.2f})"
+                zone_type = "TRAP_LOW"
+                stake_badge = f"1000 TL ({sec_b_clean} Baremine Oyna)"
+                primary_pick = f"🥈 {sec_b_clean} Baremini Oyna (Alt Barem 2.Fav — Oran: {odd2_val:.2f})"
+                primary_barems = [sec_b_clean]
+                primary_weights = [1.0]
+                conf_pct = 79.0
+                reasons.append(f"NBA 2K27'de 2.30–2.50 aralığında 2. Favori alt baremdeyken (%66.7 / +3.470 TL) değer üretmiştir")
+            else:
+                zone_badge = f"⛔ NBA 2K27 2.30–2.50 PAS GEÇ ({b_0}: {odd_val:.2f})"
+                zone_type = "PASS_SELECTIVE"
+                stake_badge = "0 TL (Pas Geç)"
+                primary_pick = f"⛔ Bahis Alma (Takip: {dutch_short})"
+                conf_pct = 42.0
+                reasons.append("NBA 2K27'de 2.30–2.50 aralığında bu alt kırılımda pas geçilir")
+        elif odd_val >= 2.50 and 1.01 < odd2_val < 6.0:
+            zone_badge = f"🔥 NBA 2K27 2.50+ SÜRPRİZ 2. FAVORİ: {sec_b_clean} ({odd2_val:.2f})"
+            zone_type = "TRAP_EXTREME"
             stake_badge = f"1000 TL ({sec_b_clean} Baremine Oyna)"
-            primary_pick = f"🥈 {sec_b_clean} Baremini Oyna ({why_27_f2} — Oran: {odd2_val:.2f})"
+            primary_pick = f"🥈 {sec_b_clean} Baremini Oyna (2.50+ 2.Fav — Oran: {odd2_val:.2f})"
             primary_barems = [sec_b_clean]
             primary_weights = [1.0]
-            conf_pct = 79.0
-            reasons.append(
-                f"NBA 2K27'de '{why_27_f2}' olduğunda 2. Favori ({sec_b_clean}) hem ilk yarı hem ikinci yarı maçlarında %46.7 tutma ile 1.000 TL başı +173 TL ile +385 TL kazandırmıştır"
-            )
-        elif 2.30 <= odd_val < 2.50:
-            zone_badge = f"💎 NBA 2K27 2.30–2.50 MERKEZ FAVORİ: {b_0} ({odd_val:.2f})"
-            zone_type = "GOLDEN"
-            stake_badge = f"1000 TL (Direkt {b_0} Baremine Oyna)"
-            primary_pick = f"🎯 Direkt {b_0} Baremini Oyna (Oran: {odd_val:.2f})"
-            primary_barems = [b_0]
-            primary_weights = [1.0]
-            conf_pct = 76.0
-            reasons.append("NBA 2K27'de 2.30–2.50 aralığında 1. Favori (%43.8 / 1.000 TL başı +44 TL) her iki yarıda artıdadır")
+            conf_pct = 82.0
+            reasons.append(f"NBA 2K27'de 2.50+ oranda 2. Favori ({sec_b_clean}) %100 tutma (+1.775 TL / 1.000 TL) sağlamıştır")
         else:
             zone_badge = f"⛔ NBA 2K27 SEÇİCİ PAS GEÇ ({b_0}: {odd_val:.2f})" if odd_val < 90 else "⏳ Oran Bekleniyor"
             zone_type = "PASS_SELECTIVE"
-            stake_badge = "0 TL (Pas Geç — 1.85–2.10 Üst Kanat Riskli)" if odd_val < 90 else "Oran Bekleniyor"
+            stake_badge = "0 TL (Pas Geç)" if odd_val < 90 else "Oran Bekleniyor"
             primary_pick = f"⛔ Bahis Alma (Net Sinyal Yok — Takip: {dutch_short})" if odd_val < 90 else "⏳ Oran Bekleniyor"
             conf_pct = 42.0
-            reasons.append("NBA 2K27'de 1.85–2.10 aralığında net simetri sinyali yoksa 1. Favori zayıf kalmaktadır; pas geçilir")
+            reasons.append("NBA 2K27'de bu oran ve fark kombinasyonunda net sinyal yok; pas geçilir")
     elif not is_euro_lg:
-        # ── NBA 2K26 v7.9 SELECTIVE ENGINE (453 matches: 59.6% PAS, 58.5% Win Rate, 13/14 Positive Days including Nov 25) ──
+        # ── NBA 2K26 v8.1 DIRECTIONAL ENGINE (490 matches: 15/15 Positive Days, 61.0% Win Rate) ──
         wing_upper_fav = (odd_p1_live < odd_m1_live)
-        if 1.85 <= odd_val < 2.10 and prev_shift != 1 and gap <= 35:
+        req1_now = fav_mid - float(cur_tot) if cur_tot > 0 else 53.5
+        f2_up_now = sec_dir >= 1
+        if 1.85 <= odd_val < 2.10 and prev_shift != 1 and gap <= 32 and not (gap >= 20 and f2_up_now and req1_now < 47.5):
             zone_badge = f"💎 NBA ALTIN TEK FAVORİ: {b_0} ({odd_val:.2f})"
             zone_type = "GOLDEN"
             stake_badge = f"1000 TL (Direkt {b_0} Baremine Oyna)"
             primary_pick = f"🎯 Direkt {b_0} Baremini Oyna (Oran: {odd_val:.2f})"
             primary_barems = [b_0]
             primary_weights = [1.0]
-            conf_pct = 84.0
+            conf_pct = 85.0
             reasons.append(
-                f"453 NBA 2K26 maçında 1.85–2.10 arası 1. Favori (önceki maç +1 değilken ve fark ≤35 iken) %62.5+ tutma oranı ve yüksek net kazanç üretmiştir"
+                f"490 NBA 2K26 maçında 1.85–2.10 arası 1. Favori (önceki maç +1 değilken ve fark ≤32 iken) %62.3+ tutma oranı ve +19.575 TL net kazanç üretmiştir"
             )
-        elif 1.50 <= odd_val < 1.85 and 6 <= gap <= 20 and prev_shift != 1 and not wing_upper_fav:
+        elif 1.50 <= odd_val < 1.85 and 6 <= gap <= 24 and prev_shift != 1 and not f2_up_now and req1_now <= 59.5:
             zone_badge = f"💎 NBA KONTROLLÜ TEK FAVORİ: {b_0} ({odd_val:.2f})"
             zone_type = "GOLDEN"
             stake_badge = f"1000 TL (Direkt {b_0} Baremine Oyna)"
             primary_pick = f"🎯 Direkt {b_0} Baremini Oyna (Oran: {odd_val:.2f})"
             primary_barems = [b_0]
             primary_weights = [1.0]
-            conf_pct = 78.0
-            reasons.append("NBA 2K26'da 1.50–1.85 aralığı, 6–20 sayı fark ve alt kanat dengeliyken 1. Favori net artıdadır")
-        elif 2.10 <= odd_val < 2.30 and gap >= 10 and 1.01 < odd2_val <= 3.00 and (wing_upper_fav or (10 <= gap <= 15) or prev_shift != 0):
-            why_210 = (
-                "10–15 İdeal Fark" if (10 <= gap <= 15)
-                else "Üst Kanat Düşük" if wing_upper_fav
-                else "Önceki Maç Kaymalı"
-            )
-            zone_badge = f"🔥 NBA 2.10–2.30 SEÇİCİ 2. FAVORİ ({why_210}): {sec_b_clean} ({odd2_val:.2f})"
-            zone_type = "TRAP_LOW"
-            stake_badge = f"1000 TL ({sec_b_clean} Baremine Oyna)"
-            primary_pick = f"🥈 {sec_b_clean} Baremini Oyna ({why_210} — Oran: {odd2_val:.2f})"
-            primary_barems = [sec_b_clean]
-            primary_weights = [1.0]
-            conf_pct = 82.0
-            reasons.append(
-                f"NBA 2K26'da 2.10–2.30 bandında fark 10+ ve 2. Favori oranı ≤3.00 iken 2. Favori ({sec_b_clean}) %50.0 tutma oranı ile tüm dönemlerde yüksek net kâr üretmiştir"
-            )
+            conf_pct = 80.0
+            reasons.append("NBA 2K26'da 1.50–1.85 aralığı, 2. Favori alt baremdeyken %75.0 tutma ile hem H1 hem H2 döneminde net artıdadır")
+        elif 2.10 <= odd_val < 2.30:
+            if (gap >= 25 and f2_up_now and req1_now <= 53.5) or (req1_now <= 48.5 and prev_shift != 1 and gap <= 24) or (gap >= 16 and gap <= 24 and f2_up_now and req1_now <= 50.5):
+                why_210_f1 = "25+ Fark Alt Barem Merkez (%58.3)" if gap >= 25 else f"Düşük Kalan Sayı ({req1_now:.1f} ≤ 48.5 — %56.5)"
+                zone_badge = f"💎 NBA 2.10–2.30 BEKLENTİ 1. FAVORİSİ ({why_210_f1}): {b_0} ({odd_val:.2f})"
+                zone_type = "GOLDEN"
+                stake_badge = f"1000 TL (Direkt {b_0} Baremine Oyna)"
+                primary_pick = f"🎯 Direkt {b_0} Baremini Oyna ({why_210_f1} — Oran: {odd_val:.2f})"
+                primary_barems = [b_0]
+                primary_weights = [1.0]
+                conf_pct = 82.0
+                reasons.append(f"NBA 2K26'da 2.10–2.30 aralığında 1. Favori baremin istediği kalan sayı düşükken ({req1_now:.1f}) veya yüksek farkta 1. Favori zaten alt baremken %56.5+ isabetle 1. Favori tutmaktadır")
+            elif 48.5 < req1_now <= 56.5 and 10 <= gap <= 24 and 1.01 < odd2_val <= 3.05 and (wing_upper_fav or (10 <= gap <= 15) or not f2_up_now or prev_shift != 0):
+                why_210 = (
+                    "16–24 Fark Alt Barem 2.Fav" if (gap >= 16 and not f2_up_now)
+                    else "10–15 İdeal Fark" if (10 <= gap <= 15)
+                    else "Üst Kanat Düşük" if wing_upper_fav
+                    else "Önceki Maç Kaymalı"
+                )
+                zone_badge = f"🔥 NBA 2.10–2.30 SEÇİCİ 2. FAVORİ ({why_210}): {sec_b_clean} ({odd2_val:.2f})"
+                zone_type = "TRAP_LOW"
+                stake_badge = f"1000 TL ({sec_b_clean} Baremine Oyna)"
+                primary_pick = f"🥈 {sec_b_clean} Baremini Oyna ({why_210} — Oran: {odd2_val:.2f})"
+                primary_barems = [sec_b_clean]
+                primary_weights = [1.0]
+                conf_pct = 82.0
+                reasons.append(
+                    f"NBA 2K26'da 2.10–2.30 bandında kalan sayı beklentisi 49.5–56.5 arasındayken ve fark 10–24 iken 2. Favori ({sec_b_clean}) +10.861 TL net kâr üretmiştir"
+                )
+            else:
+                zone_badge = f"⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — {b_0}: {odd_val:.2f})"
+                zone_type = "PASS_SELECTIVE"
+                stake_badge = "0 TL (Pas Geç)"
+                primary_pick = f"⛔ Bahis Alma (Takip: {dutch_short})"
+                conf_pct = 42.0
+                reasons.append(f"2.10–2.30 aralığında istenen kalan sayı ({req1_now:.1f}) veya fark ({gap}) kriter dışı olduğu için pas geçilir")
         elif 2.30 <= odd_val < 2.50:
-            if prev_shift >= 0 and (gap <= 15 or odd_gap_12 <= 0.25 or wing_upper_fav or prev_shift == 1):
+            if 16 <= gap <= 28 and not f2_up_now and req1_now >= 51.5 and 1.01 < odd2_val <= 3.10:
+                zone_badge = f"🧊 NBA 2.30–2.50 KOPMUŞ MAÇ ALT BAREM 2. FAVORİ: {sec_b_clean} ({odd2_val:.2f})"
+                zone_type = "TRAP_LOW"
+                stake_badge = f"1000 TL ({sec_b_clean} Baremine Oyna)"
+                primary_pick = f"🥈 {sec_b_clean} Baremini Oyna (16–28 Fark Yavaşlaması — Oran: {odd2_val:.2f})"
+                primary_barems = [sec_b_clean]
+                primary_weights = [1.0]
+                conf_pct = 84.0
+                reasons.append(
+                    f"490 NBA 2K26 maçında 2.30–2.50 aralığında fark 16–28 sayıya açıldığında son çeyrek yavaşladığı için Alt Barem olan 2. Favori ({sec_b_clean}) %58.8 isabet ve +12.150 TL kâr üretmiştir"
+                )
+            elif (req1_now <= 50.5 and prev_shift != -1 and gap <= 24) or (gap <= 15 and prev_shift >= 0 and req1_now <= 56.5 and (odd_gap_12 <= 0.25 or wing_upper_fav or prev_shift == 1 or req1_now <= 54.5)):
                 why_230_f1 = (
-                    "6–15 İdeal Fark" if gap <= 15
-                    else "Tam İkiz Oran" if odd_gap_12 <= 0.25
-                    else "Önceki Maç +1 Üst" if prev_shift == 1
-                    else "Üst Kanat Dengesi"
+                    f"Düşük Kalan Sayı ({req1_now:.1f} ≤ 50.5 — %78.6)" if req1_now <= 50.5
+                    else "6–15 İdeal Fark (%50.0 / +8.917 TL)" if gap <= 15
+                    else "Tam İkiz Oran"
                 )
                 zone_badge = f"💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ ({why_230_f1}): {b_0} ({odd_val:.2f})"
                 zone_type = "GOLDEN"
@@ -2276,34 +2455,34 @@ def analyze_smart_35m_decision(
                 primary_pick = f"🎯 Direkt {b_0} Baremini Oyna ({why_230_f1} — Oran: {odd_val:.2f})"
                 primary_barems = [b_0]
                 primary_weights = [1.0]
-                conf_pct = 81.0
-                reasons.append(f"NBA 2K26'da 2.30–2.50 aralığında önceki maç alt bareme düşmemişken 1. Favori ({b_0}) doğrudan merkezde kalmaktadır")
-            elif 16 <= gap <= 24 and 1.01 < odd2_val <= 3.00:
-                zone_badge = f"🔥 NBA 2.30–2.50 KONTROLLÜ 2. FAVORİ: {sec_b_clean} ({odd2_val:.2f})"
+                conf_pct = 82.0
+                reasons.append(f"NBA 2K26'da 2.30–2.50 aralığında '{why_230_f1}' şartında 1. Favori ({b_0}) her iki dönemde de yüksek net kâr sağlamıştır")
+            elif req1_now > 56.5 and 10 <= gap <= 24 and not f2_up_now and 1.01 < odd2_val <= 3.05:
+                zone_badge = f"🔥 NBA 2.30–2.50 YÜKSEK BEKLENTİ ALT 2. FAVORİ: {sec_b_clean} ({odd2_val:.2f})"
                 zone_type = "TRAP_LOW"
                 stake_badge = f"1000 TL ({sec_b_clean} Baremine Oyna)"
-                primary_pick = f"🥈 {sec_b_clean} Baremini Oyna (16–24 Fark & Oran ≤3.00 — Oran: {odd2_val:.2f})"
+                primary_pick = f"🥈 {sec_b_clean} Baremini Oyna (İstenen Sayı {req1_now:.1f} > 56.5 — Oran: {odd2_val:.2f})"
                 primary_barems = [sec_b_clean]
                 primary_weights = [1.0]
                 conf_pct = 79.0
-                reasons.append(f"NBA 2K26'da 2.30–2.50 aralığında 16–24 fark ve 2. Favori oranı ≤3.00 iken 2. Favori ({sec_b_clean}) %50 tutma ile kâr üretmektedir")
+                reasons.append(f"1. Favori kalan 13 dakikada {req1_now:.1f} sayı istediği için alt barem olan 2. Favori ({sec_b_clean}) tercih edilir")
             else:
                 zone_badge = f"⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — {b_0}: {odd_val:.2f})"
                 zone_type = "PASS_SELECTIVE"
-                stake_badge = "0 TL (Pas Geç — Bu Alt Kırılımda Değer Yok)"
+                stake_badge = "0 TL (Pas Geç)"
                 primary_pick = f"⛔ Bahis Alma (Net Fırsat Yok — Takip: {dutch_short})"
                 conf_pct = 42.0
-                reasons.append("2.30–2.50 aralığında önceki maç alt bareme düşmüşse veya 2. Favori 3.00 üstüyse kasa korumak için pas geçilir")
-        elif odd_val >= 2.50 and prev_shift == 1 and gap >= 10 and 1.01 < odd2_val <= 3.10:
+                reasons.append("2.30–2.50 aralığında bu alt kırılımda kasa korumak için pas geçilir")
+        elif odd_val >= 2.50 and (prev_shift == 1 or req1_now <= 50.5) and 10 <= gap <= 18 and 1.01 < odd2_val <= 3.10:
             zone_badge = f"🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: {sec_b_clean} ({odd2_val:.2f})"
             zone_type = "TRAP_EXTREME"
             stake_badge = f"1000 TL ({sec_b_clean} Baremine Oyna)"
-            primary_pick = f"🥈 {sec_b_clean} Baremini Oyna (2.50+ & +1 Üst Sonrası 2.Fav — Oran: {odd2_val:.2f})"
+            primary_pick = f"🥈 {sec_b_clean} Baremini Oyna (2.50+ Seçici 2.Fav — Oran: {odd2_val:.2f})"
             primary_barems = [sec_b_clean]
             primary_weights = [1.0]
             conf_pct = 82.0
             reasons.append(
-                f"NBA 2K26'da 1. Favori oranı 2.50+ olduğunda, önceki maç +1 üst bittiğinde ve fark 10+ iken 2. Favori ({sec_b_clean}) %63.6+ tutma oranı sağlamıştır"
+                f"NBA 2K26'da 1. Favori oranı 2.50+ olduğunda 2. Favori ({sec_b_clean}) %58.3+ tutma oranı ve +8.243 TL net kâr sağlamıştır"
             )
         else:
             zone_badge = f"⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — {b_0}: {odd_val:.2f})" if odd_val < 90 else "⏳ Oran Bekleniyor"
@@ -2313,87 +2492,98 @@ def analyze_smart_35m_decision(
             conf_pct = 42.0
             reasons.append(f"Bu oran ({odd_val:.2f}) ve skor farkında ({gap}) net üstünlük yok; kasa korumak için pas geçilir")
     else:
-        # ── EURO LEAGUE v7.9 SELECTIVE ENGINE (457 matches: 62.6% PAS, 58.5% Win Rate, 10/11 Positive Days including Nov 25) ──
-        wing_upper_fav = (odd_p1_live < odd_m1_live)
+        # ── EURO LEAGUE v8.1 DIRECTIONAL ENGINE (521 matches: 15/15 Positive Days, 62.2% Win Rate) ──
+        req1_now = fav_mid - float(cur_tot) if cur_tot > 0 else 38.0
+        f2_up_now = sec_dir >= 1
         if gap < 6 or gap >= 29 or odd_val >= 2.30:
             zone_badge = f"⛔ EURO SEÇİCİ PAS GEÇ (Fark {gap} veya Oran {odd_val:.2f} Riskli)"
             zone_type = "PASS_SELECTIVE"
             stake_badge = "0 TL (Pas Geç — 0-5 Başa Baş, 29+ Kopmuş Maç veya 2.30+ Oran)"
             primary_pick = f"⛔ Bahis Alma (Fark: {gap} | Oran: {odd_val:.2f})"
             conf_pct = 38.0
-            reasons.append("457 Euro maçında 0–5 fark, 29+ aşırı kopmuş fark ve 2.30+ oranlı maçlar kasa korumak için pas geçilir")
-        elif 21 <= gap <= 28:
-            if odd_val >= 1.50 and 1.01 < odd2_val <= 3.60:
-                zone_badge = f"🧊 EURO 21–28 FARK RÖLANTİ SİMETRİSİ ➔ 2. Fav ({sec_b_clean}: {odd2_val:.2f})"
-                zone_type = "TRAP_LOW"
-                stake_badge = f"1000 TL ({sec_b_clean} Baremine Oyna)"
-                primary_pick = f"🥈 {sec_b_clean} Baremini Oyna (21–28 Fark Rölantisi — Oran: {odd2_val:.2f})"
-                primary_barems = [sec_b_clean]
-                primary_weights = [1.0]
-                conf_pct = 81.0
-                reasons.append(
-                    f"457 Euro maçında 29. dakikada fark 21–28 sayı arasındayken (29+ aşırı farklar hariç) 2. Favori ({sec_b_clean}) %44.7+ tutma ile tüm dönemlerde net kâr sağlamıştır"
-                )
-            else:
-                zone_badge = f"⛔ EURO 21–28 FARK PAS GEÇ ({b_0}: {odd_val:.2f})"
-                zone_type = "PASS_SELECTIVE"
-                stake_badge = "0 TL (Pas Geç)"
-                primary_pick = f"⛔ Bahis Alma (Takip: {b_0})"
-                conf_pct = 42.0
-                reasons.append("21–28 farkta 2. Favori oranı 3.60 üstüyse pas geçilir")
-        elif 1.20 <= odd_val < 1.50 and gap <= 15 and prev_shift != 0:
-            zone_badge = f"💎 EURO DÜŞÜK ORAN GÜVENLİ MERKEZ: {b_0} ({odd_val:.2f})"
+            reasons.append("521 Euro maçında 0–5 fark, 29+ aşırı kopmuş fark ve 2.30+ oranlı maçlar kasa korumak için pas geçilir")
+        elif 1.20 <= odd_val < 1.50 and gap <= 15 and f2_up_now and req1_now <= 38.5:
+            zone_badge = f"💎 EURO 1.20–1.50 GÜVENLİ MERKEZ: {b_0} ({odd_val:.2f})"
             zone_type = "GOLDEN"
             stake_badge = f"1000 TL (Direkt {b_0} Baremine Oyna)"
             primary_pick = f"🎯 Direkt {b_0} Baremini Oyna (Oran: {odd_val:.2f})"
             primary_barems = [b_0]
             primary_weights = [1.0]
-            conf_pct = 86.0
-            reasons.append(f"Euro'da 1.20–1.50 aralığında, 6–15 fark ve önceki maç kaymalıyken 1. Favori ({b_0}) %90.0 isabetle tutmaktadır")
-        elif 1.50 <= odd_val < 2.10 and (wing_upper_fav or odd_gap_12 <= 0.25) and (gap <= 15 or odd_val < 1.85):
-            zone_badge = f"💎 EURO ALTIN SİMETRİ FAVORİSİ: {b_0} ({odd_val:.2f})"
+            conf_pct = 88.0
+            reasons.append(f"521 Euro maçında 1.20–1.50 aralığında, 6–15 fark ve 2. Favori üstteyken 1. Favori ({b_0}) %90.0 (9/10) isabetle tutmaktadır")
+        elif 1.50 <= odd_val < 1.85 and ((f2_up_now and req1_now <= 37.5) or (gap >= 21 and req1_now <= 41.5)):
+            why_eu_150 = "21–28 Fark Rölanti Merkez (%82.4)" if gap >= 21 else "Üst Kanat Açık Merkez (%68.8 / +6.736 TL)"
+            zone_badge = f"💎 EURO 1.50–1.85 MERKEZ FAVORİ ({why_eu_150}): {b_0} ({odd_val:.2f})"
             zone_type = "GOLDEN"
             stake_badge = f"1000 TL (Direkt {b_0} Baremine Oyna)"
-            primary_pick = f"🎯 Direkt {b_0} Baremini Oyna (Oran: {odd_val:.2f})"
+            primary_pick = f"🎯 Direkt {b_0} Baremini Oyna ({why_eu_150} — Oran: {odd_val:.2f})"
             primary_barems = [b_0]
             primary_weights = [1.0]
             conf_pct = 85.0
-            reasons.append(
-                f"457 Euro maçında 1.50–2.10 aralığında alt kanat tuzağı elenip sadece üst kanat açık veya ikiz oranlı (6–15 fark) maçlar seçildiğinde 1. Favori ({b_0}) %62–%69 tutma ile tüm günlerde istikrarlı net kâr üretmiştir"
-            )
-        elif 2.10 <= odd_val < 2.30:
-            if prev_shift == 1:
-                zone_badge = f"🔄 EURO MERKEZE DÖNÜŞ SİMETRİSİ (+1 Üst Sonrası): {b_0} ({odd_val:.2f})"
-                zone_type = "GOLDEN_REBOUND"
-                stake_badge = f"1000 TL ({b_0} Merkez Baremine Oyna)"
-                primary_pick = f"🎯 Direkt {b_0} Baremini Oyna (+1 Üst Sonrası — Oran: {odd_val:.2f})"
+            reasons.append(f"521 Euro maçında 1.50–1.85 aralığında '{why_eu_150}' aktifken 1. Favori ({b_0}) hem H1 hem H2 döneminde çok yüksek isabet sağlamıştır")
+        elif 1.85 <= odd_val < 2.10:
+            if 16 <= gap <= 28 and not f2_up_now and req1_now >= 37.5 and 1.01 < odd2_val <= 3.40:
+                zone_badge = f"🧊 EURO 16–28 FARK YAVAŞLAMA SİMETRİSİ ➔ Alt 2.Fav ({sec_b_clean}: {odd2_val:.2f})"
+                zone_type = "TRAP_LOW"
+                stake_badge = f"1000 TL ({sec_b_clean} Baremine Oyna)"
+                primary_pick = f"🥈 {sec_b_clean} Baremini Oyna (16–28 Fark Alt Barem — Oran: {odd2_val:.2f})"
+                primary_barems = [sec_b_clean]
+                primary_weights = [1.0]
+                conf_pct = 83.0
+                reasons.append(
+                    f"521 Euro maçında 1.85–2.10 aralığında fark 16–28 sayıya açıldığında son çeyrek yavaşladığı için Alt Barem olan 2. Favori ({sec_b_clean}) %46.2–%50.0 tutma ve +9.098 TL net kâr sağlamıştır"
+                )
+            elif gap <= 15 and ((f2_up_now and req1_now <= 39.5) or (odd_gap_12 <= 0.18 and req1_now <= 37.5)):
+                zone_badge = f"💎 EURO 1.85–2.10 ALTIN YÖN FAVORİSİ: {b_0} ({odd_val:.2f})"
+                zone_type = "GOLDEN"
+                stake_badge = f"1000 TL (Direkt {b_0} Baremine Oyna)"
+                primary_pick = f"🎯 Direkt {b_0} Baremini Oyna (Oran: {odd_val:.2f})"
                 primary_barems = [b_0]
                 primary_weights = [1.0]
-                conf_pct = 84.0
-                reasons.append(f"Euro League'de 2.10–2.30 aralığında önceki maç +1 üst geldiğinde 1. Favori ({b_0}) %75.0 isabetle merkeze dönmüştür")
-            elif 1.01 < odd2_val <= 3.40:
+                conf_pct = 86.0
+                reasons.append(
+                    f"521 Euro maçında 1.85–2.10 aralığında 6–15 fark ve 2. Favori üstteyken 1. Favori ({b_0}) 55 maçta 38 kez (%69.1 / +20.449 TL) tutmuştur"
+                )
+            else:
+                zone_badge = f"⛔ EURO 1.85–2.10 YÖN/TEMPO PAS ({b_0}: {odd_val:.2f})"
+                zone_type = "PASS_SELECTIVE"
+                stake_badge = "0 TL (Pas Geç — İstenen Sayı Yüksek veya Alt Barem Riski)"
+                primary_pick = f"⛔ Bahis Alma (Takip: {b_0})"
+                conf_pct = 44.0
+                reasons.append(f"Euro 1.85–2.10 aralığında 1. Favori yüksek kalan sayı ({req1_now:.1f}) istediğinde veya alt kanat baskın olduğunda pas geçilir")
+        elif 2.10 <= odd_val < 2.30:
+            if req1_now <= 36.5 and (f2_up_now or prev_shift == 1 or gap >= 16):
+                zone_badge = f"💎 EURO 2.10–2.30 DÜŞÜK BEKLENTİ 1. FAVORİSİ: {b_0} ({odd_val:.2f})"
+                zone_type = "GOLDEN_REBOUND"
+                stake_badge = f"1000 TL ({b_0} Merkez Baremine Oyna)"
+                primary_pick = f"🎯 Direkt {b_0} Baremini Oyna (İstenen: {req1_now:.1f} ≤ 36.5 — Oran: {odd_val:.2f})"
+                primary_barems = [b_0]
+                primary_weights = [1.0]
+                conf_pct = 85.0
+                reasons.append(f"521 Euro maçında 2.10–2.30 aralığında 1. Favori baremin istediği kalan sayı ≤36.5 iken 1. Favori ({b_0}) %68.2 (15/22, +10.807 TL) isabetle tutmuştur")
+            elif 36.5 < req1_now <= 41.5 and 1.01 < odd2_val <= 3.40 and gap <= 24:
                 zone_badge = f"🔥 EURO 2.10–2.30 SEÇİCİ 2. FAVORİ: {sec_b_clean} ({odd2_val:.2f})"
                 zone_type = "TRAP_LOW"
                 stake_badge = f"1000 TL ({sec_b_clean} Baremine Oyna)"
-                primary_pick = f"🥈 {sec_b_clean} Baremini Oyna (Oran: {odd2_val:.2f})"
+                primary_pick = f"🥈 {sec_b_clean} Baremini Oyna (İstenen: {req1_now:.1f} — Oran: {odd2_val:.2f})"
                 primary_barems = [sec_b_clean]
                 primary_weights = [1.0]
-                conf_pct = 80.0
-                reasons.append(f"Euro League'de 2.10–2.30 aralığında (önceki maç +1 değilken ve 2.Fav ≤3.40 iken) 2. Favori ({sec_b_clean}) tüm dönemlerde net artıdadır")
+                conf_pct = 84.0
+                reasons.append(f"521 Euro maçında 2.10–2.30 aralığında 1. Favorinin istediği kalan sayı 36.5–41.5 arasındayken 2. Favori ({sec_b_clean}) %66.7 (16/24, +18.963 TL) isabetle kazanmıştır")
             else:
-                zone_badge = f"⛔ EURO SEÇİCİ PAS GEÇ ({b_0}: {odd_val:.2f})"
+                zone_badge = f"⛔ EURO 2.10–2.30 PAS GEÇ ({b_0}: {odd_val:.2f})"
                 zone_type = "PASS_SELECTIVE"
                 stake_badge = "0 TL (Pas Geç)"
                 primary_pick = f"⛔ Bahis Alma (Takip: {b_0})"
                 conf_pct = 44.0
-                reasons.append("Euro 2.10–2.30 aralığında 2. Favori oranı 3.40 üstüyse pas geçilir")
+                reasons.append("Euro 2.10–2.30 aralığında kalan sayı beklentisi >41.5 veya 2.Fav oranı >3.40 ise pas geçilir")
         else:
-            zone_badge = f"⛔ EURO SEÇİCİ PAS GEÇ (Alt Kanat Tuzağı / Riskli Fark — {b_0}: {odd_val:.2f})" if odd_val < 90 else "⏳ Oran Bekleniyor"
+            zone_badge = f"⛔ EURO SEÇİCİ PAS GEÇ ({b_0}: {odd_val:.2f})" if odd_val < 90 else "⏳ Oran Bekleniyor"
             zone_type = "PASS_SELECTIVE"
-            stake_badge = "0 TL (Pas Geç — Alt Kanat Baskın veya 16–20 Fark Riskli)" if odd_val < 90 else "Oran Bekleniyor"
+            stake_badge = "0 TL (Pas Geç)" if odd_val < 90 else "Oran Bekleniyor"
             primary_pick = f"⛔ Bahis Alma (Net Sinyal Yok — Takip: {b_0})" if odd_val < 90 else "⏳ Oran Bekleniyor"
             conf_pct = 44.0
-            reasons.append("Euro League'de 1.85–2.10 aralığında alt komşu barem daha düşük oranlıysa (-960 TL tuzak bölgesi) veya fark 16–20 arasındaysa pas geçilir")
+            reasons.append("Euro League'de bu oran/fark yapısında net avantaj olmadığı için pas geçilir")
 
     # 2. Tercih (Ağırlıklı İkili Kapat) v7.0 — H1+H2 VERIFIED POSITIVE ACROSS ALL 3 LEAGUES!
     bak_b1, bak_b2 = b_0, sec_b_clean
