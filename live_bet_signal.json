@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 11:32:26",
-  "timestamp": 1795681946.5,
+  "updated_at_tr": "2026-11-26 11:33:07",
+  "timestamp": 1795681987.63,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 1,
-      "elapsed_mins": 10.5,
+      "elapsed_mins": 10.8,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "21-16",
       "score_gap": 5,
       "fav1_barem": "191-200",
-      "fav1_odd": 3.3,
+      "fav1_odd": 3.26,
       "fav2_barem": "201-210",
-      "fav2_odd": 4.1,
+      "fav2_odd": 4.04,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 3.30)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 3.26)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 11:32:25"
+      "updated_at_tr": "2026-11-26 11:33:06"
     },
     {
       "signal_id": "CB-774241573_35m",
@@ -56,15 +56,15 @@
       "home_team": "Denver Nuggets",
       "away_team": "New York Knicks",
       "quarter": 3,
-      "elapsed_mins": 32.6,
-      "in_decision_window_35m": false,
+      "elapsed_mins": 33.2,
+      "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "72-64",
+      "current_score": "74-66",
       "score_gap": 8,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.67,
-      "fav2_barem": "211-220",
-      "fav2_odd": 3.0,
+      "fav1_odd": 2.61,
+      "fav2_barem": "191-200",
+      "fav2_odd": 3.54,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.67)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.61)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 11:32:25"
+      "updated_at_tr": "2026-11-26 11:33:06"
     }
   ],
   "recent_history": [
@@ -91,7 +91,7 @@
       "raw_game_id": "774241573",
       "date": "2026-11-26",
       "game_name": "Denver Nuggets vs New York Knicks",
-      "current_score": "72-64",
+      "current_score": "74-66",
       "score_gap": 8,
       "decision": "PAS",
       "pick_type": "PAS",
