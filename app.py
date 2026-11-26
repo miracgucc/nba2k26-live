@@ -2134,8 +2134,10 @@ def render_v81_live_trial_bankroll():
 
     k_flat = 3000.0
     k_tier = 3000.0
+    k_ins = 3000.0
     p_idx = 0
     won_cnt = 0
+    ins_won_cnt = 0
     lost_cnt = 0
     pass_cnt = 0
     saved_cnt = 0
@@ -2148,8 +2150,10 @@ def render_v81_live_trial_bankroll():
         if d not in daily_stats:
             daily_stats[d] = {
                 "tot": 0, "p": 0, "pas": 0, "saved": 0,
-                "w": 0, "l": 0, "nba_p": 0, "nba_w": 0, "eu_p": 0, "eu_w": 0,
-                "net_f": 0.0, "k_flat": k_flat, "net_t": 0.0, "k_tier": k_tier,
+                "w": 0, "ins_w": 0, "l": 0, "nba_p": 0, "nba_w": 0, "eu_p": 0, "eu_w": 0,
+                "net_f": 0.0, "k_flat": k_flat,
+                "net_ins": 0.0, "k_ins": k_ins,
+                "net_t": 0.0, "k_tier": k_tier,
             }
         ds = daily_stats[d]
         ds["tot"] += 1
@@ -2157,10 +2161,30 @@ def render_v81_live_trial_bankroll():
         if m["dec"] is not None:
             p_idx += 1
             f_num, pick_b, pick_o = m["dec"]
+            other_b = m["f2"] if f_num == 1 else m["f1"]
+            other_o = m["o2"] if f_num == 1 else m["o1"]
             won = (pick_b == m["act_b"])
+            ins_won = (other_b == m["act_b"])
+
             st_f = 150.0 if f_num == 1 else 120.0
             net_f = st_f * (pick_o - 1.0) if won else -st_f
             k_flat += net_f
+
+            # Sigortalı İkili: Ana Seçime 150/120 TL + Yan Bareme (Sigorta) 60 TL
+            st_ins_side = 60.0
+            tot_ins_stake = st_f + st_ins_side
+            if won:
+                net_ins = (st_f * pick_o) - tot_ins_stake
+                ins_res_lbl = f"✅ Ana Tuttu ({net_ins:+,.1f} TL)"
+            elif ins_won:
+                net_ins = (st_ins_side * other_o) - tot_ins_stake
+                ins_res_lbl = f"🛡️ Sigorta Tuttu @{other_o:.2f} ({net_ins:+,.1f} TL)"
+                ins_won_cnt += 1
+                ds["ins_w"] += 1
+            else:
+                net_ins = -tot_ins_stake
+                ins_res_lbl = f"❌ İkisi de Kaçtı ({net_ins:+,.1f} TL)"
+            k_ins += net_ins
 
             tk, s1_t, s2_t = _get_tier_3000(k_tier)
             st_t = float(s1_t if f_num == 1 else s2_t)
@@ -2190,15 +2214,20 @@ def render_v81_live_trial_bankroll():
             ds["p"] += 1
             ds["net_f"] += net_f
             ds["k_flat"] = k_flat
+            ds["net_ins"] += net_ins
+            ds["k_ins"] = k_ins
             ds["net_t"] += net_t
             ds["k_tier"] = k_tier
 
             m["kupon_lbl"] = f"Kupon #{p_idx}"
-            m["pick_lbl"] = f"OYNA: {f_num}.Fav {pick_b} (@{pick_o:.2f}) — {m['reason']}"
-            m["stake_lbl"] = f"{int(st_f)} TL"
-            m["res_lbl"] = "✅ KAZANDI" if won else "❌ KAYBETTİ"
+            m["pick_lbl"] = f"OYNA: {f_num}.Fav {pick_b} (@{pick_o:.2f}) + 🛡️ Sigorta: {other_b} (@{other_o:.2f}) — {m['reason']}"
+            m["stake_lbl"] = f"{int(st_f)} TL (İkili: {int(st_f)}+60 TL)"
+            m["res_lbl"] = "✅ KAZANDI" if won else ("🛡️ TEKLİ YATTI / SİGORTA TUTTU" if ins_won else "❌ KAYBETTİ")
+            m["ins_res_lbl"] = ins_res_lbl
             m["net_f"] = net_f
             m["k_flat"] = k_flat
+            m["net_ins"] = net_ins
+            m["k_ins"] = k_ins
             m["k_tier"] = k_tier
         else:
             pass_cnt += 1
@@ -2208,44 +2237,51 @@ def render_v81_live_trial_bankroll():
                 saved_cnt += 1
                 ds["saved"] += 1
             ds["k_flat"] = k_flat
+            ds["k_ins"] = k_ins
             ds["k_tier"] = k_tier
 
             m["kupon_lbl"] = "⏭️ PAS"
             m["pick_lbl"] = f"PAS GEÇ — {m['reason']}"
             m["stake_lbl"] = "0 TL"
             m["res_lbl"] = f"🛡️ Zarardan Korudu ({m['act_b']} bitti)" if fav1_lost else f"⏭️ Pas ({m['act_b']} bitti)"
+            m["ins_res_lbl"] = "0,0 TL (Pas)"
             m["net_f"] = 0.0
             m["k_flat"] = k_flat
+            m["net_ins"] = 0.0
+            m["k_ins"] = k_ins
             m["k_tier"] = k_tier
 
     net_flat_tot = k_flat - 3000.0
+    net_ins_tot = k_ins - 3000.0
     net_tier_tot = k_tier - 3000.0
     hit_pct = (won_cnt / p_idx * 100.0) if p_idx > 0 else 0.0
+    top2_hit_cnt = won_cnt + ins_won_cnt
+    top2_hit_pct = (top2_hit_cnt / p_idx * 100.0) if p_idx > 0 else 0.0
     roi_pct = (net_flat_tot / 3000.0) * 100.0
 
     k1, k2, k3, k4, k5 = st.columns(5)
     k1.metric(
-        "💰 3.000 TL Deneme Kasası (Sabit 150/120)",
+        "💰 Tekli Kasa (Sabit 150/120 TL)",
         f"{k_flat:,.1f} TL",
-        f"{net_flat_tot:+,.1f} TL (%{roi_pct:+.1f} Kasa Artışı)",
+        f"{net_flat_tot:+,.1f} TL (%{roi_pct:+.1f} | İsabet: %{hit_pct:.1f})",
     )
     k2.metric(
-        "🎯 Oynanan Kupon & İsabet",
-        f"{p_idx} Kupon ({won_cnt}K / {lost_cnt}Y)",
-        f"%{hit_pct:.1f} İsabet Oranı",
+        "🛡️ Sigortalı İkili Kasa (150/120 + 60 TL)",
+        f"{k_ins:,.1f} TL",
+        f"{net_ins_tot:+,.1f} TL ({top2_hit_cnt}/{p_idx} = %{top2_hit_pct:.1f} Tuttu!)",
     )
     k3.metric(
+        "🎯 Kupon Dağılımı (Ana vs Sigorta)",
+        f"{won_cnt} Ana + {ins_won_cnt} Sigorta",
+        f"Sadece {p_idx - top2_hit_cnt} Maç İkisinden de Kaçtı",
+    )
+    k4.metric(
         "🛡️ Pas Geçilen & Korunan Zarar",
         f"{pass_cnt} Maç Pas Geçildi",
         f"{saved_cnt} Maçta 1.Fav Patladı (+{saved_cnt * 150:,.0f} TL Korudu)",
     )
-    k4.metric(
-        "🏀🇪🇺 Lig Bazlı İsabet",
-        f"NBA: {nba_w}/{nba_p} • Euro: {eu_w}/{eu_p}",
-        f"Toplam İncelenen: {len(sub_eval)} Maç",
-    )
     k5.metric(
-        "🚀 Kademeli Kasa (Kademe 1–7)",
+        "🚀 Kademeli Tekli Kasa (Kademe 1–7)",
         f"{k_tier:,.1f} TL",
         f"{net_tier_tot:+,.1f} TL Net Kâr",
     )
@@ -2275,24 +2311,25 @@ def render_v81_live_trial_bankroll():
         )
 
     if len(daily_stats) >= 1:
-        st.markdown("##### 📅 Gün Gün Kazanç & İsabet Özeti (`3.000 TL` Başlangıç Kasası)")
+        st.markdown("##### 📅 Gün Gün Kazanç & İsabet Özeti (`3.000 TL` Başlangıç Kasası — Tekli vs 🛡️ Sigortalı İkili)")
         day_rows = []
         for d in sorted(daily_stats.keys(), reverse=sort_newest):
             s = daily_stats[d]
             d_hit = (s["w"] / s["p"] * 100.0) if s["p"] > 0 else 0.0
+            d_top2 = ((s["w"] + s["ins_w"]) / s["p"] * 100.0) if s["p"] > 0 else 0.0
             day_rows.append(
                 {
                     "Tarih": d,
-                    "İncelenen Maç": s["tot"],
-                    "Oynanan (OYNA)": s["p"],
-                    "Pas Geçilen (PAS)": f"{s['pas']} ({s['saved']} Zarardan Korudu)",
-                    "NBA (K/O)": f"{s['nba_w']}/{s['nba_p']}",
-                    "Euro (K/O)": f"{s['eu_w']}/{s['eu_p']}",
-                    "Toplam K/Y": f"{s['w']}K / {s['l']}Y",
-                    "İsabet %": f"%{d_hit:.1f}",
-                    "Günlük Net (Sabit 150/120)": f"{s['net_f']:+,.1f} TL",
-                    "Güncel Sabit Kasa": f"{s['k_flat']:,.1f} TL",
-                    "Güncel Kademeli Kasa": f"{s['k_tier']:,.1f} TL",
+                    "İncelenen": s["tot"],
+                    "Oynanan": s["p"],
+                    "Pas (Korunan)": f"{s['pas']} ({s['saved']} Korudu)",
+                    "Tekli K/Y (%)": f"{s['w']}K / {s['l']}Y (%{d_hit:.1f})",
+                    "🛡️ İkili Tutma (Ana+Sig)": f"{s['w']} Ana + {s['ins_w']} Sig (%{d_top2:.1f})",
+                    "Günlük Net (Tekli)": f"{s['net_f']:+,.1f} TL",
+                    "💰 Tekli Kasa": f"{s['k_flat']:,.1f} TL",
+                    "Günlük Net (🛡️ Sigortalı İkili)": f"{s['net_ins']:+,.1f} TL",
+                    "🛡️ Sigortalı İkili Kasa (1.Fav+2.Fav)": f"{s['k_ins']:,.1f} TL",
+                    "🚀 Kademeli Kasa": f"{s['k_tier']:,.1f} TL",
                 }
             )
         st.dataframe(pd.DataFrame(day_rows), use_container_width=True, hide_index=True)
@@ -2322,9 +2359,11 @@ def render_v81_live_trial_bankroll():
                 "Sistem Kararı & Kural Gerekçesi": m["pick_lbl"],
                 "Bahis Tutarı": m["stake_lbl"],
                 "Maç Sonu (Toplam ➔ Barem)": f"{m['fin_sc']} ({m['fin_tot']} ➔ {m['act_b']})",
-                "Sonuç": m["res_lbl"],
-                "Net Kâr / Zarar": f"{m['net_f']:+,.1f} TL" if m["dec"] is not None else "0,0 TL",
-                "3.000 TL Deneme Kasası": f"{m['k_flat']:,.1f} TL",
+                "Tekli Sonuç": m["res_lbl"],
+                "Tekli Net": f"{m['net_f']:+,.1f} TL" if m["dec"] is not None else "0,0 TL",
+                "💰 3.000 TL Tekli Kasa": f"{m['k_flat']:,.1f} TL",
+                "🛡️ Sigortalı İkili Sonuç & Net": m["ins_res_lbl"],
+                "🛡️ Sigortalı İkili Kasa (1.Fav+2.Fav)": f"{m['k_ins']:,.1f} TL",
             }
         )
     st.dataframe(
