@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 22:57:49",
-  "timestamp": 1795723069.23,
+  "updated_at_tr": "2026-11-26 22:58:18",
+  "timestamp": 1795723098.99,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -18,32 +18,32 @@
     "home_team": "Los Angeles Clippers",
     "away_team": "Houston Rockets",
     "quarter": 3,
-    "elapsed_mins": 35.1,
+    "elapsed_mins": 35.5,
     "in_decision_window_35m": true,
     "is_barem_open": true,
     "current_score": "63-85",
     "score_gap": 22,
     "fav1_barem": "191-200",
-    "fav1_odd": 2.02,
+    "fav1_odd": 1.97,
     "fav2_barem": "201-210",
-    "fav2_odd": 2.71,
+    "fav2_odd": 2.91,
     "decision": "OYNA",
     "pick_type": "1. Favori",
     "target_barem": "191-200",
     "target_barem_tr": "191-200",
     "target_barem_en": "191-200",
     "target_t_id": 1842,
-    "target_odd": 2.02,
-    "min_acceptable_odd": 1.88,
+    "target_odd": 1.97,
+    "min_acceptable_odd": 1.82,
     "zone_type": "GOLDEN",
-    "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 191-200 (2.02)",
+    "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 191-200 (1.97)",
     "stakes": {
       "kasa_8000": 400,
       "kasa_10000": 500,
       "kasa_15000": 750,
       "kasa_20000": 1000
     },
-    "updated_at_tr": "2026-11-26 22:57:47"
+    "updated_at_tr": "2026-11-26 22:58:17"
   },
   "active_signals": [
     {
@@ -54,32 +54,32 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Houston Rockets",
       "quarter": 3,
-      "elapsed_mins": 35.1,
+      "elapsed_mins": 35.5,
       "in_decision_window_35m": true,
       "is_barem_open": true,
       "current_score": "63-85",
       "score_gap": 22,
       "fav1_barem": "191-200",
-      "fav1_odd": 2.02,
+      "fav1_odd": 1.97,
       "fav2_barem": "201-210",
-      "fav2_odd": 2.71,
+      "fav2_odd": 2.91,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "191-200",
       "target_barem_tr": "191-200",
       "target_barem_en": "191-200",
       "target_t_id": 1842,
-      "target_odd": 2.02,
-      "min_acceptable_odd": 1.88,
+      "target_odd": 1.97,
+      "min_acceptable_odd": 1.82,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 191-200 (2.02)",
+      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 191-200 (1.97)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-26 22:57:47"
+      "updated_at_tr": "2026-11-26 22:58:17"
     }
   ],
   "live_matches": [
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 22:57:47"
+      "updated_at_tr": "2026-11-26 22:58:17"
     },
     {
       "signal_id": "CB-774388691_35m",
@@ -126,32 +126,32 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Houston Rockets",
       "quarter": 3,
-      "elapsed_mins": 35.1,
+      "elapsed_mins": 35.5,
       "in_decision_window_35m": true,
       "is_barem_open": true,
       "current_score": "63-85",
       "score_gap": 22,
       "fav1_barem": "191-200",
-      "fav1_odd": 2.02,
+      "fav1_odd": 1.97,
       "fav2_barem": "201-210",
-      "fav2_odd": 2.71,
+      "fav2_odd": 2.91,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "191-200",
       "target_barem_tr": "191-200",
       "target_barem_en": "191-200",
       "target_t_id": 1842,
-      "target_odd": 2.02,
-      "min_acceptable_odd": 1.88,
+      "target_odd": 1.97,
+      "min_acceptable_odd": 1.82,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 191-200 (2.02)",
+      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 191-200 (1.97)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-26 22:57:47"
+      "updated_at_tr": "2026-11-26 22:58:17"
     }
   ],
   "recent_history": [
@@ -168,8 +168,8 @@
       "target_barem": "191-200",
       "target_barem_tr": "191-200",
       "target_t_id": 1842,
-      "target_odd": 2.02,
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 191-200 (2.02)",
+      "target_odd": 1.97,
+      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 191-200 (1.97)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
