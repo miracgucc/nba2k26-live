@@ -11,16 +11,6 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-import period_predictor as _pp_mod
-import update_all_checkpoints as _uac_mod
-import pull_today_results as _ptr_mod
-import run_live_auto_scraper as _rlas_mod
-
-importlib.reload(_pp_mod)
-importlib.reload(_uac_mod)
-importlib.reload(_ptr_mod)
-importlib.reload(_rlas_mod)
-
 from period_predictor import (
     analyze_archive_4500_symmetry,
     analyze_barem_symmetry,
@@ -115,6 +105,7 @@ SCRAPE_LOCK = threading.Lock()
 ENGINE_VERSION = "v7.1-selective-calibrated"
 
 
+@st.cache_resource
 def _ensure_clean_git_tracked_files():
     """Keep git-tracked seed CSV/JSON files clean on Streamlit Cloud so git pull never blocks."""
     try:
@@ -269,6 +260,7 @@ def _fetch_github_csv(filename: str) -> pd.DataFrame:
     return pd.DataFrame()
 
 
+@st.cache_data(ttl=20, show_spinner=False)
 def load_symmetry_log(league: str = ACTIVE_LEAGUE) -> pd.DataFrame:
     """
     Stateless loader: combines local runtime log, git seed log, local backup, AND live GitHub Raw cloud-bot backup
@@ -307,9 +299,13 @@ def load_symmetry_log(league: str = ACTIVE_LEAGUE) -> pd.DataFrame:
         (b_name, cfg["barem_odd_cols"][b_name], cfg["barem_prob_cols"][b_name])
         for b_name, _, _ in cfg["barem_ranges"]
     ]
-    smart_favs = []
-    smart_vals = []
-    for _, r in df.iterrows():
+    # Fast path: only recompute analyze_barem_symmetry for rows missing highest_prob_range/value_range or recent 150 rows
+    n_total = len(df)
+    recent_cutoff = max(0, n_total - 150)
+    smart_favs = df["highest_prob_range"].astype(str).tolist() if "highest_prob_range" in df.columns else [""] * n_total
+    smart_vals = df["value_range"].astype(str).tolist() if "value_range" in df.columns else [""] * n_total
+    for idx_r in range(recent_cutoff, n_total):
+        r = df.iloc[idx_r]
         o_d = {}
         p_d = {}
         for b_lbl, oc, pc in _b_cols:
@@ -322,13 +318,14 @@ def load_symmetry_log(league: str = ACTIVE_LEAGUE) -> pd.DataFrame:
             except Exception:
                 p_d[b_lbl] = 0.0
         sym_r = analyze_barem_symmetry(o_d, p_d, league=league)
-        smart_favs.append(sym_r.get("highest_prob_range") or str(r.get("highest_prob_range", "")))
-        smart_vals.append(sym_r.get("value_range") or str(r.get("value_range", "")))
+        smart_favs[idx_r] = sym_r.get("highest_prob_range") or smart_favs[idx_r]
+        smart_vals[idx_r] = sym_r.get("value_range") or smart_vals[idx_r]
     df["highest_prob_range"] = smart_favs
     df["value_range"] = smart_vals
     return df
 
 
+@st.cache_data(ttl=25, show_spinner=False)
 def load_completed_matches(league: str = ACTIVE_LEAGUE) -> pd.DataFrame:
     cfg = get_league_config(league)
     paths = _get_scraper_paths(league)
@@ -1587,7 +1584,7 @@ def render_live_dashboard():
                 key=f"s2_ly_{ACTIVE_LEAGUE}",
             )
         with f_col5:
-            page_options = ["Tüm Maçları Göster (Sınırsız)", "Son 25 Maç", "26 - 50. Maçlar", "51 - 75. Maçlar", "76 - 100. Maçlar", "101+ Maçlar"]
+            page_options = ["Son 10 Maç (Hızlı)", "Son 25 Maç", "26 - 50. Maçlar", "51 - 75. Maçlar", "76 - 100. Maçlar", "101+ Maçlar", "Tüm Maçları Göster (Sınırsız)"]
             page_filter = st.selectbox("Sayfa / Grup Seçimi", page_options, index=0, key=f"s2_pg_{ACTIVE_LEAGUE}")
 
         df_view = df_log.copy()
@@ -1634,7 +1631,9 @@ def render_live_dashboard():
             completed_gids = [gid for gid in game_ids_ordered if gid not in pending_gids]
             sorted_gids_all = pending_gids + completed_gids
 
-            if page_filter == "Son 25 Maç":
+            if page_filter == "Son 10 Maç (Hızlı)":
+                sorted_gids = sorted_gids_all[:10]
+            elif page_filter == "Son 25 Maç":
                 sorted_gids = sorted_gids_all[:25]
             elif page_filter == "26 - 50. Maçlar":
                 sorted_gids = sorted_gids_all[25:50]
@@ -2046,6 +2045,7 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
     return all_records, live_decided
 
 
+@st.fragment(run_every="20s" if auto_ui_refresh else None)
 def render_v81_live_trial_bankroll():
     st.markdown(
         '<div class="section-hdr">💰 v8.1 Canlı Deneme Kasası — 3.000 TL Başlangıç (Oynanan & Pas Geçilen Maçlar Anlık Kazanç Tablosu)</div>',
@@ -2326,6 +2326,19 @@ st.markdown(
     f'<div class="section-hdr">🧠 {LEAGUE_CFG["short_name"]} — Gelişmiş İstatistik, Geçmiş Maçlar & Kasa/Doğrulama Merkezi</div>',
     unsafe_allow_html=True,
 )
+
+show_archive_modules = st.toggle(
+    "📂 Alt 8 Detaylı Arşiv & İstatistik Sekmesini Aç (10.700+ Geçmiş Maç Analizi & Simülatörler)",
+    value=False,
+    help="Sitenin canlı takip sırasında çok hızlı çalışması için bu 8 ağır arşiv sekmesi varsayılan olarak kapalıdır. İncelemek istediğinizde tek tıkla açabilirsiniz.",
+    key="toggle_heavy_archive_8_tabs",
+)
+if not show_archive_modules:
+    st.caption(
+        "⚡ **Hızlı Canlı Takip Modu Aktif:** Sayfanın yağ gibi akması için 10.700+ maçlık 8 alt arşiv sekmesi beklemede. "
+        "Detaylı arşiv, H2H veya simülatörleri incelemek istediğinizde yukarıdaki anahtarı açabilirsiniz."
+    )
+    st.stop()
 
 df_completed_archive = load_completed_matches(ACTIVE_LEAGUE)
 df_sym_all = load_symmetry_log(ACTIVE_LEAGUE)
