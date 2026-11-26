@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 15:03:32",
-  "timestamp": 1795694612.59,
+  "updated_at_tr": "2026-11-26 15:04:11",
+  "timestamp": 1795694651.44,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Miami Heat",
       "away_team": "Indiana Pacers",
       "quarter": 2,
-      "elapsed_mins": 15.9,
+      "elapsed_mins": 16.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "23-21",
+      "current_score": "25-23",
       "score_gap": 2,
       "fav1_barem": "181-190",
-      "fav1_odd": 3.27,
+      "fav1_odd": 3.23,
       "fav2_barem": "171-180",
-      "fav2_odd": 3.48,
+      "fav2_odd": 3.5,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 181-190: 3.27)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 181-190: 3.23)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 15:03:31"
+      "updated_at_tr": "2026-11-26 15:04:10"
     },
     {
       "signal_id": "CB-774282309_35m",
@@ -56,7 +56,7 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Detroit Pistons",
       "quarter": 4,
-      "elapsed_mins": 44.1,
+      "elapsed_mins": 44.4,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "85-73",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 15:03:31"
+      "updated_at_tr": "2026-11-26 15:04:10"
     }
   ],
   "recent_history": [
