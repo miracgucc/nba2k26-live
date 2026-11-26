@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 08:39:44",
-  "timestamp": 1795671584.71,
+  "updated_at_tr": "2026-11-26 08:40:36",
+  "timestamp": 1795671636.09,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -20,16 +20,16 @@
       "game_name": "Golden State Warriors vs Dallas Mavericks",
       "home_team": "Golden State Warriors",
       "away_team": "Dallas Mavericks",
-      "quarter": 2,
-      "elapsed_mins": 24.0,
+      "quarter": 3,
+      "elapsed_mins": 24.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "63-67",
-      "score_gap": 4,
+      "current_score": "65-67",
+      "score_gap": 2,
       "fav1_barem": "231+",
       "fav1_odd": 1.06,
       "fav2_barem": "221-230",
-      "fav2_odd": 7.09,
+      "fav2_odd": 7.12,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 08:39:41"
+      "updated_at_tr": "2026-11-26 08:40:34"
     },
     {
       "signal_id": "CB-774223193_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 08:39:41"
+      "updated_at_tr": "2026-11-26 08:40:34"
     }
   ],
   "recent_history": [
