@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 22:54:16",
-  "timestamp": 1795722856.23,
+  "updated_at_tr": "2026-11-26 22:54:55",
+  "timestamp": 1795722895.84,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Denver Nuggets",
       "away_team": "Indiana Pacers",
       "quarter": 1,
-      "elapsed_mins": 9.8,
+      "elapsed_mins": 10.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "24-17",
@@ -29,7 +29,7 @@
       "fav1_barem": "201-210",
       "fav1_odd": 3.62,
       "fav2_barem": "211-220",
-      "fav2_odd": 3.93,
+      "fav2_odd": 3.77,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 22:54:14"
+      "updated_at_tr": "2026-11-26 22:54:54"
     },
     {
       "signal_id": "CB-774388691_35m",
@@ -56,15 +56,15 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Houston Rockets",
       "quarter": 3,
-      "elapsed_mins": 33.5,
+      "elapsed_mins": 34.2,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "63-77",
-      "score_gap": 14,
-      "fav1_barem": "201-210",
-      "fav1_odd": 2.27,
-      "fav2_barem": "191-200",
-      "fav2_odd": 2.85,
+      "current_score": "63-80",
+      "score_gap": 17,
+      "fav1_barem": "191-200",
+      "fav1_odd": 2.3,
+      "fav2_barem": "201-210",
+      "fav2_odd": 2.46,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 201-210: 2.27)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 191-200: 2.30)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 22:54:14"
+      "updated_at_tr": "2026-11-26 22:54:54"
     }
   ],
   "recent_history": [
@@ -91,15 +91,15 @@
       "raw_game_id": "774388691",
       "date": "2026-11-26",
       "game_name": "Los Angeles Clippers vs Houston Rockets",
-      "current_score": "63-77",
-      "score_gap": 14,
+      "current_score": "63-80",
+      "score_gap": 17,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
       "target_barem_tr": "",
       "target_t_id": 0,
       "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 201-210: 2.27)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 191-200: 2.30)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
