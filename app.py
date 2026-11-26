@@ -902,13 +902,33 @@ with ctrl_c5:
     st.button(theme_btn_label, on_click=toggle_ui_theme, use_container_width=True)
 
 with ctrl_c6:
-    auto_ui_refresh = st.toggle("⏱️ Oto-Yenile", value=True)
+    auto_ui_refresh = st.toggle("⏱️ Oto-Yenile (45sn)", value=True)
+
+
+@st.cache_data(ttl=60, show_spinner=False)
+def _cached_simulate_35m(df_sym: pd.DataFrame, league: str) -> dict:
+    return simulate_35m_strategies(df_sym, league=league)
+
+
+@st.cache_data(ttl=120, show_spinner=False)
+def _cached_archive_4500_symmetry(df_arch: pd.DataFrame, league: str) -> dict:
+    return analyze_archive_4500_symmetry(df_arch, league=league)
+
+
+@st.cache_data(ttl=120, show_spinner=False)
+def _cached_team_pair_table(df_arch: pd.DataFrame, min_games: int, league: str) -> pd.DataFrame:
+    return build_team_pair_table(df_arch, min_games=min_games, league=league)
+
+
+@st.cache_data(ttl=60, show_spinner=False)
+def _cached_validate_symmetry_log(df_sym: pd.DataFrame, league: str) -> dict:
+    return validate_symmetry_log(df_sym, league=league)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # MAIN DASHBOARD FRAGMENT (AUTO-REFRESHING WITHOUT FULL PAGE FLICKER)
 # ─────────────────────────────────────────────────────────────────────────────
-@st.fragment(run_every="15s" if auto_ui_refresh else None)
+@st.fragment(run_every="45s" if auto_ui_refresh else None)
 def render_live_dashboard():
     state = load_live_state(ACTIVE_LEAGUE)
     df_log = load_symmetry_log(ACTIVE_LEAGUE)
@@ -1545,12 +1565,16 @@ def render_live_dashboard():
     else:
         all_gids_chrono = list(df_log["game_id"].dropna().unique())
         gid_to_seq = {gid: idx + 1 for idx, gid in enumerate(all_gids_chrono)}
+        last_rows_by_gid = df_log.groupby("game_id", sort=False).last()
+        pending_gid_set = set(df_log.loc[df_log["status"] == "PENDING", "game_id"].dropna().unique())
         gid_label_map = {}
         for gid in reversed(all_gids_chrono):
-            g_rows = df_log[df_log["game_id"] == gid]
-            g_nm = str(g_rows.iloc[-1].get("game_name", gid)).replace(" (cyber)", "")
-            g_st_icon = "⏳" if (g_rows["status"] == "PENDING").any() else "✅"
-            g_sc = str(g_rows.iloc[-1].get("actual_score", "")).replace("nan", "").strip()
+            if gid not in last_rows_by_gid.index:
+                continue
+            lr = last_rows_by_gid.loc[gid]
+            g_nm = str(lr.get("game_name", gid)).replace(" (cyber)", "")
+            g_st_icon = "⏳" if gid in pending_gid_set else "✅"
+            g_sc = str(lr.get("actual_score", "")).replace("nan", "").strip()
             sc_txt = f" ({g_sc})" if g_sc else ""
             seq_no = gid_to_seq.get(gid, 0)
             gid_label_map[f"#{seq_no} {g_st_icon} {g_nm}{sc_txt} [{gid}]"] = gid
@@ -1620,15 +1644,10 @@ def render_live_dashboard():
         if df_view.empty:
             st.info("Seçilen filtreye uygun barem kaydı bulunamadı.")
         else:
-            game_ids_ordered = []
-            for gid in df_view["game_id"].dropna().unique()[::-1]:
-                if gid not in game_ids_ordered:
-                    game_ids_ordered.append(gid)
-
-            pending_gids = [
-                gid for gid in game_ids_ordered if (df_view[df_view["game_id"] == gid]["status"] == "PENDING").any()
-            ]
-            completed_gids = [gid for gid in game_ids_ordered if gid not in pending_gids]
+            game_ids_ordered = list(df_view["game_id"].dropna().unique()[::-1])
+            view_pending_set = set(df_view.loc[df_view["status"] == "PENDING", "game_id"].dropna().unique())
+            pending_gids = [gid for gid in game_ids_ordered if gid in view_pending_set]
+            completed_gids = [gid for gid in game_ids_ordered if gid not in view_pending_set]
             sorted_gids_all = pending_gids + completed_gids
 
             if page_filter == "Son 10 Maç (Hızlı)":
@@ -2045,7 +2064,7 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
     return all_records, live_decided
 
 
-@st.fragment(run_every="20s" if auto_ui_refresh else None)
+@st.fragment
 def render_v81_live_trial_bankroll():
     st.markdown(
         '<div class="section-hdr">💰 v8.1 Canlı Deneme Kasası — 3.000 TL Başlangıç (Oynanan & Pas Geçilen Maçlar Anlık Kazanç Tablosu)</div>',
@@ -2320,53 +2339,45 @@ render_v81_live_trial_bankroll()
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# SECTION 3: ADVANCED ANALYTICS & HISTORICAL ARCHIVE (ALL 8 MODULES)
+# SECTION 3: ADVANCED ANALYTICS & HISTORICAL ARCHIVE (SINGLE-MODULE LAZY RENDER)
 # ─────────────────────────────────────────────────────────────────────────────
 st.markdown(
     f'<div class="section-hdr">🧠 {LEAGUE_CFG["short_name"]} — Gelişmiş İstatistik, Geçmiş Maçlar & Kasa/Doğrulama Merkezi</div>',
     unsafe_allow_html=True,
 )
 
-show_archive_modules = st.toggle(
-    "📂 Alt 8 Detaylı Arşiv & İstatistik Sekmesini Aç (10.700+ Geçmiş Maç Analizi & Simülatörler)",
-    value=False,
-    help="Sitenin canlı takip sırasında çok hızlı çalışması için bu 8 ağır arşiv sekmesi varsayılan olarak kapalıdır. İncelemek istediğinizde tek tıkla açabilirsiniz.",
-    key="toggle_heavy_archive_8_tabs",
-)
-if not show_archive_modules:
-    st.caption(
-        "⚡ **Hızlı Canlı Takip Modu Aktif:** Sayfanın yağ gibi akması için 10.700+ maçlık 8 alt arşiv sekmesi beklemede. "
-        "Detaylı arşiv, H2H veya simülatörleri incelemek istediğinizde yukarıdaki anahtarı açabilirsiniz."
-    )
-    st.stop()
-
 df_completed_archive = load_completed_matches(ACTIVE_LEAGUE)
 df_sym_all = load_symmetry_log(ACTIVE_LEAGUE)
 live_state_now = load_live_state(ACTIVE_LEAGUE)
 live_matches_now = live_state_now.get("live_matches", [])
 
-tab_dna, tab_sym, tab_q3q4, tab_bankroll, tab_sim, tab_smart35, tab_pair, tab_guard = st.tabs(
-    [
-        f"🏆 1. Geçmiş Maçlar & Takım Barem DNA ({len(df_completed_archive)} Maç)",
-        f"⚖️ 2. Kapanış Oranı ({MID_Q3_MIN}-{CLOSE_MIN_INT}. Dk) Simetri & Tuzak Analizi",
-        "⚡ 3. Q3 ➔ Q4 Patlama / Çöküş Dedektörü",
-        "💰 4. Canlı Kupon, Kasa (ROI) & Çifte Barem (Dutching) Hesaplayıcı",
-        "🧮 5. Manuel Canlı Tempo Simülatörü",
-        f"🤖 6. {DEC_MIN}. Dk Akıllı Kural & Sanal Kasa Simülatörü",
-        "🤝 7. Takım Çifti Geçmişi (H2H)",
-        "🛡️ 8. Veri Doğrulama — Hata Bekçisi",
-    ]
+_SEC3_TABS = [
+    f"🤖 6. {DEC_MIN}. Dk Akıllı Kural & Sanal Kasa Simülatörü",
+    f"🏆 1. Geçmiş Maçlar & Takım Barem DNA ({len(df_completed_archive)} Maç)",
+    f"⚖️ 2. Kapanış Oranı ({MID_Q3_MIN}-{CLOSE_MIN_INT}. Dk) Simetri & Tuzak Analizi",
+    "⚡ 3. Q3 ➔ Q4 Patlama / Çöküş Dedektörü",
+    "💰 4. Canlı Kupon, Kasa (ROI) & Çifte Barem (Dutching) Hesaplayıcı",
+    "🧮 5. Manuel Canlı Tempo Simülatörü",
+    "🤝 7. Takım Çifti Geçmişi (H2H)",
+    "🛡️ 8. Veri Doğrulama — Hata Bekçisi",
+]
+active_sec3_tab = st.radio(
+    "📂 İncelemek İstediğiniz Alt Özelliği Seçin (Sıfır Kasma İçin Yalnızca Seçtiğiniz Sekme Çalışır):",
+    _SEC3_TABS,
+    index=0,
+    horizontal=True,
+    key=f"sec3_active_tab_radio_{ACTIVE_LEAGUE}",
 )
 
 # ═════════════════════════════════════════════════════════════════════════════
 # MODULE 6: DECISION-MINUTE SMART RULES, TRANSITIONS & VIRTUAL BANKROLL SIMULATOR
 # ═════════════════════════════════════════════════════════════════════════════
-with tab_smart35:
+if active_sec3_tab == _SEC3_TABS[0]:
     st.markdown(
         f"##### 🤖 {DEC_MIN}. Dakika Ne Oynamalı? — Gerçek Maçlardan Çıkarılan Sade Kurallar & Kasa Tablosu",
         help=f"Bu sekmedeki tüm tablolar ve kasa sonuçları, {LEAGUE_CFG['short_name']} maçlarının {DEC_MIN}. dakika 1xBet kapanış oranlarından otomatik hesaplanır.",
     )
-    sim35 = simulate_35m_strategies(df_sym_all, league=ACTIVE_LEAGUE)
+    sim35 = _cached_simulate_35m(df_sym_all, league=ACTIVE_LEAGUE)
     if sim35["total_matches"] == 0:
         st.info("Sonuçlanmış canlı kapanış kaydı bekleniyor. Maçlar bittikçe bu sekme otomatik dolar.")
     else:
@@ -2591,7 +2602,7 @@ with tab_smart35:
             )
             st.dataframe(pd.DataFrame(sim35["pendulum_brackets"]), use_container_width=True, hide_index=True)
 
-        arc_sym = analyze_archive_4500_symmetry(df_completed_archive, league=ACTIVE_LEAGUE)
+        arc_sym = _cached_archive_4500_symmetry(df_completed_archive, league=ACTIVE_LEAGUE)
         if arc_sym.get("mod10_36m"):
             st.markdown(
                 f"###### 🏛️ SİMETRİ 4: {arc_sym['total_archive']} Maçlık Arşivde 3. Çeyrek Sonu ({CLOSE_MIN_INT}.Dk) Skorun Son Rakamı (`..0` – `..9`) Analizi",
@@ -2656,7 +2667,7 @@ with tab_smart35:
 # ═════════════════════════════════════════════════════════════════════════════
 # MODULE 1: HISTORICAL MATCHES CENTER, TEAM BAREM DNA & H2H ANALYZER
 # ═════════════════════════════════════════════════════════════════════════════
-with tab_dna:
+if active_sec3_tab == _SEC3_TABS[1]:
     if df_completed_archive.empty:
         st.info(
             f"Şu an {LEAGUE_CFG['short_name']} geçmiş maç arşivi boş. Yukarıdaki **'{LEAGUE_CFG['archive_btn_label']}'** "
@@ -2776,7 +2787,7 @@ with tab_dna:
 # ═════════════════════════════════════════════════════════════════════════════
 # MODULE 2: CLOSING ODDS SYMMETRY & SEQUENTIAL WAVE BACKTEST
 # ═════════════════════════════════════════════════════════════════════════════
-with tab_sym:
+if active_sec3_tab == _SEC3_TABS[2]:
     st.markdown(
         f"##### 🌊 Ardışık Maçlarda {CLOSE_MIN_INT}. Dakika Favorisi Tuttu mu, Komşu Bareme mi Kaydı? (`2 Alt / 1 Alt / Favori / 1 Üst / 2 Üst`)"
     )
@@ -3009,7 +3020,7 @@ with tab_sym:
 # ═════════════════════════════════════════════════════════════════════════════
 # MODULE 3: Q3 ➔ Q4 BURST / COLLAPSE DETECTOR
 # ═════════════════════════════════════════════════════════════════════════════
-with tab_q3q4:
+if active_sec3_tab == _SEC3_TABS[3]:
     st.markdown(
         "##### ⚡ 3. Çeyrek (Q3) Temposuna Göre 4. Çeyrek (Q4) Sayı Patlaması / Çöküş Dedektörü"
     )
@@ -3084,7 +3095,7 @@ with tab_q3q4:
 # ═════════════════════════════════════════════════════════════════════════════
 # MODULE 4: LIVE BANKROLL / ROI & DUTCHING (DOUBLE BAREM) STAKE CALCULATOR
 # ═════════════════════════════════════════════════════════════════════════════
-with tab_bankroll:
+if active_sec3_tab == _SEC3_TABS[4]:
     d_col1, d_col2 = st.columns([1.15, 1.25])
 
     with d_col1:
@@ -3415,7 +3426,7 @@ with tab_bankroll:
 # ═════════════════════════════════════════════════════════════════════════════
 # MODULE 5: MANUAL LIVE TEMPO & MONTE CARLO SIMULATOR
 # ═════════════════════════════════════════════════════════════════════════════
-with tab_sim:
+if active_sec3_tab == _SEC3_TABS[5]:
     _def_q = 18 if IS_EURO else 26
     _def_q3 = 13 if IS_EURO else 18
     _def_rem_s = round(Q_LEN * 0.4, 1) if IS_EURO else 4.5
@@ -3485,7 +3496,7 @@ with tab_sim:
 # ═════════════════════════════════════════════════════════════════════════════
 # MODULE 7: TEAM PAIR H2H HISTORY ("TAKIM ÇİFTİ GEÇMİŞİ")
 # ═════════════════════════════════════════════════════════════════════════════
-with tab_pair:
+if active_sec3_tab == _SEC3_TABS[6]:
     st.markdown(
         f"##### 🤝 Takım Çifti Bazlı Birebir Geçmiş (H2H) — {LEAGUE_CFG['short_name']}",
         help="İki takımın kendi aralarındaki gerçek karşılaşmalarda çıkan barem, tempo ve uzatma eğilimini inceler.",
@@ -3532,19 +3543,19 @@ with tab_pair:
 
         st.markdown("---")
         st.markdown(f"###### 📚 Tüm {LEAGUE_CFG['short_name']} Takım Çiftleri Barem & Tempo Tablosu")
-        df_pairs_all = build_team_pair_table(df_completed_archive, min_games=2, league=ACTIVE_LEAGUE)
+        df_pairs_all = _cached_team_pair_table(df_completed_archive, min_games=2, league=ACTIVE_LEAGUE)
         if not df_pairs_all.empty:
             st.dataframe(df_pairs_all, use_container_width=True, hide_index=True, height=340)
 
 # ═════════════════════════════════════════════════════════════════════════════
 # MODULE 8: DATA VALIDATION GUARD ("VERİ DOĞRULAMA — HATA BEKÇİSİ")
 # ═════════════════════════════════════════════════════════════════════════════
-with tab_guard:
+if active_sec3_tab == _SEC3_TABS[7]:
     st.markdown(
         f"##### 🛡️ Veri Doğrulama — Hata Bekçisi ({LEAGUE_CFG['short_name']})",
         help="Canlı barem kayıtlarındaki favori uyuşmazlıkları, kilitli oran tuzakları, skor geri gitmeleri ve eksik sonuçları otomatik denetler.",
     )
-    guard_res = validate_symmetry_log(df_sym_all, league=ACTIVE_LEAGUE)
+    guard_res = _cached_validate_symmetry_log(df_sym_all, league=ACTIVE_LEAGUE)
     gc1, gc2, gc3, gc4 = st.columns(4)
     gc1.metric("📋 Taranan Satır", f"{guard_res['n_rows']} Kayıt", f"{guard_res['n_games']} Maç")
     gc2.metric("🔴 Kritik Hata", f"{guard_res['counts'].get('🔴 Hata', 0)}")
