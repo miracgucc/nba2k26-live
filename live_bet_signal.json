@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 16:36:18",
-  "timestamp": 1795700178.61,
+  "updated_at_tr": "2026-11-26 16:36:56",
+  "timestamp": 1795700216.51,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 16:36:17"
+      "updated_at_tr": "2026-11-26 16:36:55"
     },
     {
       "signal_id": "CB-774308493_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 16:36:17"
+      "updated_at_tr": "2026-11-26 16:36:55"
     },
     {
       "signal_id": "CB-774300045_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 16:36:17"
+      "updated_at_tr": "2026-11-26 16:36:55"
     }
   ],
   "recent_history": [
@@ -135,9 +135,9 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 191-200: 2.34)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "100-96",
+      "actual_range": "191-200",
+      "result": "PAS"
     },
     {
       "signal_id": "CB-774291376_35m",
