@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 22:22:16",
-  "timestamp": 1795720936.53,
+  "updated_at_tr": "2026-11-26 22:22:58",
+  "timestamp": 1795720978.8,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 22:22:15"
+      "updated_at_tr": "2026-11-26 22:22:57"
     },
     {
       "signal_id": "CB-774380500_35m",
@@ -56,11 +56,11 @@
       "home_team": "New York Knicks",
       "away_team": "Atlanta Hawks",
       "quarter": 4,
-      "elapsed_mins": 40.6,
+      "elapsed_mins": 41.4,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "83-92",
-      "score_gap": 9,
+      "current_score": "85-92",
+      "score_gap": 7,
       "fav1_barem": "201-210",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 22:22:15"
+      "updated_at_tr": "2026-11-26 22:22:57"
     }
   ],
   "recent_history": [
