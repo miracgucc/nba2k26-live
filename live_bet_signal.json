@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 18:07:45",
-  "timestamp": 1795705665.22,
+  "updated_at_tr": "2026-11-26 18:08:29",
+  "timestamp": 1795705709.21,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Los Angeles Lakers",
       "quarter": 1,
-      "elapsed_mins": 6.8,
+      "elapsed_mins": 7.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "12-16",
-      "score_gap": 4,
+      "current_score": "12-19",
+      "score_gap": 7,
       "fav1_barem": "211-220",
       "fav1_odd": 3.6,
       "fav2_barem": "201-210",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 18:07:43"
+      "updated_at_tr": "2026-11-26 18:08:27"
     },
     {
       "signal_id": "CB-774326007_35m",
@@ -56,15 +56,15 @@
       "home_team": "New York Knicks",
       "away_team": "Oklahoma City Thunder",
       "quarter": 3,
-      "elapsed_mins": 34.7,
+      "elapsed_mins": 35.3,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "58-92",
-      "score_gap": 34,
+      "current_score": "61-94",
+      "score_gap": 33,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.04,
+      "fav1_odd": 1.96,
       "fav2_barem": "191-200",
-      "fav2_odd": 2.96,
+      "fav2_odd": 3.64,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.04)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 1.96)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 18:07:43"
+      "updated_at_tr": "2026-11-26 18:08:27"
     }
   ],
   "recent_history": [
@@ -91,15 +91,15 @@
       "raw_game_id": "774326007",
       "date": "2026-11-26",
       "game_name": "New York Knicks vs Oklahoma City Thunder",
-      "current_score": "58-92",
-      "score_gap": 34,
+      "current_score": "61-94",
+      "score_gap": 33,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
       "target_barem_tr": "",
       "target_t_id": 0,
       "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.04)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 1.96)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
