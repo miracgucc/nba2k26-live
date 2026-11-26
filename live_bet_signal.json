@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 07:10:32",
-  "timestamp": 1795666232.8,
+  "updated_at_tr": "2026-11-26 07:11:11",
+  "timestamp": 1795666271.68,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 07:10:31"
+      "updated_at_tr": "2026-11-26 07:11:10"
     },
     {
       "signal_id": "CB-774211842_35m",
@@ -81,42 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 07:10:31"
-    },
-    {
-      "signal_id": "CB-774200486_35m",
-      "game_id": "CB-774200486",
-      "raw_game_id": "774200486",
-      "game_name": "Detroit Pistons vs Cleveland Cavaliers",
-      "home_team": "Detroit Pistons",
-      "away_team": "Cleveland Cavaliers",
-      "quarter": 4,
-      "elapsed_mins": 47.9,
-      "in_decision_window_35m": false,
-      "is_barem_open": false,
-      "current_score": "100-72",
-      "score_gap": 28,
-      "fav1_barem": "171-180",
-      "fav1_odd": 0.0,
-      "fav2_barem": "-",
-      "fav2_odd": 0.0,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⏳ Oran Bekleniyor",
-      "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
-      },
-      "updated_at_tr": "2026-11-26 07:10:31"
+      "updated_at_tr": "2026-11-26 07:11:10"
     }
   ],
   "recent_history": [
