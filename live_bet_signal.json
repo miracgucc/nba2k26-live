@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 18:52:30",
-  "timestamp": 1795708350.57,
+  "updated_at_tr": "2026-11-26 18:53:21",
+  "timestamp": 1795708401.55,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Detroit Pistons",
       "away_team": "Denver Nuggets",
       "quarter": 1,
-      "elapsed_mins": 7.8,
+      "elapsed_mins": 8.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "19-22",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 18:52:29"
+      "updated_at_tr": "2026-11-26 18:53:20"
     },
     {
       "signal_id": "CB-774333884_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 18:52:29"
+      "updated_at_tr": "2026-11-26 18:53:20"
     }
   ],
   "recent_history": [
@@ -91,8 +91,8 @@
       "raw_game_id": "774333884",
       "date": "2026-11-26",
       "game_name": "Los Angeles Clippers vs Los Angeles Lakers",
-      "current_score": "65-88",
-      "score_gap": 23,
+      "current_score": "67-88",
+      "score_gap": 21,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
