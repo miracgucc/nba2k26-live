@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 14:53:20",
-  "timestamp": 1795694000.47,
+  "updated_at_tr": "2026-11-26 14:54:00",
+  "timestamp": 1795694040.02,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Miami Heat",
       "away_team": "Indiana Pacers",
       "quarter": 1,
-      "elapsed_mins": 9.7,
+      "elapsed_mins": 10.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "14-13",
       "score_gap": 1,
       "fav1_barem": "181-190",
-      "fav1_odd": 3.63,
+      "fav1_odd": 3.57,
       "fav2_barem": "171-180",
-      "fav2_odd": 3.96,
+      "fav2_odd": 3.97,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 181-190: 3.63)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 181-190: 3.57)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 14:53:19"
+      "updated_at_tr": "2026-11-26 14:53:58"
     },
     {
       "signal_id": "CB-774282309_35m",
@@ -55,12 +55,12 @@
       "game_name": "Oklahoma City Thunder vs Detroit Pistons",
       "home_team": "Oklahoma City Thunder",
       "away_team": "Detroit Pistons",
-      "quarter": 3,
-      "elapsed_mins": 36.0,
+      "quarter": 4,
+      "elapsed_mins": 36.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "63-61",
-      "score_gap": 2,
+      "current_score": "65-61",
+      "score_gap": 4,
       "fav1_barem": "171-180",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 2 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 4 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 14:53:19"
+      "updated_at_tr": "2026-11-26 14:53:58"
     }
   ],
   "recent_history": [
