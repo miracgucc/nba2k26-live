@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 06:38:28",
-  "timestamp": 1795664308.41,
+  "updated_at_tr": "2026-11-26 06:39:04",
+  "timestamp": 1795664344.62,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 06:38:27"
+      "updated_at_tr": "2026-11-26 06:39:03"
     },
     {
       "signal_id": "CB-774200486_35m",
@@ -55,33 +55,33 @@
       "game_name": "Detroit Pistons vs Cleveland Cavaliers",
       "home_team": "Detroit Pistons",
       "away_team": "Cleveland Cavaliers",
-      "quarter": 2,
-      "elapsed_mins": 24.0,
+      "quarter": 3,
+      "elapsed_mins": 24.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "51-21",
       "score_gap": 30,
       "fav1_barem": "160 Or Less",
-      "fav1_odd": 2.31,
+      "fav1_odd": 2.34,
       "fav2_barem": "161-170",
-      "fav2_odd": 2.89,
+      "fav2_odd": 2.76,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "160 Or Less",
       "target_barem_tr": "160 Or Less",
       "target_barem_en": "160 Or Less",
       "target_t_id": 0,
-      "target_odd": 2.31,
-      "min_acceptable_odd": 2.16,
+      "target_odd": 2.34,
+      "min_acceptable_odd": 2.19,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Önceki Maç +1 Üst): 160 Or Less (2.31)",
+      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Önceki Maç +1 Üst): 160 Or Less (2.34)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-26 06:38:27"
+      "updated_at_tr": "2026-11-26 06:39:03"
     }
   ],
   "recent_history": [
