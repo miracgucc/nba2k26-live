@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 11:43:49",
-  "timestamp": 1795682629.24,
+  "updated_at_tr": "2026-11-26 11:44:32",
+  "timestamp": 1795682672.41,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 2,
-      "elapsed_mins": 16.9,
+      "elapsed_mins": 17.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "30-26",
-      "score_gap": 4,
+      "current_score": "30-28",
+      "score_gap": 2,
       "fav1_barem": "191-200",
       "fav1_odd": 3.37,
       "fav2_barem": "181-190",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 11:43:47"
+      "updated_at_tr": "2026-11-26 11:44:30"
     },
     {
       "signal_id": "CB-774241573_35m",
@@ -56,11 +56,11 @@
       "home_team": "Denver Nuggets",
       "away_team": "New York Knicks",
       "quarter": 4,
-      "elapsed_mins": 40.7,
+      "elapsed_mins": 41.4,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "91-76",
-      "score_gap": 15,
+      "current_score": "94-76",
+      "score_gap": 18,
       "fav1_barem": "191-200",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 11:43:47"
+      "updated_at_tr": "2026-11-26 11:44:30"
     }
   ],
   "recent_history": [
