@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 16:47:10",
-  "timestamp": 1795700830.68,
+  "updated_at_tr": "2026-11-26 16:47:58",
+  "timestamp": 1795700878.02,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 1,
-      "elapsed_mins": 6.3,
+      "elapsed_mins": 7.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "14-20",
-      "score_gap": 6,
+      "current_score": "16-20",
+      "score_gap": 4,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.83,
+      "fav1_odd": 3.74,
       "fav2_barem": "211-220",
-      "fav2_odd": 4.06,
+      "fav2_odd": 4.07,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.83)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.74)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 16:47:09"
+      "updated_at_tr": "2026-11-26 16:47:56"
     },
     {
       "signal_id": "CB-774308493_35m",
@@ -56,15 +56,15 @@
       "home_team": "Denver Nuggets",
       "away_team": "Detroit Pistons",
       "quarter": 3,
-      "elapsed_mins": 31.2,
+      "elapsed_mins": 32.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "67-60",
-      "score_gap": 7,
+      "current_score": "69-60",
+      "score_gap": 9,
       "fav1_barem": "191-200",
-      "fav1_odd": 2.57,
+      "fav1_odd": 2.54,
       "fav2_barem": "201-210",
-      "fav2_odd": 2.59,
+      "fav2_odd": 2.71,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,17 +74,36 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.57)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.54)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 16:47:09"
+      "updated_at_tr": "2026-11-26 16:47:56"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-774308493_35m",
+      "game_id": "CB-774308493",
+      "raw_game_id": "774308493",
+      "date": "2026-11-26",
+      "game_name": "Denver Nuggets vs Detroit Pistons",
+      "current_score": "69-60",
+      "score_gap": 9,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.54)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-774300045_35m",
       "game_id": "CB-774300045",
@@ -406,25 +425,6 @@
       "zone_badge": "💎 NBA 2.10–2.30 BEKLENTİ 1. FAVORİSİ (25+ Fark Alt Barem Merkez (%58.3)): 181-190 (2.14)",
       "actual_score": "73-115",
       "actual_range": "181-190",
-      "result": "TUTTU"
-    },
-    {
-      "signal_id": "CB-774182458_35m",
-      "game_id": "CB-774182458",
-      "raw_game_id": "774182458",
-      "date": "2026-11-26",
-      "game_name": "Denver Nuggets vs Indiana Pacers",
-      "current_score": "86-65",
-      "score_gap": 21,
-      "decision": "OYNA",
-      "pick_type": "2. Favori",
-      "target_barem": "191-200",
-      "target_barem_tr": "191-200",
-      "target_t_id": 1842,
-      "target_odd": 2.46,
-      "zone_badge": "🧊 NBA 2.30–2.50 KOPMUŞ MAÇ ALT BAREM 2. FAVORİ: 191-200 (2.46)",
-      "actual_score": "111-82",
-      "actual_range": "191-200",
       "result": "TUTTU"
     }
   ]
