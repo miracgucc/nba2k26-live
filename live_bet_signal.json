@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 19:25:29",
-  "timestamp": 1795710329.27,
+  "updated_at_tr": "2026-11-26 19:26:10",
+  "timestamp": 1795710370.1,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Detroit Pistons",
       "away_team": "Denver Nuggets",
       "quarter": 3,
-      "elapsed_mins": 29.2,
+      "elapsed_mins": 29.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "56-75",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 19:25:28"
+      "updated_at_tr": "2026-11-26 19:26:08"
     },
     {
       "signal_id": "CB-774351602_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 19:25:28"
+      "updated_at_tr": "2026-11-26 19:26:08"
     }
   ],
   "recent_history": [
