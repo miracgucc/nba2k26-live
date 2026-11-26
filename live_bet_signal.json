@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 17:41:56",
-  "timestamp": 1795704116.97,
+  "updated_at_tr": "2026-11-26 17:42:33",
+  "timestamp": 1795704153.59,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 4,
-      "elapsed_mins": 45.8,
+      "elapsed_mins": 46.3,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "90-122",
-      "score_gap": 32,
+      "current_score": "90-124",
+      "score_gap": 34,
       "fav1_barem": "221-230",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 17:41:56"
+      "updated_at_tr": "2026-11-26 17:42:32"
     },
     {
       "signal_id": "CB-774326007_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 17:41:56"
+      "updated_at_tr": "2026-11-26 17:42:32"
     }
   ],
   "recent_history": [
