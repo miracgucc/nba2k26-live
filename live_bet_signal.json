@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 06:50:28",
-  "timestamp": 1795665028.06,
+  "updated_at_tr": "2026-11-26 06:50:56",
+  "timestamp": 1795665056.72,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 06:50:26"
+      "updated_at_tr": "2026-11-26 06:50:55"
     },
     {
       "signal_id": "CB-774200486_35m",
@@ -56,35 +56,54 @@
       "home_team": "Detroit Pistons",
       "away_team": "Cleveland Cavaliers",
       "quarter": 3,
-      "elapsed_mins": 32.4,
+      "elapsed_mins": 32.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "67-35",
       "score_gap": 32,
       "fav1_barem": "160 Or Less",
-      "fav1_odd": 2.26,
+      "fav1_odd": 2.0,
       "fav2_barem": "161-170",
-      "fav2_odd": 2.53,
-      "decision": "OYNA",
-      "pick_type": "2. Favori",
-      "target_barem": "161-170",
-      "target_barem_tr": "161-170",
-      "target_barem_en": "161-170",
-      "target_t_id": 1839,
-      "target_odd": 2.53,
-      "min_acceptable_odd": 2.38,
-      "zone_type": "TRAP_LOW",
-      "zone_badge": "🔥 NBA 2.10–2.30 SEÇİCİ 2. FAVORİ (Önceki Maç Kaymalı): 161-170 (2.53)",
+      "fav2_odd": 2.9,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_barem_en": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "min_acceptable_odd": 0.0,
+      "zone_type": "PASS_SELECTIVE",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 160 Or Less: 2.00)",
       "stakes": {
-        "kasa_8000": 320,
-        "kasa_10000": 400,
-        "kasa_15000": 600,
-        "kasa_20000": 800
+        "kasa_8000": 0,
+        "kasa_10000": 0,
+        "kasa_15000": 0,
+        "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 06:50:26"
+      "updated_at_tr": "2026-11-26 06:50:55"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-774200486_35m",
+      "game_id": "CB-774200486",
+      "raw_game_id": "774200486",
+      "date": "2026-11-26",
+      "game_name": "Detroit Pistons vs Cleveland Cavaliers",
+      "current_score": "67-35",
+      "score_gap": 32,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 160 Or Less: 2.00)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-774194572_35m",
       "game_id": "CB-774194572",
@@ -407,25 +426,6 @@
       "actual_score": "112-95",
       "actual_range": "201-210",
       "result": "TUTTU"
-    },
-    {
-      "signal_id": "CB-774058082_35m",
-      "game_id": "CB-774058082",
-      "raw_game_id": "774058082",
-      "date": "2026-11-25",
-      "game_name": "Golden State Warriors vs Dallas Mavericks",
-      "current_score": "95-74",
-      "score_gap": 21,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.68)",
-      "actual_score": "128-106",
-      "actual_range": "231+",
-      "result": "PAS"
     }
   ]
 }
