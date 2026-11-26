@@ -1,13 +1,13 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 07:56:22",
-  "timestamp": 1795668982.06,
+  "updated_at_tr": "2026-11-26 07:57:17",
+  "timestamp": 1795669037.44,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
   "chain_state": {
-    "prev_shift": 2,
-    "prev2_shift": 1
+    "prev_shift": -1,
+    "prev2_shift": 2
   },
   "has_active_play_signal": false,
   "current_play_signal": null,
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 07:56:20"
+      "updated_at_tr": "2026-11-26 07:57:15"
     },
     {
       "signal_id": "CB-774211842_35m",
@@ -56,15 +56,15 @@
       "home_team": "Denver Nuggets",
       "away_team": "Los Angeles Lakers",
       "quarter": 2,
-      "elapsed_mins": 21.1,
+      "elapsed_mins": 21.8,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "53-37",
-      "score_gap": 16,
+      "current_score": "54-40",
+      "score_gap": 14,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.06,
+      "fav1_odd": 3.09,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.67,
+      "fav2_odd": 3.33,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.06)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.09)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 07:56:20"
+      "updated_at_tr": "2026-11-26 07:57:15"
     },
     {
       "signal_id": "CB-774217302_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 07:56:20"
+      "updated_at_tr": "2026-11-26 07:57:15"
     }
   ],
   "recent_history": [
@@ -135,9 +135,9 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.21)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "104-86",
+      "actual_range": "181-190",
+      "result": "PAS"
     },
     {
       "signal_id": "CB-774200486_35m",
