@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 04:48:29",
-  "timestamp": 1795657709.86,
+  "updated_at_tr": "2026-11-26 04:49:11",
+  "timestamp": 1795657751.38,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -43,7 +43,7 @@
       "kasa_15000": 750,
       "kasa_20000": 1000
     },
-    "updated_at_tr": "2026-11-26 04:48:28"
+    "updated_at_tr": "2026-11-26 04:49:09"
   },
   "active_signals": [
     {
@@ -79,7 +79,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-26 04:48:28"
+      "updated_at_tr": "2026-11-26 04:49:09"
     }
   ],
   "live_matches": [
@@ -116,7 +116,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-26 04:48:28"
+      "updated_at_tr": "2026-11-26 04:49:09"
     },
     {
       "signal_id": "CB-774188706_35m",
@@ -151,7 +151,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 04:48:28"
+      "updated_at_tr": "2026-11-26 04:49:09"
     }
   ],
   "recent_history": [
@@ -161,8 +161,8 @@
       "raw_game_id": "774182458",
       "date": "2026-11-26",
       "game_name": "Denver Nuggets vs Indiana Pacers",
-      "current_score": "84-61",
-      "score_gap": 23,
+      "current_score": "86-61",
+      "score_gap": 25,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "201-210",
