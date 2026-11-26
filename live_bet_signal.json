@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 13:51:58",
-  "timestamp": 1795690318.21,
+  "updated_at_tr": "2026-11-26 13:52:41",
+  "timestamp": 1795690361.77,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,13 +21,13 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Houston Rockets",
       "quarter": 2,
-      "elapsed_mins": 19.8,
+      "elapsed_mins": 20.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "34-49",
-      "score_gap": 15,
+      "current_score": "34-54",
+      "score_gap": 20,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.68,
+      "fav1_odd": 2.65,
       "fav2_barem": "211-220",
       "fav2_odd": 3.66,
       "decision": "PAS",
@@ -39,49 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.68)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.65)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 13:51:56"
-    },
-    {
-      "signal_id": "CB-774266656_35m",
-      "game_id": "CB-774266656",
-      "raw_game_id": "774266656",
-      "game_name": "New York Knicks vs Boston Celtics",
-      "home_team": "New York Knicks",
-      "away_team": "Boston Celtics",
-      "quarter": 4,
-      "elapsed_mins": 47.9,
-      "in_decision_window_35m": false,
-      "is_barem_open": false,
-      "current_score": "104-73",
-      "score_gap": 31,
-      "fav1_barem": "171-180",
-      "fav1_odd": 0.0,
-      "fav2_barem": "-",
-      "fav2_odd": 0.0,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⏳ Oran Bekleniyor",
-      "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
-      },
-      "updated_at_tr": "2026-11-26 13:51:56"
+      "updated_at_tr": "2026-11-26 13:52:40"
     },
     {
       "signal_id": "CB-774282309_35m",
@@ -116,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 13:51:56"
+      "updated_at_tr": "2026-11-26 13:52:40"
     }
   ],
   "recent_history": [
