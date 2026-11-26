@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 11:49:25",
-  "timestamp": 1795682965.15,
+  "updated_at_tr": "2026-11-26 11:49:56",
+  "timestamp": 1795682996.03,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 2,
-      "elapsed_mins": 20.1,
+      "elapsed_mins": 20.7,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "32-32",
-      "score_gap": 0,
+      "current_score": "34-32",
+      "score_gap": 2,
       "fav1_barem": "181-190",
-      "fav1_odd": 3.14,
-      "fav2_barem": "191-200",
-      "fav2_odd": 3.91,
+      "fav1_odd": 3.12,
+      "fav2_barem": "171-180",
+      "fav2_odd": 3.82,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 181-190: 3.14)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 181-190: 3.12)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 11:49:23"
+      "updated_at_tr": "2026-11-26 11:49:54"
     },
     {
       "signal_id": "CB-774241573_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 11:49:23"
+      "updated_at_tr": "2026-11-26 11:49:54"
     }
   ],
   "recent_history": [
