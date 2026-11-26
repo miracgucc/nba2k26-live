@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 13:59:40",
-  "timestamp": 1795690780.86,
+  "updated_at_tr": "2026-11-26 14:00:19",
+  "timestamp": 1795690819.79,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -20,16 +20,16 @@
       "game_name": "Atlanta Hawks vs Houston Rockets",
       "home_team": "Atlanta Hawks",
       "away_team": "Houston Rockets",
-      "quarter": 2,
-      "elapsed_mins": 24.0,
+      "quarter": 3,
+      "elapsed_mins": 24.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "39-65",
-      "score_gap": 26,
+      "current_score": "39-67",
+      "score_gap": 28,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.42,
+      "fav1_odd": 2.38,
       "fav2_barem": "211-220",
-      "fav2_odd": 3.48,
+      "fav2_odd": 3.59,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 201-210: 2.42)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 201-210: 2.38)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 13:59:39"
+      "updated_at_tr": "2026-11-26 14:00:18"
     },
     {
       "signal_id": "CB-774282309_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 13:59:39"
+      "updated_at_tr": "2026-11-26 14:00:18"
     }
   ],
   "recent_history": [
