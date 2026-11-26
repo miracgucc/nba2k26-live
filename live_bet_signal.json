@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 18:18:59",
-  "timestamp": 1795706339.32,
+  "updated_at_tr": "2026-11-26 18:19:45",
+  "timestamp": 1795706385.64,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Los Angeles Lakers",
       "quarter": 2,
-      "elapsed_mins": 12.2,
+      "elapsed_mins": 12.8,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "26-34",
-      "score_gap": 8,
+      "current_score": "28-34",
+      "score_gap": 6,
       "fav1_barem": "211-220",
       "fav1_odd": 3.21,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.89,
+      "fav2_odd": 3.98,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 18:18:57"
+      "updated_at_tr": "2026-11-26 18:19:44"
     },
     {
       "signal_id": "CB-774326007_35m",
@@ -56,11 +56,11 @@
       "home_team": "New York Knicks",
       "away_team": "Oklahoma City Thunder",
       "quarter": 4,
-      "elapsed_mins": 44.7,
+      "elapsed_mins": 45.5,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "74-116",
-      "score_gap": 42,
+      "current_score": "74-121",
+      "score_gap": 47,
       "fav1_barem": "201-210",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 18:18:57"
+      "updated_at_tr": "2026-11-26 18:19:44"
     }
   ],
   "recent_history": [
