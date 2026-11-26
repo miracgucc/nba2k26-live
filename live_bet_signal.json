@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 17:10:02",
-  "timestamp": 1795702202.61,
+  "updated_at_tr": "2026-11-26 17:10:40",
+  "timestamp": 1795702240.24,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 2,
-      "elapsed_mins": 20.5,
+      "elapsed_mins": 20.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "31-55",
@@ -29,7 +29,7 @@
       "fav1_barem": "201-210",
       "fav1_odd": 3.3,
       "fav2_barem": "191-200",
-      "fav2_odd": 3.3,
+      "fav2_odd": 3.33,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 17:10:01"
+      "updated_at_tr": "2026-11-26 17:10:39"
     },
     {
       "signal_id": "CB-774308493_35m",
@@ -56,11 +56,11 @@
       "home_team": "Denver Nuggets",
       "away_team": "Detroit Pistons",
       "quarter": 4,
-      "elapsed_mins": 47.2,
+      "elapsed_mins": 47.4,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "110-104",
-      "score_gap": 6,
+      "current_score": "113-104",
+      "score_gap": 9,
       "fav1_barem": "211-220",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -81,7 +81,42 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 17:10:01"
+      "updated_at_tr": "2026-11-26 17:10:39"
+    },
+    {
+      "signal_id": "CB-774326007_35m",
+      "game_id": "CB-774326007",
+      "raw_game_id": "774326007",
+      "game_name": "New York Knicks vs Oklahoma City Thunder",
+      "home_team": "New York Knicks",
+      "away_team": "Oklahoma City Thunder",
+      "quarter": 1,
+      "elapsed_mins": 0.0,
+      "in_decision_window_35m": false,
+      "is_barem_open": false,
+      "current_score": "0-0",
+      "score_gap": 0,
+      "fav1_barem": "-",
+      "fav1_odd": 0.0,
+      "fav2_barem": "-",
+      "fav2_odd": 0.0,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_barem_en": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "min_acceptable_odd": 0.0,
+      "zone_type": "PASS_CLUTCH",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 0 Sayı Fark)",
+      "stakes": {
+        "kasa_8000": 0,
+        "kasa_10000": 0,
+        "kasa_15000": 0,
+        "kasa_20000": 0
+      },
+      "updated_at_tr": "2026-11-26 17:10:39"
     }
   ],
   "recent_history": [
