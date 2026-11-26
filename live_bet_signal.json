@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 13:35:26",
-  "timestamp": 1795689326.25,
+  "updated_at_tr": "2026-11-26 13:36:07",
+  "timestamp": 1795689367.1,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 13:35:24"
+      "updated_at_tr": "2026-11-26 13:36:05"
     },
     {
       "signal_id": "CB-774266656_35m",
@@ -55,33 +55,33 @@
       "game_name": "New York Knicks vs Boston Celtics",
       "home_team": "New York Knicks",
       "away_team": "Boston Celtics",
-      "quarter": 3,
-      "elapsed_mins": 36.0,
+      "quarter": 4,
+      "elapsed_mins": 36.5,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "80-60",
-      "score_gap": 20,
-      "fav1_barem": "191-200",
-      "fav1_odd": 2.26,
-      "fav2_barem": "181-190",
-      "fav2_odd": 2.73,
-      "decision": "OYNA",
-      "pick_type": "2. Favori",
-      "target_barem": "181-190",
-      "target_barem_tr": "181-190",
-      "target_barem_en": "181-190",
-      "target_t_id": 1841,
-      "target_odd": 2.73,
-      "min_acceptable_odd": 2.58,
-      "zone_type": "TRAP_LOW",
-      "zone_badge": "🔥 NBA 2.10–2.30 SEÇİCİ 2. FAVORİ (16–24 Fark Alt Barem 2.Fav): 181-190 (2.73)",
+      "current_score": "82-60",
+      "score_gap": 22,
+      "fav1_barem": "181-190",
+      "fav1_odd": 0.0,
+      "fav2_barem": "-",
+      "fav2_odd": 0.0,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_barem_en": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "min_acceptable_odd": 0.0,
+      "zone_type": "PASS_SELECTIVE",
+      "zone_badge": "⏳ Oran Bekleniyor",
       "stakes": {
-        "kasa_8000": 320,
-        "kasa_10000": 400,
-        "kasa_15000": 600,
-        "kasa_20000": 800
+        "kasa_8000": 0,
+        "kasa_10000": 0,
+        "kasa_15000": 0,
+        "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 13:35:24"
+      "updated_at_tr": "2026-11-26 13:36:05"
     }
   ],
   "recent_history": [
