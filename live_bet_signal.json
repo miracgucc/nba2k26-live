@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 14:56:34",
-  "timestamp": 1795694194.78,
+  "updated_at_tr": "2026-11-26 14:57:13",
+  "timestamp": 1795694233.25,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -20,16 +20,16 @@
       "game_name": "Miami Heat vs Indiana Pacers",
       "home_team": "Miami Heat",
       "away_team": "Indiana Pacers",
-      "quarter": 1,
-      "elapsed_mins": 12.0,
+      "quarter": 2,
+      "elapsed_mins": 12.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "19-13",
       "score_gap": 6,
       "fav1_barem": "181-190",
-      "fav1_odd": 3.42,
+      "fav1_odd": 3.48,
       "fav2_barem": "171-180",
-      "fav2_odd": 3.9,
+      "fav2_odd": 3.73,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 181-190: 3.42)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 181-190: 3.48)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 14:56:33"
+      "updated_at_tr": "2026-11-26 14:57:12"
     },
     {
       "signal_id": "CB-774282309_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 14:56:33"
+      "updated_at_tr": "2026-11-26 14:57:12"
     }
   ],
   "recent_history": [
