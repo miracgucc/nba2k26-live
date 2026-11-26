@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 23:32:54",
-  "timestamp": 1795725174.75,
+  "updated_at_tr": "2026-11-26 23:33:39",
+  "timestamp": 1795725219.85,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -20,16 +20,16 @@
       "game_name": "Denver Nuggets vs Indiana Pacers",
       "home_team": "Denver Nuggets",
       "away_team": "Indiana Pacers",
-      "quarter": 3,
-      "elapsed_mins": 36.0,
+      "quarter": 4,
+      "elapsed_mins": 36.2,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "75-85",
       "score_gap": 10,
       "fav1_barem": "211-220",
-      "fav1_odd": 2.55,
-      "fav2_barem": "201-210",
-      "fav2_odd": 3.0,
+      "fav1_odd": 0.0,
+      "fav2_barem": "-",
+      "fav2_odd": 0.0,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 2.55)",
+      "zone_badge": "⏳ Oran Bekleniyor",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 23:32:53"
+      "updated_at_tr": "2026-11-26 23:33:38"
     },
     {
       "signal_id": "CB-774407739_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 23:32:53"
+      "updated_at_tr": "2026-11-26 23:33:38"
     }
   ],
   "recent_history": [
