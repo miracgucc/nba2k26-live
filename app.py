@@ -912,6 +912,276 @@ with ctrl_c6:
 # ─────────────────────────────────────────────────────────────────────────────
 @st.fragment(run_every="15s" if auto_ui_refresh else None)
 def render_live_dashboard():
+    st.markdown(
+        '<div class="section-hdr">💰 v8.1 Canlı Deneme Kasası — 3.000 TL Başlangıç (Oynanan & Pas Geçilen Maçlar Anlık Kazanç Tablosu)</div>',
+        unsafe_allow_html=True,
+    )
+    all_eval, live_decided = _build_v81_combined_trial_records()
+    if not all_eval:
+        st.info("Canlı deneme kasası için maç verisi yükleniyor...")
+        return
+
+    c_p1, c_p2, c_p3 = st.columns([2.3, 1.8, 1.1])
+    with c_p1:
+        period_mode = st.radio(
+            "📅 Takip Başlangıç Noktası:",
+            [
+                "🆕 Yeni Sistem (v8.1) Kurulduktan Sonrası (26 Kasım 13:00+)",
+                "📆 Bugünün Tüm Maçları (26 Kasım 00:00+)",
+                "🏆 Tüm 15 Günlük Canlı Veri (12 Kasım – Bugün)",
+            ],
+            index=0,
+            horizontal=False,
+            key="v81_trial_period_mode",
+        )
+    with c_p2:
+        filter_mode = st.radio(
+            "🔎 Maç Filtresi:",
+            [
+                "📋 Tüm Maçlar (Oynanan + Pas Geçilen)",
+                "🎯 Sadece Oynanan Kuponlar (OYNA)",
+                "⏭️ Sadece Pas Geçilenler (PAS)",
+            ],
+            index=0,
+            horizontal=False,
+            key="v81_trial_filter_mode",
+        )
+    with c_p3:
+        sort_newest = st.toggle("🔽 En Yeni Maç Üstte", value=False, key="v81_trial_sort_newest")
+        include_1235 = st.toggle(
+            "12:35-12:40 Maçlarını Dahil Et",
+            value=False,
+            help="Sistem güncellenirken sahada oynanmakta olan 12:35 (Milano-Baskonia) ve 12:40 (Knicks-Celtics) maçlarını da yeni kasaya dahil eder.",
+            key="v81_trial_inc_1235",
+        )
+
+    if "Yeni Sistem" in period_mode:
+        cutoff_dt = "2026-11-26 12:30" if include_1235 else "2026-11-26 13:00"
+        sub_eval = [m.copy() for m in all_eval if m["full_dt"] >= cutoff_dt]
+    elif "Bugünün" in period_mode:
+        sub_eval = [m.copy() for m in all_eval if m["day"] >= "2026-11-26"]
+    else:
+        sub_eval = [m.copy() for m in all_eval]
+
+    def _get_tier_3000(b_val: float):
+        if b_val < 4200:
+            return (1, 150, 120)
+        if b_val < 5700:
+            return (2, 210, 170)
+        if b_val < 7600:
+            return (3, 280, 220)
+        if b_val < 10400:
+            return (4, 380, 300)
+        if b_val < 14200:
+            return (5, 520, 420)
+        if b_val < 19400:
+            return (6, 710, 570)
+        return (7, 850, 680)
+
+    k_flat = 3000.0
+    k_tier = 3000.0
+    p_idx = 0
+    won_cnt = 0
+    lost_cnt = 0
+    pass_cnt = 0
+    saved_cnt = 0
+    nba_p = nba_w = eu_p = eu_w = 0
+    daily_stats = {}
+
+    for seq_i, m in enumerate(sub_eval, 1):
+        m["seq_i"] = seq_i
+        d = m["day"]
+        if d not in daily_stats:
+            daily_stats[d] = {
+                "tot": 0, "p": 0, "pas": 0, "saved": 0,
+                "w": 0, "l": 0, "nba_p": 0, "nba_w": 0, "eu_p": 0, "eu_w": 0,
+                "net_f": 0.0, "k_flat": k_flat, "net_t": 0.0, "k_tier": k_tier,
+            }
+        ds = daily_stats[d]
+        ds["tot"] += 1
+
+        if m["dec"] is not None:
+            p_idx += 1
+            f_num, pick_b, pick_o = m["dec"]
+            won = (pick_b == m["act_b"])
+            st_f = 150.0 if f_num == 1 else 120.0
+            net_f = st_f * (pick_o - 1.0) if won else -st_f
+            k_flat += net_f
+
+            tk, s1_t, s2_t = _get_tier_3000(k_tier)
+            st_t = float(s1_t if f_num == 1 else s2_t)
+            net_t = st_t * (pick_o - 1.0) if won else -st_t
+            k_tier += net_t
+
+            if won:
+                won_cnt += 1
+                ds["w"] += 1
+            else:
+                lost_cnt += 1
+                ds["l"] += 1
+
+            if m["lg"] == "NBA":
+                nba_p += 1
+                ds["nba_p"] += 1
+                if won:
+                    nba_w += 1
+                    ds["nba_w"] += 1
+            else:
+                eu_p += 1
+                ds["eu_p"] += 1
+                if won:
+                    eu_w += 1
+                    ds["eu_w"] += 1
+
+            ds["p"] += 1
+            ds["net_f"] += net_f
+            ds["k_flat"] = k_flat
+            ds["net_t"] += net_t
+            ds["k_tier"] = k_tier
+
+            m["kupon_lbl"] = f"Kupon #{p_idx}"
+            m["pick_lbl"] = f"OYNA: {f_num}.Fav {pick_b} (@{pick_o:.2f}) — {m['reason']}"
+            m["stake_lbl"] = f"{int(st_f)} TL"
+            m["res_lbl"] = "✅ KAZANDI" if won else "❌ KAYBETTİ"
+            m["net_f"] = net_f
+            m["k_flat"] = k_flat
+            m["k_tier"] = k_tier
+        else:
+            pass_cnt += 1
+            ds["pas"] += 1
+            fav1_lost = (m["f1"] != m["act_b"])
+            if fav1_lost:
+                saved_cnt += 1
+                ds["saved"] += 1
+            ds["k_flat"] = k_flat
+            ds["k_tier"] = k_tier
+
+            m["kupon_lbl"] = "⏭️ PAS"
+            m["pick_lbl"] = f"PAS GEÇ — {m['reason']}"
+            m["stake_lbl"] = "0 TL"
+            m["res_lbl"] = f"🛡️ Zarardan Korudu ({m['act_b']} bitti)" if fav1_lost else f"⏭️ Pas ({m['act_b']} bitti)"
+            m["net_f"] = 0.0
+            m["k_flat"] = k_flat
+            m["k_tier"] = k_tier
+
+    net_flat_tot = k_flat - 3000.0
+    net_tier_tot = k_tier - 3000.0
+    hit_pct = (won_cnt / p_idx * 100.0) if p_idx > 0 else 0.0
+    roi_pct = (net_flat_tot / 3000.0) * 100.0
+
+    k1, k2, k3, k4, k5 = st.columns(5)
+    k1.metric(
+        "💰 3.000 TL Deneme Kasası (Sabit 150/120)",
+        f"{k_flat:,.1f} TL",
+        f"{net_flat_tot:+,.1f} TL (%{roi_pct:+.1f} Kasa Artışı)",
+    )
+    k2.metric(
+        "🎯 Oynanan Kupon & İsabet",
+        f"{p_idx} Kupon ({won_cnt}K / {lost_cnt}Y)",
+        f"%{hit_pct:.1f} İsabet Oranı",
+    )
+    k3.metric(
+        "🛡️ Pas Geçilen & Korunan Zarar",
+        f"{pass_cnt} Maç Pas Geçildi",
+        f"{saved_cnt} Maçta 1.Fav Patladı (+{saved_cnt * 150:,.0f} TL Korudu)",
+    )
+    k4.metric(
+        "🏀🇪🇺 Lig Bazlı İsabet",
+        f"NBA: {nba_w}/{nba_p} • Euro: {eu_w}/{eu_p}",
+        f"Toplam İncelenen: {len(sub_eval)} Maç",
+    )
+    k5.metric(
+        "🚀 Kademeli Kasa (Kademe 1–7)",
+        f"{k_tier:,.1f} TL",
+        f"{net_tier_tot:+,.1f} TL Net Kâr",
+    )
+
+    if live_decided:
+        live_html_items = []
+        for lm in live_decided:
+            lg_b = "🏀 NBA" if lm["lg"] == "NBA" else "🇪🇺 EURO"
+            if lm["dec"] is not None:
+                fn_l, pb_l, po_l = lm["dec"]
+                st_l = 150 if fn_l == 1 else 120
+                dec_badge = f"<b style='color:#10b981;'>🎯 CANLI OYNA: {fn_l}.Fav {pb_l} (@{po_l:.2f}) — {st_l} TL</b> ({lm['reason']})"
+            else:
+                dec_badge = f"<b style='color:#f59e0b;'>⏭️ CANLI PAS GEÇ:</b> {lm['reason']}"
+            live_html_items.append(
+                f"<div style='margin-top:0.25rem;'>• <b>{lg_b} | {lm['teams']}</b> "
+                f"(Karar Skoru: <code>{lm['cur_sc']}</code> | Fark: <b>{lm['gap']}</b> | 1.Fav: <code>{lm['f1']} @{lm['o1']:.2f}</code>) ➔ {dec_badge} <i>(4. Çeyrek oynanıyor, maç sonu bekleniyor)</i></div>"
+            )
+        st.markdown(
+            f"""
+            <div style="background:var(--bg-card); border:1px solid var(--val-border); border-left:4px solid #10b981; border-radius:10px; padding:0.75rem 1rem; margin:0.5rem 0 0.8rem 0;">
+                <div style="font-size:0.88rem; font-weight:800; color:var(--text-primary);">🔴 Şu An Karar Dakikasını Geçmiş & 4. Çeyreği Oynanan Canlı Maçlar ({len(live_decided)} Maç)</div>
+                <div style="font-size:0.82rem; color:var(--text-secondary);">{''.join(live_html_items)}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    if len(daily_stats) >= 1:
+        st.markdown("##### 📅 Gün Gün Kazanç & İsabet Özeti (`3.000 TL` Başlangıç Kasası)")
+        day_rows = []
+        for d in sorted(daily_stats.keys(), reverse=sort_newest):
+            s = daily_stats[d]
+            d_hit = (s["w"] / s["p"] * 100.0) if s["p"] > 0 else 0.0
+            day_rows.append(
+                {
+                    "Tarih": d,
+                    "İncelenen Maç": s["tot"],
+                    "Oynanan (OYNA)": s["p"],
+                    "Pas Geçilen (PAS)": f"{s['pas']} ({s['saved']} Zarardan Korudu)",
+                    "NBA (K/O)": f"{s['nba_w']}/{s['nba_p']}",
+                    "Euro (K/O)": f"{s['eu_w']}/{s['eu_p']}",
+                    "Toplam K/Y": f"{s['w']}K / {s['l']}Y",
+                    "İsabet %": f"%{d_hit:.1f}",
+                    "Günlük Net (Sabit 150/120)": f"{s['net_f']:+,.1f} TL",
+                    "Güncel Sabit Kasa": f"{s['k_flat']:,.1f} TL",
+                    "Güncel Kademeli Kasa": f"{s['k_tier']:,.1f} TL",
+                }
+            )
+        st.dataframe(pd.DataFrame(day_rows), use_container_width=True, hide_index=True)
+
+    view_list = sub_eval
+    if "Sadece Oynanan" in filter_mode:
+        view_list = [m for m in sub_eval if m["dec"] is not None]
+    elif "Sadece Pas" in filter_mode:
+        view_list = [m for m in sub_eval if m["dec"] is None]
+
+    if sort_newest:
+        view_list = list(reversed(view_list))
+
+    st.markdown(f"##### 🏀🇪🇺 Maç Maç Canlı Takip Tablosu (`{len(view_list)}` Maç Gösteriliyor)")
+    table_rows = []
+    for m in view_list:
+        table_rows.append(
+            {
+                "Sıra": m["seq_i"],
+                "Kupon / Durum": m["kupon_lbl"],
+                "Başlangıç Saati": m["full_dt"],
+                "Lig": "🏀 NBA" if m["lg"] == "NBA" else "🇪🇺 EURO",
+                "Maç": m["teams"],
+                "Karar Skoru (Fark)": f"{m['cur_sc']} ({m['gap']} Fark)",
+                "1. Favori (İstenen Sayı)": f"{m['f1']} @{m['o1']:.2f} ({m['req1']:.1f} sayı)",
+                "2. Favori": f"{m['f2']} @{m['o2']:.2f}",
+                "Sistem Kararı & Kural Gerekçesi": m["pick_lbl"],
+                "Bahis Tutarı": m["stake_lbl"],
+                "Maç Sonu (Toplam ➔ Barem)": f"{m['fin_sc']} ({m['fin_tot']} ➔ {m['act_b']})",
+                "Sonuç": m["res_lbl"],
+                "Net Kâr / Zarar": f"{m['net_f']:+,.1f} TL" if m["dec"] is not None else "0,0 TL",
+                "3.000 TL Deneme Kasası": f"{m['k_flat']:,.1f} TL",
+            }
+        )
+    st.dataframe(
+        pd.DataFrame(table_rows),
+        use_container_width=True,
+        hide_index=True,
+        height=min(620, 58 + 36 * max(1, len(table_rows))),
+    )
+
+
+render_v81_live_trial_bankroll():
     state = load_live_state(ACTIVE_LEAGUE)
     df_log = load_symmetry_log(ACTIVE_LEAGUE)
     df_hist = load_completed_matches(ACTIVE_LEAGUE)
@@ -1787,6 +2057,535 @@ def render_live_dashboard():
 
 
 render_live_dashboard()
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SECTION 2.5: v8.1 LIVE TRIAL BANKROLL TRACKER (3.000 TL FRESH START FROM NOV 26 13:00)
+# ─────────────────────────────────────────────────────────────────────────────
+@st.cache_data(ttl=30, show_spinner=False)
+def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
+    """Evaluates all NBA 2K26 + Cyber Euro League matches with v8.1 rules and returns (completed_eval, live_decided)."""
+
+    def _rule_nba_v81(r: dict):
+        gap = r["gap"]
+        o1, o2 = r["o1"], r["o2"]
+        f1, f2 = r["f1"], r["f2"]
+        req1 = r["req1"]
+        up = r["up"]
+        f2_up = r["f2_is_upper"]
+        ps = r["ps"]
+        odiff = r["odiff"]
+        if gap < 6:
+            return None, f"Başa baş maç ({gap} sayı fark < 6 sınırı)"
+        if o1 < 1.50:
+            return None, f"1.Fav oranı çok düşük ({o1:.2f} < 1.50 taban sınırı)"
+        if 1.50 <= o1 < 1.85:
+            if gap <= 24 and ps != 1 and not f2_up and req1 <= 59.5:
+                return (1, f1, o1), "1.50-1.85 bandı güvenli 1.Fav"
+            reasons = []
+            if gap > 24:
+                reasons.append(f"Fark {gap} > 24")
+            if ps == 1:
+                reasons.append("Önceki maç üst bareme kaydı (ps=+1)")
+            if f2_up:
+                reasons.append("2.Fav üst baremde")
+            if req1 > 59.5:
+                reasons.append(f"İstenen sayı yüksek ({req1:.1f} > 59.5)")
+            return None, "1.50-1.85 filtre dışı: " + ", ".join(reasons)
+        if 1.85 <= o1 < 2.10:
+            if ps != 1 and gap <= 32:
+                if gap >= 20 and f2_up and req1 < 47.5:
+                    return None, f"20+ farkta ({gap} fark) 1.Fav alt barem ve sadece {req1:.1f} sayı istiyor (< 47.5 tuzağı)"
+                return (1, f1, o1), "1.85-2.10 ana merkez 1.Fav"
+            if ps == 1:
+                return None, "Önceki maç üst bareme kaydığı için (ps=+1) 1.85-2.10 pas"
+            return None, f"Aşırı fark ({gap} > 32)"
+        if 2.10 <= o1 < 2.30:
+            if gap >= 25 and f2_up and req1 <= 53.5:
+                return (1, f1, o1), "25+ farkta düşük kalan sayı 1.Fav"
+            if req1 <= 48.5 and ps != 1 and gap <= 24:
+                return (1, f1, o1), f"Düşük kalan sayı ({req1:.1f} <= 48.5) 1.Fav"
+            if 48.5 < req1 <= 56.5 and 10 <= gap <= 24 and o2 <= 3.05:
+                if gap >= 16 and f2_up and req1 <= 50.5:
+                    return (1, f1, o1), "16-24 farkta düşük kalan sayı 1.Fav"
+                if up or (10 <= gap <= 15) or not f2_up or ps != 0:
+                    return (2, f2, o2), f"2.10-2.30 bandı 2.Fav ({req1:.1f} kalan sayı)"
+            return None, f"2.10-2.30 seçici filtre dışı (Fark:{gap}, İstenen:{req1:.1f}, 2.Fav:{o2:.2f}, ps:{ps:+d})"
+        if 2.30 <= o1 < 2.50:
+            if 16 <= gap <= 28 and not f2_up and req1 >= 51.5 and o2 <= 3.10:
+                return (2, f2, o2), f"16-28 fark yavaşlaması ({gap} fark, 1.Fav {req1:.1f} istiyor ➔ Alt 2.Fav)"
+            if req1 <= 50.5 and ps != -1 and gap <= 24:
+                return (1, f1, o1), f"2.30-2.50 düşük kalan sayı ({req1:.1f}) 1.Fav"
+            if gap <= 15 and ps >= 0 and req1 <= 56.5 and (odiff <= 0.25 or up or ps == 1 or req1 <= 54.5):
+                return (1, f1, o1), "2.30-2.50 dengeli 1.Fav"
+            if req1 > 56.5 and 10 <= gap <= 24 and not f2_up and o2 <= 3.05:
+                return (2, f2, o2), f"Yüksek kalan sayı ({req1:.1f} > 56.5) ➔ Alt 2.Fav"
+            return None, f"2.30-2.50 seçici filtre dışı (Fark:{gap}, İstenen:{req1:.1f}, 2.Fav:{o2:.2f})"
+        if o1 >= 2.50:
+            if (ps == 1 or req1 <= 50.5) and 10 <= gap <= 18 and o2 <= 3.10:
+                return (2, f2, o2), "2.50+ makas dar ikiz barem 2.Fav"
+            return None, f"1.Fav oranı yüksek ({o1:.2f} >= 2.50) ve şartlar sağlanmadı"
+        return None, "Seçici pas"
+
+    def _rule_euro_v81(r: dict):
+        gap = r["gap"]
+        o1, o2 = r["o1"], r["o2"]
+        f1, f2 = r["f1"], r["f2"]
+        req1 = r["req1"]
+        f2_up = r["f2_is_upper"]
+        ps = r["ps"]
+        odiff = r["odiff"]
+        if gap < 6:
+            return None, f"Başa baş maç ({gap} sayı fark < 6 sınırı)"
+        if gap >= 29:
+            return None, f"Aşırı fark ({gap} >= 29 kopmuş maç)"
+        if o1 < 1.20:
+            return None, f"1.Fav oranı çok düşük ({o1:.2f} < 1.20 taban sınırı)"
+        if o1 >= 2.30:
+            return None, f"EuroLeague kararsız piyasa (1.Fav oranı {o1:.2f} >= 2.30 tavan sınırı)"
+        if 1.20 <= o1 < 1.50:
+            if gap <= 15 and f2_up and req1 <= 38.5:
+                return (1, f1, o1), "1.20-1.50 güvenli 1.Fav"
+            return None, f"1.20-1.50 filtre dışı (Fark:{gap}, İstenen:{req1:.1f})"
+        if 1.50 <= o1 < 1.85:
+            if f2_up and req1 <= 37.5:
+                return (1, f1, o1), f"1.50-1.85 düşük kalan sayı ({req1:.1f}) 1.Fav"
+            if gap >= 21 and req1 <= 41.5:
+                return (1, f1, o1), "21+ farkta 1.50-1.85 1.Fav"
+            return None, f"1.50-1.85 filtre dışı (Fark:{gap}, İstenen:{req1:.1f})"
+        if 1.85 <= o1 < 2.10:
+            if 16 <= gap <= 28 and not f2_up and req1 >= 37.5 and o2 <= 3.40:
+                return (2, f2, o2), f"16-28 fark yavaşlaması ({gap} fark, 1.Fav {req1:.1f} sayı istiyor ➔ Alt 2.Fav)"
+            if gap <= 15 and ((f2_up and req1 <= 39.5) or (odiff <= 0.18 and req1 <= 37.5)):
+                return (1, f1, o1), f"1.85-2.10 normal fark ({gap}) ve düşük kalan sayı ({req1:.1f}) 1.Fav"
+            return None, f"1.85-2.10 filtre dışı (Fark:{gap}, İstenen:{req1:.1f}, 2.Fav:{f2}@{o2:.2f})"
+        if 2.10 <= o1 < 2.30:
+            if req1 <= 36.5 and (f2_up or ps == 1 or gap >= 16):
+                return (1, f1, o1), f"2.10-2.30 düşük kalan sayı ({req1:.1f} <= 36.5) 1.Fav"
+            if 36.5 < req1 <= 41.5 and o2 <= 3.40 and gap <= 24:
+                return (2, f2, o2), f"2.10-2.30 yüksek kalan sayı ({req1:.1f} > 36.5) ➔ 2.Fav"
+            return None, f"2.10-2.30 filtre dışı (Fark:{gap}, İstenen:{req1:.1f}, 2.Fav:{o2:.2f})"
+        return None, "Seçici pas"
+
+    all_records = []
+    live_decided = []
+
+    for lg in ("nba", "euro"):
+        cfg = get_league_config(lg)
+        paths = _get_scraper_paths(lg)
+        files = cfg["files"]
+        df_m = load_completed_matches(lg)
+        m_map = {}
+        if not df_m.empty:
+            for _, mr in df_m.iterrows():
+                gid = str(mr.get("game_id", "")).strip()
+                try:
+                    tot = int(float(mr.get("total_score", 0) or 0))
+                    ht = int(float(mr.get("home_total", 0) or 0))
+                    at = int(float(mr.get("away_total", 0) or 0))
+                except Exception:
+                    continue
+                if tot >= int(cfg["min_total_valid"]):
+                    m_map[gid] = (tot, f"{ht}-{at}", get_range_from_score(tot, league=lg), str(mr.get("date", "")).strip())
+
+        frames = [
+            _read_csv_safe(paths["csv_path"]),
+            _read_csv_safe(os.path.join(BASE_DIR, files["log_seed"])),
+            _read_csv_safe(os.path.join(BASE_DIR, files["log_cloud"])),
+            _fetch_github_csv(files["log_cloud"]),
+        ]
+        frames = [f for f in frames if not f.empty and "game_id" in f.columns and "check_time" in f.columns]
+        if not frames:
+            continue
+        df_s = pd.concat(frames, ignore_index=True)
+        df_s["game_id"] = df_s["game_id"].astype(str).str.strip()
+        df_s = df_s.drop_duplicates(subset=["game_id", "check_time"], keep="last").copy()
+
+        for idx, sr in df_s.iterrows():
+            gid = str(sr["game_id"]).strip()
+            if gid in m_map:
+                tot, sc, act_b, dt = m_map[gid]
+                if pd.isna(sr.get("actual_range")) or str(sr.get("actual_range", "")).strip() in ("", "nan", "None"):
+                    df_s.at[idx, "actual_score"] = sc
+                    df_s.at[idx, "actual_range"] = act_b
+                    df_s.at[idx, "status"] = "COMPLETED"
+
+        df_s["_min"] = df_s["check_time"].astype(str).str.extract(r"Minute\s+(\d+)")[0].fillna(-1).astype(int)
+        df_s["_gid_num"] = df_s["game_id"].astype(str).str.extract(r"(\d+)")[0].fillna(0).astype(int)
+        df_s = df_s[df_s["_gid_num"] >= int(cfg["min_clean_gid"])].sort_values(["_gid_num", "_min"]).reset_index(drop=True)
+
+        dec_min = int(cfg["decision_min"])
+        close_start = int(cfg["closing_start_min"])
+        barem_names = [b[0] for b in cfg["barem_ranges"]]
+        b_cols = cfg["barem_odd_cols"]
+        p_cols = cfg["barem_prob_cols"]
+        mid_map = {}
+        for bn, blo, bhi in cfg["barem_ranges"]:
+            elo = max(float(cfg["bar_lower_floor"]), float(blo))
+            ehi = min(float(bhi), float(cfg["bar_upper_cap"]))
+            mid_map[bn] = (elo + ehi) / 2.0
+
+        ps = 0
+        ps2 = 0
+        for gid, grp in df_s.groupby("game_id", sort=False):
+            cands = grp[(grp["_min"] >= close_start) & (grp["_min"] <= dec_min)]
+            if cands.empty:
+                continue
+            last_r = None
+            for _, cr in cands.iloc[::-1].iterrows():
+                if any(1.001 < float(cr.get(b_cols[bn], 99.0) or 99.0) < 85.0 for bn in barem_names):
+                    last_r = cr
+                    break
+            if last_r is None:
+                continue
+            o_raw = {bn: float(last_r.get(b_cols[bn], 99.0) or 99.0) for bn in barem_names}
+            p_raw = {bn: float(last_r.get(p_cols[bn], 0.0) or 0.0) for bn in barem_names}
+            om, _ = resolve_effective_barem_odds(o_raw, p_raw, league=lg)
+            if len(om) < 2:
+                continue
+            arr = sorted(om.items(), key=lambda x: x[1])
+            f1, o1 = arr[0]
+            f2, o2 = arr[1]
+            i1 = barem_names.index(f1)
+            i2 = barem_names.index(f2)
+            om1 = om.get(barem_names[i1 - 1], 99.0) if i1 > 0 else 99.0
+            op1 = om.get(barem_names[i1 + 1], 99.0) if i1 < len(barem_names) - 1 else 99.0
+            sc_str = str(last_r.get("current_score", "0-0"))
+            if "-" not in sc_str:
+                continue
+            try:
+                s1, s2 = map(int, sc_str.split("-"))
+            except Exception:
+                continue
+            cur_tot = s1 + s2
+            gap = abs(s1 - s2)
+            full_dt = m_map.get(gid, (0, "", "", str(last_r.get("date", "")).strip()))[3]
+            if len(full_dt) < 10:
+                full_dt = str(last_r.get("date", "")).strip()
+
+            rec = {
+                "gid": gid,
+                "gid_num": int(gid.replace("CB-", "")),
+                "lg": "NBA" if lg == "nba" else "EURO",
+                "teams": str(last_r.get("game_name", "")).replace(" (cyber)", ""),
+                "full_dt": full_dt,
+                "day": full_dt[:10],
+                "min": int(last_r["_min"]),
+                "cur_sc": sc_str,
+                "cur_tot": cur_tot,
+                "gap": gap,
+                "f1": f1,
+                "o1": o1,
+                "f2": f2,
+                "o2": o2,
+                "i1": i1,
+                "i2": i2,
+                "f2_is_upper": i2 > i1,
+                "up": op1 < om1,
+                "odiff": o2 - o1,
+                "req1": mid_map[f1] - cur_tot,
+                "req2": mid_map[f2] - cur_tot,
+                "ps": ps,
+                "ps2": ps2,
+            }
+            dec, reason = _rule_nba_v81(rec) if lg == "nba" else _rule_euro_v81(rec)
+            rec["dec"] = dec
+            rec["reason"] = reason
+
+            act_b = str(last_r.get("actual_range", "")).strip()
+            if act_b not in barem_names:
+                if int(last_r["_min"]) == dec_min:
+                    live_decided.append(rec)
+                continue
+
+            act_sc = str(last_r.get("actual_score", "0-0"))
+            a1, a2 = map(int, act_sc.split("-")) if "-" in act_sc else (0, 0)
+            fin_tot = a1 + a2
+            i_act = barem_names.index(act_b)
+            shift = i_act - i1
+            rec["fin_sc"] = act_sc
+            rec["fin_tot"] = fin_tot
+            rec["act_b"] = act_b
+            all_records.append(rec)
+
+            ps2 = ps
+            ps = 1 if shift > 0 else (-1 if shift < 0 else 0)
+
+    all_records.sort(key=lambda x: x["gid_num"])
+    return all_records, live_decided
+
+
+def render_v81_live_trial_bankroll():
+    st.markdown(
+        '<div class="section-hdr">💰 v8.1 Canlı Deneme Kasası — 3.000 TL Başlangıç (Oynanan & Pas Geçilen Maçlar Anlık Kazanç Tablosu)</div>',
+        unsafe_allow_html=True,
+    )
+    all_eval, live_decided = _build_v81_combined_trial_records()
+    if not all_eval:
+        st.info("Canlı deneme kasası için maç verisi yükleniyor...")
+        return
+
+    c_p1, c_p2, c_p3 = st.columns([2.3, 1.8, 1.1])
+    with c_p1:
+        period_mode = st.radio(
+            "📅 Takip Başlangıç Noktası:",
+            [
+                "🆕 Yeni Sistem (v8.1) Kurulduktan Sonrası (26 Kasım 13:00+)",
+                "📆 Bugünün Tüm Maçları (26 Kasım 00:00+)",
+                "🏆 Tüm 15 Günlük Canlı Veri (12 Kasım – Bugün)",
+            ],
+            index=0,
+            horizontal=False,
+            key="v81_trial_period_mode",
+        )
+    with c_p2:
+        filter_mode = st.radio(
+            "🔎 Maç Filtresi:",
+            [
+                "📋 Tüm Maçlar (Oynanan + Pas Geçilen)",
+                "🎯 Sadece Oynanan Kuponlar (OYNA)",
+                "⏭️ Sadece Pas Geçilenler (PAS)",
+            ],
+            index=0,
+            horizontal=False,
+            key="v81_trial_filter_mode",
+        )
+    with c_p3:
+        sort_newest = st.toggle("🔽 En Yeni Maç Üstte", value=False, key="v81_trial_sort_newest")
+        include_1235 = st.toggle(
+            "12:35-12:40 Maçlarını Dahil Et",
+            value=False,
+            help="Sistem güncellenirken sahada oynanmakta olan 12:35 (Milano-Baskonia) ve 12:40 (Knicks-Celtics) maçlarını da yeni kasaya dahil eder.",
+            key="v81_trial_inc_1235",
+        )
+
+    if "Yeni Sistem" in period_mode:
+        cutoff_dt = "2026-11-26 12:30" if include_1235 else "2026-11-26 13:00"
+        sub_eval = [m.copy() for m in all_eval if m["full_dt"] >= cutoff_dt]
+    elif "Bugünün" in period_mode:
+        sub_eval = [m.copy() for m in all_eval if m["day"] >= "2026-11-26"]
+    else:
+        sub_eval = [m.copy() for m in all_eval]
+
+    def _get_tier_3000(b_val: float):
+        if b_val < 4200:
+            return (1, 150, 120)
+        if b_val < 5700:
+            return (2, 210, 170)
+        if b_val < 7600:
+            return (3, 280, 220)
+        if b_val < 10400:
+            return (4, 380, 300)
+        if b_val < 14200:
+            return (5, 520, 420)
+        if b_val < 19400:
+            return (6, 710, 570)
+        return (7, 850, 680)
+
+    k_flat = 3000.0
+    k_tier = 3000.0
+    p_idx = 0
+    won_cnt = 0
+    lost_cnt = 0
+    pass_cnt = 0
+    saved_cnt = 0
+    nba_p = nba_w = eu_p = eu_w = 0
+    daily_stats = {}
+
+    for seq_i, m in enumerate(sub_eval, 1):
+        m["seq_i"] = seq_i
+        d = m["day"]
+        if d not in daily_stats:
+            daily_stats[d] = {
+                "tot": 0, "p": 0, "pas": 0, "saved": 0,
+                "w": 0, "l": 0, "nba_p": 0, "nba_w": 0, "eu_p": 0, "eu_w": 0,
+                "net_f": 0.0, "k_flat": k_flat, "net_t": 0.0, "k_tier": k_tier,
+            }
+        ds = daily_stats[d]
+        ds["tot"] += 1
+
+        if m["dec"] is not None:
+            p_idx += 1
+            f_num, pick_b, pick_o = m["dec"]
+            won = (pick_b == m["act_b"])
+            st_f = 150.0 if f_num == 1 else 120.0
+            net_f = st_f * (pick_o - 1.0) if won else -st_f
+            k_flat += net_f
+
+            tk, s1_t, s2_t = _get_tier_3000(k_tier)
+            st_t = float(s1_t if f_num == 1 else s2_t)
+            net_t = st_t * (pick_o - 1.0) if won else -st_t
+            k_tier += net_t
+
+            if won:
+                won_cnt += 1
+                ds["w"] += 1
+            else:
+                lost_cnt += 1
+                ds["l"] += 1
+
+            if m["lg"] == "NBA":
+                nba_p += 1
+                ds["nba_p"] += 1
+                if won:
+                    nba_w += 1
+                    ds["nba_w"] += 1
+            else:
+                eu_p += 1
+                ds["eu_p"] += 1
+                if won:
+                    eu_w += 1
+                    ds["eu_w"] += 1
+
+            ds["p"] += 1
+            ds["net_f"] += net_f
+            ds["k_flat"] = k_flat
+            ds["net_t"] += net_t
+            ds["k_tier"] = k_tier
+
+            m["kupon_lbl"] = f"Kupon #{p_idx}"
+            m["pick_lbl"] = f"OYNA: {f_num}.Fav {pick_b} (@{pick_o:.2f}) — {m['reason']}"
+            m["stake_lbl"] = f"{int(st_f)} TL"
+            m["res_lbl"] = "✅ KAZANDI" if won else "❌ KAYBETTİ"
+            m["net_f"] = net_f
+            m["k_flat"] = k_flat
+            m["k_tier"] = k_tier
+        else:
+            pass_cnt += 1
+            ds["pas"] += 1
+            fav1_lost = (m["f1"] != m["act_b"])
+            if fav1_lost:
+                saved_cnt += 1
+                ds["saved"] += 1
+            ds["k_flat"] = k_flat
+            ds["k_tier"] = k_tier
+
+            m["kupon_lbl"] = "⏭️ PAS"
+            m["pick_lbl"] = f"PAS GEÇ — {m['reason']}"
+            m["stake_lbl"] = "0 TL"
+            m["res_lbl"] = f"🛡️ Zarardan Korudu ({m['act_b']} bitti)" if fav1_lost else f"⏭️ Pas ({m['act_b']} bitti)"
+            m["net_f"] = 0.0
+            m["k_flat"] = k_flat
+            m["k_tier"] = k_tier
+
+    net_flat_tot = k_flat - 3000.0
+    net_tier_tot = k_tier - 3000.0
+    hit_pct = (won_cnt / p_idx * 100.0) if p_idx > 0 else 0.0
+    roi_pct = (net_flat_tot / 3000.0) * 100.0
+
+    k1, k2, k3, k4, k5 = st.columns(5)
+    k1.metric(
+        "💰 3.000 TL Deneme Kasası (Sabit 150/120)",
+        f"{k_flat:,.1f} TL",
+        f"{net_flat_tot:+,.1f} TL (%{roi_pct:+.1f} Kasa Artışı)",
+    )
+    k2.metric(
+        "🎯 Oynanan Kupon & İsabet",
+        f"{p_idx} Kupon ({won_cnt}K / {lost_cnt}Y)",
+        f"%{hit_pct:.1f} İsabet Oranı",
+    )
+    k3.metric(
+        "🛡️ Pas Geçilen & Korunan Zarar",
+        f"{pass_cnt} Maç Pas Geçildi",
+        f"{saved_cnt} Maçta 1.Fav Patladı (+{saved_cnt * 150:,.0f} TL Korudu)",
+    )
+    k4.metric(
+        "🏀🇪🇺 Lig Bazlı İsabet",
+        f"NBA: {nba_w}/{nba_p} • Euro: {eu_w}/{eu_p}",
+        f"Toplam İncelenen: {len(sub_eval)} Maç",
+    )
+    k5.metric(
+        "🚀 Kademeli Kasa (Kademe 1–7)",
+        f"{k_tier:,.1f} TL",
+        f"{net_tier_tot:+,.1f} TL Net Kâr",
+    )
+
+    if live_decided:
+        live_html_items = []
+        for lm in live_decided:
+            lg_b = "🏀 NBA" if lm["lg"] == "NBA" else "🇪🇺 EURO"
+            if lm["dec"] is not None:
+                fn_l, pb_l, po_l = lm["dec"]
+                st_l = 150 if fn_l == 1 else 120
+                dec_badge = f"<b style='color:#10b981;'>🎯 CANLI OYNA: {fn_l}.Fav {pb_l} (@{po_l:.2f}) — {st_l} TL</b> ({lm['reason']})"
+            else:
+                dec_badge = f"<b style='color:#f59e0b;'>⏭️ CANLI PAS GEÇ:</b> {lm['reason']}"
+            live_html_items.append(
+                f"<div style='margin-top:0.25rem;'>• <b>{lg_b} | {lm['teams']}</b> "
+                f"(Karar Skoru: <code>{lm['cur_sc']}</code> | Fark: <b>{lm['gap']}</b> | 1.Fav: <code>{lm['f1']} @{lm['o1']:.2f}</code>) ➔ {dec_badge} <i>(4. Çeyrek oynanıyor, maç sonu bekleniyor)</i></div>"
+            )
+        st.markdown(
+            f"""
+            <div style="background:var(--bg-card); border:1px solid var(--val-border); border-left:4px solid #10b981; border-radius:10px; padding:0.75rem 1rem; margin:0.5rem 0 0.8rem 0;">
+                <div style="font-size:0.88rem; font-weight:800; color:var(--text-primary);">🔴 Şu An Karar Dakikasını Geçmiş & 4. Çeyreği Oynanan Canlı Maçlar ({len(live_decided)} Maç)</div>
+                <div style="font-size:0.82rem; color:var(--text-secondary);">{''.join(live_html_items)}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    if len(daily_stats) >= 1:
+        st.markdown("##### 📅 Gün Gün Kazanç & İsabet Özeti (`3.000 TL` Başlangıç Kasası)")
+        day_rows = []
+        for d in sorted(daily_stats.keys(), reverse=sort_newest):
+            s = daily_stats[d]
+            d_hit = (s["w"] / s["p"] * 100.0) if s["p"] > 0 else 0.0
+            day_rows.append(
+                {
+                    "Tarih": d,
+                    "İncelenen Maç": s["tot"],
+                    "Oynanan (OYNA)": s["p"],
+                    "Pas Geçilen (PAS)": f"{s['pas']} ({s['saved']} Zarardan Korudu)",
+                    "NBA (K/O)": f"{s['nba_w']}/{s['nba_p']}",
+                    "Euro (K/O)": f"{s['eu_w']}/{s['eu_p']}",
+                    "Toplam K/Y": f"{s['w']}K / {s['l']}Y",
+                    "İsabet %": f"%{d_hit:.1f}",
+                    "Günlük Net (Sabit 150/120)": f"{s['net_f']:+,.1f} TL",
+                    "Güncel Sabit Kasa": f"{s['k_flat']:,.1f} TL",
+                    "Güncel Kademeli Kasa": f"{s['k_tier']:,.1f} TL",
+                }
+            )
+        st.dataframe(pd.DataFrame(day_rows), use_container_width=True, hide_index=True)
+
+    view_list = sub_eval
+    if "Sadece Oynanan" in filter_mode:
+        view_list = [m for m in sub_eval if m["dec"] is not None]
+    elif "Sadece Pas" in filter_mode:
+        view_list = [m for m in sub_eval if m["dec"] is None]
+
+    if sort_newest:
+        view_list = list(reversed(view_list))
+
+    st.markdown(f"##### 🏀🇪🇺 Maç Maç Canlı Takip Tablosu (`{len(view_list)}` Maç Gösteriliyor)")
+    table_rows = []
+    for m in view_list:
+        table_rows.append(
+            {
+                "Sıra": m["seq_i"],
+                "Kupon / Durum": m["kupon_lbl"],
+                "Başlangıç Saati": m["full_dt"],
+                "Lig": "🏀 NBA" if m["lg"] == "NBA" else "🇪🇺 EURO",
+                "Maç": m["teams"],
+                "Karar Skoru (Fark)": f"{m['cur_sc']} ({m['gap']} Fark)",
+                "1. Favori (İstenen Sayı)": f"{m['f1']} @{m['o1']:.2f} ({m['req1']:.1f} sayı)",
+                "2. Favori": f"{m['f2']} @{m['o2']:.2f}",
+                "Sistem Kararı & Kural Gerekçesi": m["pick_lbl"],
+                "Bahis Tutarı": m["stake_lbl"],
+                "Maç Sonu (Toplam ➔ Barem)": f"{m['fin_sc']} ({m['fin_tot']} ➔ {m['act_b']})",
+                "Sonuç": m["res_lbl"],
+                "Net Kâr / Zarar": f"{m['net_f']:+,.1f} TL" if m["dec"] is not None else "0,0 TL",
+                "3.000 TL Deneme Kasası": f"{m['k_flat']:,.1f} TL",
+            }
+        )
+    st.dataframe(
+        pd.DataFrame(table_rows),
+        use_container_width=True,
+        hide_index=True,
+        height=min(620, 58 + 36 * max(1, len(table_rows))),
+    )
+
+
+render_v81_live_trial_bankroll()
 
 
 # ─────────────────────────────────────────────────────────────────────────────
