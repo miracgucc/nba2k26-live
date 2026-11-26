@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 12:13:33",
-  "timestamp": 1795684413.45,
+  "updated_at_tr": "2026-11-26 12:14:00",
+  "timestamp": 1795684440.07,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 3,
-      "elapsed_mins": 35.6,
-      "in_decision_window_35m": true,
+      "elapsed_mins": 36.0,
+      "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "61-62",
-      "score_gap": 1,
+      "current_score": "61-64",
+      "score_gap": 3,
       "fav1_barem": "181-190",
       "fav1_odd": 2.59,
       "fav2_barem": "171-180",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 1 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 3 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 12:13:32"
+      "updated_at_tr": "2026-11-26 12:13:58"
     },
     {
       "signal_id": "CB-774257221_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 12:13:32"
+      "updated_at_tr": "2026-11-26 12:13:58"
     }
   ],
   "recent_history": [
@@ -91,15 +91,15 @@
       "raw_game_id": "774248994",
       "date": "2026-11-26",
       "game_name": "Atlanta Hawks vs Minnesota Timberwolves",
-      "current_score": "61-62",
-      "score_gap": 1,
+      "current_score": "61-64",
+      "score_gap": 3,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
       "target_barem_tr": "",
       "target_t_id": 0,
       "target_odd": 0.0,
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 1 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 3 Sayı Fark)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
