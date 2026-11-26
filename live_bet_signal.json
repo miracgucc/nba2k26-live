@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 18:31:31",
-  "timestamp": 1795707091.77,
+  "updated_at_tr": "2026-11-26 18:32:06",
+  "timestamp": 1795707126.23,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 18:31:30"
+      "updated_at_tr": "2026-11-26 18:32:05"
     },
     {
       "signal_id": "CB-774333884_35m",
@@ -59,29 +59,29 @@
       "elapsed_mins": 19.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "38-57",
-      "score_gap": 19,
+      "current_score": "39-57",
+      "score_gap": 18,
       "fav1_barem": "231+",
       "fav1_odd": 2.74,
       "fav2_barem": "221-230",
       "fav2_odd": 3.02,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 2.74)",
+      "decision": "OYNA",
+      "pick_type": "2. Favori",
+      "target_barem": "221-230",
+      "target_barem_tr": "221-230",
+      "target_barem_en": "221-230",
+      "target_t_id": 1845,
+      "target_odd": 3.02,
+      "min_acceptable_odd": 2.87,
+      "zone_type": "TRAP_EXTREME",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 221-230 (3.02)",
       "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
+        "kasa_8000": 320,
+        "kasa_10000": 400,
+        "kasa_15000": 600,
+        "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-26 18:31:30"
+      "updated_at_tr": "2026-11-26 18:32:05"
     }
   ],
   "recent_history": [
