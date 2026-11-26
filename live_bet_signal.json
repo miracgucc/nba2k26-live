@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 17:14:04",
-  "timestamp": 1795702444.45,
+  "updated_at_tr": "2026-11-26 17:14:42",
+  "timestamp": 1795702482.07,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Minnesota Timberwolves",
       "quarter": 2,
-      "elapsed_mins": 23.9,
+      "elapsed_mins": 24.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "43-61",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 17:14:03"
+      "updated_at_tr": "2026-11-26 17:14:41"
     },
     {
       "signal_id": "CB-774308493_35m",
@@ -59,8 +59,8 @@
       "elapsed_mins": 47.8,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "115-110",
-      "score_gap": 5,
+      "current_score": "117-110",
+      "score_gap": 7,
       "fav1_barem": "221-230",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -73,15 +73,15 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 5 Sayı Fark)",
+      "zone_type": "PASS_SELECTIVE",
+      "zone_badge": "⏳ Oran Bekleniyor",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 17:14:03"
+      "updated_at_tr": "2026-11-26 17:14:41"
     },
     {
       "signal_id": "CB-774326007_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 17:14:03"
+      "updated_at_tr": "2026-11-26 17:14:41"
     }
   ],
   "recent_history": [
