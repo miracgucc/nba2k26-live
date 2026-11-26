@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-26 22:38:31",
-  "timestamp": 1795721911.87,
+  "updated_at_tr": "2026-11-26 22:39:08",
+  "timestamp": 1795721948.59,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 22:38:30"
+      "updated_at_tr": "2026-11-26 22:39:07"
     },
     {
       "signal_id": "CB-774388691_35m",
@@ -55,14 +55,14 @@
       "game_name": "Los Angeles Clippers vs Houston Rockets",
       "home_team": "Los Angeles Clippers",
       "away_team": "Houston Rockets",
-      "quarter": 2,
-      "elapsed_mins": 24.0,
+      "quarter": 3,
+      "elapsed_mins": 24.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "43-58",
-      "score_gap": 15,
+      "current_score": "45-58",
+      "score_gap": 13,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.74,
+      "fav1_odd": 2.75,
       "fav2_barem": "191-200",
       "fav2_odd": 3.58,
       "decision": "PAS",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.74)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.75)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 22:38:30"
+      "updated_at_tr": "2026-11-26 22:39:07"
     },
     {
       "signal_id": "CB-774380500_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-26 22:38:30"
+      "updated_at_tr": "2026-11-26 22:39:07"
     }
   ],
   "recent_history": [
