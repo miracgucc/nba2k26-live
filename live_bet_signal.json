@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 00:31:58",
-  "timestamp": 1795728718.59,
+  "updated_at_tr": "2026-11-27 00:32:36",
+  "timestamp": 1795728756.56,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 00:31:57"
+      "updated_at_tr": "2026-11-27 00:32:35"
     },
     {
       "signal_id": "CB-774416401_35m",
@@ -56,15 +56,15 @@
       "home_team": "New York Knicks",
       "away_team": "Miami Heat",
       "quarter": 2,
-      "elapsed_mins": 21.7,
+      "elapsed_mins": 22.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "54-51",
-      "score_gap": 3,
+      "current_score": "56-51",
+      "score_gap": 5,
       "fav1_barem": "221-230",
-      "fav1_odd": 3.02,
-      "fav2_barem": "231+",
-      "fav2_odd": 3.21,
+      "fav1_odd": 3.12,
+      "fav2_barem": "211-220",
+      "fav2_odd": 3.43,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 221-230: 3.02)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 221-230: 3.12)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 00:31:57"
+      "updated_at_tr": "2026-11-27 00:32:35"
     },
     {
       "signal_id": "CB-774407739_35m",
@@ -91,10 +91,10 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Dallas Mavericks",
       "quarter": 4,
-      "elapsed_mins": 45.8,
+      "elapsed_mins": 46.2,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "89-102",
+      "current_score": "91-104",
       "score_gap": 13,
       "fav1_barem": "201-210",
       "fav1_odd": 0.0,
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 00:31:57"
+      "updated_at_tr": "2026-11-27 00:32:35"
     }
   ],
   "recent_history": [
