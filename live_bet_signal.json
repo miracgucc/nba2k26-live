@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 08:34:38",
-  "timestamp": 1795757678.72,
+  "updated_at_tr": "2026-11-27 08:35:19",
+  "timestamp": 1795757719.02,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 08:34:37"
+      "updated_at_tr": "2026-11-27 08:35:17"
     },
     {
       "signal_id": "CB-774485882_35m",
@@ -56,32 +56,32 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Denver Nuggets",
       "quarter": 2,
-      "elapsed_mins": 21.8,
+      "elapsed_mins": 22.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "46-56",
-      "score_gap": 10,
+      "current_score": "46-61",
+      "score_gap": 15,
       "fav1_barem": "211-220",
-      "fav1_odd": 2.85,
+      "fav1_odd": 2.82,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.06,
+      "fav2_odd": 2.92,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "221-230",
       "target_barem_tr": "221-230",
       "target_barem_en": "221-230",
       "target_t_id": 1845,
-      "target_odd": 3.06,
-      "min_acceptable_odd": 2.92,
+      "target_odd": 2.92,
+      "min_acceptable_odd": 2.77,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 221-230 (3.06)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 221-230 (2.92)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-27 08:34:37"
+      "updated_at_tr": "2026-11-27 08:35:17"
     },
     {
       "signal_id": "CB-774480126_35m",
@@ -91,7 +91,7 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Miami Heat",
       "quarter": 4,
-      "elapsed_mins": 47.6,
+      "elapsed_mins": 47.9,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "106-85",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 08:34:37"
+      "updated_at_tr": "2026-11-27 08:35:17"
     }
   ],
   "recent_history": [
