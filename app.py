@@ -2201,10 +2201,10 @@ def render_v81_live_trial_bankroll():
             tot_ins_stake = st_f + st_ins_side
             if won:
                 net_ins = (st_f * pick_o) - tot_ins_stake
-                ins_res_lbl = f"✅ Ana Tuttu ({net_ins:+,.1f} TL)"
+                ins_res_lbl = f"✅ Ana Seçim Tuttu ({net_ins:+,.1f} TL)"
             elif ins_won:
                 net_ins = (st_ins_side * other_o) - tot_ins_stake
-                ins_res_lbl = f"🛡️ Sigorta Tuttu @{other_o:.2f} ({net_ins:+,.1f} TL)"
+                ins_res_lbl = f"🛡️ TEKLİ YATTI / SİGORTA TUTTU ({other_b} @{other_o:.2f} ➔ {net_ins:+,.1f} TL)"
                 ins_won_cnt += 1
                 ds["ins_w"] += 1
             else:
@@ -2246,9 +2246,9 @@ def render_v81_live_trial_bankroll():
             ds["k_tier"] = k_tier
 
             m["kupon_lbl"] = f"Kupon #{p_idx}"
-            m["pick_lbl"] = f"OYNA: {f_num}.Fav {pick_b} (@{pick_o:.2f}) + 🛡️ Sigorta: {other_b} (@{other_o:.2f}) — {m['reason']}"
-            m["stake_lbl"] = f"{int(st_f)} TL (İkili: {int(st_f)}+60 TL)"
-            m["res_lbl"] = "✅ KAZANDI" if won else ("🛡️ TEKLİ YATTI / SİGORTA TUTTU" if ins_won else "❌ KAYBETTİ")
+            m["pick_lbl"] = f"OYNA: {f_num}.Fav {pick_b} (@{pick_o:.2f}) — {m['reason']}"
+            m["stake_lbl"] = f"{int(st_f)} TL"
+            m["res_lbl"] = "✅ KAZANDI" if won else "❌ KAYBETTİ"
             m["ins_res_lbl"] = ins_res_lbl
             m["net_f"] = net_f
             m["k_flat"] = k_flat
