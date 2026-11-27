@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 09:31:18",
-  "timestamp": 1795761078.28,
+  "updated_at_tr": "2026-11-27 09:31:55",
+  "timestamp": 1795761115.93,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Houston Rockets",
       "quarter": 3,
-      "elapsed_mins": 32.0,
+      "elapsed_mins": 32.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "67-68",
-      "score_gap": 1,
+      "current_score": "70-68",
+      "score_gap": 2,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.43,
+      "fav1_odd": 2.4,
       "fav2_barem": "211-220",
-      "fav2_odd": 3.12,
+      "fav2_odd": 3.04,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 1 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 2 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 09:31:16"
+      "updated_at_tr": "2026-11-27 09:31:54"
     },
     {
       "signal_id": "CB-774497863_35m",
@@ -59,8 +59,8 @@
       "elapsed_mins": 7.8,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "21-18",
-      "score_gap": 3,
+      "current_score": "21-19",
+      "score_gap": 2,
       "fav1_barem": "211-220",
       "fav1_odd": 3.92,
       "fav2_barem": "201-210",
@@ -81,10 +81,29 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 09:31:16"
+      "updated_at_tr": "2026-11-27 09:31:54"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-774491673_35m",
+      "game_id": "CB-774491673",
+      "raw_game_id": "774491673",
+      "date": "2026-11-27",
+      "game_name": "Atlanta Hawks vs Houston Rockets",
+      "current_score": "70-68",
+      "score_gap": 2,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 2 Sayı Fark)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-774485882_35m",
       "game_id": "CB-774485882",
@@ -406,25 +425,6 @@
       "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 2 Sayı Fark)",
       "actual_score": "106-105",
       "actual_range": "211-220",
-      "result": "PAS"
-    },
-    {
-      "signal_id": "CB-774369238_35m",
-      "game_id": "CB-774369238",
-      "raw_game_id": "774369238",
-      "date": "2026-11-26",
-      "game_name": "Miami Heat vs Detroit Pistons",
-      "current_score": "65-87",
-      "score_gap": 22,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 1.98)",
-      "actual_score": "91-117",
-      "actual_range": "201-210",
       "result": "PAS"
     }
   ]
