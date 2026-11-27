@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 01:09:30",
-  "timestamp": 1795817370.15,
+  "updated_at_tr": "2026-11-28 01:10:10",
+  "timestamp": 1795817410.42,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 01:09:28"
+      "updated_at_tr": "2026-11-28 01:10:09"
     },
     {
       "signal_id": "CB-774710263_35m",
@@ -56,15 +56,15 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "New York Knicks",
       "quarter": 2,
-      "elapsed_mins": 18.5,
+      "elapsed_mins": 19.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "38-43",
-      "score_gap": 5,
+      "current_score": "40-43",
+      "score_gap": 3,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.27,
+      "fav1_odd": 3.15,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.38,
+      "fav2_odd": 3.39,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.27)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.15)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 01:09:28"
+      "updated_at_tr": "2026-11-28 01:10:09"
     }
   ],
   "recent_history": [
