@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 01:31:25",
-  "timestamp": 1795818685.91,
+  "updated_at_tr": "2026-11-28 01:32:06",
+  "timestamp": 1795818726.13,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Detroit Pistons",
       "away_team": "Oklahoma City Thunder",
       "quarter": 1,
-      "elapsed_mins": 8.0,
+      "elapsed_mins": 8.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "19-16",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 01:31:24"
+      "updated_at_tr": "2026-11-28 01:32:04"
     },
     {
       "signal_id": "CB-774710263_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 01:31:24"
+      "updated_at_tr": "2026-11-28 01:32:04"
     }
   ],
   "recent_history": [
@@ -91,15 +91,15 @@
       "raw_game_id": "774710263",
       "date": "2026-11-28",
       "game_name": "Minnesota Timberwolves vs New York Knicks",
-      "current_score": "72-75",
-      "score_gap": 3,
+      "current_score": "72-77",
+      "score_gap": 5,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
       "target_barem_tr": "",
       "target_t_id": 0,
       "target_odd": 0.0,
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 3 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 5 Sayı Fark)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
