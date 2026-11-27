@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 14:35:18",
-  "timestamp": 1795779318.79,
+  "updated_at_tr": "2026-11-27 14:36:17",
+  "timestamp": 1795779377.99,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 14:35:17"
+      "updated_at_tr": "2026-11-27 14:36:16"
     },
     {
       "signal_id": "CB-774546090_35m",
@@ -56,7 +56,7 @@
       "home_team": "Denver Nuggets",
       "away_team": "New York Knicks",
       "quarter": 4,
-      "elapsed_mins": 47.8,
+      "elapsed_mins": 48.0,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "113-92",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 14:35:17"
+      "updated_at_tr": "2026-11-27 14:36:16"
     },
     {
       "signal_id": "CB-774554240_35m",
@@ -91,15 +91,15 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Indiana Pacers",
       "quarter": 2,
-      "elapsed_mins": 21.6,
+      "elapsed_mins": 22.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "53-40",
-      "score_gap": 13,
+      "current_score": "58-40",
+      "score_gap": 18,
       "fav1_barem": "201-210",
       "fav1_odd": 2.76,
-      "fav2_barem": "211-220",
-      "fav2_odd": 3.37,
+      "fav2_barem": "191-200",
+      "fav2_odd": 3.53,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 14:35:17"
+      "updated_at_tr": "2026-11-27 14:36:16"
     }
   ],
   "recent_history": [
