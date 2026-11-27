@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 02:09:24",
-  "timestamp": 1795820964.62,
+  "updated_at_tr": "2026-11-28 02:10:17",
+  "timestamp": 1795821017.96,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Detroit Pistons",
       "away_team": "Oklahoma City Thunder",
       "quarter": 3,
-      "elapsed_mins": 31.5,
+      "elapsed_mins": 32.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "62-81",
-      "score_gap": 19,
+      "current_score": "62-83",
+      "score_gap": 21,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.71,
+      "fav1_odd": 2.62,
       "fav2_barem": "211-220",
-      "fav2_odd": 3.23,
+      "fav2_odd": 2.95,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.71)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.62)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 02:09:23"
+      "updated_at_tr": "2026-11-28 02:10:16"
     },
     {
       "signal_id": "CB-774724408_35m",
@@ -81,10 +81,29 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 02:09:23"
+      "updated_at_tr": "2026-11-28 02:10:16"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-774717820_35m",
+      "game_id": "CB-774717820",
+      "raw_game_id": "774717820",
+      "date": "2026-11-28",
+      "game_name": "Detroit Pistons vs Oklahoma City Thunder",
+      "current_score": "62-83",
+      "score_gap": 21,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.62)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-774710263_35m",
       "game_id": "CB-774710263",
@@ -407,25 +426,6 @@
       "actual_score": "112-90",
       "actual_range": "201-210",
       "result": "YATTI"
-    },
-    {
-      "signal_id": "CB-774546090_35m",
-      "game_id": "CB-774546090",
-      "raw_game_id": "774546090",
-      "date": "2026-11-27",
-      "game_name": "Denver Nuggets vs New York Knicks",
-      "current_score": "90-66",
-      "score_gap": 24,
-      "decision": "OYNA",
-      "pick_type": "1. Favori",
-      "target_barem": "201-210",
-      "target_barem_tr": "201-210",
-      "target_t_id": 1843,
-      "target_odd": 2.22,
-      "zone_badge": "💎 NBA 2.10–2.30 BEKLENTİ 1. FAVORİSİ (Düşük Kalan Sayı (49.5 ≤ 48.5 — %56.5)): 201-210 (2.22)",
-      "actual_score": "113-92",
-      "actual_range": "201-210",
-      "result": "TUTTU"
     }
   ]
 }
