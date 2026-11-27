@@ -134,6 +134,11 @@ def _ensure_clean_git_tracked_files():
                     "cloud_euro_symmetry_backup.csv",
                     "cloud_euro_matches_backup.csv",
                     "euro_live_matches_state.json",
+                    "live_bet_signal.json",
+                    "app.py",
+                    "period_predictor.py",
+                    "run_live_auto_scraper.py",
+                    "pull_today_results.py",
                 ],
                 cwd=BASE_DIR,
                 timeout=3,
@@ -163,6 +168,8 @@ def get_background_engine(version: str = ENGINE_VERSION) -> BackgroundEngineStat
     state = BackgroundEngineState()
 
     def _worker():
+        # Wait 6s on cold boot so the initial Streamlit UI renders immediately without CPU contention
+        time.sleep(6.0)
         while state.version == ENGINE_VERSION:
             try:
                 with SCRAPE_LOCK:
@@ -170,12 +177,12 @@ def get_background_engine(version: str = ENGINE_VERSION) -> BackgroundEngineStat
                     poll_sec = run_auto_scraper(force_manual=False)
                     state.last_run_ts = time.time()
                     state.last_run_str = datetime.now(TR_TZ).strftime("%H:%M:%S")
-                    state.next_poll_sec = max(10, min(300, int(poll_sec or 60)))
+                    state.next_poll_sec = max(25, min(300, int(poll_sec or 45)))
                     state.scan_count += 1
                     state.last_error = ""
             except Exception as e:
                 state.last_error = str(e)
-                state.next_poll_sec = 30
+                state.next_poll_sec = 45
             finally:
                 state.is_running = False
 

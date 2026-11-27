@@ -12,6 +12,7 @@ import threading
 from datetime import datetime, timedelta, timezone
 
 _FILE_LOCK = threading.RLock()
+_LAST_SETTLE_TS = {}
 
 TR_TZ = timezone(timedelta(hours=3))
 
@@ -1042,12 +1043,16 @@ def _scrape_single_league(domain: str, league: str = "nba", force_manual: bool =
     os.replace(tmp_state, paths["state_file"])
 
     try:
-        pull_today_results(only_tracked=False, days_back=1, league=league)
-        auto_settle_checkpoints(league=league)
+        now_settle = time.time()
+        last_settle = _LAST_SETTLE_TS.get(league, 0.0)
+        if force_manual or (now_settle - last_settle >= 90.0):
+            _LAST_SETTLE_TS[league] = now_settle
+            pull_today_results(only_tracked=False, days_back=1, league=league)
+            auto_settle_checkpoints(league=league)
     except Exception as e:
         print(f"[{tag}] Auto-settle warning: {e}")
 
-    if cfg["key"] == "nba":
+    if cfg["key"] == "nba" and os.environ.get("GITHUB_ACTIONS") == "true":
         try:
             _update_live_bet_signal_file(live_cards, paths, domain)
         except Exception as e:
@@ -1154,7 +1159,7 @@ def _update_live_bet_signal_file(live_cards: list, paths: dict, domain: str):
         df_c = df_log.copy()
         df_c["_min"] = df_c["check_time"].astype(str).str.extract(r"Minute\s+(\d+)", expand=False).astype(float).fillna(0.0)
         df_c["_gid_num"] = df_c["game_id"].astype(str).str.extract(r"(\d+)", expand=False).astype(float).fillna(0.0)
-        df_cl = df_c[df_c["_min"] >= 32].sort_values(["_gid_num", "_min"]).groupby("game_id", as_index=False).last().sort_values(["_gid_num", "_min"]).reset_index(drop=True)
+        df_cl = df_c[df_c["_min"] >= 32].sort_values(["_gid_num", "_min"]).groupby("game_id", as_index=False).last().sort_values(["_gid_num", "_min"]).tail(25).reset_index(drop=True)
         for _, r in df_cl.iterrows():
             gid = str(r.get("game_id", "")).strip()
             act_b = str(r.get("actual_range", "")).strip()
