@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 14:55:37",
-  "timestamp": 1795780537.95,
+  "updated_at_tr": "2026-11-27 14:56:05",
+  "timestamp": 1795780565.57,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Golden State Warriors",
       "quarter": 1,
-      "elapsed_mins": 10.2,
+      "elapsed_mins": 10.7,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "31-19",
-      "score_gap": 12,
+      "current_score": "31-22",
+      "score_gap": 9,
       "fav1_barem": "231+",
-      "fav1_odd": 2.03,
+      "fav1_odd": 2.02,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.69,
+      "fav2_odd": 3.95,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "231+",
       "target_barem_tr": "231 veya daha fazla",
       "target_barem_en": "231 or more",
       "target_t_id": 1846,
-      "target_odd": 2.03,
-      "min_acceptable_odd": 1.88,
+      "target_odd": 2.02,
+      "min_acceptable_odd": 1.87,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 231+ (2.03)",
+      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 231+ (2.02)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-27 14:55:36"
+      "updated_at_tr": "2026-11-27 14:56:04"
     },
     {
       "signal_id": "CB-774554240_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-27 14:55:36"
+      "updated_at_tr": "2026-11-27 14:56:04"
     }
   ],
   "recent_history": [
