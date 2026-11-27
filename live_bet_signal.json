@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 13:40:18",
-  "timestamp": 1795776018.91,
+  "updated_at_tr": "2026-11-27 13:41:04",
+  "timestamp": 1795776064.38,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Denver Nuggets",
       "away_team": "New York Knicks",
       "quarter": 2,
-      "elapsed_mins": 14.7,
+      "elapsed_mins": 14.8,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "26-26",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 13:40:17"
+      "updated_at_tr": "2026-11-27 13:41:02"
     },
     {
       "signal_id": "CB-774537729_35m",
@@ -56,11 +56,11 @@
       "home_team": "Golden State Warriors",
       "away_team": "Dallas Mavericks",
       "quarter": 4,
-      "elapsed_mins": 40.8,
+      "elapsed_mins": 41.0,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "96-95",
-      "score_gap": 1,
+      "current_score": "99-95",
+      "score_gap": 4,
       "fav1_barem": "221-230",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 1 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 4 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 13:40:17"
+      "updated_at_tr": "2026-11-27 13:41:02"
     }
   ],
   "recent_history": [
