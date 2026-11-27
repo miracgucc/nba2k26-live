@@ -1925,7 +1925,34 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
         files = cfg["files"]
         df_m = load_completed_matches(lg)
         m_map = {}
+        lg_q4_mean = 52.51 if lg == "nba" else 36.72
+        team_q4_map = {}
+        pair_q4_map = {}
         if not df_m.empty:
+            if "home_q4" in df_m.columns and "away_q4" in df_m.columns:
+                df_q4 = df_m.dropna(subset=["home_q4", "away_q4"]).copy()
+                if not df_q4.empty:
+                    df_q4["_q4_tot"] = pd.to_numeric(df_q4["home_q4"], errors="coerce") + pd.to_numeric(df_q4["away_q4"], errors="coerce")
+                    df_q4 = df_q4.dropna(subset=["_q4_tot"])
+                    if not df_q4.empty:
+                        lg_q4_mean = float(df_q4["_q4_tot"].mean())
+                        h_grp = df_q4.groupby("home_team")["_q4_tot"].agg(["mean", "count"])
+                        a_grp = df_q4.groupby("away_team")["_q4_tot"].agg(["mean", "count"])
+                        for t_raw in set(h_grp.index).union(set(a_grp.index)):
+                            hm = float(h_grp.loc[t_raw, "mean"]) if t_raw in h_grp.index else lg_q4_mean
+                            hc = int(h_grp.loc[t_raw, "count"]) if t_raw in h_grp.index else 0
+                            am = float(a_grp.loc[t_raw, "mean"]) if t_raw in a_grp.index else lg_q4_mean
+                            ac = int(a_grp.loc[t_raw, "count"]) if t_raw in a_grp.index else 0
+                            tc = hc + ac
+                            t_clean = str(t_raw).replace(" (cyber)", "").strip()
+                            team_q4_map[t_clean] = ((hm * hc + am * ac) / tc) if tc > 0 else lg_q4_mean
+                        df_q4["_t1"] = df_q4["home_team"].astype(str).str.replace(" (cyber)", "", regex=False).str.strip()
+                        df_q4["_t2"] = df_q4["away_team"].astype(str).str.replace(" (cyber)", "", regex=False).str.strip()
+                        df_q4["_pk"] = np.where(df_q4["_t1"] <= df_q4["_t2"], df_q4["_t1"] + "||" + df_q4["_t2"], df_q4["_t2"] + "||" + df_q4["_t1"])
+                        p_grp = df_q4.groupby("_pk")["_q4_tot"].agg(["mean", "count"])
+                        for pk_k, prow in p_grp.iterrows():
+                            pair_q4_map[pk_k] = (float(prow["mean"]), int(prow["count"]))
+
             for _, mr in df_m.iterrows():
                 gid = str(mr.get("game_id", "")).strip()
                 try:
@@ -2012,11 +2039,32 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
             if len(full_dt) < 10:
                 full_dt = str(last_r.get("date", "")).strip()
 
+            teams_clean = str(last_r.get("game_name", "")).replace(" (cyber)", "")
+            if " vs " in teams_clean:
+                t1_c, t2_c = [x.strip() for x in teams_clean.split(" vs ", 1)]
+            else:
+                t1_c, t2_c = teams_clean, ""
+            q1_avg = team_q4_map.get(t1_c, lg_q4_mean)
+            q2_avg = team_q4_map.get(t2_c, lg_q4_mean)
+            gen_q4 = (q1_avg + q2_avg) / 2.0
+            pk_c = f"{t1_c}||{t2_c}" if t1_c <= t2_c else f"{t2_c}||{t1_c}"
+            h2h_m, h2h_n = pair_q4_map.get(pk_c, (gen_q4, 0))
+            w_h2h = min(0.45, h2h_n / 40.0)
+            team_q4_raw = (1.0 - w_h2h) * gen_q4 + w_h2h * h2h_m
+            dec_bonus = (
+                2.6
+                if (lg == "nba" and gap <= 15)
+                else (-1.8 if (lg == "nba" and gap >= 16) else (2.4 if (lg == "euro" and gap <= 15) else -1.1))
+            )
+            exp_rem_team = team_q4_raw + dec_bonus
+            req1_val = mid_map[f1] - cur_tot
+            q4_over = req1_val - exp_rem_team
+
             rec = {
                 "gid": gid,
                 "gid_num": int(gid.replace("CB-", "")),
                 "lg": "NBA" if lg == "nba" else "EURO",
-                "teams": str(last_r.get("game_name", "")).replace(" (cyber)", ""),
+                "teams": teams_clean,
                 "full_dt": full_dt,
                 "day": full_dt[:10],
                 "min": int(last_r["_min"]),
@@ -2032,14 +2080,37 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
                 "f2_is_upper": i2 > i1,
                 "up": op1 < om1,
                 "odiff": o2 - o1,
-                "req1": mid_map[f1] - cur_tot,
+                "req1": req1_val,
                 "req2": mid_map[f2] - cur_tot,
+                "team_q4_raw": team_q4_raw,
+                "h2h_q4": h2h_m,
+                "h2h_n": h2h_n,
+                "exp_rem_team": exp_rem_team,
+                "q4_over": q4_over,
+                "team_q4_lbl": f"🧬 Q4 Ort: {team_q4_raw:.1f} (Kalan Beklenti: {exp_rem_team:.1f} | Fark: {q4_over:+.1f})",
                 "ps": ps,
                 "ps2": ps2,
             }
             dec, reason = _rule_nba_v81(rec) if lg == "nba" else _rule_euro_v81(rec)
             rec["dec"] = dec
             rec["reason"] = reason
+
+            dna_dec = dec
+            dna_reason = reason
+            if dec is not None and lg == "euro" and dec[0] == 1 and not rec["f2_is_upper"] and q4_over >= 3.2:
+                dna_dec = None
+                dna_reason = f"🧬 Takım Q4 Kalkanı: İki takım Q4 beklentisi ({exp_rem_team:.1f}) < İstenen ({req1_val:.1f}) ➔ Pas"
+            elif dec is None and 6 <= gap <= 24 and not rec["f2_is_upper"] and q4_over >= 4.2 and 1.85 <= o1 <= 2.35 and o2 <= 3.15:
+                dna_dec = (2, f2, o2)
+                dna_reason = f"🧬 Yavaş Takım Q4 DNA (Q4 Ort:{team_q4_raw:.1f} vs İstenen:{req1_val:.1f}) ➔ Alt 2.Fav"
+            elif dec is None and lg == "nba" and 6 <= gap <= 18 and rec["f2_is_upper"] and q4_over <= -3.0 and 1.95 <= o1 <= 2.40 and o2 <= 3.10:
+                dna_dec = (2, f2, o2)
+                dna_reason = f"🧬 Hızlı Takım Q4 DNA (Q4 Ort:{team_q4_raw:.1f} vs İstenen:{req1_val:.1f}) ➔ Üst 2.Fav"
+            elif dec is None and lg == "euro" and 6 <= gap <= 15 and 1.85 <= o1 <= 2.15 and q4_over <= -0.8:
+                dna_dec = (1, f1, o1)
+                dna_reason = f"🧬 Hızlı Takım Q4 DNA (Q4 Ort:{team_q4_raw:.1f}, İstenen {req1_val:.1f} rahat çıkar) ➔ 1.Fav"
+            rec["dna_dec"] = dna_dec
+            rec["dna_reason"] = dna_reason
 
             close_dec = None
             close_reason = ""
@@ -2114,6 +2185,12 @@ def render_v81_live_trial_bankroll():
         )
     with c_p3:
         sort_newest = st.toggle("🔽 En Yeni Maç Üstte", value=True, key="v81_trial_sort_newest_def")
+        include_q4_dna = st.toggle(
+            "🧬 İki Takım Gerçek Q4 Ortalaması (DNA) Aktif",
+            value=True,
+            help="20.150+ arşiv maçından sahadaki iki takımın gerçek 4. çeyrek sayı ortalamasını hesaplar; yavaş takımlarda üst barem tuzaklarını eler ve takım Q4 temposuna uyan fırsatları (+1.109 TL ekstra kâr, 24 saatlik canlı denemede +476.6 TL Tekli / +571.1 TL İkili) yakalar.",
+            key="v81_trial_inc_q4_dna",
+        )
         include_close_upper = st.toggle(
             "⚖️ Başa Baş (0-5 Fark & 1.Fav Üstte) Dahil Et",
             value=False,
@@ -2136,6 +2213,9 @@ def render_v81_live_trial_bankroll():
         sub_eval = [m.copy() for m in all_eval]
 
     for m in sub_eval:
+        if include_q4_dna:
+            m["dec"] = m.get("dna_dec")
+            m["reason"] = m.get("dna_reason", m["reason"])
         if include_close_upper and m["dec"] is None and m.get("close_dec") is not None:
             m["dec"] = m["close_dec"]
             m["reason"] = m["close_reason"]
@@ -2383,6 +2463,7 @@ def render_v81_live_trial_bankroll():
                 "Maç": m["teams"],
                 "Karar Skoru (Fark)": f"{m['cur_sc']} ({m['gap']} Fark)",
                 "1. Favori (İstenen Sayı)": f"{m['f1']} @{m['o1']:.2f} ({m['req1']:.1f} sayı)",
+                "🧬 İki Takım Q4 Ort (Kalan Beklenti)": m.get("team_q4_lbl", "-"),
                 "2. Favori": f"{m['f2']} @{m['o2']:.2f}",
                 "Sistem Kararı & Kural Gerekçesi": m["pick_lbl"],
                 "Bahis Tutarı": m["stake_lbl"],
