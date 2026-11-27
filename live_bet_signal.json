@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 22:22:11",
-  "timestamp": 1795807331.95,
+  "updated_at_tr": "2026-11-27 22:23:04",
+  "timestamp": 1795807384.52,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Houston Rockets",
       "quarter": 4,
-      "elapsed_mins": 41.7,
+      "elapsed_mins": 42.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "68-106",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 22:22:10"
+      "updated_at_tr": "2026-11-27 22:23:03"
     },
     {
       "signal_id": "CB-774669641_35m",
@@ -56,15 +56,15 @@
       "home_team": "Miami Heat",
       "away_team": "Indiana Pacers",
       "quarter": 2,
-      "elapsed_mins": 15.4,
+      "elapsed_mins": 16.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "38-42",
-      "score_gap": 4,
+      "current_score": "40-45",
+      "score_gap": 5,
       "fav1_barem": "221-230",
-      "fav1_odd": 3.14,
+      "fav1_odd": 3.22,
       "fav2_barem": "211-220",
-      "fav2_odd": 3.26,
+      "fav2_odd": 3.23,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 221-230: 3.14)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 221-230: 3.22)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 22:22:10"
+      "updated_at_tr": "2026-11-27 22:23:03"
     }
   ],
   "recent_history": [
