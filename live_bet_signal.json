@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 16:24:07",
-  "timestamp": 1795785847.3,
+  "updated_at_tr": "2026-11-27 16:24:51",
+  "timestamp": 1795785891.15,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Detroit Pistons",
       "quarter": 2,
-      "elapsed_mins": 15.2,
+      "elapsed_mins": 15.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "34-38",
-      "score_gap": 4,
+      "current_score": "36-38",
+      "score_gap": 2,
       "fav1_barem": "211-220",
       "fav1_odd": 3.65,
       "fav2_barem": "221-230",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 16:24:05"
+      "updated_at_tr": "2026-11-27 16:24:49"
     },
     {
       "signal_id": "CB-774572769_35m",
@@ -56,11 +56,11 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Los Angeles Clippers",
       "quarter": 4,
-      "elapsed_mins": 44.3,
+      "elapsed_mins": 44.9,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "104-89",
-      "score_gap": 15,
+      "current_score": "107-89",
+      "score_gap": 18,
       "fav1_barem": "201-210",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 16:24:05"
+      "updated_at_tr": "2026-11-27 16:24:49"
     }
   ],
   "recent_history": [
