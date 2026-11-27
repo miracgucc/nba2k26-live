@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 16:06:38",
-  "timestamp": 1795784798.84,
+  "updated_at_tr": "2026-11-27 16:07:14",
+  "timestamp": 1795784834.61,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Detroit Pistons",
       "quarter": 1,
-      "elapsed_mins": 4.0,
+      "elapsed_mins": 4.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "4-6",
-      "score_gap": 2,
+      "current_score": "5-6",
+      "score_gap": 1,
       "fav1_barem": "191-200",
       "fav1_odd": 3.96,
       "fav2_barem": "201-210",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 16:06:37"
+      "updated_at_tr": "2026-11-27 16:07:13"
     },
     {
       "signal_id": "CB-774572769_35m",
@@ -56,11 +56,11 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Los Angeles Clippers",
       "quarter": 3,
-      "elapsed_mins": 32.8,
+      "elapsed_mins": 32.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "78-62",
-      "score_gap": 16,
+      "current_score": "80-62",
+      "score_gap": 18,
       "fav1_barem": "201-210",
       "fav1_odd": 2.31,
       "fav2_barem": "211-220",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 16:06:37"
+      "updated_at_tr": "2026-11-27 16:07:13"
     }
   ],
   "recent_history": [
@@ -91,15 +91,15 @@
       "raw_game_id": "774572769",
       "date": "2026-11-27",
       "game_name": "Oklahoma City Thunder vs Los Angeles Clippers",
-      "current_score": "78-62",
-      "score_gap": 16,
+      "current_score": "80-62",
+      "score_gap": 18,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
       "target_barem_tr": "",
       "target_t_id": 0,
       "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 201-210: 2.22)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 201-210: 2.31)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
