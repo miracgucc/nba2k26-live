@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 14:45:14",
-  "timestamp": 1795779914.99,
+  "updated_at_tr": "2026-11-27 14:45:56",
+  "timestamp": 1795779956.78,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 14:45:13"
+      "updated_at_tr": "2026-11-27 14:45:55"
     },
     {
       "signal_id": "CB-774554240_35m",
@@ -56,11 +56,11 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Indiana Pacers",
       "quarter": 3,
-      "elapsed_mins": 28.6,
+      "elapsed_mins": 28.8,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "65-53",
-      "score_gap": 12,
+      "current_score": "68-53",
+      "score_gap": 15,
       "fav1_barem": "191-200",
       "fav1_odd": 2.6,
       "fav2_barem": "201-210",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 14:45:13"
+      "updated_at_tr": "2026-11-27 14:45:55"
     }
   ],
   "recent_history": [
