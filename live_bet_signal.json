@@ -1,13 +1,13 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 03:16:08",
-  "timestamp": 1795738568.74,
+  "updated_at_tr": "2026-11-27 03:17:01",
+  "timestamp": 1795738621.68,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
   "chain_state": {
-    "prev_shift": -1,
-    "prev2_shift": 1
+    "prev_shift": 1,
+    "prev2_shift": -1
   },
   "has_active_play_signal": false,
   "current_play_signal": null,
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 03:16:07"
+      "updated_at_tr": "2026-11-27 03:17:00"
     },
     {
       "signal_id": "CB-774441457_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 03:16:07"
+      "updated_at_tr": "2026-11-27 03:17:00"
     },
     {
       "signal_id": "CB-774435562_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 03:16:07"
+      "updated_at_tr": "2026-11-27 03:17:00"
     }
   ],
   "recent_history": [
@@ -135,9 +135,9 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.51)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "113-106",
+      "actual_range": "211-220",
+      "result": "PAS"
     },
     {
       "signal_id": "CB-774429629_35m",
