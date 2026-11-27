@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 05:42:24",
-  "timestamp": 1795747344.94,
+  "updated_at_tr": "2026-11-27 05:43:05",
+  "timestamp": 1795747385.76,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Detroit Pistons",
       "quarter": 2,
-      "elapsed_mins": 14.2,
+      "elapsed_mins": 14.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "33-30",
-      "score_gap": 3,
-      "fav1_barem": "201-210",
-      "fav1_odd": 3.42,
-      "fav2_barem": "211-220",
-      "fav2_odd": 3.6,
+      "current_score": "35-33",
+      "score_gap": 2,
+      "fav1_barem": "211-220",
+      "fav1_odd": 3.17,
+      "fav2_barem": "201-210",
+      "fav2_odd": 3.9,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.42)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.17)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 05:42:23"
+      "updated_at_tr": "2026-11-27 05:43:04"
     },
     {
       "signal_id": "CB-774458456_35m",
@@ -56,7 +56,7 @@
       "home_team": "New York Knicks",
       "away_team": "Oklahoma City Thunder",
       "quarter": 4,
-      "elapsed_mins": 39.4,
+      "elapsed_mins": 40.0,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "72-67",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 05:42:23"
+      "updated_at_tr": "2026-11-27 05:43:04"
     }
   ],
   "recent_history": [
