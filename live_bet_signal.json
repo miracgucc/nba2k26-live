@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 04:32:29",
-  "timestamp": 1795743149.63,
+  "updated_at_tr": "2026-11-27 04:33:11",
+  "timestamp": 1795743191.18,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 04:32:28"
+      "updated_at_tr": "2026-11-27 04:33:09"
     },
     {
       "signal_id": "CB-774447113_35m",
@@ -56,11 +56,11 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Houston Rockets",
       "quarter": 4,
-      "elapsed_mins": 46.0,
+      "elapsed_mins": 46.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "92-101",
-      "score_gap": 9,
+      "current_score": "92-104",
+      "score_gap": 12,
       "fav1_barem": "201-210",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 04:32:28"
+      "updated_at_tr": "2026-11-27 04:33:09"
     },
     {
       "signal_id": "CB-774458456_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 04:32:28"
+      "updated_at_tr": "2026-11-27 04:33:09"
     }
   ],
   "recent_history": [
