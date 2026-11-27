@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 19:35:03",
-  "timestamp": 1795797303.12,
+  "updated_at_tr": "2026-11-27 19:35:34",
+  "timestamp": 1795797334.59,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,8 +21,8 @@
     "elapsed_mins": 35.2,
     "in_decision_window_35m": true,
     "is_barem_open": true,
-    "current_score": "66-90",
-    "score_gap": 24,
+    "current_score": "66-91",
+    "score_gap": 25,
     "fav1_barem": "201-210",
     "fav1_odd": 2.1,
     "fav2_barem": "211-220",
@@ -36,14 +36,14 @@
     "target_odd": 2.1,
     "min_acceptable_odd": 1.95,
     "zone_type": "GOLDEN",
-    "zone_badge": "💎 NBA 2.10–2.30 BEKLENTİ 1. FAVORİSİ (Düşük Kalan Sayı (49.5 ≤ 48.5 — %56.5)): 201-210 (2.10)",
+    "zone_badge": "💎 NBA 2.10–2.30 BEKLENTİ 1. FAVORİSİ (25+ Fark Alt Barem Merkez (%58.3)): 201-210 (2.10)",
     "stakes": {
       "kasa_8000": 400,
       "kasa_10000": 500,
       "kasa_15000": 750,
       "kasa_20000": 1000
     },
-    "updated_at_tr": "2026-11-27 19:35:01"
+    "updated_at_tr": "2026-11-27 19:35:33"
   },
   "active_signals": [
     {
@@ -57,8 +57,8 @@
       "elapsed_mins": 35.2,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "66-90",
-      "score_gap": 24,
+      "current_score": "66-91",
+      "score_gap": 25,
       "fav1_barem": "201-210",
       "fav1_odd": 2.1,
       "fav2_barem": "211-220",
@@ -72,14 +72,14 @@
       "target_odd": 2.1,
       "min_acceptable_odd": 1.95,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA 2.10–2.30 BEKLENTİ 1. FAVORİSİ (Düşük Kalan Sayı (49.5 ≤ 48.5 — %56.5)): 201-210 (2.10)",
+      "zone_badge": "💎 NBA 2.10–2.30 BEKLENTİ 1. FAVORİSİ (25+ Fark Alt Barem Merkez (%58.3)): 201-210 (2.10)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-27 19:35:01"
+      "updated_at_tr": "2026-11-27 19:35:33"
     }
   ],
   "live_matches": [
@@ -91,15 +91,15 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Houston Rockets",
       "quarter": 1,
-      "elapsed_mins": 10.3,
+      "elapsed_mins": 10.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "24-25",
       "score_gap": 1,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.64,
+      "fav1_odd": 3.5,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.66,
+      "fav2_odd": 3.57,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -109,14 +109,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.64)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.50)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 19:35:01"
+      "updated_at_tr": "2026-11-27 19:35:33"
     },
     {
       "signal_id": "CB-774619076_35m",
@@ -129,8 +129,8 @@
       "elapsed_mins": 35.2,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "66-90",
-      "score_gap": 24,
+      "current_score": "66-91",
+      "score_gap": 25,
       "fav1_barem": "201-210",
       "fav1_odd": 2.1,
       "fav2_barem": "211-220",
@@ -144,14 +144,14 @@
       "target_odd": 2.1,
       "min_acceptable_odd": 1.95,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA 2.10–2.30 BEKLENTİ 1. FAVORİSİ (Düşük Kalan Sayı (49.5 ≤ 48.5 — %56.5)): 201-210 (2.10)",
+      "zone_badge": "💎 NBA 2.10–2.30 BEKLENTİ 1. FAVORİSİ (25+ Fark Alt Barem Merkez (%58.3)): 201-210 (2.10)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-27 19:35:01"
+      "updated_at_tr": "2026-11-27 19:35:33"
     }
   ],
   "recent_history": [
@@ -161,15 +161,15 @@
       "raw_game_id": "774619076",
       "date": "2026-11-27",
       "game_name": "New York Knicks vs Oklahoma City Thunder",
-      "current_score": "66-90",
-      "score_gap": 24,
+      "current_score": "66-91",
+      "score_gap": 25,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_t_id": 1843,
       "target_odd": 2.1,
-      "zone_badge": "💎 NBA 2.10–2.30 BEKLENTİ 1. FAVORİSİ (Düşük Kalan Sayı (49.5 ≤ 48.5 — %56.5)): 201-210 (2.10)",
+      "zone_badge": "💎 NBA 2.10–2.30 BEKLENTİ 1. FAVORİSİ (25+ Fark Alt Barem Merkez (%58.3)): 201-210 (2.10)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
