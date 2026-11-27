@@ -1,13 +1,13 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 16:29:26",
-  "timestamp": 1795786166.64,
+  "updated_at_tr": "2026-11-27 16:30:02",
+  "timestamp": 1795786202.32,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
   "chain_state": {
-    "prev_shift": 0,
-    "prev2_shift": 1
+    "prev_shift": 1,
+    "prev2_shift": 0
   },
   "has_active_play_signal": false,
   "current_play_signal": null,
@@ -21,7 +21,7 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Detroit Pistons",
       "quarter": 2,
-      "elapsed_mins": 18.6,
+      "elapsed_mins": 18.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "45-46",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 16:29:25"
+      "updated_at_tr": "2026-11-27 16:30:01"
     },
     {
       "signal_id": "CB-774572769_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 16:29:25"
+      "updated_at_tr": "2026-11-27 16:30:01"
     }
   ],
   "recent_history": [
@@ -100,9 +100,9 @@
       "target_t_id": 1843,
       "target_odd": 2.18,
       "zone_badge": "💎 NBA 2.10–2.30 BEKLENTİ 1. FAVORİSİ (Düşük Kalan Sayı (47.5 ≤ 48.5 — %56.5)): 201-210 (2.18)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "113-98",
+      "actual_range": "211-220",
+      "result": "YATTI"
     },
     {
       "signal_id": "CB-774563308_35m",
