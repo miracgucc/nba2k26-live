@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 10:07:54",
-  "timestamp": 1795763274.92,
+  "updated_at_tr": "2026-11-27 10:08:35",
+  "timestamp": 1795763315.21,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Houston Rockets",
       "quarter": 5,
-      "elapsed_mins": 52.3,
+      "elapsed_mins": 52.9,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "109-106",
-      "score_gap": 3,
+      "current_score": "109-108",
+      "score_gap": 1,
       "fav1_barem": "201-210",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 3 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 1 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 10:07:53"
+      "updated_at_tr": "2026-11-27 10:08:33"
     },
     {
       "signal_id": "CB-774504663_35m",
@@ -56,15 +56,15 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Indiana Pacers",
       "quarter": 1,
-      "elapsed_mins": 5.4,
+      "elapsed_mins": 6.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "5-11",
-      "score_gap": 6,
+      "current_score": "8-11",
+      "score_gap": 3,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.77,
+      "fav1_odd": 3.74,
       "fav2_barem": "191-200",
-      "fav2_odd": 4.16,
+      "fav2_odd": 3.98,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.77)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.74)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 10:07:53"
+      "updated_at_tr": "2026-11-27 10:08:33"
     },
     {
       "signal_id": "CB-774497863_35m",
@@ -91,15 +91,15 @@
       "home_team": "New York Knicks",
       "away_team": "Miami Heat",
       "quarter": 3,
-      "elapsed_mins": 29.3,
+      "elapsed_mins": 29.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "67-62",
-      "score_gap": 5,
+      "current_score": "69-65",
+      "score_gap": 4,
       "fav1_barem": "211-220",
       "fav1_odd": 3.06,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.48,
+      "fav2_odd": 3.21,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 10:07:53"
+      "updated_at_tr": "2026-11-27 10:08:33"
     }
   ],
   "recent_history": [
