@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 12:12:10",
-  "timestamp": 1795770730.64,
+  "updated_at_tr": "2026-11-27 12:12:57",
+  "timestamp": 1795770777.05,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 12:12:09"
+      "updated_at_tr": "2026-11-27 12:12:55"
     },
     {
       "signal_id": "CB-774519181_35m",
@@ -56,8 +56,8 @@
       "home_team": "New York Knicks",
       "away_team": "Denver Nuggets",
       "quarter": 3,
-      "elapsed_mins": 35.5,
-      "in_decision_window_35m": true,
+      "elapsed_mins": 36.0,
+      "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "83-95",
       "score_gap": 12,
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 12:12:09"
+      "updated_at_tr": "2026-11-27 12:12:55"
     }
   ],
   "recent_history": [
