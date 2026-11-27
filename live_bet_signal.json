@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 00:22:57",
-  "timestamp": 1795814577.98,
+  "updated_at_tr": "2026-11-28 00:23:34",
+  "timestamp": 1795814614.5,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
       "quarter": 2,
-      "elapsed_mins": 14.4,
+      "elapsed_mins": 14.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "41-27",
-      "score_gap": 14,
+      "current_score": "42-27",
+      "score_gap": 15,
       "fav1_barem": "231+",
       "fav1_odd": 1.81,
       "fav2_barem": "221-230",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 00:22:56"
+      "updated_at_tr": "2026-11-28 00:23:33"
     },
     {
       "signal_id": "CB-774692666_35m",
@@ -56,11 +56,11 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Oklahoma City Thunder",
       "quarter": 4,
-      "elapsed_mins": 40.1,
+      "elapsed_mins": 40.8,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "87-103",
-      "score_gap": 16,
+      "current_score": "87-106",
+      "score_gap": 19,
       "fav1_barem": "221-230",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 00:22:56"
+      "updated_at_tr": "2026-11-28 00:23:33"
     }
   ],
   "recent_history": [
