@@ -1344,18 +1344,48 @@ def render_live_dashboard():
             w_rec_pair = match_wave["recommended_pair"]
             w_rec_prob = match_wave["recommended_pair_prob"]
 
+            # Once the match reaches 36.0m (NBA) / 30.0m (Euro) or barems close at Q3 end, LOCK the decision card to the last logged closing snapshot!
+            _dec_fav1 = fav1
+            _dec_fav1_odd = float(fav1_odd or 0.0)
+            _dec_fav2 = fav2
+            _dec_fav2_odd = float(m.get("bookie_fav_2_odd", 99.0) or 99.0)
+            _dec_gap = _gap_now
+            _dec_tot = int(tot_sc)
+            _dec_odds_map = m.get("odds", {})
+            _is_locked_close = float(el_m) >= float(CLOSE_MIN) or (float(el_m) >= float(CLOSING_START) and not is_barem_open)
+            if _is_locked_close and not df_log.empty and "game_id" in df_log.columns:
+                _g_rows_lock = df_log[df_log["game_id"].astype(str).str.strip() == str(m.get("game_id", "")).strip()]
+                if not _g_rows_lock.empty:
+                    _lr_lock = _g_rows_lock.iloc[-1]
+                    _sc_lock = str(_lr_lock.get("current_score", ""))
+                    if "-" in _sc_lock:
+                        try:
+                            _lh, _la = map(int, _sc_lock.split("-"))
+                            _dec_tot = _lh + _la
+                            _dec_gap = abs(_lh - _la)
+                        except Exception:
+                            pass
+                    _o_raw_lock = {bn: float(_lr_lock.get(BAREM_TO_ODD_COL[bn], 99.0) or 99.0) for bn, _, _ in BAREM_RANGES}
+                    _p_raw_lock = {bn: float(_lr_lock.get(BAREM_TO_PROB_COL[bn], 0.0) or 0.0) for bn, _, _ in BAREM_RANGES}
+                    _om_lock, _ = resolve_effective_barem_odds(_o_raw_lock, _p_raw_lock, league=ACTIVE_LEAGUE)
+                    if len(_om_lock) >= 2:
+                        _arr_lock = sorted(_om_lock.items(), key=lambda x: x[1])
+                        _dec_fav1, _dec_fav1_odd = _arr_lock[0]
+                        _dec_fav2, _dec_fav2_odd = _arr_lock[1]
+                        _dec_odds_map = _om_lock
+
             smart = analyze_smart_35m_decision(
-                fav1_barem=fav1,
-                fav1_odd=float(fav1_odd or 0.0),
-                fav2_barem=fav2,
-                fav2_odd=float(m.get("bookie_fav_2_odd", 99.0) or 99.0),
+                fav1_barem=_dec_fav1,
+                fav1_odd=_dec_fav1_odd,
+                fav2_barem=_dec_fav2,
+                fav2_odd=_dec_fav2_odd,
                 game_id=str(m.get("game_id", "")),
                 df_log=df_log,
                 recent_chain=recent_chain,
-                score_gap=_gap_now,
-                cur_tot=int(tot_sc),
-                elapsed_mins=float(el_m),
-                odds_map=m.get("odds", {}),
+                score_gap=_dec_gap,
+                cur_tot=_dec_tot,
+                elapsed_mins=float(DEC_MIN if _is_locked_close else el_m),
+                odds_map=_dec_odds_map,
                 league=ACTIVE_LEAGUE,
                 proj_tot=pred_tot,
             )
