@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 22:59:44",
-  "timestamp": 1795809584.47,
+  "updated_at_tr": "2026-11-27 23:00:25",
+  "timestamp": 1795809625.1,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "New York Knicks",
       "quarter": 2,
-      "elapsed_mins": 14.6,
+      "elapsed_mins": 14.7,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "32-19",
-      "score_gap": 13,
+      "current_score": "32-21",
+      "score_gap": 11,
       "fav1_barem": "191-200",
       "fav1_odd": 3.01,
       "fav2_barem": "181-190",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 22:59:42"
+      "updated_at_tr": "2026-11-27 23:00:23"
     },
     {
       "signal_id": "CB-774669641_35m",
@@ -56,12 +56,12 @@
       "home_team": "Miami Heat",
       "away_team": "Indiana Pacers",
       "quarter": 4,
-      "elapsed_mins": 36.3,
+      "elapsed_mins": 36.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "89-79",
-      "score_gap": 10,
-      "fav1_barem": "211-220",
+      "current_score": "89-81",
+      "score_gap": 8,
+      "fav1_barem": "221-230",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
       "fav2_odd": 0.0,
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 22:59:42"
+      "updated_at_tr": "2026-11-27 23:00:23"
     }
   ],
   "recent_history": [
