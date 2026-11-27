@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 15:17:15",
-  "timestamp": 1795781835.47,
+  "updated_at_tr": "2026-11-27 15:17:55",
+  "timestamp": 1795781875.22,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Golden State Warriors",
       "quarter": 3,
-      "elapsed_mins": 24.2,
+      "elapsed_mins": 24.8,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "67-64",
+      "current_score": "69-66",
       "score_gap": 3,
       "fav1_barem": "231+",
-      "fav1_odd": 1.04,
+      "fav1_odd": 1.01,
       "fav2_barem": "221-230",
-      "fav2_odd": 10.0,
+      "fav2_odd": 9.56,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.04)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.01)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 15:17:14"
+      "updated_at_tr": "2026-11-27 15:17:54"
     },
     {
       "signal_id": "CB-774554240_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 15:17:14"
+      "updated_at_tr": "2026-11-27 15:17:54"
     },
     {
       "signal_id": "CB-774572769_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 15:17:14"
+      "updated_at_tr": "2026-11-27 15:17:54"
     }
   ],
   "recent_history": [
