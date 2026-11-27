@@ -2231,13 +2231,12 @@ def render_v81_live_trial_bankroll():
         period_mode = st.radio(
             "📅 Takip Başlangıç Noktası:",
             [
-                "🆕 Yeni Sistem (v8.1) Kurulduktan Sonrası (26 Kasım 13:00+)",
-                "📆 Bugünün Tüm Maçları (26 Kasım 00:00+)",
-                "🏆 Tüm 15 Günlük Canlı Veri (12 Kasım – Bugün)",
+                "🚀 27 Kasım 00:00'dan İtibaren Canlı Kasa (27 Kasım – Bugün)",
+                "🏆 Tüm Canlı Veri (12 Kasım – Bugün)",
             ],
             index=0,
             horizontal=False,
-            key="v81_trial_period_mode",
+            key="v81_trial_period_mode_nov27",
         )
     with c_p2:
         filter_mode = st.radio(
@@ -2256,7 +2255,7 @@ def render_v81_live_trial_bankroll():
         include_q4_dna = st.toggle(
             "🧬 İki Takım Gerçek Q4 Ortalaması (DNA) Aktif",
             value=True,
-            help="20.150+ arşiv maçından sahadaki iki takımın gerçek 4. çeyrek sayı ortalamasını hesaplar; yavaş takımlarda üst barem tuzaklarını eler ve takım Q4 temposuna uyan fırsatları (+1.109 TL ekstra kâr, 24 saatlik canlı denemede +476.6 TL Tekli / +571.1 TL İkili) yakalar.",
+            help="20.150+ arşiv maçından sahadaki iki takımın gerçek 4. çeyrek sayı ortalamasını hesaplar; yavaş takımlarda üst barem tuzaklarını eler ve takım Q4 temposuna uyan fırsatları (+1.109 TL ekstra kâr) yakalar.",
             key="v81_trial_inc_q4_dna",
         )
         include_close_upper = st.toggle(
@@ -2265,18 +2264,9 @@ def render_v81_live_trial_bankroll():
             help="0-5 sayı farkla başa baş giren maçlarda, 1. Favori zaten üstteki baremse (2.Fav alttaysa) maç yavaşlamayacağı için 1. Favoriyi (+2.106 TL ekstra kâr) kasaya dahil eder.",
             key="v81_trial_inc_close_upper",
         )
-        include_1235 = st.toggle(
-            "12:35-12:40 Maçlarını Dahil Et",
-            value=False,
-            help="Sistem güncellenirken sahada oynanmakta olan 12:35 (Milano-Baskonia) ve 12:40 (Knicks-Celtics) maçlarını da yeni kasaya dahil eder.",
-            key="v81_trial_inc_1235",
-        )
 
-    if "Yeni Sistem" in period_mode:
-        cutoff_dt = "2026-11-26 12:30" if include_1235 else "2026-11-26 13:00"
-        sub_eval = [m.copy() for m in all_eval if m["full_dt"] >= cutoff_dt]
-    elif "Bugünün" in period_mode:
-        sub_eval = [m.copy() for m in all_eval if m["day"] >= "2026-11-26"]
+    if "27 Kasım" in period_mode:
+        sub_eval = [m.copy() for m in all_eval if m["day"] >= "2026-11-27"]
     else:
         sub_eval = [m.copy() for m in all_eval]
 
