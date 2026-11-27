@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 14:41:26",
-  "timestamp": 1795779686.73,
+  "updated_at_tr": "2026-11-27 14:42:18",
+  "timestamp": 1795779738.47,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Golden State Warriors",
       "quarter": 1,
-      "elapsed_mins": 0.9,
+      "elapsed_mins": 1.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "0-2",
-      "score_gap": 2,
+      "current_score": "0-3",
+      "score_gap": 3,
       "fav1_barem": "231+",
       "fav1_odd": 3.0,
       "fav2_barem": "221-230",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 14:41:25"
+      "updated_at_tr": "2026-11-27 14:42:16"
     },
     {
       "signal_id": "CB-774554240_35m",
@@ -56,15 +56,15 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Indiana Pacers",
       "quarter": 3,
-      "elapsed_mins": 24.7,
+      "elapsed_mins": 25.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "60-42",
-      "score_gap": 18,
-      "fav1_barem": "201-210",
-      "fav1_odd": 2.7,
-      "fav2_barem": "191-200",
-      "fav2_odd": 2.94,
+      "current_score": "60-45",
+      "score_gap": 15,
+      "fav1_barem": "191-200",
+      "fav1_odd": 2.71,
+      "fav2_barem": "201-210",
+      "fav2_odd": 2.91,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.70)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.71)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 14:41:25"
+      "updated_at_tr": "2026-11-27 14:42:16"
     }
   ],
   "recent_history": [
