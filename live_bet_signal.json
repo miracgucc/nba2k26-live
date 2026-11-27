@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 17:00:11",
-  "timestamp": 1795788011.8,
+  "updated_at_tr": "2026-11-27 17:00:49",
+  "timestamp": 1795788049.41,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,12 +21,12 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Detroit Pistons",
       "quarter": 4,
-      "elapsed_mins": 38.4,
+      "elapsed_mins": 38.9,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "104-84",
       "score_gap": 20,
-      "fav1_barem": "231+",
+      "fav1_barem": "221-230",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
       "fav2_odd": 0.0,
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 17:00:10"
+      "updated_at_tr": "2026-11-27 17:00:47"
     },
     {
       "signal_id": "CB-774591476_35m",
@@ -55,16 +55,16 @@
       "game_name": "New York Knicks vs Boston Celtics",
       "home_team": "New York Knicks",
       "away_team": "Boston Celtics",
-      "quarter": 1,
-      "elapsed_mins": 12.0,
+      "quarter": 2,
+      "elapsed_mins": 12.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "15-38",
-      "score_gap": 23,
+      "current_score": "15-41",
+      "score_gap": 26,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.94,
+      "fav1_odd": 3.71,
       "fav2_barem": "211-220",
-      "fav2_odd": 4.0,
+      "fav2_odd": 3.99,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.94)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.71)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 17:00:10"
+      "updated_at_tr": "2026-11-27 17:00:48"
     }
   ],
   "recent_history": [
