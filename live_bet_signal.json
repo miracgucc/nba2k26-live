@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 07:49:49",
-  "timestamp": 1795754989.1,
+  "updated_at_tr": "2026-11-27 07:50:21",
+  "timestamp": 1795755021.12,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,42 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 07:49:47"
+      "updated_at_tr": "2026-11-27 07:50:19"
+    },
+    {
+      "signal_id": "CB-774485882_35m",
+      "game_id": "CB-774485882",
+      "raw_game_id": "774485882",
+      "game_name": "Los Angeles Lakers vs Denver Nuggets",
+      "home_team": "Los Angeles Lakers",
+      "away_team": "Denver Nuggets",
+      "quarter": 1,
+      "elapsed_mins": 0.0,
+      "in_decision_window_35m": false,
+      "is_barem_open": false,
+      "current_score": "0-0",
+      "score_gap": 0,
+      "fav1_barem": "-",
+      "fav1_odd": 0.0,
+      "fav2_barem": "-",
+      "fav2_odd": 0.0,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_barem_en": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "min_acceptable_odd": 0.0,
+      "zone_type": "PASS_CLUTCH",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 0 Sayı Fark)",
+      "stakes": {
+        "kasa_8000": 0,
+        "kasa_10000": 0,
+        "kasa_15000": 0,
+        "kasa_20000": 0
+      },
+      "updated_at_tr": "2026-11-27 07:50:19"
     },
     {
       "signal_id": "CB-774480126_35m",
@@ -81,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 07:49:47"
+      "updated_at_tr": "2026-11-27 07:50:19"
     }
   ],
   "recent_history": [
