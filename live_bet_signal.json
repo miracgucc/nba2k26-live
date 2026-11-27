@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 23:21:36",
-  "timestamp": 1795810896.58,
+  "updated_at_tr": "2026-11-27 23:22:10",
+  "timestamp": 1795810930.08,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 23:21:35"
+      "updated_at_tr": "2026-11-27 23:22:09"
     },
     {
       "signal_id": "CB-774692666_35m",
@@ -56,15 +56,15 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Oklahoma City Thunder",
       "quarter": 1,
-      "elapsed_mins": 1.1,
+      "elapsed_mins": 1.7,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "4-0",
-      "score_gap": 4,
+      "current_score": "4-5",
+      "score_gap": 1,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.61,
+      "fav1_odd": 3.63,
       "fav2_barem": "191-200",
-      "fav2_odd": 3.93,
+      "fav2_odd": 3.91,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.61)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.63)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 23:21:35"
+      "updated_at_tr": "2026-11-27 23:22:09"
     },
     {
       "signal_id": "CB-774669641_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 23:21:35"
+      "updated_at_tr": "2026-11-27 23:22:09"
     }
   ],
   "recent_history": [
@@ -135,9 +135,9 @@
       "target_t_id": 1844,
       "target_odd": 2.31,
       "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (6–15 İdeal Fark (%50.0 / +8.917 TL)): 211-220 (2.31)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "112-107",
+      "actual_range": "211-220",
+      "result": "TUTTU"
     },
     {
       "signal_id": "CB-774659789_35m",
