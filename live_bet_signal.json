@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 00:51:08",
-  "timestamp": 1795816268.94,
+  "updated_at_tr": "2026-11-28 00:51:49",
+  "timestamp": 1795816309.81,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
       "quarter": 3,
-      "elapsed_mins": 34.1,
+      "elapsed_mins": 34.8,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "82-69",
+      "current_score": "85-72",
       "score_gap": 13,
       "fav1_barem": "211-220",
-      "fav1_odd": 2.37,
-      "fav2_barem": "201-210",
-      "fav2_odd": 3.24,
+      "fav1_odd": 2.15,
+      "fav2_barem": "221-230",
+      "fav2_odd": 3.63,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 211-220: 2.37)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 211-220: 2.15)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 00:51:07"
+      "updated_at_tr": "2026-11-28 00:51:48"
     },
     {
       "signal_id": "CB-774710263_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 00:51:07"
+      "updated_at_tr": "2026-11-28 00:51:48"
     }
   ],
   "recent_history": [
@@ -91,7 +91,7 @@
       "raw_game_id": "774701933",
       "date": "2026-11-28",
       "game_name": "Houston Rockets vs Golden State Warriors",
-      "current_score": "82-69",
+      "current_score": "85-72",
       "score_gap": 13,
       "decision": "PAS",
       "pick_type": "PAS",
@@ -99,7 +99,7 @@
       "target_barem_tr": "",
       "target_t_id": 0,
       "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 211-220: 2.37)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 211-220: 2.15)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
