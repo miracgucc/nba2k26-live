@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 05:08:31",
-  "timestamp": 1795745311.53,
+  "updated_at_tr": "2026-11-27 05:09:08",
+  "timestamp": 1795745348.93,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,10 +21,10 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Cleveland Cavaliers",
       "quarter": 4,
-      "elapsed_mins": 46.0,
+      "elapsed_mins": 46.4,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "82-93",
+      "current_score": "84-95",
       "score_gap": 11,
       "fav1_barem": "181-190",
       "fav1_odd": 0.0,
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 05:08:30"
+      "updated_at_tr": "2026-11-27 05:09:07"
     },
     {
       "signal_id": "CB-774458456_35m",
@@ -59,8 +59,8 @@
       "elapsed_mins": 19.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "34-26",
-      "score_gap": 8,
+      "current_score": "34-27",
+      "score_gap": 7,
       "fav1_barem": "181-190",
       "fav1_odd": 3.09,
       "fav2_barem": "191-200",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 05:08:30"
+      "updated_at_tr": "2026-11-27 05:09:07"
     }
   ],
   "recent_history": [
