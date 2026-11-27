@@ -1,13 +1,13 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 07:12:53",
-  "timestamp": 1795752773.63,
+  "updated_at_tr": "2026-11-27 07:13:45",
+  "timestamp": 1795752825.09,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
   "chain_state": {
     "prev_shift": 0,
-    "prev2_shift": -2
+    "prev2_shift": 0
   },
   "has_active_play_signal": false,
   "current_play_signal": null,
@@ -21,32 +21,32 @@
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
       "quarter": 2,
-      "elapsed_mins": 22.7,
+      "elapsed_mins": 23.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "51-49",
+      "current_score": "54-52",
       "score_gap": 2,
       "fav1_barem": "231+",
-      "fav1_odd": 2.12,
+      "fav1_odd": 1.86,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.33,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 231+: 2.12)",
+      "fav2_odd": 3.38,
+      "decision": "OYNA",
+      "pick_type": "1. Favori",
+      "target_barem": "231+",
+      "target_barem_tr": "231 veya daha fazla",
+      "target_barem_en": "231 or more",
+      "target_t_id": 1846,
+      "target_odd": 1.86,
+      "min_acceptable_odd": 1.71,
+      "zone_type": "GOLDEN",
+      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 231+ (1.86)",
       "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
+        "kasa_8000": 400,
+        "kasa_10000": 500,
+        "kasa_15000": 750,
+        "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-27 07:12:52"
+      "updated_at_tr": "2026-11-27 07:13:43"
     },
     {
       "signal_id": "CB-774468912_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 07:12:52"
+      "updated_at_tr": "2026-11-27 07:13:43"
     },
     {
       "signal_id": "CB-774480126_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 07:12:52"
+      "updated_at_tr": "2026-11-27 07:13:43"
     }
   ],
   "recent_history": [
@@ -135,9 +135,9 @@
       "target_t_id": 1843,
       "target_odd": 2.06,
       "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 201-210 (2.06)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "114-95",
+      "actual_range": "201-210",
+      "result": "TUTTU"
     },
     {
       "signal_id": "CB-774463629_35m",
