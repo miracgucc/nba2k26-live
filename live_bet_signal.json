@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 19:33:50",
-  "timestamp": 1795797230.01,
+  "updated_at_tr": "2026-11-27 19:34:25",
+  "timestamp": 1795797265.5,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -18,7 +18,7 @@
     "home_team": "New York Knicks",
     "away_team": "Oklahoma City Thunder",
     "quarter": 3,
-    "elapsed_mins": 34.5,
+    "elapsed_mins": 34.6,
     "in_decision_window_35m": true,
     "is_barem_open": true,
     "current_score": "66-90",
@@ -26,24 +26,24 @@
     "fav1_barem": "211-220",
     "fav1_odd": 2.32,
     "fav2_barem": "201-210",
-    "fav2_odd": 2.58,
+    "fav2_odd": 2.54,
     "decision": "OYNA",
     "pick_type": "2. Favori",
     "target_barem": "201-210",
     "target_barem_tr": "201-210",
     "target_barem_en": "201-210",
     "target_t_id": 1843,
-    "target_odd": 2.58,
-    "min_acceptable_odd": 2.43,
+    "target_odd": 2.54,
+    "min_acceptable_odd": 2.39,
     "zone_type": "TRAP_LOW",
-    "zone_badge": "🧊 NBA 2.30–2.50 KOPMUŞ MAÇ ALT BAREM 2. FAVORİ: 201-210 (2.58)",
+    "zone_badge": "🧊 NBA 2.30–2.50 KOPMUŞ MAÇ ALT BAREM 2. FAVORİ: 201-210 (2.54)",
     "stakes": {
       "kasa_8000": 320,
       "kasa_10000": 400,
       "kasa_15000": 600,
       "kasa_20000": 800
     },
-    "updated_at_tr": "2026-11-27 19:33:48"
+    "updated_at_tr": "2026-11-27 19:34:24"
   },
   "active_signals": [
     {
@@ -54,7 +54,7 @@
       "home_team": "New York Knicks",
       "away_team": "Oklahoma City Thunder",
       "quarter": 3,
-      "elapsed_mins": 34.5,
+      "elapsed_mins": 34.6,
       "in_decision_window_35m": true,
       "is_barem_open": true,
       "current_score": "66-90",
@@ -62,24 +62,24 @@
       "fav1_barem": "211-220",
       "fav1_odd": 2.32,
       "fav2_barem": "201-210",
-      "fav2_odd": 2.58,
+      "fav2_odd": 2.54,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_barem_en": "201-210",
       "target_t_id": 1843,
-      "target_odd": 2.58,
-      "min_acceptable_odd": 2.43,
+      "target_odd": 2.54,
+      "min_acceptable_odd": 2.39,
       "zone_type": "TRAP_LOW",
-      "zone_badge": "🧊 NBA 2.30–2.50 KOPMUŞ MAÇ ALT BAREM 2. FAVORİ: 201-210 (2.58)",
+      "zone_badge": "🧊 NBA 2.30–2.50 KOPMUŞ MAÇ ALT BAREM 2. FAVORİ: 201-210 (2.54)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-27 19:33:48"
+      "updated_at_tr": "2026-11-27 19:34:24"
     }
   ],
   "live_matches": [
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 19:33:48"
+      "updated_at_tr": "2026-11-27 19:34:24"
     },
     {
       "signal_id": "CB-774619076_35m",
@@ -126,7 +126,7 @@
       "home_team": "New York Knicks",
       "away_team": "Oklahoma City Thunder",
       "quarter": 3,
-      "elapsed_mins": 34.5,
+      "elapsed_mins": 34.6,
       "in_decision_window_35m": true,
       "is_barem_open": true,
       "current_score": "66-90",
@@ -134,24 +134,24 @@
       "fav1_barem": "211-220",
       "fav1_odd": 2.32,
       "fav2_barem": "201-210",
-      "fav2_odd": 2.58,
+      "fav2_odd": 2.54,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_barem_en": "201-210",
       "target_t_id": 1843,
-      "target_odd": 2.58,
-      "min_acceptable_odd": 2.43,
+      "target_odd": 2.54,
+      "min_acceptable_odd": 2.39,
       "zone_type": "TRAP_LOW",
-      "zone_badge": "🧊 NBA 2.30–2.50 KOPMUŞ MAÇ ALT BAREM 2. FAVORİ: 201-210 (2.58)",
+      "zone_badge": "🧊 NBA 2.30–2.50 KOPMUŞ MAÇ ALT BAREM 2. FAVORİ: 201-210 (2.54)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-27 19:33:48"
+      "updated_at_tr": "2026-11-27 19:34:24"
     }
   ],
   "recent_history": [
@@ -168,8 +168,8 @@
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_t_id": 1843,
-      "target_odd": 2.58,
-      "zone_badge": "🧊 NBA 2.30–2.50 KOPMUŞ MAÇ ALT BAREM 2. FAVORİ: 201-210 (2.58)",
+      "target_odd": 2.54,
+      "zone_badge": "🧊 NBA 2.30–2.50 KOPMUŞ MAÇ ALT BAREM 2. FAVORİ: 201-210 (2.54)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
