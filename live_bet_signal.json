@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 17:53:22",
-  "timestamp": 1795791202.78,
+  "updated_at_tr": "2026-11-27 17:53:58",
+  "timestamp": 1795791238.46,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 17:53:20"
+      "updated_at_tr": "2026-11-27 17:53:57"
     },
     {
       "signal_id": "CB-774601221_35m",
@@ -56,15 +56,15 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Atlanta Hawks",
       "quarter": 2,
-      "elapsed_mins": 21.0,
+      "elapsed_mins": 21.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "52-49",
       "score_gap": 3,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.1,
+      "fav1_odd": 3.2,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.5,
+      "fav2_odd": 3.54,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.10)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.20)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 17:53:20"
+      "updated_at_tr": "2026-11-27 17:53:57"
     },
     {
       "signal_id": "CB-774591476_35m",
@@ -91,7 +91,7 @@
       "home_team": "New York Knicks",
       "away_team": "Boston Celtics",
       "quarter": 4,
-      "elapsed_mins": 47.5,
+      "elapsed_mins": 47.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "99-104",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 17:53:20"
+      "updated_at_tr": "2026-11-27 17:53:57"
     }
   ],
   "recent_history": [
