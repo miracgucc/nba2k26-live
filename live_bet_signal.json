@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 18:36:06",
-  "timestamp": 1795793766.19,
+  "updated_at_tr": "2026-11-27 18:36:42",
+  "timestamp": 1795793802.29,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -26,27 +26,27 @@
       "is_barem_open": true,
       "current_score": "59-47",
       "score_gap": 12,
-      "fav1_barem": "201-210",
-      "fav1_odd": 2.66,
-      "fav2_barem": "211-220",
-      "fav2_odd": 2.93,
+      "fav1_barem": "211-220",
+      "fav1_odd": 2.73,
+      "fav2_barem": "201-210",
+      "fav2_odd": 2.83,
       "decision": "OYNA",
       "pick_type": "2. Favori",
-      "target_barem": "211-220",
-      "target_barem_tr": "211-220",
-      "target_barem_en": "211-220",
-      "target_t_id": 1844,
-      "target_odd": 2.93,
-      "min_acceptable_odd": 2.78,
+      "target_barem": "201-210",
+      "target_barem_tr": "201-210",
+      "target_barem_en": "201-210",
+      "target_t_id": 1843,
+      "target_odd": 2.83,
+      "min_acceptable_odd": 2.68,
       "zone_type": "TRAP_EXTREME",
-      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 211-220 (2.93)",
+      "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (2.83)",
       "stakes": {
         "kasa_8000": 320,
         "kasa_10000": 400,
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-27 18:36:04"
+      "updated_at_tr": "2026-11-27 18:36:40"
     },
     {
       "signal_id": "CB-774619076_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 18:36:04"
+      "updated_at_tr": "2026-11-27 18:36:40"
     }
   ],
   "recent_history": [
