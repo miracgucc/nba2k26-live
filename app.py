@@ -106,7 +106,7 @@ ENGINE_VERSION = "v7.1-selective-calibrated"
 
 
 @st.cache_resource
-def _ensure_clean_git_tracked_files():
+def _ensure_clean_git_tracked_files(v: str = "v8.1.3"):
     """Keep git-tracked seed CSV/JSON files clean on Streamlit Cloud so git pull never blocks."""
     try:
         import subprocess
@@ -1818,7 +1818,7 @@ render_live_dashboard()
 # ─────────────────────────────────────────────────────────────────────────────
 # SECTION 2.5: v8.1 LIVE TRIAL BANKROLL TRACKER (3.000 TL FRESH START FROM NOV 26 13:00)
 # ─────────────────────────────────────────────────────────────────────────────
-@st.cache_data(ttl=30, show_spinner=False)
+@st.cache_data(ttl=60, show_spinner=False)
 def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
     """Evaluates all NBA 2K26 + Cyber Euro League matches with v8.1 rules and returns (completed_eval, live_decided)."""
 
@@ -1960,17 +1960,6 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
                         for pk_k, prow in p_grp.iterrows():
                             pair_q4_map[pk_k] = (float(prow["mean"]), int(prow["count"]))
 
-            for _, mr in df_m.iterrows():
-                gid = str(mr.get("game_id", "")).strip()
-                try:
-                    tot = int(float(mr.get("total_score", 0) or 0))
-                    ht = int(float(mr.get("home_total", 0) or 0))
-                    at = int(float(mr.get("away_total", 0) or 0))
-                except Exception:
-                    continue
-                if tot >= int(cfg["min_total_valid"]):
-                    m_map[gid] = (tot, f"{ht}-{at}", get_range_from_score(tot, league=lg), str(mr.get("date", "")).strip())
-
         frames = [
             _read_csv_safe(paths["csv_path"]),
             _read_csv_safe(os.path.join(BASE_DIR, files["log_seed"])),
@@ -1983,22 +1972,45 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
         df_s = pd.concat(frames, ignore_index=True)
         df_s["game_id"] = df_s["game_id"].astype(str).str.strip()
         df_s = df_s.drop_duplicates(subset=["game_id", "check_time"], keep="last").copy()
-
-        for idx, sr in df_s.iterrows():
-            gid = str(sr["game_id"]).strip()
-            if gid in m_map:
-                tot, sc, act_b, dt = m_map[gid]
-                if pd.isna(sr.get("actual_range")) or str(sr.get("actual_range", "")).strip() in ("", "nan", "None"):
-                    df_s.at[idx, "actual_score"] = sc
-                    df_s.at[idx, "actual_range"] = act_b
-                    df_s.at[idx, "status"] = "COMPLETED"
-
         df_s["_min"] = df_s["check_time"].astype(str).str.extract(r"Minute\s+(\d+)")[0].fillna(-1).astype(int)
         df_s["_gid_num"] = df_s["game_id"].astype(str).str.extract(r"(\d+)")[0].fillna(0).astype(int)
-        df_s = df_s[df_s["_gid_num"] >= int(cfg["min_clean_gid"])].sort_values(["_gid_num", "_min"]).reset_index(drop=True)
-
         dec_min = int(cfg["decision_min"])
         close_start = int(cfg["closing_start_min"])
+        df_s = df_s[
+            (df_s["_gid_num"] >= int(cfg["min_clean_gid"]))
+            & (df_s["_min"] >= close_start)
+            & (df_s["_min"] <= dec_min)
+        ].sort_values(["_gid_num", "_min"]).reset_index(drop=True)
+
+        if not df_m.empty and not df_s.empty:
+            s_gids = set(df_s["game_id"].unique())
+            df_m_sub = df_m[df_m["game_id"].isin(s_gids)]
+            min_v = int(cfg["min_total_valid"])
+            for gid_v, tot_v, ht_v, at_v, dt_v in zip(
+                df_m_sub["game_id"],
+                df_m_sub.get("total_score", pd.Series(dtype=float)),
+                df_m_sub.get("home_total", pd.Series(dtype=float)),
+                df_m_sub.get("away_total", pd.Series(dtype=float)),
+                df_m_sub.get("date", pd.Series(dtype=str)),
+            ):
+                try:
+                    tot = int(float(tot_v or 0))
+                    ht = int(float(ht_v or 0))
+                    at = int(float(at_v or 0))
+                except Exception:
+                    continue
+                if tot >= min_v:
+                    m_map[str(gid_v).strip()] = (tot, f"{ht}-{at}", get_range_from_score(tot, league=lg), str(dt_v or "").strip())
+
+        missing_mask = df_s["actual_range"].isna() | df_s["actual_range"].astype(str).str.strip().isin(["", "nan", "None"])
+        for idx in df_s.index[missing_mask]:
+            gid = str(df_s.at[idx, "game_id"]).strip()
+            if gid in m_map:
+                tot, sc, act_b, dt = m_map[gid]
+                df_s.at[idx, "actual_score"] = sc
+                df_s.at[idx, "actual_range"] = act_b
+                df_s.at[idx, "status"] = "COMPLETED"
+
         barem_names = [b[0] for b in cfg["barem_ranges"]]
         b_cols = cfg["barem_odd_cols"]
         p_cols = cfg["barem_prob_cols"]
@@ -2011,7 +2023,7 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
         ps = 0
         ps2 = 0
         for gid, grp in df_s.groupby("game_id", sort=False):
-            cands = grp[(grp["_min"] >= close_start) & (grp["_min"] <= dec_min)]
+            cands = grp
             if cands.empty:
                 continue
             last_r = None
