@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 07:15:51",
-  "timestamp": 1795752951.29,
+  "updated_at_tr": "2026-11-27 07:16:32",
+  "timestamp": 1795752992.57,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -20,8 +20,8 @@
       "game_name": "Houston Rockets vs Golden State Warriors",
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
-      "quarter": 2,
-      "elapsed_mins": 24.0,
+      "quarter": 3,
+      "elapsed_mins": 24.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "56-55",
@@ -37,7 +37,7 @@
       "target_barem_en": "231 or more",
       "target_t_id": 1846,
       "target_odd": 2.02,
-      "min_acceptable_odd": 1.88,
+      "min_acceptable_odd": 1.87,
       "zone_type": "GOLDEN",
       "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 231+ (2.02)",
       "stakes": {
@@ -46,7 +46,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-27 07:15:50"
+      "updated_at_tr": "2026-11-27 07:16:31"
     },
     {
       "signal_id": "CB-774480126_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 07:15:50"
+      "updated_at_tr": "2026-11-27 07:16:31"
     }
   ],
   "recent_history": [
