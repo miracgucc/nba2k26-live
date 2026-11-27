@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 19:10:46",
-  "timestamp": 1795795846.7,
+  "updated_at_tr": "2026-11-27 19:12:02",
+  "timestamp": 1795795922.2,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Denver Nuggets",
       "away_team": "Detroit Pistons",
       "quarter": 4,
-      "elapsed_mins": 46.0,
+      "elapsed_mins": 46.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "108-97",
-      "score_gap": 11,
+      "current_score": "111-99",
+      "score_gap": 12,
       "fav1_barem": "211-220",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 19:10:45"
+      "updated_at_tr": "2026-11-27 19:12:01"
     },
     {
       "signal_id": "CB-774628896_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 19:10:45"
+      "updated_at_tr": "2026-11-27 19:12:01"
     },
     {
       "signal_id": "CB-774619076_35m",
@@ -91,15 +91,15 @@
       "home_team": "New York Knicks",
       "away_team": "Oklahoma City Thunder",
       "quarter": 2,
-      "elapsed_mins": 20.6,
+      "elapsed_mins": 21.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "40-53",
+      "current_score": "42-55",
       "score_gap": 13,
       "fav1_barem": "211-220",
-      "fav1_odd": 2.97,
+      "fav1_odd": 2.78,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.24,
+      "fav2_odd": 3.19,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -109,14 +109,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 2.97)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 2.78)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 19:10:45"
+      "updated_at_tr": "2026-11-27 19:12:01"
     }
   ],
   "recent_history": [
