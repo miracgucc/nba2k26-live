@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 05:00:08",
-  "timestamp": 1795744808.41,
+  "updated_at_tr": "2026-11-27 05:00:55",
+  "timestamp": 1795744855.79,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Cleveland Cavaliers",
       "quarter": 4,
-      "elapsed_mins": 38.9,
+      "elapsed_mins": 39.7,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "70-78",
-      "score_gap": 8,
+      "current_score": "75-78",
+      "score_gap": 3,
       "fav1_barem": "181-190",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -38,15 +38,15 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⏳ Oran Bekleniyor",
+      "zone_type": "PASS_CLUTCH",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 3 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 05:00:07"
+      "updated_at_tr": "2026-11-27 05:00:54"
     },
     {
       "signal_id": "CB-774458456_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 05:00:07"
+      "updated_at_tr": "2026-11-27 05:00:54"
     }
   ],
   "recent_history": [
