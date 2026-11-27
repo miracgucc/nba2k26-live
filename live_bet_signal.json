@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 01:29:03",
-  "timestamp": 1795818543.42,
+  "updated_at_tr": "2026-11-28 01:29:37",
+  "timestamp": 1795818577.36,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 01:29:02"
+      "updated_at_tr": "2026-11-28 01:29:36"
     },
     {
       "signal_id": "CB-774710263_35m",
@@ -56,15 +56,15 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "New York Knicks",
       "quarter": 3,
-      "elapsed_mins": 31.8,
+      "elapsed_mins": 32.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "68-75",
-      "score_gap": 7,
+      "current_score": "70-75",
+      "score_gap": 5,
       "fav1_barem": "211-220",
-      "fav1_odd": 2.5,
+      "fav1_odd": 2.4,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.35,
+      "fav2_odd": 3.45,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -73,18 +73,37 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 2.50)",
+      "zone_type": "PASS_CLUTCH",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 5 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 01:29:02"
+      "updated_at_tr": "2026-11-28 01:29:36"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-774710263_35m",
+      "game_id": "CB-774710263",
+      "raw_game_id": "774710263",
+      "date": "2026-11-28",
+      "game_name": "Minnesota Timberwolves vs New York Knicks",
+      "current_score": "70-75",
+      "score_gap": 5,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 5 Sayı Fark)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-774701933_35m",
       "game_id": "CB-774701933",
@@ -407,25 +426,6 @@
       "actual_score": "113-92",
       "actual_range": "201-210",
       "result": "TUTTU"
-    },
-    {
-      "signal_id": "CB-774537729_35m",
-      "game_id": "CB-774537729",
-      "raw_game_id": "774537729",
-      "date": "2026-11-27",
-      "game_name": "Golden State Warriors vs Dallas Mavericks",
-      "current_score": "87-83",
-      "score_gap": 4,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 4 Sayı Fark)",
-      "actual_score": "121-113",
-      "actual_range": "231+",
-      "result": "PAS"
     }
   ]
 }
