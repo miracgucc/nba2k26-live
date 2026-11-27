@@ -1355,7 +1355,7 @@ def render_live_dashboard():
             _is_locked_close = float(el_m) >= float(CLOSE_MIN) or (float(el_m) >= float(CLOSING_START) and not is_open)
             if _is_locked_close:
                 _gid_clean = str(m.get("game_id", "")).strip()
-                _df_fresh_disk = _read_csv_safe(SCRAPER_PATHS["csv_path"])
+                _df_fresh_disk = _read_csv_safe(_get_scraper_paths(ACTIVE_LEAGUE)["csv_path"])
                 _g_rows_lock = pd.DataFrame()
                 if not _df_fresh_disk.empty and "game_id" in _df_fresh_disk.columns:
                     _g_rows_lock = _df_fresh_disk[_df_fresh_disk["game_id"].astype(str).str.strip() == _gid_clean]
