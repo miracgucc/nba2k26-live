@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 06:41:23",
-  "timestamp": 1795750883.0,
+  "updated_at_tr": "2026-11-27 06:42:01",
+  "timestamp": 1795750921.77,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
       "quarter": 1,
-      "elapsed_mins": 0.8,
+      "elapsed_mins": 1.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "0-2",
-      "score_gap": 2,
+      "current_score": "2-5",
+      "score_gap": 3,
       "fav1_barem": "231+",
-      "fav1_odd": 2.01,
+      "fav1_odd": 1.88,
       "fav2_barem": "221-230",
-      "fav2_odd": 4.3,
+      "fav2_odd": 4.22,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "231+",
       "target_barem_tr": "231 veya daha fazla",
       "target_barem_en": "231 or more",
       "target_t_id": 1846,
-      "target_odd": 2.01,
-      "min_acceptable_odd": 1.86,
+      "target_odd": 1.88,
+      "min_acceptable_odd": 1.73,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 231+ (2.01)",
+      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 231+ (1.88)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-27 06:41:21"
+      "updated_at_tr": "2026-11-27 06:42:00"
     },
     {
       "signal_id": "CB-774468912_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 06:41:21"
+      "updated_at_tr": "2026-11-27 06:42:00"
     }
   ],
   "recent_history": [
