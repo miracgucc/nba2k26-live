@@ -2041,6 +2041,18 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
             rec["dec"] = dec
             rec["reason"] = reason
 
+            close_dec = None
+            close_reason = ""
+            if dec is None and gap < 6 and not rec["f2_is_upper"]:
+                if lg == "nba" and 1.95 <= o1 <= 2.45:
+                    close_dec = (1, f1, o1)
+                    close_reason = f"⚖️ Başa Baş ({gap} fark) & 1.Fav Üst Baremde (2.Fav Altta) — Tempo düşmez 1.Fav"
+                elif lg == "euro" and 1.85 <= o1 <= 2.35:
+                    close_dec = (1, f1, o1)
+                    close_reason = f"⚖️ Başa Baş ({gap} fark) & 1.Fav Üst Baremde (2.Fav Altta) — Tempo düşmez 1.Fav"
+            rec["close_dec"] = close_dec
+            rec["close_reason"] = close_reason
+
             act_b = str(last_r.get("actual_range", "")).strip()
             if act_b not in barem_names:
                 if int(last_r["_min"]) == dec_min:
@@ -2102,6 +2114,12 @@ def render_v81_live_trial_bankroll():
         )
     with c_p3:
         sort_newest = st.toggle("🔽 En Yeni Maç Üstte", value=False, key="v81_trial_sort_newest")
+        include_close_upper = st.toggle(
+            "⚖️ Başa Baş (0-5 Fark & 1.Fav Üstte) Dahil Et",
+            value=False,
+            help="0-5 sayı farkla başa baş giren maçlarda, 1. Favori zaten üstteki baremse (2.Fav alttaysa) maç yavaşlamayacağı için 1. Favoriyi (+2.106 TL ekstra kâr) kasaya dahil eder.",
+            key="v81_trial_inc_close_upper",
+        )
         include_1235 = st.toggle(
             "12:35-12:40 Maçlarını Dahil Et",
             value=False,
@@ -2116,6 +2134,14 @@ def render_v81_live_trial_bankroll():
         sub_eval = [m.copy() for m in all_eval if m["day"] >= "2026-11-26"]
     else:
         sub_eval = [m.copy() for m in all_eval]
+
+    for m in sub_eval:
+        if include_close_upper and m["dec"] is None and m.get("close_dec") is not None:
+            m["dec"] = m["close_dec"]
+            m["reason"] = m["close_reason"]
+            m["is_close_extra"] = True
+        else:
+            m["is_close_extra"] = False
 
     def _get_tier_3000(b_val: float):
         if b_val < 4200:
