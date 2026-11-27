@@ -2113,7 +2113,7 @@ def render_v81_live_trial_bankroll():
             key="v81_trial_filter_mode",
         )
     with c_p3:
-        sort_newest = st.toggle("🔽 En Yeni Maç Üstte", value=False, key="v81_trial_sort_newest")
+        sort_newest = st.toggle("🔽 En Yeni Maç Üstte", value=True, key="v81_trial_sort_newest_def")
         include_close_upper = st.toggle(
             "⚖️ Başa Baş (0-5 Fark & 1.Fav Üstte) Dahil Et",
             value=False,
