@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 23:05:07",
-  "timestamp": 1795809907.5,
+  "updated_at_tr": "2026-11-27 23:05:47",
+  "timestamp": 1795809947.43,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 23:05:06"
+      "updated_at_tr": "2026-11-27 23:05:46"
     },
     {
       "signal_id": "CB-774669641_35m",
@@ -56,10 +56,10 @@
       "home_team": "Miami Heat",
       "away_team": "Indiana Pacers",
       "quarter": 4,
-      "elapsed_mins": 41.1,
+      "elapsed_mins": 41.7,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "101-90",
+      "current_score": "103-92",
       "score_gap": 11,
       "fav1_barem": "221-230",
       "fav1_odd": 0.0,
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 23:05:06"
+      "updated_at_tr": "2026-11-27 23:05:46"
     }
   ],
   "recent_history": [
