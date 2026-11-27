@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 03:31:32",
-  "timestamp": 1795739492.65,
+  "updated_at_tr": "2026-11-27 03:32:08",
+  "timestamp": 1795739528.4,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Houston Rockets",
       "quarter": 1,
-      "elapsed_mins": 8.0,
+      "elapsed_mins": 8.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "17-16",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 03:31:31"
+      "updated_at_tr": "2026-11-27 03:32:07"
     },
     {
       "signal_id": "CB-774441457_35m",
@@ -56,10 +56,10 @@
       "home_team": "Miami Heat",
       "away_team": "Indiana Pacers",
       "quarter": 3,
-      "elapsed_mins": 33.9,
+      "elapsed_mins": 34.2,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "68-67",
+      "current_score": "68-69",
       "score_gap": 1,
       "fav1_barem": "201-210",
       "fav1_odd": 2.83,
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 03:31:31"
+      "updated_at_tr": "2026-11-27 03:32:07"
     }
   ],
   "recent_history": [
@@ -91,7 +91,7 @@
       "raw_game_id": "774441457",
       "date": "2026-11-27",
       "game_name": "Miami Heat vs Indiana Pacers",
-      "current_score": "68-67",
+      "current_score": "68-69",
       "score_gap": 1,
       "decision": "PAS",
       "pick_type": "PAS",
