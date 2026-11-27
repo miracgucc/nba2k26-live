@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 20:37:53",
-  "timestamp": 1795801073.01,
+  "updated_at_tr": "2026-11-27 20:38:28",
+  "timestamp": 1795801108.14,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Denver Nuggets",
       "away_team": "Cleveland Cavaliers",
       "quarter": 3,
-      "elapsed_mins": 24.6,
+      "elapsed_mins": 25.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "56-42",
-      "score_gap": 14,
+      "current_score": "56-44",
+      "score_gap": 12,
       "fav1_barem": "191-200",
-      "fav1_odd": 2.52,
-      "fav2_barem": "201-210",
-      "fav2_odd": 3.79,
+      "fav1_odd": 2.49,
+      "fav2_barem": "181-190",
+      "fav2_odd": 3.55,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.52)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 191-200: 2.49)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 20:37:51"
+      "updated_at_tr": "2026-11-27 20:38:27"
     },
     {
       "signal_id": "CB-774628896_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 20:37:51"
+      "updated_at_tr": "2026-11-27 20:38:27"
     },
     {
       "signal_id": "CB-774648743_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 20:37:51"
+      "updated_at_tr": "2026-11-27 20:38:27"
     }
   ],
   "recent_history": [
