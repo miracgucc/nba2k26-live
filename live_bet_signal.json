@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 17:33:40",
-  "timestamp": 1795790020.06,
+  "updated_at_tr": "2026-11-27 17:34:10",
+  "timestamp": 1795790050.18,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -24,8 +24,8 @@
       "elapsed_mins": 9.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "17-22",
-      "score_gap": 5,
+      "current_score": "19-22",
+      "score_gap": 3,
       "fav1_barem": "201-210",
       "fav1_odd": 3.48,
       "fav2_barem": "211-220",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 17:33:38"
+      "updated_at_tr": "2026-11-27 17:34:08"
     },
     {
       "signal_id": "CB-774591476_35m",
@@ -56,15 +56,15 @@
       "home_team": "New York Knicks",
       "away_team": "Boston Celtics",
       "quarter": 3,
-      "elapsed_mins": 35.0,
+      "elapsed_mins": 35.5,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "70-76",
-      "score_gap": 6,
+      "current_score": "72-76",
+      "score_gap": 4,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.25,
-      "fav2_barem": "211-220",
-      "fav2_odd": 3.98,
+      "fav1_odd": 2.18,
+      "fav2_barem": "191-200",
+      "fav2_odd": 4.2,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -73,15 +73,15 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 201-210: 2.25)",
+      "zone_type": "PASS_CLUTCH",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 4 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 17:33:38"
+      "updated_at_tr": "2026-11-27 17:34:08"
     }
   ],
   "recent_history": [
@@ -91,15 +91,15 @@
       "raw_game_id": "774591476",
       "date": "2026-11-27",
       "game_name": "New York Knicks vs Boston Celtics",
-      "current_score": "70-76",
-      "score_gap": 6,
+      "current_score": "72-76",
+      "score_gap": 4,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
       "target_barem_tr": "",
       "target_t_id": 0,
       "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 201-210: 2.25)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 4 Sayı Fark)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
