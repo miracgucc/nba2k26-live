@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 05:21:04",
-  "timestamp": 1795746064.88,
+  "updated_at_tr": "2026-11-27 05:21:48",
+  "timestamp": 1795746108.04,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Detroit Pistons",
       "quarter": 1,
-      "elapsed_mins": 0.0,
+      "elapsed_mins": 1.0,
       "in_decision_window_35m": false,
-      "is_barem_open": false,
-      "current_score": "0-0",
-      "score_gap": 0,
-      "fav1_barem": "-",
-      "fav1_odd": 0.0,
-      "fav2_barem": "-",
-      "fav2_odd": 0.0,
+      "is_barem_open": true,
+      "current_score": "0-2",
+      "score_gap": 2,
+      "fav1_barem": "201-210",
+      "fav1_odd": 3.8,
+      "fav2_barem": "191-200",
+      "fav2_odd": 4.15,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -38,15 +38,15 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 0 Sayı Fark)",
+      "zone_type": "PASS_SELECTIVE",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.80)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 05:21:03"
+      "updated_at_tr": "2026-11-27 05:21:46"
     },
     {
       "signal_id": "CB-774458456_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 05:21:03"
+      "updated_at_tr": "2026-11-27 05:21:46"
     }
   ],
   "recent_history": [
