@@ -241,14 +241,14 @@ def _read_csv_safe(path: str) -> pd.DataFrame:
     return pd.DataFrame()
 
 
-@st.cache_data(ttl=45, show_spinner=False)
+@st.cache_data(ttl=15, show_spinner=False)
 def _fetch_github_csv(filename: str) -> pd.DataFrame:
     """Fetch latest cloud-bot CSV directly from GitHub Raw so Streamlit Cloud never freezes on stale deploys."""
     try:
         import io
         import urllib.request
 
-        bucket = int(time.time() // 45)
+        bucket = int(time.time() // 15)
         url = f"https://raw.githubusercontent.com/miracgucc/nba2k26-live/main/{filename}?cb={bucket}"
         req = urllib.request.Request(
             url,
@@ -267,7 +267,7 @@ def _fetch_github_csv(filename: str) -> pd.DataFrame:
     return pd.DataFrame()
 
 
-@st.cache_data(ttl=20, show_spinner=False)
+@st.cache_data(ttl=10, show_spinner=False)
 def load_symmetry_log(league: str = ACTIVE_LEAGUE) -> pd.DataFrame:
     """
     Stateless loader: combines local runtime log, git seed log, local backup, AND live GitHub Raw cloud-bot backup
@@ -1352,9 +1352,15 @@ def render_live_dashboard():
             _dec_gap = _gap_now
             _dec_tot = int(tot_sc)
             _dec_odds_map = m.get("odds", {})
-            _is_locked_close = float(el_m) >= float(CLOSE_MIN) or (float(el_m) >= float(CLOSING_START) and not is_barem_open)
-            if _is_locked_close and not df_log.empty and "game_id" in df_log.columns:
-                _g_rows_lock = df_log[df_log["game_id"].astype(str).str.strip() == str(m.get("game_id", "")).strip()]
+            _is_locked_close = float(el_m) >= float(CLOSE_MIN) or (float(el_m) >= float(CLOSING_START) and not is_open)
+            if _is_locked_close:
+                _gid_clean = str(m.get("game_id", "")).strip()
+                _df_fresh_disk = _read_csv_safe(SCRAPER_PATHS["csv_path"])
+                _g_rows_lock = pd.DataFrame()
+                if not _df_fresh_disk.empty and "game_id" in _df_fresh_disk.columns:
+                    _g_rows_lock = _df_fresh_disk[_df_fresh_disk["game_id"].astype(str).str.strip() == _gid_clean]
+                if _g_rows_lock.empty and not df_log.empty and "game_id" in df_log.columns:
+                    _g_rows_lock = df_log[df_log["game_id"].astype(str).str.strip() == _gid_clean]
                 if not _g_rows_lock.empty:
                     _lr_lock = _g_rows_lock.iloc[-1]
                     _sc_lock = str(_lr_lock.get("current_score", ""))
@@ -1848,7 +1854,7 @@ render_live_dashboard()
 # ─────────────────────────────────────────────────────────────────────────────
 # SECTION 2.5: v8.1 LIVE TRIAL BANKROLL TRACKER (3.000 TL FRESH START FROM NOV 26 13:00)
 # ─────────────────────────────────────────────────────────────────────────────
-@st.cache_data(ttl=60, show_spinner=False)
+@st.cache_data(ttl=10, show_spinner=False)
 def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
     """Evaluates all NBA 2K26 + Cyber Euro League matches with v8.1 rules and returns (completed_eval, live_decided)."""
 
@@ -2176,6 +2182,19 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
             act_b = str(last_r.get("actual_range", "")).strip()
             if act_b not in barem_names:
                 if int(last_r["_min"]) == dec_min:
+                    _ls_lg = load_live_state(lg)
+                    _close_m_lg = float(cfg["close_min"])
+                    _is_q4_lck = True
+                    _live_el_val = _close_m_lg
+                    for _lm_item in _ls_lg.get("live_matches", []):
+                        if str(_lm_item.get("game_id", "")).strip() == gid:
+                            _live_el_val = float(_lm_item.get("elapsed_mins", _close_m_lg) or _close_m_lg)
+                            _lm_open = bool(_lm_item.get("is_barem_open", False))
+                            _is_q4_lck = (_live_el_val >= _close_m_lg) or not _lm_open
+                            break
+                    rec["is_q4_locked"] = _is_q4_lck
+                    rec["live_el"] = _live_el_val
+                    rec["close_min_lg"] = _close_m_lg
                     live_decided.append(rec)
                 continue
 
@@ -2271,6 +2290,15 @@ def render_v81_live_trial_bankroll():
             m["is_close_extra"] = True
         else:
             m["is_close_extra"] = False
+
+    live_decided_view = [lm.copy() for lm in live_decided]
+    for lm in live_decided_view:
+        if include_q4_dna:
+            lm["dec"] = lm.get("dna_dec")
+            lm["reason"] = lm.get("dna_reason", lm["reason"])
+        if include_close_upper and lm["dec"] is None and lm.get("close_dec") is not None:
+            lm["dec"] = lm["close_dec"]
+            lm["reason"] = lm["close_reason"]
 
     def _get_tier_3000(b_val: float):
         if b_val < 4200:
@@ -2443,24 +2471,32 @@ def render_v81_live_trial_bankroll():
         f"{net_tier_tot:+,.1f} TL Net Kâr",
     )
 
-    if live_decided:
+    if live_decided_view:
         live_html_items = []
-        for lm in live_decided:
+        for lm in live_decided_view:
             lg_b = "🏀 NBA" if lm["lg"] == "NBA" else "🇪🇺 EURO"
+            is_lck = bool(lm.get("is_q4_locked", True))
             if lm["dec"] is not None:
                 fn_l, pb_l, po_l = lm["dec"]
                 st_l = 150 if fn_l == 1 else 120
-                dec_badge = f"<b style='color:#10b981;'>🎯 CANLI OYNA: {fn_l}.Fav {pb_l} (@{po_l:.2f}) — {st_l} TL</b> ({lm['reason']})"
+                if is_lck:
+                    dec_badge = f"<b style='color:#10b981;'>🔒 KARAR KİLİTLENDİ — 🎯 CANLI OYNA: {fn_l}.Fav {pb_l} (@{po_l:.2f}) — {st_l} TL</b> ({lm['reason']})"
+                else:
+                    dec_badge = f"<b style='color:#3b82f6;'>⏳ 3. ÇEYREK SON SANİYELER (Ön Sinyal: {fn_l}.Fav {pb_l} @{po_l:.2f})</b> — <i>4. Çeyrek başında ({int(lm.get('close_min_lg', 30))}.0 dk) kesinleşip kilitlenecek</i>"
             else:
-                dec_badge = f"<b style='color:#f59e0b;'>⏭️ CANLI PAS GEÇ:</b> {lm['reason']}"
+                if is_lck:
+                    dec_badge = f"<b style='color:#f59e0b;'>🔒 KARAR KİLİTLENDİ — ⏭️ CANLI PAS GEÇ:</b> {lm['reason']}"
+                else:
+                    dec_badge = f"<b style='color:#94a3b8;'>⏳ 3. ÇEYREK SON SANİYELER (Şu An Pas: {lm['reason']})</b> — <i>4. Çeyrek başında ({int(lm.get('close_min_lg', 30))}.0 dk) kesinleşip kilitlenecek</i>"
+            status_tail = "<i>(4. Çeyrek oynanıyor, karar %100 kilitli — maç sonu bekleniyor)</i>" if is_lck else f"<i>(3. Çeyrek son dakikası: {lm.get('live_el', 29.0):.1f}. dk — Barem henüz açık)</i>"
             live_html_items.append(
                 f"<div style='margin-top:0.25rem;'>• <b>{lg_b} | {lm['teams']}</b> "
-                f"(Karar Skoru: <code>{lm['cur_sc']}</code> | Fark: <b>{lm['gap']}</b> | 1.Fav: <code>{lm['f1']} @{lm['o1']:.2f}</code>) ➔ {dec_badge} <i>(4. Çeyrek oynanıyor, maç sonu bekleniyor)</i></div>"
+                f"(Karar Skoru: <code>{lm['cur_sc']}</code> | Fark: <b>{lm['gap']}</b> | 1.Fav: <code>{lm['f1']} @{lm['o1']:.2f}</code>) ➔ {dec_badge} {status_tail}</div>"
             )
         st.markdown(
             f"""
             <div style="background:var(--bg-card); border:1px solid var(--val-border); border-left:4px solid #10b981; border-radius:10px; padding:0.75rem 1rem; margin:0.5rem 0 0.8rem 0;">
-                <div style="font-size:0.88rem; font-weight:800; color:var(--text-primary);">🔴 Şu An Karar Dakikasını Geçmiş & 4. Çeyreği Oynanan Canlı Maçlar ({len(live_decided)} Maç)</div>
+                <div style="font-size:0.88rem; font-weight:800; color:var(--text-primary);">🔴 Şu An Karar Dakikasındaki & 4. Çeyreği Oynanan Canlı Maçlar ({len(live_decided_view)} Maç)</div>
                 <div style="font-size:0.82rem; color:var(--text-secondary);">{''.join(live_html_items)}</div>
             </div>
             """,
