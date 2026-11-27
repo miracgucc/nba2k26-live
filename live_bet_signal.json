@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 06:35:17",
-  "timestamp": 1795750517.06,
+  "updated_at_tr": "2026-11-27 06:36:04",
+  "timestamp": 1795750564.29,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 06:35:16"
+      "updated_at_tr": "2026-11-27 06:36:03"
     },
     {
       "signal_id": "CB-774463629_35m",
@@ -56,11 +56,11 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Detroit Pistons",
       "quarter": 4,
-      "elapsed_mins": 46.6,
+      "elapsed_mins": 46.9,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "108-99",
-      "score_gap": 9,
+      "current_score": "110-99",
+      "score_gap": 11,
       "fav1_barem": "211-220",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 06:35:16"
+      "updated_at_tr": "2026-11-27 06:36:03"
     },
     {
       "signal_id": "CB-774468912_35m",
@@ -90,8 +90,8 @@
       "game_name": "Minnesota Timberwolves vs Indiana Pacers",
       "home_team": "Minnesota Timberwolves",
       "away_team": "Indiana Pacers",
-      "quarter": 2,
-      "elapsed_mins": 24.0,
+      "quarter": 3,
+      "elapsed_mins": 24.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "64-41",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 06:35:16"
+      "updated_at_tr": "2026-11-27 06:36:03"
     }
   ],
   "recent_history": [
