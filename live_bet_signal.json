@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 14:56:05",
-  "timestamp": 1795780565.57,
+  "updated_at_tr": "2026-11-27 14:56:57",
+  "timestamp": 1795780617.28,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Golden State Warriors",
       "quarter": 1,
-      "elapsed_mins": 10.7,
+      "elapsed_mins": 11.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "31-22",
-      "score_gap": 9,
+      "current_score": "33-22",
+      "score_gap": 11,
       "fav1_barem": "231+",
-      "fav1_odd": 2.02,
+      "fav1_odd": 1.9,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.95,
+      "fav2_odd": 3.86,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "231+",
       "target_barem_tr": "231 veya daha fazla",
       "target_barem_en": "231 or more",
       "target_t_id": 1846,
-      "target_odd": 2.02,
-      "min_acceptable_odd": 1.87,
+      "target_odd": 1.9,
+      "min_acceptable_odd": 1.75,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 231+ (2.02)",
+      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 231+ (1.90)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-27 14:56:04"
+      "updated_at_tr": "2026-11-27 14:56:55"
     },
     {
       "signal_id": "CB-774554240_35m",
@@ -58,9 +58,9 @@
       "quarter": 3,
       "elapsed_mins": 36.0,
       "in_decision_window_35m": false,
-      "is_barem_open": true,
-      "current_score": "90-60",
-      "score_gap": 30,
+      "is_barem_open": false,
+      "current_score": "90-61",
+      "score_gap": 29,
       "fav1_barem": "191-200",
       "fav1_odd": 2.26,
       "fav2_barem": "201-210",
@@ -81,7 +81,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-27 14:56:04"
+      "updated_at_tr": "2026-11-27 14:56:55"
     }
   ],
   "recent_history": [
