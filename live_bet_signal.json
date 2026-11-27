@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 04:11:23",
-  "timestamp": 1795741883.59,
+  "updated_at_tr": "2026-11-27 04:12:02",
+  "timestamp": 1795741922.78,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Cleveland Cavaliers",
       "quarter": 1,
-      "elapsed_mins": 8.9,
+      "elapsed_mins": 9.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "15-23",
       "score_gap": 8,
-      "fav1_barem": "201-210",
-      "fav1_odd": 3.68,
-      "fav2_barem": "191-200",
-      "fav2_odd": 3.92,
+      "fav1_barem": "191-200",
+      "fav1_odd": 3.76,
+      "fav2_barem": "201-210",
+      "fav2_odd": 3.94,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.68)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 3.76)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 04:11:22"
+      "updated_at_tr": "2026-11-27 04:12:01"
     },
     {
       "signal_id": "CB-774447113_35m",
@@ -59,8 +59,8 @@
       "elapsed_mins": 33.2,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "69-71",
-      "score_gap": 2,
+      "current_score": "70-71",
+      "score_gap": 1,
       "fav1_barem": "201-210",
       "fav1_odd": 2.42,
       "fav2_barem": "211-220",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 2 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 1 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 04:11:22"
+      "updated_at_tr": "2026-11-27 04:12:01"
     }
   ],
   "recent_history": [
