@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 11:04:52",
-  "timestamp": 1795766692.34,
+  "updated_at_tr": "2026-11-27 11:05:50",
+  "timestamp": 1795766750.67,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Houston Rockets",
       "away_team": "Los Angeles Clippers",
       "quarter": 2,
-      "elapsed_mins": 15.6,
+      "elapsed_mins": 16.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "35-32",
-      "score_gap": 3,
+      "current_score": "35-36",
+      "score_gap": 1,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.42,
+      "fav1_odd": 3.46,
       "fav2_barem": "201-210",
-      "fav2_odd": 4.08,
+      "fav2_odd": 3.95,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.42)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.46)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 11:04:50"
+      "updated_at_tr": "2026-11-27 11:05:49"
     },
     {
       "signal_id": "CB-774504663_35m",
@@ -56,11 +56,11 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Indiana Pacers",
       "quarter": 4,
-      "elapsed_mins": 40.9,
+      "elapsed_mins": 41.5,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "86-88",
-      "score_gap": 2,
+      "current_score": "86-91",
+      "score_gap": 5,
       "fav1_barem": "201-210",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 2 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 5 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 11:04:50"
+      "updated_at_tr": "2026-11-27 11:05:49"
     }
   ],
   "recent_history": [
