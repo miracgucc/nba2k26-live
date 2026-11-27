@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 21:08:47",
-  "timestamp": 1795802927.77,
+  "updated_at_tr": "2026-11-27 21:09:27",
+  "timestamp": 1795802967.63,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,10 +21,10 @@
       "home_team": "Denver Nuggets",
       "away_team": "Cleveland Cavaliers",
       "quarter": 4,
-      "elapsed_mins": 43.0,
+      "elapsed_mins": 43.5,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "100-76",
+      "current_score": "103-79",
       "score_gap": 24,
       "fav1_barem": "191-200",
       "fav1_odd": 0.0,
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 21:08:46"
+      "updated_at_tr": "2026-11-27 21:09:26"
     },
     {
       "signal_id": "CB-774648743_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 21:08:46"
+      "updated_at_tr": "2026-11-27 21:09:26"
     }
   ],
   "recent_history": [
