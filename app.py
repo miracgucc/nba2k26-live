@@ -2255,6 +2255,7 @@ def render_v81_live_trial_bankroll():
             m["net_ins"] = net_ins
             m["k_ins"] = k_ins
             m["k_tier"] = k_tier
+            m["tier_lbl"] = f"K{tk} ({int(st_t)} TL) ➔ {k_tier:,.1f} TL"
         else:
             pass_cnt += 1
             ds["pas"] += 1
@@ -2276,6 +2277,7 @@ def render_v81_live_trial_bankroll():
             m["net_ins"] = 0.0
             m["k_ins"] = k_ins
             m["k_tier"] = k_tier
+            m["tier_lbl"] = f"{k_tier:,.1f} TL (Pas)"
 
     net_flat_tot = k_flat - 3000.0
     net_ins_tot = k_ins - 3000.0
@@ -2388,6 +2390,7 @@ def render_v81_live_trial_bankroll():
                 "Tekli Sonuç": m["res_lbl"],
                 "Tekli Net": f"{m['net_f']:+,.1f} TL" if m["dec"] is not None else "0,0 TL",
                 "💰 3.000 TL Tekli Kasa": f"{m['k_flat']:,.1f} TL",
+                "🚀 Kademeli (Tutar ➔ Kasa)": m["tier_lbl"],
                 "🛡️ Sigortalı İkili Sonuç & Net": m["ins_res_lbl"],
                 "🛡️ Sigortalı İkili Kasa (1.Fav+2.Fav)": f"{m['k_ins']:,.1f} TL",
             }
