@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 11:16:13",
-  "timestamp": 1795767373.51,
+  "updated_at_tr": "2026-11-27 11:16:55",
+  "timestamp": 1795767415.92,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -20,16 +20,16 @@
       "game_name": "Houston Rockets vs Los Angeles Clippers",
       "home_team": "Houston Rockets",
       "away_team": "Los Angeles Clippers",
-      "quarter": 2,
-      "elapsed_mins": 24.0,
+      "quarter": 3,
+      "elapsed_mins": 24.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "54-54",
-      "score_gap": 0,
+      "current_score": "54-56",
+      "score_gap": 2,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.03,
-      "fav2_barem": "201-210",
-      "fav2_odd": 3.92,
+      "fav1_odd": 3.09,
+      "fav2_barem": "221-230",
+      "fav2_odd": 3.83,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.03)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.09)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 11:16:11"
+      "updated_at_tr": "2026-11-27 11:16:54"
     },
     {
       "signal_id": "CB-774504663_35m",
@@ -56,11 +56,11 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Indiana Pacers",
       "quarter": 4,
-      "elapsed_mins": 47.3,
+      "elapsed_mins": 47.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "100-109",
-      "score_gap": 9,
+      "current_score": "102-109",
+      "score_gap": 7,
       "fav1_barem": "211-220",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 11:16:11"
+      "updated_at_tr": "2026-11-27 11:16:54"
     },
     {
       "signal_id": "CB-774519181_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 11:16:11"
+      "updated_at_tr": "2026-11-27 11:16:54"
     }
   ],
   "recent_history": [
