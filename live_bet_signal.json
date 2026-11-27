@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 16:56:08",
-  "timestamp": 1795787768.28,
+  "updated_at_tr": "2026-11-27 16:56:40",
+  "timestamp": 1795787800.05,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,10 +21,10 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Detroit Pistons",
       "quarter": 3,
-      "elapsed_mins": 35.6,
-      "in_decision_window_35m": true,
+      "elapsed_mins": 36.0,
+      "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "98-82",
+      "current_score": "100-84",
       "score_gap": 16,
       "fav1_barem": "231+",
       "fav1_odd": 1.28,
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 16:56:07"
+      "updated_at_tr": "2026-11-27 16:56:38"
     },
     {
       "signal_id": "CB-774591476_35m",
@@ -56,11 +56,11 @@
       "home_team": "New York Knicks",
       "away_team": "Boston Celtics",
       "quarter": 1,
-      "elapsed_mins": 10.2,
+      "elapsed_mins": 10.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "10-34",
-      "score_gap": 24,
+      "current_score": "12-34",
+      "score_gap": 22,
       "fav1_barem": "211-220",
       "fav1_odd": 3.89,
       "fav2_barem": "201-210",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 16:56:07"
+      "updated_at_tr": "2026-11-27 16:56:38"
     }
   ],
   "recent_history": [
@@ -91,7 +91,7 @@
       "raw_game_id": "774582366",
       "date": "2026-11-27",
       "game_name": "Minnesota Timberwolves vs Detroit Pistons",
-      "current_score": "98-82",
+      "current_score": "100-84",
       "score_gap": 16,
       "decision": "PAS",
       "pick_type": "PAS",
