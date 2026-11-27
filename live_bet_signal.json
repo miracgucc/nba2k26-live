@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 18:39:45",
-  "timestamp": 1795793985.93,
+  "updated_at_tr": "2026-11-27 18:40:24",
+  "timestamp": 1795794024.22,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,13 +21,13 @@
       "home_team": "Denver Nuggets",
       "away_team": "Detroit Pistons",
       "quarter": 3,
-      "elapsed_mins": 26.4,
+      "elapsed_mins": 27.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "65-54",
-      "score_gap": 11,
+      "current_score": "68-54",
+      "score_gap": 14,
       "fav1_barem": "211-220",
-      "fav1_odd": 2.56,
+      "fav1_odd": 2.63,
       "fav2_barem": "201-210",
       "fav2_odd": 2.79,
       "decision": "OYNA",
@@ -37,7 +37,7 @@
       "target_barem_en": "201-210",
       "target_t_id": 1843,
       "target_odd": 2.79,
-      "min_acceptable_odd": 2.65,
+      "min_acceptable_odd": 2.64,
       "zone_type": "TRAP_EXTREME",
       "zone_badge": "🔥 NBA 2.50+ KAYMALI 2. FAVORİ FIRSATI: 201-210 (2.79)",
       "stakes": {
@@ -46,7 +46,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-27 18:39:44"
+      "updated_at_tr": "2026-11-27 18:40:22"
     },
     {
       "signal_id": "CB-774619076_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 18:39:44"
+      "updated_at_tr": "2026-11-27 18:40:22"
     }
   ],
   "recent_history": [
