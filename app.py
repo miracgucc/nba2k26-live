@@ -281,10 +281,10 @@ def load_symmetry_log(league: str = ACTIVE_LEAGUE) -> pd.DataFrame:
 
     init_csv(league)
     frames = [
-        _read_csv_safe(paths["csv_path"]),
         _read_csv_safe(os.path.join(BASE_DIR, files["log_seed"])),
-        _read_csv_safe(os.path.join(BASE_DIR, files["log_cloud"])),
         _fetch_github_csv(files["log_cloud"]),
+        _read_csv_safe(os.path.join(BASE_DIR, files["log_cloud"])),
+        _read_csv_safe(paths["csv_path"]),
     ]
     frames = [f for f in frames if not f.empty and "game_id" in f.columns and "check_time" in f.columns]
     if not frames:
@@ -1856,8 +1856,28 @@ render_live_dashboard()
 # ─────────────────────────────────────────────────────────────────────────────
 @st.cache_resource
 def _get_locked_decision_snapshots() -> dict:
-    """Process-wide immutable store of closing decision rows (Minute 35 NBA / Minute 29 Euro) so late CDN overwrites never flip a locked decision."""
-    return {}
+    """Process-wide immutable store of closing decision rows and evaluated decisions (Minute 35 NBA / Minute 29 Euro)."""
+    lock_file = os.path.join(BASE_DIR, "runtime_locked_decisions.json")
+    data = {"rows": {}, "recs": {}}
+    if os.path.exists(lock_file):
+        try:
+            with open(lock_file, "r", encoding="utf-8") as f:
+                loaded = json.load(f)
+                if isinstance(loaded, dict) and "recs" in loaded:
+                    data = loaded
+        except Exception:
+            pass
+    return data
+
+
+def _save_locked_decision_snapshots(data: dict):
+    lock_file = os.path.join(BASE_DIR, "runtime_locked_decisions.json")
+    try:
+        with open(lock_file + ".tmp", "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False)
+        os.replace(lock_file + ".tmp", lock_file)
+    except Exception:
+        pass
 
 
 @st.cache_data(ttl=10, show_spinner=False)
@@ -2062,7 +2082,10 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
             ehi = min(float(bhi), float(cfg["bar_upper_cap"]))
             mid_map[bn] = (elo + ehi) / 2.0
 
-        locked_snaps = _get_locked_decision_snapshots()
+        locked_store = _get_locked_decision_snapshots()
+        locked_rows = locked_store.setdefault("rows", {})
+        locked_recs = locked_store.setdefault("recs", {})
+        dirty_lock = False
         ps = 0
         ps2 = 0
         for gid, grp in df_s.groupby("game_id", sort=False):
@@ -2077,14 +2100,19 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
             if last_r is None:
                 continue
             if int(last_r["_min"]) == dec_min:
-                if gid in locked_snaps:
-                    lck_r = locked_snaps[gid].copy()
-                    lck_r["actual_score"] = last_r.get("actual_score", lck_r.get("actual_score", ""))
-                    lck_r["actual_range"] = last_r.get("actual_range", lck_r.get("actual_range", ""))
-                    lck_r["status"] = last_r.get("status", lck_r.get("status", "PENDING"))
-                    last_r = lck_r
+                if gid in locked_rows:
+                    lck_dict = locked_rows[gid]
+                    last_r = last_r.copy()
+                    for _k, _v in lck_dict.items():
+                        if _k not in ("actual_score", "actual_range", "status"):
+                            last_r[_k] = _v
                 else:
-                    locked_snaps[gid] = last_r.copy()
+                    locked_rows[gid] = {
+                        k: (v.item() if hasattr(v, "item") else v)
+                        for k, v in last_r.to_dict().items()
+                        if k not in ("actual_score", "actual_range", "status")
+                    }
+                    dirty_lock = True
             o_raw = {bn: float(last_r.get(b_cols[bn], 99.0) or 99.0) for bn in barem_names}
             p_raw = {bn: float(last_r.get(p_cols[bn], 0.0) or 0.0) for bn in barem_names}
             om, _ = resolve_effective_barem_odds(o_raw, p_raw, league=lg)
@@ -2195,6 +2223,36 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
             rec["close_dec"] = close_dec
             rec["close_reason"] = close_reason
 
+            if int(last_r["_min"]) == dec_min:
+                if gid in locked_recs:
+                    saved_rec = locked_recs[gid]
+                    for _rk in ("cur_sc", "cur_tot", "gap", "f1", "o1", "f2", "o2", "req1", "req2", "team_q4_lbl", "reason", "dna_reason", "close_reason"):
+                        if _rk in saved_rec:
+                            rec[_rk] = saved_rec[_rk]
+                    for _dk in ("dec", "dna_dec", "close_dec"):
+                        if _dk in saved_rec:
+                            rec[_dk] = tuple(saved_rec[_dk]) if saved_rec[_dk] is not None else None
+                else:
+                    locked_recs[gid] = {
+                        "cur_sc": rec["cur_sc"],
+                        "cur_tot": rec["cur_tot"],
+                        "gap": rec["gap"],
+                        "f1": rec["f1"],
+                        "o1": rec["o1"],
+                        "f2": rec["f2"],
+                        "o2": rec["o2"],
+                        "req1": rec["req1"],
+                        "req2": rec["req2"],
+                        "team_q4_lbl": rec["team_q4_lbl"],
+                        "dec": list(rec["dec"]) if rec["dec"] is not None else None,
+                        "reason": rec["reason"],
+                        "dna_dec": list(rec["dna_dec"]) if rec["dna_dec"] is not None else None,
+                        "dna_reason": rec["dna_reason"],
+                        "close_dec": list(rec["close_dec"]) if rec["close_dec"] is not None else None,
+                        "close_reason": rec["close_reason"],
+                    }
+                    dirty_lock = True
+
             act_b = str(last_r.get("actual_range", "")).strip()
             if act_b not in barem_names:
                 if int(last_r["_min"]) == dec_min:
@@ -2227,6 +2285,8 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
             ps2 = ps
             ps = 1 if shift > 0 else (-1 if shift < 0 else 0)
 
+    if dirty_lock:
+        _save_locked_decision_snapshots(locked_store)
     all_records.sort(key=lambda x: x["gid_num"])
     return all_records, live_decided
 
