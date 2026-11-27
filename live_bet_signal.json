@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 23:28:05",
-  "timestamp": 1795811285.68,
+  "updated_at_tr": "2026-11-27 23:29:00",
+  "timestamp": 1795811340.01,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "New York Knicks",
       "quarter": 3,
-      "elapsed_mins": 31.4,
+      "elapsed_mins": 32.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "64-54",
-      "score_gap": 10,
+      "current_score": "69-54",
+      "score_gap": 15,
       "fav1_barem": "191-200",
-      "fav1_odd": 2.38,
+      "fav1_odd": 2.5,
       "fav2_barem": "181-190",
-      "fav2_odd": 3.58,
+      "fav2_odd": 3.1,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 191-200: 2.38)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.50)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 23:28:04"
+      "updated_at_tr": "2026-11-27 23:28:58"
     },
     {
       "signal_id": "CB-774692666_35m",
@@ -56,15 +56,15 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Oklahoma City Thunder",
       "quarter": 1,
-      "elapsed_mins": 5.6,
+      "elapsed_mins": 5.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "11-15",
-      "score_gap": 4,
+      "current_score": "13-18",
+      "score_gap": 5,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.55,
+      "fav1_odd": 3.42,
       "fav2_barem": "191-200",
-      "fav2_odd": 4.07,
+      "fav2_odd": 4.42,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,17 +74,36 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.55)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.42)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 23:28:04"
+      "updated_at_tr": "2026-11-27 23:28:58"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-774680405_35m",
+      "game_id": "CB-774680405",
+      "raw_game_id": "774680405",
+      "date": "2026-11-27",
+      "game_name": "Los Angeles Clippers vs New York Knicks",
+      "current_score": "69-54",
+      "score_gap": 15,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.50)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-774669641_35m",
       "game_id": "CB-774669641",
@@ -406,25 +425,6 @@
       "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.46)",
       "actual_score": "109-127",
       "actual_range": "231+",
-      "result": "PAS"
-    },
-    {
-      "signal_id": "CB-774511623_35m",
-      "game_id": "CB-774511623",
-      "raw_game_id": "774511623",
-      "date": "2026-11-27",
-      "game_name": "Houston Rockets vs Los Angeles Clippers",
-      "current_score": "71-83",
-      "score_gap": 12,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 201-210: 2.27)",
-      "actual_score": "96-116",
-      "actual_range": "211-220",
       "result": "PAS"
     }
   ]
