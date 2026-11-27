@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 03:36:06",
-  "timestamp": 1795739766.62,
+  "updated_at_tr": "2026-11-27 03:36:45",
+  "timestamp": 1795739805.08,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Houston Rockets",
       "quarter": 1,
-      "elapsed_mins": 11.6,
+      "elapsed_mins": 12.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "26-21",
-      "score_gap": 5,
+      "current_score": "26-23",
+      "score_gap": 3,
       "fav1_barem": "201-210",
       "fav1_odd": 3.35,
       "fav2_barem": "211-220",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 03:36:05"
+      "updated_at_tr": "2026-11-27 03:36:43"
     },
     {
       "signal_id": "CB-774441457_35m",
@@ -56,11 +56,11 @@
       "home_team": "Miami Heat",
       "away_team": "Indiana Pacers",
       "quarter": 4,
-      "elapsed_mins": 37.4,
+      "elapsed_mins": 38.0,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "73-73",
-      "score_gap": 0,
+      "current_score": "75-73",
+      "score_gap": 2,
       "fav1_barem": "191-200",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 0 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 2 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 03:36:05"
+      "updated_at_tr": "2026-11-27 03:36:43"
     }
   ],
   "recent_history": [
