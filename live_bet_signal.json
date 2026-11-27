@@ -1,12 +1,12 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 15:18:32",
-  "timestamp": 1795781912.2,
+  "updated_at_tr": "2026-11-27 15:19:10",
+  "timestamp": 1795781950.53,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
   "chain_state": {
-    "prev_shift": 0,
+    "prev_shift": 1,
     "prev2_shift": 0
   },
   "has_active_play_signal": false,
@@ -21,15 +21,15 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Golden State Warriors",
       "quarter": 3,
-      "elapsed_mins": 25.4,
+      "elapsed_mins": 26.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "69-66",
       "score_gap": 3,
       "fav1_barem": "231+",
-      "fav1_odd": 1.07,
+      "fav1_odd": 1.09,
       "fav2_barem": "221-230",
-      "fav2_odd": 7.14,
+      "fav2_odd": 6.77,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,49 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.07)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.09)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 15:18:31"
-    },
-    {
-      "signal_id": "CB-774554240_35m",
-      "game_id": "CB-774554240",
-      "raw_game_id": "774554240",
-      "game_name": "Minnesota Timberwolves vs Indiana Pacers",
-      "home_team": "Minnesota Timberwolves",
-      "away_team": "Indiana Pacers",
-      "quarter": 4,
-      "elapsed_mins": 48.0,
-      "in_decision_window_35m": false,
-      "is_barem_open": false,
-      "current_score": "112-90",
-      "score_gap": 22,
-      "fav1_barem": "201-210",
-      "fav1_odd": 0.0,
-      "fav2_barem": "-",
-      "fav2_odd": 0.0,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⏳ Oran Bekleniyor",
-      "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
-      },
-      "updated_at_tr": "2026-11-27 15:18:31"
+      "updated_at_tr": "2026-11-27 15:19:09"
     },
     {
       "signal_id": "CB-774572769_35m",
@@ -116,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 15:18:31"
+      "updated_at_tr": "2026-11-27 15:19:09"
     }
   ],
   "recent_history": [
@@ -135,9 +100,9 @@
       "target_t_id": 1842,
       "target_odd": 2.26,
       "zone_badge": "💎 NBA 2.10–2.30 BEKLENTİ 1. FAVORİSİ (25+ Fark Alt Barem Merkez (%58.3)): 191-200 (2.26)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "112-90",
+      "actual_range": "201-210",
+      "result": "YATTI"
     },
     {
       "signal_id": "CB-774546090_35m",
