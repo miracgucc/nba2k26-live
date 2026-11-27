@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 12:37:31",
-  "timestamp": 1795772251.63,
+  "updated_at_tr": "2026-11-27 12:38:13",
+  "timestamp": 1795772293.5,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,13 +21,13 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Boston Celtics",
       "quarter": 2,
-      "elapsed_mins": 21.2,
+      "elapsed_mins": 21.8,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "50-47",
-      "score_gap": 3,
+      "current_score": "53-47",
+      "score_gap": 6,
       "fav1_barem": "231+",
-      "fav1_odd": 2.5,
+      "fav1_odd": 2.48,
       "fav2_barem": "221-230",
       "fav2_odd": 3.69,
       "decision": "PAS",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 231+: 2.50)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 231+: 2.48)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 12:37:30"
+      "updated_at_tr": "2026-11-27 12:38:11"
     },
     {
       "signal_id": "CB-774537729_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 12:37:30"
+      "updated_at_tr": "2026-11-27 12:38:11"
     }
   ],
   "recent_history": [
