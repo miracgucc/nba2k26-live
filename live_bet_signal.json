@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 02:36:56",
-  "timestamp": 1795822616.56,
+  "updated_at_tr": "2026-11-28 02:37:32",
+  "timestamp": 1795822652.54,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Detroit Pistons",
       "away_team": "Oklahoma City Thunder",
       "quarter": 4,
-      "elapsed_mins": 47.3,
+      "elapsed_mins": 47.9,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "101-119",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 02:36:55"
+      "updated_at_tr": "2026-11-28 02:37:31"
     },
     {
       "signal_id": "CB-774731127_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 02:36:55"
+      "updated_at_tr": "2026-11-28 02:37:31"
     },
     {
       "signal_id": "CB-774724408_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 02:36:55"
+      "updated_at_tr": "2026-11-28 02:37:31"
     }
   ],
   "recent_history": [
