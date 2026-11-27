@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 06:52:44",
-  "timestamp": 1795751564.3,
+  "updated_at_tr": "2026-11-27 06:53:26",
+  "timestamp": 1795751606.9,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -18,32 +18,32 @@
     "home_team": "Minnesota Timberwolves",
     "away_team": "Indiana Pacers",
     "quarter": 3,
-    "elapsed_mins": 34.7,
+    "elapsed_mins": 35.3,
     "in_decision_window_35m": true,
     "is_barem_open": true,
     "current_score": "86-67",
     "score_gap": 19,
     "fav1_barem": "201-210",
-    "fav1_odd": 2.04,
+    "fav1_odd": 2.03,
     "fav2_barem": "211-220",
-    "fav2_odd": 3.65,
+    "fav2_odd": 3.29,
     "decision": "OYNA",
     "pick_type": "1. Favori",
     "target_barem": "201-210",
     "target_barem_tr": "201-210",
     "target_barem_en": "201-210",
     "target_t_id": 1843,
-    "target_odd": 2.04,
-    "min_acceptable_odd": 1.89,
+    "target_odd": 2.03,
+    "min_acceptable_odd": 1.88,
     "zone_type": "GOLDEN",
-    "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 201-210 (2.04)",
+    "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 201-210 (2.03)",
     "stakes": {
       "kasa_8000": 400,
       "kasa_10000": 500,
       "kasa_15000": 750,
       "kasa_20000": 1000
     },
-    "updated_at_tr": "2026-11-27 06:52:42"
+    "updated_at_tr": "2026-11-27 06:53:25"
   },
   "active_signals": [
     {
@@ -54,32 +54,32 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Indiana Pacers",
       "quarter": 3,
-      "elapsed_mins": 34.7,
+      "elapsed_mins": 35.3,
       "in_decision_window_35m": true,
       "is_barem_open": true,
       "current_score": "86-67",
       "score_gap": 19,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.04,
+      "fav1_odd": 2.03,
       "fav2_barem": "211-220",
-      "fav2_odd": 3.65,
+      "fav2_odd": 3.29,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_barem_en": "201-210",
       "target_t_id": 1843,
-      "target_odd": 2.04,
-      "min_acceptable_odd": 1.89,
+      "target_odd": 2.03,
+      "min_acceptable_odd": 1.88,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 201-210 (2.04)",
+      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 201-210 (2.03)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-27 06:52:42"
+      "updated_at_tr": "2026-11-27 06:53:25"
     }
   ],
   "live_matches": [
@@ -91,7 +91,7 @@
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
       "quarter": 1,
-      "elapsed_mins": 8.4,
+      "elapsed_mins": 8.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "19-20",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 06:52:42"
+      "updated_at_tr": "2026-11-27 06:53:25"
     },
     {
       "signal_id": "CB-774468912_35m",
@@ -126,32 +126,32 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Indiana Pacers",
       "quarter": 3,
-      "elapsed_mins": 34.7,
+      "elapsed_mins": 35.3,
       "in_decision_window_35m": true,
       "is_barem_open": true,
       "current_score": "86-67",
       "score_gap": 19,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.04,
+      "fav1_odd": 2.03,
       "fav2_barem": "211-220",
-      "fav2_odd": 3.65,
+      "fav2_odd": 3.29,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_barem_en": "201-210",
       "target_t_id": 1843,
-      "target_odd": 2.04,
-      "min_acceptable_odd": 1.89,
+      "target_odd": 2.03,
+      "min_acceptable_odd": 1.88,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 201-210 (2.04)",
+      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 201-210 (2.03)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-27 06:52:42"
+      "updated_at_tr": "2026-11-27 06:53:25"
     }
   ],
   "recent_history": [
@@ -168,8 +168,8 @@
       "target_barem": "201-210",
       "target_barem_tr": "201-210",
       "target_t_id": 1843,
-      "target_odd": 2.04,
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 201-210 (2.04)",
+      "target_odd": 2.03,
+      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 201-210 (2.03)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
