@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 06:51:27",
-  "timestamp": 1795751487.5,
+  "updated_at_tr": "2026-11-27 06:51:58",
+  "timestamp": 1795751518.76,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,8 +21,8 @@
     "elapsed_mins": 34.5,
     "in_decision_window_35m": true,
     "is_barem_open": true,
-    "current_score": "85-67",
-    "score_gap": 18,
+    "current_score": "86-67",
+    "score_gap": 19,
     "fav1_barem": "201-210",
     "fav1_odd": 2.1,
     "fav2_barem": "211-220",
@@ -43,7 +43,7 @@
       "kasa_15000": 600,
       "kasa_20000": 800
     },
-    "updated_at_tr": "2026-11-27 06:51:25"
+    "updated_at_tr": "2026-11-27 06:51:57"
   },
   "active_signals": [
     {
@@ -57,8 +57,8 @@
       "elapsed_mins": 34.5,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "85-67",
-      "score_gap": 18,
+      "current_score": "86-67",
+      "score_gap": 19,
       "fav1_barem": "201-210",
       "fav1_odd": 2.1,
       "fav2_barem": "211-220",
@@ -79,7 +79,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-27 06:51:25"
+      "updated_at_tr": "2026-11-27 06:51:57"
     }
   ],
   "live_matches": [
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 06:51:25"
+      "updated_at_tr": "2026-11-27 06:51:57"
     },
     {
       "signal_id": "CB-774468912_35m",
@@ -129,8 +129,8 @@
       "elapsed_mins": 34.5,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "85-67",
-      "score_gap": 18,
+      "current_score": "86-67",
+      "score_gap": 19,
       "fav1_barem": "201-210",
       "fav1_odd": 2.1,
       "fav2_barem": "211-220",
@@ -151,7 +151,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-27 06:51:25"
+      "updated_at_tr": "2026-11-27 06:51:57"
     }
   ],
   "recent_history": [
@@ -161,8 +161,8 @@
       "raw_game_id": "774468912",
       "date": "2026-11-27",
       "game_name": "Minnesota Timberwolves vs Indiana Pacers",
-      "current_score": "85-67",
-      "score_gap": 18,
+      "current_score": "86-67",
+      "score_gap": 19,
       "decision": "OYNA",
       "pick_type": "2. Favori",
       "target_barem": "211-220",
