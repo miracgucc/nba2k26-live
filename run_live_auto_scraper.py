@@ -194,6 +194,27 @@ def _upsert_symmetry_log_rows_unlocked(new_rows: list, league: str = "nba"):
         clean_new = {h: new_row.get(h, "") for h in headers}
         if (new_gid, new_ctime) in dedup_map:
             prev = dedup_map[(new_gid, new_ctime)]
+            # Once the closing decision minute (35m NBA / 29m Euro) is logged with valid open odds,
+            # LOCK its score and odds so subsequent 10s polls or late cloud merges never mutate the decision!
+            if new_m == int(cfg["decision_min"]):
+                def _has_valid_open_odd(r_dict):
+                    for oc in cfg["barem_odd_cols"].values():
+                        try:
+                            if 1.001 < float(r_dict.get(oc, 99.0) or 99.0) < 85.0:
+                                return True
+                        except Exception:
+                            pass
+                    return False
+
+                if _has_valid_open_odd(prev):
+                    if str(new_row.get("status", "")) == "COMPLETED" and str(new_row.get("actual_range", "")).strip():
+                        prev_locked = dict(prev)
+                        prev_locked["actual_score"] = new_row.get("actual_score", "")
+                        prev_locked["actual_range"] = new_row.get("actual_range", "")
+                        prev_locked["status"] = "COMPLETED"
+                        dedup_map[(new_gid, new_ctime)] = prev_locked
+                        changed = True
+                    continue
             if prev.get("status") == "COMPLETED":
                 clean_new["actual_score"] = prev.get("actual_score", "")
                 clean_new["actual_range"] = prev.get("actual_range", "")

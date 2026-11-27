@@ -1852,8 +1852,14 @@ render_live_dashboard()
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# SECTION 2.5: v8.1 LIVE TRIAL BANKROLL TRACKER (3.000 TL FRESH START FROM NOV 26 13:00)
+# SECTION 2.5: v8.1 LIVE TRIAL BANKROLL TRACKER (3.000 TL FRESH START FROM NOV 27 00:00)
 # ─────────────────────────────────────────────────────────────────────────────
+@st.cache_resource
+def _get_locked_decision_snapshots() -> dict:
+    """Process-wide immutable store of closing decision rows (Minute 35 NBA / Minute 29 Euro) so late CDN overwrites never flip a locked decision."""
+    return {}
+
+
 @st.cache_data(ttl=10, show_spinner=False)
 def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
     """Evaluates all NBA 2K26 + Cyber Euro League matches with v8.1 rules and returns (completed_eval, live_decided)."""
@@ -1897,9 +1903,9 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
                 return (1, f1, o1), "25+ farkta düşük kalan sayı 1.Fav"
             if req1 <= 48.5 and ps != 1 and gap <= 24:
                 return (1, f1, o1), f"Düşük kalan sayı ({req1:.1f} <= 48.5) 1.Fav"
+            if 16 <= gap <= 24 and f2_up and req1 <= 50.5:
+                return (1, f1, o1), "16-24 farkta düşük kalan sayı 1.Fav"
             if 48.5 < req1 <= 56.5 and 10 <= gap <= 24 and o2 <= 3.05:
-                if gap >= 16 and f2_up and req1 <= 50.5:
-                    return (1, f1, o1), "16-24 farkta düşük kalan sayı 1.Fav"
                 if up or (10 <= gap <= 15) or not f2_up or ps != 0:
                     return (2, f2, o2), f"2.10-2.30 bandı 2.Fav ({req1:.1f} kalan sayı)"
             return None, f"2.10-2.30 seçici filtre dışı (Fark:{gap}, İstenen:{req1:.1f}, 2.Fav:{o2:.2f}, ps:{ps:+d})"
@@ -1997,10 +2003,10 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
                             pair_q4_map[pk_k] = (float(prow["mean"]), int(prow["count"]))
 
         frames = [
-            _read_csv_safe(paths["csv_path"]),
             _read_csv_safe(os.path.join(BASE_DIR, files["log_seed"])),
-            _read_csv_safe(os.path.join(BASE_DIR, files["log_cloud"])),
             _fetch_github_csv(files["log_cloud"]),
+            _read_csv_safe(os.path.join(BASE_DIR, files["log_cloud"])),
+            _read_csv_safe(paths["csv_path"]),
         ]
         frames = [f for f in frames if not f.empty and "game_id" in f.columns and "check_time" in f.columns]
         if not frames:
@@ -2056,6 +2062,7 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
             ehi = min(float(bhi), float(cfg["bar_upper_cap"]))
             mid_map[bn] = (elo + ehi) / 2.0
 
+        locked_snaps = _get_locked_decision_snapshots()
         ps = 0
         ps2 = 0
         for gid, grp in df_s.groupby("game_id", sort=False):
@@ -2069,6 +2076,15 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
                     break
             if last_r is None:
                 continue
+            if int(last_r["_min"]) == dec_min:
+                if gid in locked_snaps:
+                    lck_r = locked_snaps[gid].copy()
+                    lck_r["actual_score"] = last_r.get("actual_score", lck_r.get("actual_score", ""))
+                    lck_r["actual_range"] = last_r.get("actual_range", lck_r.get("actual_range", ""))
+                    lck_r["status"] = last_r.get("status", lck_r.get("status", "PENDING"))
+                    last_r = lck_r
+                else:
+                    locked_snaps[gid] = last_r.copy()
             o_raw = {bn: float(last_r.get(b_cols[bn], 99.0) or 99.0) for bn in barem_names}
             p_raw = {bn: float(last_r.get(p_cols[bn], 0.0) or 0.0) for bn in barem_names}
             om, _ = resolve_effective_barem_odds(o_raw, p_raw, league=lg)
