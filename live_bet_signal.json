@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 11:19:01",
-  "timestamp": 1795767541.8,
+  "updated_at_tr": "2026-11-27 11:19:43",
+  "timestamp": 1795767583.34,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Houston Rockets",
       "away_team": "Los Angeles Clippers",
       "quarter": 3,
-      "elapsed_mins": 26.4,
+      "elapsed_mins": 26.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "63-58",
-      "score_gap": 5,
+      "current_score": "65-58",
+      "score_gap": 7,
       "fav1_barem": "221-230",
       "fav1_odd": 3.05,
       "fav2_barem": "231+",
@@ -46,42 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 11:19:00"
-    },
-    {
-      "signal_id": "CB-774504663_35m",
-      "game_id": "CB-774504663",
-      "raw_game_id": "774504663",
-      "game_name": "Los Angeles Lakers vs Indiana Pacers",
-      "home_team": "Los Angeles Lakers",
-      "away_team": "Indiana Pacers",
-      "quarter": 4,
-      "elapsed_mins": 48.0,
-      "in_decision_window_35m": false,
-      "is_barem_open": false,
-      "current_score": "102-111",
-      "score_gap": 9,
-      "fav1_barem": "211-220",
-      "fav1_odd": 0.0,
-      "fav2_barem": "-",
-      "fav2_odd": 0.0,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⏳ Oran Bekleniyor",
-      "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
-      },
-      "updated_at_tr": "2026-11-27 11:19:00"
+      "updated_at_tr": "2026-11-27 11:19:42"
     },
     {
       "signal_id": "CB-774519181_35m",
@@ -116,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 11:19:00"
+      "updated_at_tr": "2026-11-27 11:19:42"
     }
   ],
   "recent_history": [
