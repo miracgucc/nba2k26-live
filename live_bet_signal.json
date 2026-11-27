@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 13:48:40",
-  "timestamp": 1795776520.67,
+  "updated_at_tr": "2026-11-27 13:49:21",
+  "timestamp": 1795776561.22,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 13:48:39"
+      "updated_at_tr": "2026-11-27 13:49:20"
     },
     {
       "signal_id": "CB-774537729_35m",
@@ -56,11 +56,11 @@
       "home_team": "Golden State Warriors",
       "away_team": "Dallas Mavericks",
       "quarter": 4,
-      "elapsed_mins": 46.6,
+      "elapsed_mins": 46.7,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "114-111",
-      "score_gap": 3,
+      "current_score": "117-111",
+      "score_gap": 6,
       "fav1_barem": "231+",
       "fav1_odd": 1.01,
       "fav2_barem": "-",
@@ -73,15 +73,15 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 3 Sayı Fark)",
+      "zone_type": "PASS_SELECTIVE",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.01)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 13:48:39"
+      "updated_at_tr": "2026-11-27 13:49:20"
     }
   ],
   "recent_history": [
