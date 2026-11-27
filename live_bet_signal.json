@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 20:33:08",
-  "timestamp": 1795800788.46,
+  "updated_at_tr": "2026-11-27 20:33:54",
+  "timestamp": 1795800834.53,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Denver Nuggets",
       "away_team": "Cleveland Cavaliers",
       "quarter": 2,
-      "elapsed_mins": 21.9,
+      "elapsed_mins": 22.7,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "50-36",
-      "score_gap": 14,
+      "current_score": "53-36",
+      "score_gap": 17,
       "fav1_barem": "191-200",
-      "fav1_odd": 2.7,
+      "fav1_odd": 2.58,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.51,
+      "fav2_odd": 3.66,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.70)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.58)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 20:33:07"
+      "updated_at_tr": "2026-11-27 20:33:53"
     },
     {
       "signal_id": "CB-774628896_35m",
@@ -56,11 +56,11 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Houston Rockets",
       "quarter": 4,
-      "elapsed_mins": 47.1,
+      "elapsed_mins": 47.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "104-106",
-      "score_gap": 2,
+      "current_score": "104-109",
+      "score_gap": 5,
       "fav1_barem": "211-220",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 2 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 5 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 20:33:07"
+      "updated_at_tr": "2026-11-27 20:33:53"
     },
     {
       "signal_id": "CB-774648743_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 20:33:07"
+      "updated_at_tr": "2026-11-27 20:33:53"
     }
   ],
   "recent_history": [
