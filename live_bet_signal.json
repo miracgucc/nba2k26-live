@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 07:33:38",
-  "timestamp": 1795754018.34,
+  "updated_at_tr": "2026-11-27 07:34:20",
+  "timestamp": 1795754060.22,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -18,7 +18,7 @@
     "home_team": "Houston Rockets",
     "away_team": "Golden State Warriors",
     "quarter": 3,
-    "elapsed_mins": 34.3,
+    "elapsed_mins": 34.8,
     "in_decision_window_35m": true,
     "is_barem_open": true,
     "current_score": "94-71",
@@ -26,7 +26,7 @@
     "fav1_barem": "221-230",
     "fav1_odd": 2.07,
     "fav2_barem": "231+",
-    "fav2_odd": 3.52,
+    "fav2_odd": 3.43,
     "decision": "OYNA",
     "pick_type": "1. Favori",
     "target_barem": "221-230",
@@ -43,7 +43,7 @@
       "kasa_15000": 750,
       "kasa_20000": 1000
     },
-    "updated_at_tr": "2026-11-27 07:33:36"
+    "updated_at_tr": "2026-11-27 07:34:18"
   },
   "active_signals": [
     {
@@ -54,7 +54,7 @@
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
       "quarter": 3,
-      "elapsed_mins": 34.3,
+      "elapsed_mins": 34.8,
       "in_decision_window_35m": true,
       "is_barem_open": true,
       "current_score": "94-71",
@@ -62,7 +62,7 @@
       "fav1_barem": "221-230",
       "fav1_odd": 2.07,
       "fav2_barem": "231+",
-      "fav2_odd": 3.52,
+      "fav2_odd": 3.43,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "221-230",
@@ -79,7 +79,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-27 07:33:36"
+      "updated_at_tr": "2026-11-27 07:34:18"
     }
   ],
   "live_matches": [
@@ -91,7 +91,7 @@
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
       "quarter": 3,
-      "elapsed_mins": 34.3,
+      "elapsed_mins": 34.8,
       "in_decision_window_35m": true,
       "is_barem_open": true,
       "current_score": "94-71",
@@ -99,7 +99,7 @@
       "fav1_barem": "221-230",
       "fav1_odd": 2.07,
       "fav2_barem": "231+",
-      "fav2_odd": 3.52,
+      "fav2_odd": 3.43,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "221-230",
@@ -116,7 +116,7 @@
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-27 07:33:36"
+      "updated_at_tr": "2026-11-27 07:34:18"
     },
     {
       "signal_id": "CB-774480126_35m",
@@ -126,15 +126,15 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Miami Heat",
       "quarter": 1,
-      "elapsed_mins": 8.2,
+      "elapsed_mins": 8.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "15-6",
       "score_gap": 9,
       "fav1_barem": "181-190",
-      "fav1_odd": 3.37,
+      "fav1_odd": 3.46,
       "fav2_barem": "171-180",
-      "fav2_odd": 4.07,
+      "fav2_odd": 4.06,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -144,14 +144,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 181-190: 3.37)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 181-190: 3.46)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 07:33:36"
+      "updated_at_tr": "2026-11-27 07:34:18"
     }
   ],
   "recent_history": [
