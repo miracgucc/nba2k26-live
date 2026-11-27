@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 04:16:40",
-  "timestamp": 1795742200.26,
+  "updated_at_tr": "2026-11-27 04:17:10",
+  "timestamp": 1795742230.36,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Atlanta Hawks",
       "away_team": "Cleveland Cavaliers",
       "quarter": 1,
-      "elapsed_mins": 11.9,
+      "elapsed_mins": 12.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "20-27",
-      "score_gap": 7,
+      "current_score": "20-30",
+      "score_gap": 10,
       "fav1_barem": "201-210",
       "fav1_odd": 3.61,
       "fav2_barem": "191-200",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 04:16:39"
+      "updated_at_tr": "2026-11-27 04:17:09"
     },
     {
       "signal_id": "CB-774447113_35m",
@@ -56,15 +56,15 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Houston Rockets",
       "quarter": 3,
-      "elapsed_mins": 35.3,
+      "elapsed_mins": 35.6,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "74-76",
+      "current_score": "77-79",
       "score_gap": 2,
       "fav1_barem": "201-210",
       "fav1_odd": 2.52,
       "fav2_barem": "211-220",
-      "fav2_odd": 2.56,
+      "fav2_odd": 2.58,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 04:16:39"
+      "updated_at_tr": "2026-11-27 04:17:09"
     }
   ],
   "recent_history": [
@@ -91,7 +91,7 @@
       "raw_game_id": "774447113",
       "date": "2026-11-27",
       "game_name": "Los Angeles Clippers vs Houston Rockets",
-      "current_score": "74-76",
+      "current_score": "77-79",
       "score_gap": 2,
       "decision": "PAS",
       "pick_type": "PAS",
