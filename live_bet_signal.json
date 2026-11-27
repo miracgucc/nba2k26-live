@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 10:12:18",
-  "timestamp": 1795763538.97,
+  "updated_at_tr": "2026-11-27 10:12:58",
+  "timestamp": 1795763578.82,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Indiana Pacers",
       "quarter": 1,
-      "elapsed_mins": 8.2,
+      "elapsed_mins": 8.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "8-17",
       "score_gap": 9,
       "fav1_barem": "191-200",
-      "fav1_odd": 3.93,
+      "fav1_odd": 3.88,
       "fav2_barem": "201-210",
-      "fav2_odd": 4.26,
+      "fav2_odd": 4.24,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 3.93)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 3.88)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 10:12:17"
+      "updated_at_tr": "2026-11-27 10:12:57"
     },
     {
       "signal_id": "CB-774497863_35m",
@@ -56,15 +56,15 @@
       "home_team": "New York Knicks",
       "away_team": "Miami Heat",
       "quarter": 3,
-      "elapsed_mins": 31.4,
+      "elapsed_mins": 32.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "71-65",
-      "score_gap": 6,
-      "fav1_barem": "201-210",
-      "fav1_odd": 2.69,
-      "fav2_barem": "211-220",
-      "fav2_odd": 3.45,
+      "current_score": "71-67",
+      "score_gap": 4,
+      "fav1_barem": "211-220",
+      "fav1_odd": 2.83,
+      "fav2_barem": "201-210",
+      "fav2_odd": 3.15,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -73,18 +73,37 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.69)",
+      "zone_type": "PASS_CLUTCH",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 4 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 10:12:17"
+      "updated_at_tr": "2026-11-27 10:12:57"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-774497863_35m",
+      "game_id": "CB-774497863",
+      "raw_game_id": "774497863",
+      "date": "2026-11-27",
+      "game_name": "New York Knicks vs Miami Heat",
+      "current_score": "71-67",
+      "score_gap": 4,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 4 Sayı Fark)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-774491673_35m",
       "game_id": "CB-774491673",
@@ -407,25 +426,6 @@
       "actual_score": "89-96",
       "actual_range": "181-190",
       "result": "YATTI"
-    },
-    {
-      "signal_id": "CB-774380500_35m",
-      "game_id": "CB-774380500",
-      "raw_game_id": "774380500",
-      "date": "2026-11-26",
-      "game_name": "New York Knicks vs Atlanta Hawks",
-      "current_score": "78-80",
-      "score_gap": 2,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 2 Sayı Fark)",
-      "actual_score": "106-105",
-      "actual_range": "211-220",
-      "result": "PAS"
     }
   ]
 }
