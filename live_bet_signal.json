@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 18:35:30",
-  "timestamp": 1795793730.75,
+  "updated_at_tr": "2026-11-27 18:36:06",
+  "timestamp": 1795793766.19,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,42 +46,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-27 18:35:29"
-    },
-    {
-      "signal_id": "CB-774601221_35m",
-      "game_id": "CB-774601221",
-      "raw_game_id": "774601221",
-      "game_name": "Los Angeles Clippers vs Atlanta Hawks",
-      "home_team": "Los Angeles Clippers",
-      "away_team": "Atlanta Hawks",
-      "quarter": 4,
-      "elapsed_mins": 48.0,
-      "in_decision_window_35m": false,
-      "is_barem_open": false,
-      "current_score": "124-114",
-      "score_gap": 10,
-      "fav1_barem": "231+",
-      "fav1_odd": 1.01,
-      "fav2_barem": "-",
-      "fav2_odd": 0.0,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.01)",
-      "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
-      },
-      "updated_at_tr": "2026-11-27 18:35:29"
+      "updated_at_tr": "2026-11-27 18:36:04"
     },
     {
       "signal_id": "CB-774619076_35m",
@@ -116,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 18:35:29"
+      "updated_at_tr": "2026-11-27 18:36:04"
     }
   ],
   "recent_history": [
