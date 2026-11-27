@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 00:29:57",
-  "timestamp": 1795814997.84,
+  "updated_at_tr": "2026-11-28 00:30:34",
+  "timestamp": 1795815034.97,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 00:29:56"
+      "updated_at_tr": "2026-11-28 00:30:33"
     },
     {
       "signal_id": "CB-774692666_35m",
@@ -56,11 +56,11 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Oklahoma City Thunder",
       "quarter": 4,
-      "elapsed_mins": 45.0,
+      "elapsed_mins": 45.7,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "98-118",
-      "score_gap": 20,
+      "current_score": "98-120",
+      "score_gap": 22,
       "fav1_barem": "221-230",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -81,7 +81,42 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 00:29:56"
+      "updated_at_tr": "2026-11-28 00:30:33"
+    },
+    {
+      "signal_id": "CB-774710263_35m",
+      "game_id": "CB-774710263",
+      "raw_game_id": "774710263",
+      "game_name": "Minnesota Timberwolves vs New York Knicks",
+      "home_team": "Minnesota Timberwolves",
+      "away_team": "New York Knicks",
+      "quarter": 1,
+      "elapsed_mins": 0.0,
+      "in_decision_window_35m": false,
+      "is_barem_open": false,
+      "current_score": "0-0",
+      "score_gap": 0,
+      "fav1_barem": "-",
+      "fav1_odd": 0.0,
+      "fav2_barem": "-",
+      "fav2_odd": 0.0,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_barem_en": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "min_acceptable_odd": 0.0,
+      "zone_type": "PASS_CLUTCH",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 0 Sayı Fark)",
+      "stakes": {
+        "kasa_8000": 0,
+        "kasa_10000": 0,
+        "kasa_15000": 0,
+        "kasa_20000": 0
+      },
+      "updated_at_tr": "2026-11-28 00:30:33"
     }
   ],
   "recent_history": [
