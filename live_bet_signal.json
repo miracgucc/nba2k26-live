@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 00:33:34",
-  "timestamp": 1795815214.21,
+  "updated_at_tr": "2026-11-28 00:34:11",
+  "timestamp": 1795815251.12,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
       "quarter": 2,
-      "elapsed_mins": 21.9,
+      "elapsed_mins": 22.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "57-44",
-      "score_gap": 13,
+      "current_score": "59-47",
+      "score_gap": 12,
       "fav1_barem": "231+",
-      "fav1_odd": 1.92,
+      "fav1_odd": 1.82,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.22,
-      "decision": "OYNA",
-      "pick_type": "1. Favori",
-      "target_barem": "231+",
-      "target_barem_tr": "231 veya daha fazla",
-      "target_barem_en": "231 or more",
-      "target_t_id": 1846,
-      "target_odd": 1.92,
-      "min_acceptable_odd": 1.77,
-      "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 231+ (1.92)",
+      "fav2_odd": 3.33,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_barem_en": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "min_acceptable_odd": 0.0,
+      "zone_type": "PASS_SELECTIVE",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.82)",
       "stakes": {
-        "kasa_8000": 400,
-        "kasa_10000": 500,
-        "kasa_15000": 750,
-        "kasa_20000": 1000
+        "kasa_8000": 0,
+        "kasa_10000": 0,
+        "kasa_15000": 0,
+        "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 00:33:32"
+      "updated_at_tr": "2026-11-28 00:34:09"
     },
     {
       "signal_id": "CB-774692666_35m",
@@ -56,12 +56,12 @@
       "home_team": "Los Angeles Lakers",
       "away_team": "Oklahoma City Thunder",
       "quarter": 4,
-      "elapsed_mins": 46.3,
+      "elapsed_mins": 46.7,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "98-122",
-      "score_gap": 24,
-      "fav1_barem": "221-230",
+      "current_score": "101-124",
+      "score_gap": 23,
+      "fav1_barem": "231+",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
       "fav2_odd": 0.0,
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 00:33:32"
+      "updated_at_tr": "2026-11-28 00:34:09"
     },
     {
       "signal_id": "CB-774710263_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 00:33:32"
+      "updated_at_tr": "2026-11-28 00:34:09"
     }
   ],
   "recent_history": [
