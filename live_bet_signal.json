@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-27 06:38:01",
-  "timestamp": 1795750681.8,
+  "updated_at_tr": "2026-11-27 06:38:41",
+  "timestamp": 1795750721.17,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 06:38:00"
+      "updated_at_tr": "2026-11-27 06:38:39"
     },
     {
       "signal_id": "CB-774463629_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 06:38:00"
+      "updated_at_tr": "2026-11-27 06:38:39"
     },
     {
       "signal_id": "CB-774468912_35m",
@@ -91,15 +91,15 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Indiana Pacers",
       "quarter": 3,
-      "elapsed_mins": 25.4,
+      "elapsed_mins": 25.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "67-44",
-      "score_gap": 23,
+      "current_score": "70-45",
+      "score_gap": 25,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.65,
+      "fav1_odd": 2.66,
       "fav2_barem": "211-220",
-      "fav2_odd": 2.94,
+      "fav2_odd": 2.8,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -109,14 +109,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.65)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.66)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-27 06:38:00"
+      "updated_at_tr": "2026-11-27 06:38:39"
     }
   ],
   "recent_history": [
