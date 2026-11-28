@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 08:13:29",
-  "timestamp": 1795842809.04,
+  "updated_at_tr": "2026-11-28 08:14:03",
+  "timestamp": 1795842843.38,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Denver Nuggets",
       "away_team": "Detroit Pistons",
       "quarter": 3,
-      "elapsed_mins": 34.0,
+      "elapsed_mins": 34.6,
       "in_decision_window_35m": true,
       "is_barem_open": true,
       "current_score": "75-76",
       "score_gap": 1,
-      "fav1_barem": "211-220",
-      "fav1_odd": 2.43,
-      "fav2_barem": "201-210",
-      "fav2_odd": 2.78,
+      "fav1_barem": "201-210",
+      "fav1_odd": 2.57,
+      "fav2_barem": "211-220",
+      "fav2_odd": 2.58,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 08:13:27"
+      "updated_at_tr": "2026-11-28 08:14:01"
     },
     {
       "signal_id": "CB-774782742_35m",
@@ -56,15 +56,15 @@
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
       "quarter": 1,
-      "elapsed_mins": 8.0,
+      "elapsed_mins": 8.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "19-25",
-      "score_gap": 6,
+      "current_score": "21-25",
+      "score_gap": 4,
       "fav1_barem": "231+",
-      "fav1_odd": 1.43,
+      "fav1_odd": 1.59,
       "fav2_barem": "221-230",
-      "fav2_odd": 4.83,
+      "fav2_odd": 4.33,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.43)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.59)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 08:13:27"
+      "updated_at_tr": "2026-11-28 08:14:01"
     }
   ],
   "recent_history": [
