@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 17:36:04",
-  "timestamp": 1795876564.76,
+  "updated_at_tr": "2026-11-28 17:36:44",
+  "timestamp": 1795876604.41,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,10 +21,10 @@
       "home_team": "Golden State Warriors",
       "away_team": "Los Angeles Clippers",
       "quarter": 4,
-      "elapsed_mins": 36.9,
+      "elapsed_mins": 37.5,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "83-94",
+      "current_score": "85-96",
       "score_gap": 11,
       "fav1_barem": "231+",
       "fav1_odd": 0.0,
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 17:36:03"
+      "updated_at_tr": "2026-11-28 17:36:43"
     },
     {
       "signal_id": "CB-774915989_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 17:36:03"
+      "updated_at_tr": "2026-11-28 17:36:43"
     }
   ],
   "recent_history": [
