@@ -1,13 +1,13 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 17:50:06",
-  "timestamp": 1795877406.63,
+  "updated_at_tr": "2026-11-28 17:50:51",
+  "timestamp": 1795877451.06,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
   "chain_state": {
     "prev_shift": -1,
-    "prev2_shift": 0
+    "prev2_shift": -1
   },
   "has_active_play_signal": false,
   "current_play_signal": null,
@@ -21,11 +21,11 @@
       "home_team": "Golden State Warriors",
       "away_team": "Los Angeles Clippers",
       "quarter": 4,
-      "elapsed_mins": 47.4,
+      "elapsed_mins": 48.0,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "106-119",
-      "score_gap": 13,
+      "current_score": "106-121",
+      "score_gap": 15,
       "fav1_barem": "221-230",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 17:50:05"
+      "updated_at_tr": "2026-11-28 17:50:49"
     },
     {
       "signal_id": "CB-774915989_35m",
@@ -56,15 +56,15 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Oklahoma City Thunder",
       "quarter": 2,
-      "elapsed_mins": 18.8,
+      "elapsed_mins": 19.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "31-28",
-      "score_gap": 3,
+      "current_score": "33-31",
+      "score_gap": 2,
       "fav1_barem": "181-190",
-      "fav1_odd": 3.25,
+      "fav1_odd": 3.26,
       "fav2_barem": "191-200",
-      "fav2_odd": 3.89,
+      "fav2_odd": 3.61,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,49 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 181-190: 3.25)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 181-190: 3.26)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 17:50:05"
+      "updated_at_tr": "2026-11-28 17:50:49"
+    },
+    {
+      "signal_id": "CB-774925870_35m",
+      "game_id": "CB-774925870",
+      "raw_game_id": "774925870",
+      "game_name": "New York Knicks vs Atlanta Hawks",
+      "home_team": "New York Knicks",
+      "away_team": "Atlanta Hawks",
+      "quarter": 1,
+      "elapsed_mins": 0.0,
+      "in_decision_window_35m": false,
+      "is_barem_open": false,
+      "current_score": "0-0",
+      "score_gap": 0,
+      "fav1_barem": "-",
+      "fav1_odd": 0.0,
+      "fav2_barem": "-",
+      "fav2_odd": 0.0,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_barem_en": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "min_acceptable_odd": 0.0,
+      "zone_type": "PASS_CLUTCH",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 0 Sayı Fark)",
+      "stakes": {
+        "kasa_8000": 0,
+        "kasa_10000": 0,
+        "kasa_15000": 0,
+        "kasa_20000": 0
+      },
+      "updated_at_tr": "2026-11-28 17:50:49"
     }
   ],
   "recent_history": [
@@ -100,9 +135,9 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.48)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "106-121",
+      "actual_range": "221-230",
+      "result": "PAS"
     },
     {
       "signal_id": "CB-774890420_35m",
