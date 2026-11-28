@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 05:10:29",
-  "timestamp": 1795831829.42,
+  "updated_at_tr": "2026-11-28 05:11:05",
+  "timestamp": 1795831865.22,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Denver Nuggets",
       "away_team": "Los Angeles Lakers",
       "quarter": 4,
-      "elapsed_mins": 47.1,
+      "elapsed_mins": 47.4,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "88-83",
-      "score_gap": 5,
+      "current_score": "88-85",
+      "score_gap": 3,
       "fav1_barem": "171-180",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 5 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 3 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 05:10:28"
+      "updated_at_tr": "2026-11-28 05:11:04"
     },
     {
       "signal_id": "CB-774751999_35m",
@@ -56,10 +56,10 @@
       "home_team": "Houston Rockets",
       "away_team": "Los Angeles Clippers",
       "quarter": 2,
-      "elapsed_mins": 20.8,
+      "elapsed_mins": 21.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "46-42",
+      "current_score": "48-44",
       "score_gap": 4,
       "fav1_barem": "211-220",
       "fav1_odd": 3.08,
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 05:10:28"
+      "updated_at_tr": "2026-11-28 05:11:04"
     },
     {
       "signal_id": "CB-774758071_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 05:10:28"
+      "updated_at_tr": "2026-11-28 05:11:04"
     }
   ],
   "recent_history": [
