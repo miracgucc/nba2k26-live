@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 16:47:27",
-  "timestamp": 1795873647.5,
+  "updated_at_tr": "2026-11-28 16:48:08",
+  "timestamp": 1795873688.89,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Golden State Warriors",
       "away_team": "Los Angeles Clippers",
       "quarter": 1,
-      "elapsed_mins": 6.8,
+      "elapsed_mins": 7.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "16-18",
-      "score_gap": 2,
+      "current_score": "18-18",
+      "score_gap": 0,
       "fav1_barem": "231+",
       "fav1_odd": 2.41,
       "fav2_barem": "221-230",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 16:47:26"
+      "updated_at_tr": "2026-11-28 16:48:07"
     },
     {
       "signal_id": "CB-774890420_35m",
@@ -56,15 +56,15 @@
       "home_team": "Miami Heat",
       "away_team": "Detroit Pistons",
       "quarter": 3,
-      "elapsed_mins": 32.9,
-      "in_decision_window_35m": false,
+      "elapsed_mins": 33.5,
+      "in_decision_window_35m": true,
       "is_barem_open": true,
       "current_score": "54-85",
       "score_gap": 31,
       "fav1_barem": "191-200",
-      "fav1_odd": 2.35,
+      "fav1_odd": 2.4,
       "fav2_barem": "181-190",
-      "fav2_odd": 3.06,
+      "fav2_odd": 2.67,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 191-200: 2.35)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 191-200: 2.40)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 16:47:26"
+      "updated_at_tr": "2026-11-28 16:48:07"
     }
   ],
   "recent_history": [
@@ -91,15 +91,15 @@
       "raw_game_id": "774890420",
       "date": "2026-11-28",
       "game_name": "Miami Heat vs Detroit Pistons",
-      "current_score": "52-85",
-      "score_gap": 33,
+      "current_score": "54-85",
+      "score_gap": 31,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
       "target_barem_tr": "",
       "target_t_id": 0,
       "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.52)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 191-200: 2.40)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
