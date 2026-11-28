@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 04:18:37",
-  "timestamp": 1795828717.15,
+  "updated_at_tr": "2026-11-28 04:19:17",
+  "timestamp": 1795828757.1,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Denver Nuggets",
       "away_team": "Los Angeles Lakers",
       "quarter": 2,
-      "elapsed_mins": 12.9,
+      "elapsed_mins": 13.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "22-27",
-      "score_gap": 5,
+      "current_score": "24-27",
+      "score_gap": 3,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.64,
-      "fav2_barem": "211-220",
-      "fav2_odd": 4.23,
+      "fav1_odd": 3.67,
+      "fav2_barem": "191-200",
+      "fav2_odd": 4.21,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.64)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.67)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 04:18:35"
+      "updated_at_tr": "2026-11-28 04:19:15"
     },
     {
       "signal_id": "CB-774738257_35m",
@@ -56,11 +56,11 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Atlanta Hawks",
       "quarter": 4,
-      "elapsed_mins": 38.8,
+      "elapsed_mins": 39.5,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "69-84",
-      "score_gap": 15,
+      "current_score": "69-86",
+      "score_gap": 17,
       "fav1_barem": "191-200",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 04:18:35"
+      "updated_at_tr": "2026-11-28 04:19:15"
     }
   ],
   "recent_history": [
