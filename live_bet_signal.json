@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 15:36:39",
-  "timestamp": 1795869399.83,
+  "updated_at_tr": "2026-11-28 15:37:33",
+  "timestamp": 1795869453.4,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Golden State Warriors",
       "away_team": "Oklahoma City Thunder",
       "quarter": 4,
-      "elapsed_mins": 38.9,
+      "elapsed_mins": 39.0,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "86-86",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 15:36:38"
+      "updated_at_tr": "2026-11-28 15:37:32"
     },
     {
       "signal_id": "CB-774879411_35m",
@@ -55,16 +55,16 @@
       "game_name": "Minnesota Timberwolves vs New York Knicks",
       "home_team": "Minnesota Timberwolves",
       "away_team": "New York Knicks",
-      "quarter": 1,
-      "elapsed_mins": 11.7,
+      "quarter": 2,
+      "elapsed_mins": 24.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "30-17",
       "score_gap": 13,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.38,
-      "fav2_barem": "211-220",
-      "fav2_odd": 4.05,
+      "fav1_odd": 3.27,
+      "fav2_barem": "191-200",
+      "fav2_odd": 4.08,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.38)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.27)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 15:36:38"
+      "updated_at_tr": "2026-11-28 15:37:32"
     }
   ],
   "recent_history": [
