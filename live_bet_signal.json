@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 12:49:57",
-  "timestamp": 1795859397.69,
+  "updated_at_tr": "2026-11-28 12:51:11",
+  "timestamp": 1795859471.94,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Dallas Mavericks",
       "away_team": "Oklahoma City Thunder",
       "quarter": 1,
-      "elapsed_mins": 7.9,
+      "elapsed_mins": 8.3,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "13-20",
       "score_gap": 7,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.43,
+      "fav1_odd": 3.53,
       "fav2_barem": "211-220",
-      "fav2_odd": 3.84,
+      "fav2_odd": 3.99,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.43)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.53)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 12:49:56"
+      "updated_at_tr": "2026-11-28 12:51:10"
     },
     {
       "signal_id": "CB-774830852_35m",
@@ -56,15 +56,15 @@
       "home_team": "Denver Nuggets",
       "away_team": "Detroit Pistons",
       "quarter": 3,
-      "elapsed_mins": 31.2,
+      "elapsed_mins": 32.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "70-72",
+      "current_score": "75-77",
       "score_gap": 2,
       "fav1_barem": "211-220",
-      "fav1_odd": 2.83,
+      "fav1_odd": 2.7,
       "fav2_barem": "221-230",
-      "fav2_odd": 2.92,
+      "fav2_odd": 2.82,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -81,10 +81,29 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 12:49:56"
+      "updated_at_tr": "2026-11-28 12:51:10"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-774830852_35m",
+      "game_id": "CB-774830852",
+      "raw_game_id": "774830852",
+      "date": "2026-11-28",
+      "game_name": "Denver Nuggets vs Detroit Pistons",
+      "current_score": "75-77",
+      "score_gap": 2,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 2 Sayı Fark)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-774822160_35m",
       "game_id": "CB-774822160",
@@ -406,25 +425,6 @@
       "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 0 Sayı Fark)",
       "actual_score": "105-112",
       "actual_range": "211-220",
-      "result": "PAS"
-    },
-    {
-      "signal_id": "CB-774701933_35m",
-      "game_id": "CB-774701933",
-      "raw_game_id": "774701933",
-      "date": "2026-11-28",
-      "game_name": "Houston Rockets vs Golden State Warriors",
-      "current_score": "85-74",
-      "score_gap": 11,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 211-220: 2.20)",
-      "actual_score": "130-98",
-      "actual_range": "221-230",
       "result": "PAS"
     }
   ]
