@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 15:26:43",
-  "timestamp": 1795868803.63,
+  "updated_at_tr": "2026-11-28 15:27:34",
+  "timestamp": 1795868854.75,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Golden State Warriors",
       "away_team": "Oklahoma City Thunder",
       "quarter": 3,
-      "elapsed_mins": 31.6,
+      "elapsed_mins": 32.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "72-71",
-      "score_gap": 1,
-      "fav1_barem": "221-230",
-      "fav1_odd": 2.52,
-      "fav2_barem": "231+",
-      "fav2_odd": 3.08,
+      "current_score": "73-71",
+      "score_gap": 2,
+      "fav1_barem": "211-220",
+      "fav1_odd": 2.61,
+      "fav2_barem": "221-230",
+      "fav2_odd": 3.06,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 1 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 2 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 15:26:42"
+      "updated_at_tr": "2026-11-28 15:27:33"
     },
     {
       "signal_id": "CB-774879411_35m",
@@ -81,10 +81,29 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 15:26:42"
+      "updated_at_tr": "2026-11-28 15:27:33"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-774868494_35m",
+      "game_id": "CB-774868494",
+      "raw_game_id": "774868494",
+      "date": "2026-11-28",
+      "game_name": "Golden State Warriors vs Oklahoma City Thunder",
+      "current_score": "73-71",
+      "score_gap": 2,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 2 Sayı Fark)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-774857659_35m",
       "game_id": "CB-774857659",
@@ -406,25 +425,6 @@
       "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 191-200: 2.18)",
       "actual_score": "91-102",
       "actual_range": "191-200",
-      "result": "PAS"
-    },
-    {
-      "signal_id": "CB-774731127_35m",
-      "game_id": "CB-774731127",
-      "raw_game_id": "774731127",
-      "date": "2026-11-28",
-      "game_name": "Houston Rockets vs Los Angeles Clippers",
-      "current_score": "85-81",
-      "score_gap": 4,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 4 Sayı Fark)",
-      "actual_score": "112-100",
-      "actual_range": "211-220",
       "result": "PAS"
     }
   ]
