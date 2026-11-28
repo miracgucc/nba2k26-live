@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 08:37:13",
-  "timestamp": 1795844233.72,
+  "updated_at_tr": "2026-11-28 08:37:52",
+  "timestamp": 1795844272.97,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 08:37:12"
+      "updated_at_tr": "2026-11-28 08:37:52"
     },
     {
       "signal_id": "CB-774782742_35m",
@@ -56,15 +56,15 @@
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
       "quarter": 2,
-      "elapsed_mins": 22.3,
+      "elapsed_mins": 22.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "50-38",
-      "score_gap": 12,
+      "current_score": "52-41",
+      "score_gap": 11,
       "fav1_barem": "211-220",
-      "fav1_odd": 3.23,
-      "fav2_barem": "221-230",
-      "fav2_odd": 3.58,
+      "fav1_odd": 3.15,
+      "fav2_barem": "201-210",
+      "fav2_odd": 3.63,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.23)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 3.15)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 08:37:12"
+      "updated_at_tr": "2026-11-28 08:37:52"
     }
   ],
   "recent_history": [
