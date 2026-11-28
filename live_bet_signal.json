@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 09:47:37",
-  "timestamp": 1795848457.78,
+  "updated_at_tr": "2026-11-28 09:48:26",
+  "timestamp": 1795848506.26,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 09:47:36"
+      "updated_at_tr": "2026-11-28 09:48:25"
     },
     {
       "signal_id": "CB-774798384_35m",
@@ -56,15 +56,15 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Atlanta Hawks",
       "quarter": 2,
-      "elapsed_mins": 17.9,
+      "elapsed_mins": 18.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "44-39",
-      "score_gap": 5,
+      "current_score": "44-41",
+      "score_gap": 3,
       "fav1_barem": "211-220",
       "fav1_odd": 3.44,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.82,
+      "fav2_odd": 3.44,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 09:47:36"
+      "updated_at_tr": "2026-11-28 09:48:25"
     }
   ],
   "recent_history": [
