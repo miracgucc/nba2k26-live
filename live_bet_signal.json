@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 14:59:19",
-  "timestamp": 1795867159.52,
+  "updated_at_tr": "2026-11-28 15:00:08",
+  "timestamp": 1795867209.0,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 14:59:18"
+      "updated_at_tr": "2026-11-28 15:00:08"
     },
     {
       "signal_id": "CB-774857659_35m",
@@ -56,10 +56,10 @@
       "home_team": "Indiana Pacers",
       "away_team": "Los Angeles Lakers",
       "quarter": 4,
-      "elapsed_mins": 40.9,
+      "elapsed_mins": 41.6,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "96-78",
+      "current_score": "98-80",
       "score_gap": 18,
       "fav1_barem": "201-210",
       "fav1_odd": 0.0,
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 14:59:18"
+      "updated_at_tr": "2026-11-28 15:00:08"
     }
   ],
   "recent_history": [
