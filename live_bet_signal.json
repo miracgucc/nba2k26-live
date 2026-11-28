@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 12:37:42",
-  "timestamp": 1795858662.3,
+  "updated_at_tr": "2026-11-28 12:38:23",
+  "timestamp": 1795858703.61,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 12:37:40"
+      "updated_at_tr": "2026-11-28 12:38:22"
     },
     {
       "signal_id": "CB-774830852_35m",
@@ -56,15 +56,15 @@
       "home_team": "Denver Nuggets",
       "away_team": "Detroit Pistons",
       "quarter": 3,
-      "elapsed_mins": 25.2,
+      "elapsed_mins": 25.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "58-61",
-      "score_gap": 3,
+      "current_score": "58-63",
+      "score_gap": 5,
       "fav1_barem": "211-220",
-      "fav1_odd": 2.8,
+      "fav1_odd": 2.74,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.43,
+      "fav2_odd": 3.64,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 2.80)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 2.74)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 12:37:40"
+      "updated_at_tr": "2026-11-28 12:38:22"
     }
   ],
   "recent_history": [
