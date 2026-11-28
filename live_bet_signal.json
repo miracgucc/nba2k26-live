@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 09:57:23",
-  "timestamp": 1795849043.06,
+  "updated_at_tr": "2026-11-28 09:58:01",
+  "timestamp": 1795849081.39,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -14,41 +14,6 @@
   "active_signals": [],
   "live_matches": [
     {
-      "signal_id": "CB-774790925_35m",
-      "game_id": "CB-774790925",
-      "raw_game_id": "774790925",
-      "game_name": "Cleveland Cavaliers vs Minnesota Timberwolves",
-      "home_team": "Cleveland Cavaliers",
-      "away_team": "Minnesota Timberwolves",
-      "quarter": 4,
-      "elapsed_mins": 48.0,
-      "in_decision_window_35m": false,
-      "is_barem_open": false,
-      "current_score": "97-98",
-      "score_gap": 1,
-      "fav1_barem": "191-200",
-      "fav1_odd": 0.0,
-      "fav2_barem": "-",
-      "fav2_odd": 0.0,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 1 Sayı Fark)",
-      "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
-      },
-      "updated_at_tr": "2026-11-28 09:57:22"
-    },
-    {
       "signal_id": "CB-774798384_35m",
       "game_id": "CB-774798384",
       "raw_game_id": "774798384",
@@ -56,15 +21,15 @@
       "home_team": "Los Angeles Clippers",
       "away_team": "Atlanta Hawks",
       "quarter": 3,
-      "elapsed_mins": 24.9,
+      "elapsed_mins": 25.8,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "51-49",
-      "score_gap": 2,
-      "fav1_barem": "201-210",
-      "fav1_odd": 3.02,
-      "fav2_barem": "191-200",
-      "fav2_odd": 3.26,
+      "current_score": "51-51",
+      "score_gap": 0,
+      "fav1_barem": "191-200",
+      "fav1_odd": 3.12,
+      "fav2_barem": "201-210",
+      "fav2_odd": 3.17,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.02)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 3.12)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 09:57:22"
+      "updated_at_tr": "2026-11-28 09:58:00"
     },
     {
       "signal_id": "CB-774805517_35m",
@@ -116,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 09:57:22"
+      "updated_at_tr": "2026-11-28 09:58:00"
     }
   ],
   "recent_history": [
