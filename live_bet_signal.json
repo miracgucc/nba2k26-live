@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 12:15:24",
-  "timestamp": 1795857324.28,
+  "updated_at_tr": "2026-11-28 12:15:47",
+  "timestamp": 1795857347.63,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Denver Nuggets",
       "away_team": "Detroit Pistons",
       "quarter": 1,
-      "elapsed_mins": 10.8,
+      "elapsed_mins": 11.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "18-23",
-      "score_gap": 5,
+      "current_score": "18-25",
+      "score_gap": 7,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.44,
+      "fav1_odd": 3.43,
       "fav2_barem": "191-200",
-      "fav2_odd": 3.79,
+      "fav2_odd": 4.06,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.44)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.43)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 12:15:23"
+      "updated_at_tr": "2026-11-28 12:15:46"
     },
     {
       "signal_id": "CB-774822160_35m",
@@ -56,15 +56,15 @@
       "home_team": "Indiana Pacers",
       "away_team": "Atlanta Hawks",
       "quarter": 3,
-      "elapsed_mins": 34.9,
+      "elapsed_mins": 35.3,
       "in_decision_window_35m": true,
       "is_barem_open": true,
       "current_score": "83-78",
       "score_gap": 5,
       "fav1_barem": "211-220",
-      "fav1_odd": 2.14,
+      "fav1_odd": 2.1,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.47,
+      "fav2_odd": 3.07,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 12:15:23"
+      "updated_at_tr": "2026-11-28 12:15:46"
     }
   ],
   "recent_history": [
