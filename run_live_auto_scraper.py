@@ -128,7 +128,7 @@ def _score_sum(sc_str: str) -> int:
         return -1
 
 
-def _upsert_symmetry_log_rows_unlocked(new_rows: list, league: str = "nba"):
+def _upsert_symmetry_log_rows_unlocked(new_rows: list, league: str = "nba", from_cloud_merge: bool = False):
     """
     Batch upsert checkpoint rows by (game_id, check_time) so simultaneous games never create
     duplicate minute rows, foreign non-cyber matches are blocked, and halftime score rollbacks
@@ -194,9 +194,8 @@ def _upsert_symmetry_log_rows_unlocked(new_rows: list, league: str = "nba"):
         clean_new = {h: new_row.get(h, "") for h in headers}
         if (new_gid, new_ctime) in dedup_map:
             prev = dedup_map[(new_gid, new_ctime)]
-            # Once the closing decision minute (35m NBA / 29m Euro) is logged with valid open odds,
-            # LOCK its score and odds so subsequent 10s polls or late cloud merges never mutate the decision!
-            if new_m == int(cfg["decision_min"]):
+            # When merging delayed cloud backup CSVs, never overwrite a local closing decision row's score/odds!
+            if from_cloud_merge and new_m >= int(cfg["closing_start_min"]):
                 def _has_valid_open_odd(r_dict):
                     for oc in cfg["barem_odd_cols"].values():
                         try:
@@ -722,7 +721,7 @@ def merge_cloud_backups(league: str = "nba"):
                 with open(cloud_sym, "r", encoding="utf-8") as f:
                     c_rows = list(csv.DictReader(f))
                 if c_rows:
-                    _upsert_symmetry_log_rows_unlocked(c_rows, league=league)
+                    _upsert_symmetry_log_rows_unlocked(c_rows, league=league, from_cloud_merge=True)
             except Exception:
                 pass
         if os.path.exists(cloud_m) and os.path.getsize(cloud_m) > 0:

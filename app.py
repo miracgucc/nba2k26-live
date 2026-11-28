@@ -11,6 +11,11 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+import period_predictor as _pp_mod
+import run_live_auto_scraper as _rlas_mod
+importlib.reload(_pp_mod)
+importlib.reload(_rlas_mod)
+
 from period_predictor import (
     analyze_archive_4500_symmetry,
     analyze_barem_symmetry,
@@ -102,7 +107,7 @@ EXP_REM_DEC = float(LEAGUE_CFG["exp_rem_decision"])
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v7.1-selective-calibrated"
+ENGINE_VERSION = "v8.3-q4-strict-immutable-lock"
 
 
 @st.cache_resource
@@ -1854,10 +1859,19 @@ render_live_dashboard()
 # ─────────────────────────────────────────────────────────────────────────────
 # SECTION 2.5: v8.1 LIVE TRIAL BANKROLL TRACKER (3.000 TL FRESH START FROM NOV 27 00:00)
 # ─────────────────────────────────────────────────────────────────────────────
+def _get_locked_decisions_file_path() -> str:
+    try:
+        rt_dir = os.path.dirname(_get_scraper_paths("nba")["csv_path"])
+        os.makedirs(rt_dir, exist_ok=True)
+        return os.path.join(rt_dir, "runtime_locked_decisions_v83.json")
+    except Exception:
+        return os.path.join(BASE_DIR, "runtime_locked_decisions_v83.json")
+
+
 @st.cache_resource
 def _get_locked_decision_snapshots() -> dict:
-    """Process-wide immutable store of closing decision rows and evaluated decisions (Minute 35 NBA / Minute 29 Euro)."""
-    lock_file = os.path.join(BASE_DIR, "runtime_locked_decisions.json")
+    """Process-wide immutable store of closing decision rows and evaluated decisions once Q4 starts (36.0m NBA / 30.0m Euro)."""
+    lock_file = _get_locked_decisions_file_path()
     data = {"rows": {}, "recs": {}}
     if os.path.exists(lock_file):
         try:
@@ -1871,7 +1885,7 @@ def _get_locked_decision_snapshots() -> dict:
 
 
 def _save_locked_decision_snapshots(data: dict):
-    lock_file = os.path.join(BASE_DIR, "runtime_locked_decisions.json")
+    lock_file = _get_locked_decisions_file_path()
     try:
         with open(lock_file + ".tmp", "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False)
@@ -2082,6 +2096,13 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
             ehi = min(float(bhi), float(cfg["bar_upper_cap"]))
             mid_map[bn] = (elo + ehi) / 2.0
 
+        _ls_lg = load_live_state(lg)
+        _close_m_lg = float(cfg["close_min"])
+        _live_map_lg = {
+            str(_lm_item.get("game_id", "")).strip(): _lm_item
+            for _lm_item in _ls_lg.get("live_matches", [])
+        }
+
         locked_store = _get_locked_decision_snapshots()
         locked_rows = locked_store.setdefault("rows", {})
         locked_recs = locked_store.setdefault("recs", {})
@@ -2099,7 +2120,19 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
                     break
             if last_r is None:
                 continue
-            if int(last_r["_min"]) == dec_min:
+
+            act_b_pre = str(last_r.get("actual_range", "")).strip()
+            _is_completed_pre = act_b_pre in barem_names
+            _is_q4_lck = True
+            _live_el_val = _close_m_lg
+            if not _is_completed_pre and gid in _live_map_lg:
+                _lm_item = _live_map_lg[gid]
+                _live_el_val = float(_lm_item.get("elapsed_mins", 0.0) or 0.0)
+                _lm_open = bool(_lm_item.get("is_barem_open", False))
+                _is_q4_lck = (_live_el_val >= _close_m_lg) or not _lm_open
+
+            # Only lock and freeze once the match has ACTUALLY entered Q4 (36.0m NBA / 30.0m Euro or barems closed) or completed!
+            if int(last_r["_min"]) == dec_min and (_is_q4_lck or _is_completed_pre):
                 if gid in locked_rows:
                     lck_dict = locked_rows[gid]
                     last_r = last_r.copy()
@@ -2223,7 +2256,8 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
             rec["close_dec"] = close_dec
             rec["close_reason"] = close_reason
 
-            if int(last_r["_min"]) == dec_min:
+            act_b = str(last_r.get("actual_range", "")).strip()
+            if int(last_r["_min"]) == dec_min and (_is_q4_lck or (act_b in barem_names)):
                 if gid in locked_recs:
                     saved_rec = locked_recs[gid]
                     for _rk in ("cur_sc", "cur_tot", "gap", "f1", "o1", "f2", "o2", "req1", "req2", "team_q4_lbl", "reason", "dna_reason", "close_reason"):
@@ -2253,20 +2287,10 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
                     }
                     dirty_lock = True
 
-            act_b = str(last_r.get("actual_range", "")).strip()
             if act_b not in barem_names:
-                if int(last_r["_min"]) == dec_min:
-                    _ls_lg = load_live_state(lg)
-                    _close_m_lg = float(cfg["close_min"])
-                    _is_q4_lck = True
-                    _live_el_val = _close_m_lg
-                    for _lm_item in _ls_lg.get("live_matches", []):
-                        if str(_lm_item.get("game_id", "")).strip() == gid:
-                            _live_el_val = float(_lm_item.get("elapsed_mins", _close_m_lg) or _close_m_lg)
-                            _lm_open = bool(_lm_item.get("is_barem_open", False))
-                            _is_q4_lck = (_live_el_val >= _close_m_lg) or not _lm_open
-                            break
-                    rec["is_q4_locked"] = _is_q4_lck
+                # Strictly display in the Q4 Locked box ONLY when 3rd quarter has ended / barems closed (_is_q4_lck == True)!
+                if int(last_r["_min"]) == dec_min and _is_q4_lck:
+                    rec["is_q4_locked"] = True
                     rec["live_el"] = _live_el_val
                     rec["close_min_lg"] = _close_m_lg
                     live_decided.append(rec)
