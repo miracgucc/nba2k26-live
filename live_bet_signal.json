@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 14:23:34",
-  "timestamp": 1795865014.79,
+  "updated_at_tr": "2026-11-28 14:24:15",
+  "timestamp": 1795865055.44,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 14:23:33"
+      "updated_at_tr": "2026-11-28 14:24:14"
     },
     {
       "signal_id": "CB-774849463_35m",
@@ -56,11 +56,11 @@
       "home_team": "Milwaukee Bucks",
       "away_team": "Los Angeles Clippers",
       "quarter": 4,
-      "elapsed_mins": 38.2,
+      "elapsed_mins": 38.9,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "95-83",
-      "score_gap": 12,
+      "current_score": "97-83",
+      "score_gap": 14,
       "fav1_barem": "221-230",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 14:23:33"
+      "updated_at_tr": "2026-11-28 14:24:14"
     }
   ],
   "recent_history": [
