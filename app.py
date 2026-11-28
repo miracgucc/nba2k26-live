@@ -2318,17 +2318,22 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
 
 @st.fragment
 def render_v81_live_trial_bankroll():
-    st.markdown(
-        '<div class="section-hdr">💰 v8.1 Canlı Deneme Kasası — 3.000 TL Başlangıç (Oynanan & Pas Geçilen Maçlar Anlık Kazanç Tablosu)</div>',
-        unsafe_allow_html=True,
-    )
     all_eval, live_decided = _build_v81_combined_trial_records()
     if not all_eval:
         st.info("Canlı deneme kasası için maç verisi yükleniyor...")
         return
 
-    c_p1, c_p2, c_p3 = st.columns([2.3, 1.8, 1.1])
+    c_p1, c_p2, c_p3 = st.columns([2.2, 1.7, 1.3])
     with c_p1:
+        start_bankroll_in = st.number_input(
+            "💰 Başlangıç Kasası Girin (TL — Tüm Bahis & Kademeler Otomatik Ölçeklenir):",
+            min_value=100,
+            max_value=10000000,
+            value=3000,
+            step=500,
+            key="v81_custom_start_bankroll_val",
+            help="İstediğiniz başlangıç kasasını girin: Sistem otomatik olarak 1. Favoriye kasanın %5'i, 2. Favoriye %4'ü, Sigortalı İkili yan baremine +%2'si ve Kademe 1–7 bileşik artış basamaklarını girdiğiniz kasaya göre hesaplar.",
+        )
         period_mode = st.radio(
             "📅 Takip Başlangıç Noktası:",
             [
@@ -2391,24 +2396,36 @@ def render_v81_live_trial_bankroll():
             lm["dec"] = lm["close_dec"]
             lm["reason"] = lm["close_reason"]
 
-    def _get_tier_3000(b_val: float):
-        if b_val < 4200:
-            return (1, 150, 120)
-        if b_val < 5700:
-            return (2, 210, 170)
-        if b_val < 7600:
-            return (3, 280, 220)
-        if b_val < 10400:
-            return (4, 380, 300)
-        if b_val < 14200:
-            return (5, 520, 420)
-        if b_val < 19400:
-            return (6, 710, 570)
-        return (7, 850, 680)
+    start_k = float(start_bankroll_in or 3000.0)
+    scale_k = start_k / 3000.0
+    base_s1 = max(1.0, round(150.0 * scale_k, 1))
+    base_s2 = max(1.0, round(120.0 * scale_k, 1))
+    base_ins = max(1.0, round(60.0 * scale_k, 1))
 
-    k_flat = 3000.0
-    k_tier = 3000.0
-    k_ins = 3000.0
+    st.markdown(
+        f'<div class="section-hdr">💰 v8.1 Canlı Deneme & Kasa Simülasyonu — {start_k:,.0f} TL Başlangıç '
+        f'(1.Fav: {base_s1:g} TL | 2.Fav: {base_s2:g} TL | 🛡️ Sigorta: +{base_ins:g} TL)</div>',
+        unsafe_allow_html=True,
+    )
+
+    def _get_tier_scaled(b_val: float):
+        if b_val < 4200.0 * scale_k:
+            return (1, max(1.0, round(150.0 * scale_k, 1)), max(1.0, round(120.0 * scale_k, 1)))
+        if b_val < 5700.0 * scale_k:
+            return (2, max(1.0, round(210.0 * scale_k, 1)), max(1.0, round(170.0 * scale_k, 1)))
+        if b_val < 7600.0 * scale_k:
+            return (3, max(1.0, round(280.0 * scale_k, 1)), max(1.0, round(220.0 * scale_k, 1)))
+        if b_val < 10400.0 * scale_k:
+            return (4, max(1.0, round(380.0 * scale_k, 1)), max(1.0, round(300.0 * scale_k, 1)))
+        if b_val < 14200.0 * scale_k:
+            return (5, max(1.0, round(520.0 * scale_k, 1)), max(1.0, round(420.0 * scale_k, 1)))
+        if b_val < 19400.0 * scale_k:
+            return (6, max(1.0, round(710.0 * scale_k, 1)), max(1.0, round(570.0 * scale_k, 1)))
+        return (7, max(1.0, round(850.0 * scale_k, 1)), max(1.0, round(680.0 * scale_k, 1)))
+
+    k_flat = start_k
+    k_tier = start_k
+    k_ins = start_k
     p_idx = 0
     won_cnt = 0
     ins_won_cnt = 0
@@ -2440,12 +2457,12 @@ def render_v81_live_trial_bankroll():
             won = (pick_b == m["act_b"])
             ins_won = (other_b == m["act_b"])
 
-            st_f = 150.0 if f_num == 1 else 120.0
+            st_f = base_s1 if f_num == 1 else base_s2
             net_f = st_f * (pick_o - 1.0) if won else -st_f
             k_flat += net_f
 
-            # Sigortalı İkili: Ana Seçime 150/120 TL + Yan Bareme (Sigorta) 60 TL
-            st_ins_side = 60.0
+            # Sigortalı İkili: Ana Seçime base_s1/base_s2 + Yan Bareme (Sigorta) base_ins
+            st_ins_side = base_ins
             tot_ins_stake = st_f + st_ins_side
             if won:
                 net_ins = (st_f * pick_o) - tot_ins_stake
@@ -2460,7 +2477,7 @@ def render_v81_live_trial_bankroll():
                 ins_res_lbl = f"❌ İkisi de Kaçtı ({net_ins:+,.1f} TL)"
             k_ins += net_ins
 
-            tk, s1_t, s2_t = _get_tier_3000(k_tier)
+            tk, s1_t, s2_t = _get_tier_scaled(k_tier)
             st_t = float(s1_t if f_num == 1 else s2_t)
             net_t = st_t * (pick_o - 1.0) if won else -st_t
             k_tier += net_t
@@ -2495,7 +2512,7 @@ def render_v81_live_trial_bankroll():
 
             m["kupon_lbl"] = f"Kupon #{p_idx}"
             m["pick_lbl"] = f"OYNA: {f_num}.Fav {pick_b} (@{pick_o:.2f}) — {m['reason']}"
-            m["stake_lbl"] = f"{int(st_f)} TL"
+            m["stake_lbl"] = f"{st_f:g} TL"
             m["res_lbl"] = "✅ KAZANDI" if won else "❌ KAYBETTİ"
             m["ins_res_lbl"] = ins_res_lbl
             m["net_f"] = net_f
@@ -2503,7 +2520,7 @@ def render_v81_live_trial_bankroll():
             m["net_ins"] = net_ins
             m["k_ins"] = k_ins
             m["k_tier"] = k_tier
-            m["tier_lbl"] = f"K{tk} ({int(st_t)} TL) ➔ {k_tier:,.1f} TL"
+            m["tier_lbl"] = f"K{tk} ({st_t:g} TL) ➔ {k_tier:,.1f} TL"
         else:
             pass_cnt += 1
             ds["pas"] += 1
@@ -2527,22 +2544,22 @@ def render_v81_live_trial_bankroll():
             m["k_tier"] = k_tier
             m["tier_lbl"] = f"{k_tier:,.1f} TL (Pas)"
 
-    net_flat_tot = k_flat - 3000.0
-    net_ins_tot = k_ins - 3000.0
-    net_tier_tot = k_tier - 3000.0
+    net_flat_tot = k_flat - start_k
+    net_ins_tot = k_ins - start_k
+    net_tier_tot = k_tier - start_k
     hit_pct = (won_cnt / p_idx * 100.0) if p_idx > 0 else 0.0
     top2_hit_cnt = won_cnt + ins_won_cnt
     top2_hit_pct = (top2_hit_cnt / p_idx * 100.0) if p_idx > 0 else 0.0
-    roi_pct = (net_flat_tot / 3000.0) * 100.0
+    roi_pct = (net_flat_tot / max(1.0, start_k)) * 100.0
 
     k1, k2, k3, k4, k5 = st.columns(5)
     k1.metric(
-        "💰 Tekli Kasa (Sabit 150/120 TL)",
+        f"💰 Tekli Kasa (Sabit {base_s1:g}/{base_s2:g} TL)",
         f"{k_flat:,.1f} TL",
         f"{net_flat_tot:+,.1f} TL (%{roi_pct:+.1f} | İsabet: %{hit_pct:.1f})",
     )
     k2.metric(
-        "🛡️ Sigortalı İkili Kasa (150/120 + 60 TL)",
+        f"🛡️ Sigortalı İkili Kasa ({base_s1:g}/{base_s2:g} + {base_ins:g} TL)",
         f"{k_ins:,.1f} TL",
         f"{net_ins_tot:+,.1f} TL ({top2_hit_cnt}/{p_idx} = %{top2_hit_pct:.1f} Tuttu!)",
     )
@@ -2554,7 +2571,7 @@ def render_v81_live_trial_bankroll():
     k4.metric(
         "🛡️ Pas Geçilen & Korunan Zarar",
         f"{pass_cnt} Maç Pas Geçildi",
-        f"{saved_cnt} Maçta 1.Fav Patladı (+{saved_cnt * 150:,.0f} TL Korudu)",
+        f"{saved_cnt} Maçta 1.Fav Patladı (+{saved_cnt * base_s1:,.0f} TL Korudu)",
     )
     k5.metric(
         "🚀 Kademeli Tekli Kasa (Kademe 1–7)",
@@ -2569,9 +2586,9 @@ def render_v81_live_trial_bankroll():
             is_lck = bool(lm.get("is_q4_locked", True))
             if lm["dec"] is not None:
                 fn_l, pb_l, po_l = lm["dec"]
-                st_l = 150 if fn_l == 1 else 120
+                st_l = base_s1 if fn_l == 1 else base_s2
                 if is_lck:
-                    dec_badge = f"<b style='color:#10b981;'>🔒 KARAR KİLİTLENDİ — 🎯 CANLI OYNA: {fn_l}.Fav {pb_l} (@{po_l:.2f}) — {st_l} TL</b> ({lm['reason']})"
+                    dec_badge = f"<b style='color:#10b981;'>🔒 KARAR KİLİTLENDİ — 🎯 CANLI OYNA: {fn_l}.Fav {pb_l} (@{po_l:.2f}) — {st_l:g} TL</b> ({lm['reason']})"
                 else:
                     dec_badge = f"<b style='color:#3b82f6;'>⏳ 3. ÇEYREK SON SANİYELER (Ön Sinyal: {fn_l}.Fav {pb_l} @{po_l:.2f})</b> — <i>4. Çeyrek başında ({int(lm.get('close_min_lg', 30))}.0 dk) kesinleşip kilitlenecek</i>"
             else:
@@ -2595,7 +2612,7 @@ def render_v81_live_trial_bankroll():
         )
 
     if len(daily_stats) >= 1:
-        st.markdown("##### 📅 Gün Gün Kazanç & İsabet Özeti (`3.000 TL` Başlangıç Kasası — Tekli vs 🛡️ Sigortalı İkili)")
+        st.markdown(f"##### 📅 Gün Gün Kazanç & İsabet Özeti (`{start_k:,.0f} TL` Başlangıç Kasası — Tekli vs 🛡️ Sigortalı İkili)")
         day_rows = []
         for d in sorted(daily_stats.keys(), reverse=sort_newest):
             s = daily_stats[d]
@@ -2646,7 +2663,7 @@ def render_v81_live_trial_bankroll():
                 "Maç Sonu (Toplam ➔ Barem)": f"{m['fin_sc']} ({m['fin_tot']} ➔ {m['act_b']})",
                 "Tekli Sonuç": m["res_lbl"],
                 "Tekli Net": f"{m['net_f']:+,.1f} TL" if m["dec"] is not None else "0,0 TL",
-                "💰 3.000 TL Tekli Kasa": f"{m['k_flat']:,.1f} TL",
+                f"💰 {start_k:,.0f} TL Tekli Kasa": f"{m['k_flat']:,.1f} TL",
                 "🚀 Kademeli (Tutar ➔ Kasa)": m["tier_lbl"],
                 "🛡️ Sigortalı İkili Sonuç & Net": m["ins_res_lbl"],
                 "🛡️ Sigortalı İkili Kasa (1.Fav+2.Fav)": f"{m['k_ins']:,.1f} TL",
@@ -2832,9 +2849,21 @@ if active_sec3_tab == _SEC3_TABS[0]:
             unsafe_allow_html=True,
         )
 
+        sim35_stake = float(
+            st.number_input(
+                "💰 Sanal Kasa Kupon Başı Bahis Tutarı Girin (TL):",
+                min_value=10,
+                max_value=1000000,
+                value=1000,
+                step=100,
+                key=f"sim35_custom_unit_stake_{ACTIVE_LEAGUE}",
+            )
+            or 1000.0
+        )
+        sim35_mult = sim35_stake / 1000.0
         st.markdown(
-            "###### 💰 Sanal Kasa: Hangi Yöntem 1.000 TL Başına Ne Kadar Kazandırdı?",
-            help="Gerçek sonuçlanmış maçların tamamında bu yöntemleri her maça 1.000 TL yatırarak uygulasaydık kasamızın ne olacağını gösterir.",
+            f"###### 💰 Sanal Kasa: Hangi Yöntem {sim35_stake:,.0f} TL Başına Ne Kadar Kazandırdı?",
+            help=f"Gerçek sonuçlanmış maçların tamamında bu yöntemleri her maça {sim35_stake:,.0f} TL yatırarak uygulasaydık kasamızın ne olacağını gösterir.",
         )
         st.dataframe(
             pd.DataFrame(
@@ -2842,10 +2871,10 @@ if active_sec3_tab == _SEC3_TABS[0]:
                     {
                         "Oynama Yöntemi (Strateji)": s["name"],
                         "Tutma Oranı": f"{s['wins']} / {s['total']} (%{s['win_rate']})",
-                        "1.000 TL Başı Net": f"{s['net_profit']/max(1, s['total']):+.0f} TL",
-                        "Toplam Yatırılan": f"{s['cost']:.0f} TL",
-                        "Toplam Geri Dönüş": f"{s['return']:.0f} TL",
-                        "Net Kâr / Zarar": f"{s['net_profit']:+.0f} TL",
+                        f"{sim35_stake:,.0f} TL Başı Net": f"{(s['net_profit'] * sim35_mult)/max(1, s['total']):+,.0f} TL",
+                        "Toplam Yatırılan": f"{s['cost'] * sim35_mult:,.0f} TL",
+                        "Toplam Geri Dönüş": f"{s['return'] * sim35_mult:,.0f} TL",
+                        "Net Kâr / Zarar": f"{s['net_profit'] * sim35_mult:+,.0f} TL",
                         "Kâr Oranı (%)": f"%{s['roi_pct']:+.1f}",
                     }
                     for s in sim35["strategies"]
@@ -3541,7 +3570,17 @@ if active_sec3_tab == _SEC3_TABS[4]:
             else:
                 df_eval_roi = df_comp_roi.copy()
 
-            unit_bet = 1000.0
+            unit_bet = float(
+                st.number_input(
+                    "💰 Strateji Simülasyonu Maç Başı Bahis Tutarı Girin (TL):",
+                    min_value=10,
+                    max_value=1000000,
+                    value=1000,
+                    step=100,
+                    key=f"bk_roi_custom_unit_bet_{ACTIVE_LEAGUE}",
+                )
+                or 1000.0
+            )
             fav_pnl, fav_hits = 0.0, 0
             val_pnl, val_hits = 0.0, 0
             clu_pnl, clu_hits = 0.0, 0
