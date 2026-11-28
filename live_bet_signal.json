@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 05:23:07",
-  "timestamp": 1795832587.45,
+  "updated_at_tr": "2026-11-28 05:23:43",
+  "timestamp": 1795832623.31,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Houston Rockets",
       "away_team": "Los Angeles Clippers",
       "quarter": 3,
-      "elapsed_mins": 27.4,
+      "elapsed_mins": 27.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "57-57",
-      "score_gap": 0,
+      "current_score": "58-59",
+      "score_gap": 1,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.71,
-      "fav2_barem": "191-200",
-      "fav2_odd": 3.83,
+      "fav1_odd": 2.73,
+      "fav2_barem": "211-220",
+      "fav2_odd": 3.67,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.71)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.73)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 05:23:06"
+      "updated_at_tr": "2026-11-28 05:23:42"
     },
     {
       "signal_id": "CB-774758071_35m",
@@ -59,8 +59,8 @@
       "elapsed_mins": 1.7,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "4-1",
-      "score_gap": 3,
+      "current_score": "4-2",
+      "score_gap": 2,
       "fav1_barem": "201-210",
       "fav1_odd": 4.12,
       "fav2_barem": "191-200",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 05:23:06"
+      "updated_at_tr": "2026-11-28 05:23:42"
     }
   ],
   "recent_history": [
