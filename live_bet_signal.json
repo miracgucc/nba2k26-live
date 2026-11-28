@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 14:16:18",
-  "timestamp": 1795864578.76,
+  "updated_at_tr": "2026-11-28 14:16:58",
+  "timestamp": 1795864618.79,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,8 +21,8 @@
     "elapsed_mins": 33.9,
     "in_decision_window_35m": true,
     "is_barem_open": true,
-    "current_score": "84-68",
-    "score_gap": 16,
+    "current_score": "85-68",
+    "score_gap": 17,
     "fav1_barem": "221-230",
     "fav1_odd": 2.39,
     "fav2_barem": "211-220",
@@ -43,7 +43,7 @@
       "kasa_15000": 600,
       "kasa_20000": 800
     },
-    "updated_at_tr": "2026-11-28 14:16:17"
+    "updated_at_tr": "2026-11-28 14:16:57"
   },
   "active_signals": [
     {
@@ -57,8 +57,8 @@
       "elapsed_mins": 33.9,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "84-68",
-      "score_gap": 16,
+      "current_score": "85-68",
+      "score_gap": 17,
       "fav1_barem": "221-230",
       "fav1_odd": 2.39,
       "fav2_barem": "211-220",
@@ -79,7 +79,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-28 14:16:17"
+      "updated_at_tr": "2026-11-28 14:16:57"
     }
   ],
   "live_matches": [
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 14:16:17"
+      "updated_at_tr": "2026-11-28 14:16:57"
     },
     {
       "signal_id": "CB-774849463_35m",
@@ -129,8 +129,8 @@
       "elapsed_mins": 33.9,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "84-68",
-      "score_gap": 16,
+      "current_score": "85-68",
+      "score_gap": 17,
       "fav1_barem": "221-230",
       "fav1_odd": 2.39,
       "fav2_barem": "211-220",
@@ -151,7 +151,7 @@
         "kasa_15000": 600,
         "kasa_20000": 800
       },
-      "updated_at_tr": "2026-11-28 14:16:17"
+      "updated_at_tr": "2026-11-28 14:16:57"
     }
   ],
   "recent_history": [
@@ -161,15 +161,15 @@
       "raw_game_id": "774849463",
       "date": "2026-11-28",
       "game_name": "Milwaukee Bucks vs Los Angeles Clippers",
-      "current_score": "82-68",
-      "score_gap": 14,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 2.53)",
+      "current_score": "85-68",
+      "score_gap": 17,
+      "decision": "OYNA",
+      "pick_type": "2. Favori",
+      "target_barem": "211-220",
+      "target_barem_tr": "211-220",
+      "target_t_id": 1844,
+      "target_odd": 2.63,
+      "zone_badge": "🧊 NBA 2.30–2.50 KOPMUŞ MAÇ ALT BAREM 2. FAVORİ: 211-220 (2.63)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
