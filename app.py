@@ -107,7 +107,7 @@ EXP_REM_DEC = float(LEAGUE_CFG["exp_rem_decision"])
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v8.3-q4-strict-immutable-lock"
+ENGINE_VERSION = "v8.4-instant-35m-29m-lock"
 
 
 @st.cache_resource
@@ -182,7 +182,7 @@ def get_background_engine(version: str = ENGINE_VERSION) -> BackgroundEngineStat
                     poll_sec = run_auto_scraper(force_manual=False)
                     state.last_run_ts = time.time()
                     state.last_run_str = datetime.now(TR_TZ).strftime("%H:%M:%S")
-                    state.next_poll_sec = max(25, min(300, int(poll_sec or 45)))
+                    state.next_poll_sec = max(10, min(300, int(poll_sec or 45)))
                     state.scan_count += 1
                     state.last_error = ""
             except Exception as e:
@@ -1349,7 +1349,7 @@ def render_live_dashboard():
             w_rec_pair = match_wave["recommended_pair"]
             w_rec_prob = match_wave["recommended_pair_prob"]
 
-            # Once the match reaches 36.0m (NBA) / 30.0m (Euro) or barems close at Q3 end, LOCK the decision card to the last logged closing snapshot!
+            # Once the match reaches 35.0m (NBA) / 29.0m (Euro) or barems close, LOCK the decision card to the logged closing snapshot!
             _dec_fav1 = fav1
             _dec_fav1_odd = float(fav1_odd or 0.0)
             _dec_fav2 = fav2
@@ -1357,7 +1357,7 @@ def render_live_dashboard():
             _dec_gap = _gap_now
             _dec_tot = int(tot_sc)
             _dec_odds_map = m.get("odds", {})
-            _is_locked_close = float(el_m) >= float(CLOSE_MIN) or (float(el_m) >= float(CLOSING_START) and not is_open)
+            _is_locked_close = float(el_m) >= float(DEC_MIN) or (float(el_m) >= float(CLOSING_START) and not is_open)
             if _is_locked_close:
                 _gid_clean = str(m.get("game_id", "")).strip()
                 _df_fresh_disk = _read_csv_safe(_get_scraper_paths(ACTIVE_LEAGUE)["csv_path"])
@@ -1863,9 +1863,9 @@ def _get_locked_decisions_file_path() -> str:
     try:
         rt_dir = os.path.dirname(_get_scraper_paths("nba")["csv_path"])
         os.makedirs(rt_dir, exist_ok=True)
-        return os.path.join(rt_dir, "runtime_locked_decisions_v83.json")
+        return os.path.join(rt_dir, "runtime_locked_decisions_v84.json")
     except Exception:
-        return os.path.join(BASE_DIR, "runtime_locked_decisions_v83.json")
+        return os.path.join(BASE_DIR, "runtime_locked_decisions_v84.json")
 
 
 @st.cache_resource
@@ -2131,8 +2131,8 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
                 _lm_open = bool(_lm_item.get("is_barem_open", False))
                 _is_q4_lck = (_live_el_val >= _close_m_lg) or not _lm_open
 
-            # Only lock and freeze once the match has ACTUALLY entered Q4 (36.0m NBA / 30.0m Euro or barems closed) or completed!
-            if int(last_r["_min"]) == dec_min and (_is_q4_lck or _is_completed_pre):
+            # As soon as the match enters 35-36m (NBA: Minute 35) or 29-30m (Euro: Minute 29), IMMEDIATELY lock its row and decision!
+            if int(last_r["_min"]) == dec_min:
                 if gid in locked_rows:
                     lck_dict = locked_rows[gid]
                     last_r = last_r.copy()
@@ -2257,7 +2257,7 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
             rec["close_reason"] = close_reason
 
             act_b = str(last_r.get("actual_range", "")).strip()
-            if int(last_r["_min"]) == dec_min and (_is_q4_lck or (act_b in barem_names)):
+            if int(last_r["_min"]) == dec_min:
                 if gid in locked_recs:
                     saved_rec = locked_recs[gid]
                     for _rk in ("cur_sc", "cur_tot", "gap", "f1", "o1", "f2", "o2", "req1", "req2", "team_q4_lbl", "reason", "dna_reason", "close_reason"):
@@ -2288,8 +2288,8 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
                     dirty_lock = True
 
             if act_b not in barem_names:
-                # Strictly display in the Q4 Locked box ONLY when 3rd quarter has ended / barems closed (_is_q4_lck == True)!
-                if int(last_r["_min"]) == dec_min and _is_q4_lck:
+                # Show and lock in the live box IMMEDIATELY once Minute 35 (35-36m NBA) or Minute 29 (29-30m Euro) is logged!
+                if int(last_r["_min"]) == dec_min:
                     rec["is_q4_locked"] = True
                     rec["live_el"] = _live_el_val
                     rec["close_min_lg"] = _close_m_lg

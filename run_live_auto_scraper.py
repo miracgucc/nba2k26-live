@@ -194,8 +194,9 @@ def _upsert_symmetry_log_rows_unlocked(new_rows: list, league: str = "nba", from
         clean_new = {h: new_row.get(h, "") for h in headers}
         if (new_gid, new_ctime) in dedup_map:
             prev = dedup_map[(new_gid, new_ctime)]
-            # When merging delayed cloud backup CSVs, never overwrite a local closing decision row's score/odds!
-            if from_cloud_merge and new_m >= int(cfg["closing_start_min"]):
+            # Once the closing decision minute (35m NBA / 29m Euro) is logged with valid open odds,
+            # or when merging delayed cloud backups, NEVER overwrite its score or odds!
+            if (new_m == int(cfg["decision_min"])) or (from_cloud_merge and new_m >= int(cfg["closing_start_min"])):
                 def _has_valid_open_odd(r_dict):
                     for oc in cfg["barem_odd_cols"].values():
                         try:
