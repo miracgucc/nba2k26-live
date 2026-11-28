@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 17:28:59",
-  "timestamp": 1795876139.73,
+  "updated_at_tr": "2026-11-28 17:29:41",
+  "timestamp": 1795876181.2,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Golden State Warriors",
       "away_team": "Los Angeles Clippers",
       "quarter": 3,
-      "elapsed_mins": 31.6,
+      "elapsed_mins": 32.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "70-81",
-      "score_gap": 11,
+      "current_score": "73-81",
+      "score_gap": 8,
       "fav1_barem": "231+",
-      "fav1_odd": 1.97,
+      "fav1_odd": 1.62,
       "fav2_barem": "221-230",
-      "fav2_odd": 2.75,
-      "decision": "OYNA",
-      "pick_type": "1. Favori",
-      "target_barem": "231+",
-      "target_barem_tr": "231 veya daha fazla",
-      "target_barem_en": "231 or more",
-      "target_t_id": 1846,
-      "target_odd": 1.97,
-      "min_acceptable_odd": 1.82,
-      "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 231+ (1.97)",
+      "fav2_odd": 3.0,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_barem_en": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "min_acceptable_odd": 0.0,
+      "zone_type": "PASS_SELECTIVE",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.62)",
       "stakes": {
-        "kasa_8000": 400,
-        "kasa_10000": 500,
-        "kasa_15000": 750,
-        "kasa_20000": 1000
+        "kasa_8000": 0,
+        "kasa_10000": 0,
+        "kasa_15000": 0,
+        "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 17:28:58"
+      "updated_at_tr": "2026-11-28 17:29:39"
     },
     {
       "signal_id": "CB-774915989_35m",
@@ -81,10 +81,29 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 17:28:58"
+      "updated_at_tr": "2026-11-28 17:29:39"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-774903681_35m",
+      "game_id": "CB-774903681",
+      "raw_game_id": "774903681",
+      "date": "2026-11-28",
+      "game_name": "Golden State Warriors vs Los Angeles Clippers",
+      "current_score": "73-81",
+      "score_gap": 8,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.62)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-774890420_35m",
       "game_id": "CB-774890420",
@@ -407,25 +426,6 @@
       "actual_score": "84-100",
       "actual_range": "181-190",
       "result": "TUTTU"
-    },
-    {
-      "signal_id": "CB-774751999_35m",
-      "game_id": "CB-774751999",
-      "raw_game_id": "774751999",
-      "date": "2026-11-28",
-      "game_name": "Houston Rockets vs Los Angeles Clippers",
-      "current_score": "75-79",
-      "score_gap": 4,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 4 Sayı Fark)",
-      "actual_score": "106-114",
-      "actual_range": "211-220",
-      "result": "PAS"
     }
   ]
 }
