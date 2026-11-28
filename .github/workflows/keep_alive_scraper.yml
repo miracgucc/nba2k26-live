@@ -96,7 +96,7 @@ jobs:
                       print(f'[Cycle {cycle}] Pushed updated CSVs to GitHub!')
               except Exception as e:
                   print('Git sync warning:', e)
-              wait_s = min(20, max(10, int(poll_sec or 20)))
+              wait_s = min(20, max(6, int(poll_sec or 20)))
               if time.time() - start_loop + wait_s >= 560:
                   break
               time.sleep(wait_s)

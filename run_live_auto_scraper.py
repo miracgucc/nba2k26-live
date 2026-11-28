@@ -678,10 +678,10 @@ def get_required_interval(elapsed_mins: float, close_min: float = 36.0) -> int:
     """
     if elapsed_mins >= close_min:
         return 60
-    elif elapsed_mins >= close_min - 1.0:
-        return 10
+    elif elapsed_mins >= close_min - 1.5:
+        return 6
     elif elapsed_mins >= close_min - 2.0:
-        return 30
+        return 15
     elif elapsed_mins >= close_min - 4.0:
         return 60
     elif elapsed_mins >= close_min - 6.0:
@@ -900,7 +900,14 @@ def _scrape_single_league(domain: str, league: str = "nba", force_manual: bool =
             total_match_elapsed = (current_quarter - 1) * q_len + quarter_elapsed
 
         remaining_mins = max(0.0, min(q_len, q_len - quarter_elapsed))
-        check_time = f"Q{current_quarter} - Minute {int(total_match_elapsed)}"
+        dec_min_int = int(cfg["decision_min"])
+        eff_min_int = int(total_match_elapsed)
+        # Wait until the final ~25 seconds of Q3 (>= 35.55m NBA / >= 29.55m Euro, i.e., 35:33+ / 29:33+)
+        # before stamping and locking the closing decision minute (Minute 35 / Minute 29),
+        # so we never lock 55 seconds too early at 35:01 / 29:01 while 6-10 more Q3 points are scored!
+        if eff_min_int == dec_min_int and total_match_elapsed < (close_min - 0.45):
+            eff_min_int = dec_min_int - 1
+        check_time = f"Q{current_quarter} - Minute {eff_min_int}"
 
         odds_dict = {}
         for o in data.get("outcomes", []):
@@ -1009,8 +1016,9 @@ def _scrape_single_league(domain: str, league: str = "nba", force_manual: bool =
         now_ts = time.time()
         last_game_ts = log_timestamps.get(game_id_str, 0)
         elapsed_since_last = now_ts - last_game_ts
+        is_closing_lock_moment = (eff_min_int == dec_min_int)
 
-        if force_manual or (elapsed_since_last >= req_interval - 5):
+        if force_manual or is_closing_lock_moment or (elapsed_since_last >= req_interval - 2):
             row = {
                 "game_id": game_id_str,
                 "game_name": f"{team1} vs {team2}",

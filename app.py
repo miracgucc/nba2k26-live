@@ -108,7 +108,7 @@ EXP_REM_DEC = float(LEAGUE_CFG["exp_rem_decision"])
 SCRAPE_LOCK = threading.Lock()
 
 
-ENGINE_VERSION = "v8.4-instant-35m-29m-lock"
+ENGINE_VERSION = "v8.6-late-q3-35m33s-29m33s-lock"
 
 
 @st.cache_resource
@@ -183,7 +183,7 @@ def get_background_engine(version: str = ENGINE_VERSION) -> BackgroundEngineStat
                     poll_sec = run_auto_scraper(force_manual=False)
                     state.last_run_ts = time.time()
                     state.last_run_str = datetime.now(TR_TZ).strftime("%H:%M:%S")
-                    state.next_poll_sec = max(10, min(300, int(poll_sec or 45)))
+                    state.next_poll_sec = max(6, min(300, int(poll_sec or 45)))
                     state.scan_count += 1
                     state.last_error = ""
             except Exception as e:
@@ -1350,7 +1350,7 @@ def render_live_dashboard():
             w_rec_pair = match_wave["recommended_pair"]
             w_rec_prob = match_wave["recommended_pair_prob"]
 
-            # Once the match reaches 35.0m (NBA) / 29.0m (Euro) or barems close, LOCK the decision card to the logged closing snapshot!
+            # Once the match reaches the final ~25s of Q3 (35.55m NBA / 29.55m Euro) or barems close, LOCK the decision card to the logged closing snapshot!
             _dec_fav1 = fav1
             _dec_fav1_odd = float(fav1_odd or 0.0)
             _dec_fav2 = fav2
@@ -1358,7 +1358,7 @@ def render_live_dashboard():
             _dec_gap = _gap_now
             _dec_tot = int(tot_sc)
             _dec_odds_map = m.get("odds", {})
-            _is_locked_close = float(el_m) >= float(DEC_MIN) or (float(el_m) >= float(CLOSING_START) and not is_open)
+            _is_locked_close = float(el_m) >= (float(CLOSE_MIN) - 0.45) or (float(el_m) >= float(CLOSING_START) and not is_open)
             if _is_locked_close:
                 _gid_clean = str(m.get("game_id", "")).strip()
                 _df_fresh_disk = _read_csv_safe(_get_scraper_paths(ACTIVE_LEAGUE)["csv_path"])
