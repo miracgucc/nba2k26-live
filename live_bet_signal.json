@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 15:31:38",
-  "timestamp": 1795869098.77,
+  "updated_at_tr": "2026-11-28 15:32:17",
+  "timestamp": 1795869137.01,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Golden State Warriors",
       "away_team": "Oklahoma City Thunder",
       "quarter": 3,
-      "elapsed_mins": 35.1,
+      "elapsed_mins": 35.6,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "80-80",
-      "score_gap": 0,
+      "current_score": "82-80",
+      "score_gap": 2,
       "fav1_barem": "221-230",
-      "fav1_odd": 2.38,
+      "fav1_odd": 2.39,
       "fav2_barem": "211-220",
-      "fav2_odd": 2.76,
+      "fav2_odd": 2.74,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 0 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 2 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 15:31:37"
+      "updated_at_tr": "2026-11-28 15:32:16"
     },
     {
       "signal_id": "CB-774879411_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 15:31:37"
+      "updated_at_tr": "2026-11-28 15:32:16"
     }
   ],
   "recent_history": [
@@ -91,15 +91,15 @@
       "raw_game_id": "774868494",
       "date": "2026-11-28",
       "game_name": "Golden State Warriors vs Oklahoma City Thunder",
-      "current_score": "80-80",
-      "score_gap": 0,
+      "current_score": "82-80",
+      "score_gap": 2,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
       "target_barem_tr": "",
       "target_t_id": 0,
       "target_odd": 0.0,
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 0 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 2 Sayı Fark)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
