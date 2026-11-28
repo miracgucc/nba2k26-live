@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 16:53:01",
-  "timestamp": 1795873981.44,
+  "updated_at_tr": "2026-11-28 16:53:43",
+  "timestamp": 1795874023.48,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,32 +21,32 @@
       "home_team": "Golden State Warriors",
       "away_team": "Los Angeles Clippers",
       "quarter": 1,
-      "elapsed_mins": 10.4,
+      "elapsed_mins": 10.7,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "25-26",
-      "score_gap": 1,
+      "current_score": "25-28",
+      "score_gap": 3,
       "fav1_barem": "231+",
-      "fav1_odd": 1.94,
+      "fav1_odd": 1.93,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.44,
+      "fav2_odd": 3.5,
       "decision": "OYNA",
       "pick_type": "1. Favori",
       "target_barem": "231+",
       "target_barem_tr": "231 veya daha fazla",
       "target_barem_en": "231 or more",
       "target_t_id": 1846,
-      "target_odd": 1.94,
-      "min_acceptable_odd": 1.79,
+      "target_odd": 1.93,
+      "min_acceptable_odd": 1.78,
       "zone_type": "GOLDEN",
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 231+ (1.94)",
+      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 231+ (1.93)",
       "stakes": {
         "kasa_8000": 400,
         "kasa_10000": 500,
         "kasa_15000": 750,
         "kasa_20000": 1000
       },
-      "updated_at_tr": "2026-11-28 16:52:59"
+      "updated_at_tr": "2026-11-28 16:53:41"
     },
     {
       "signal_id": "CB-774890420_35m",
@@ -56,7 +56,7 @@
       "home_team": "Miami Heat",
       "away_team": "Detroit Pistons",
       "quarter": 4,
-      "elapsed_mins": 37.4,
+      "elapsed_mins": 38.1,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "56-92",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 16:52:59"
+      "updated_at_tr": "2026-11-28 16:53:41"
     }
   ],
   "recent_history": [
