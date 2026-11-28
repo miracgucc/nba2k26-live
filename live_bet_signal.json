@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 15:51:06",
-  "timestamp": 1795870266.52,
+  "updated_at_tr": "2026-11-28 15:52:00",
+  "timestamp": 1795870320.85,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Golden State Warriors",
       "away_team": "Oklahoma City Thunder",
       "quarter": 4,
-      "elapsed_mins": 47.2,
+      "elapsed_mins": 47.9,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "105-108",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 15:51:05"
+      "updated_at_tr": "2026-11-28 15:51:59"
     },
     {
       "signal_id": "CB-774890420_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 15:51:05"
+      "updated_at_tr": "2026-11-28 15:51:59"
     },
     {
       "signal_id": "CB-774879411_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 15:51:05"
+      "updated_at_tr": "2026-11-28 15:51:59"
     }
   ],
   "recent_history": [
