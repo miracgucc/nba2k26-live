@@ -45,13 +45,15 @@ jobs:
           git config --global user.name "NBA2K26-CloudBot"
           git config --global user.email "bot@nba2k26.local"
           python -c "
-          import shutil, os, json, time, subprocess, run_live_auto_scraper
+          import shutil, os, json, time, subprocess, importlib, period_predictor, run_live_auto_scraper
           start_loop = time.time()
           cycle = 0
           while time.time() - start_loop < 560:
               cycle += 1
               try:
                   subprocess.run(['git', 'pull', '--rebase', '--autostash', 'origin', 'main'], timeout=15)
+                  importlib.reload(period_predictor)
+                  importlib.reload(run_live_auto_scraper)
               except Exception:
                   pass
               if os.path.exists('cloud_symmetry_backup.csv'):

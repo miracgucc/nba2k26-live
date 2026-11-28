@@ -2,6 +2,7 @@ import importlib
 import json
 import os
 import re
+import tempfile
 import threading
 import time
 from datetime import datetime, timedelta, timezone
@@ -1861,11 +1862,11 @@ render_live_dashboard()
 # ─────────────────────────────────────────────────────────────────────────────
 def _get_locked_decisions_file_path() -> str:
     try:
-        rt_dir = os.path.dirname(_get_scraper_paths("nba")["csv_path"])
+        rt_dir = os.path.join(tempfile.gettempdir(), "nba2k26_locks")
         os.makedirs(rt_dir, exist_ok=True)
-        return os.path.join(rt_dir, "runtime_locked_decisions_v84.json")
+        return os.path.join(rt_dir, "runtime_locked_decisions_v85.json")
     except Exception:
-        return os.path.join(BASE_DIR, "runtime_locked_decisions_v84.json")
+        return os.path.join(BASE_DIR, "runtime_locked_decisions_v85.json")
 
 
 @st.cache_resource
@@ -2132,20 +2133,20 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
                 _is_q4_lck = (_live_el_val >= _close_m_lg) or not _lm_open
 
             # As soon as the match enters 35-36m (NBA: Minute 35) or 29-30m (Euro: Minute 29), IMMEDIATELY lock its row and decision!
-            if int(last_r["_min"]) == dec_min:
-                if gid in locked_rows:
-                    lck_dict = locked_rows[gid]
-                    last_r = last_r.copy()
-                    for _k, _v in lck_dict.items():
-                        if _k not in ("actual_score", "actual_range", "status"):
-                            last_r[_k] = _v
-                else:
-                    locked_rows[gid] = {
-                        k: (v.item() if hasattr(v, "item") else v)
-                        for k, v in last_r.to_dict().items()
-                        if k not in ("actual_score", "actual_range", "status")
-                    }
-                    dirty_lock = True
+            if gid in locked_rows:
+                lck_dict = locked_rows[gid]
+                last_r = last_r.copy()
+                for _k, _v in lck_dict.items():
+                    if _k not in ("actual_score", "actual_range", "status"):
+                        last_r[_k] = _v
+                last_r["_min"] = dec_min
+            elif int(last_r["_min"]) == dec_min:
+                locked_rows[gid] = {
+                    k: (v.item() if hasattr(v, "item") else v)
+                    for k, v in last_r.to_dict().items()
+                    if k not in ("actual_score", "actual_range", "status")
+                }
+                dirty_lock = True
             o_raw = {bn: float(last_r.get(b_cols[bn], 99.0) or 99.0) for bn in barem_names}
             p_raw = {bn: float(last_r.get(p_cols[bn], 0.0) or 0.0) for bn in barem_names}
             om, _ = resolve_effective_barem_odds(o_raw, p_raw, league=lg)
@@ -2257,39 +2258,39 @@ def _build_v81_combined_trial_records() -> tuple[list[dict], list[dict]]:
             rec["close_reason"] = close_reason
 
             act_b = str(last_r.get("actual_range", "")).strip()
-            if int(last_r["_min"]) == dec_min:
-                if gid in locked_recs:
-                    saved_rec = locked_recs[gid]
-                    for _rk in ("cur_sc", "cur_tot", "gap", "f1", "o1", "f2", "o2", "req1", "req2", "team_q4_lbl", "reason", "dna_reason", "close_reason"):
-                        if _rk in saved_rec:
-                            rec[_rk] = saved_rec[_rk]
-                    for _dk in ("dec", "dna_dec", "close_dec"):
-                        if _dk in saved_rec:
-                            rec[_dk] = tuple(saved_rec[_dk]) if saved_rec[_dk] is not None else None
-                else:
-                    locked_recs[gid] = {
-                        "cur_sc": rec["cur_sc"],
-                        "cur_tot": rec["cur_tot"],
-                        "gap": rec["gap"],
-                        "f1": rec["f1"],
-                        "o1": rec["o1"],
-                        "f2": rec["f2"],
-                        "o2": rec["o2"],
-                        "req1": rec["req1"],
-                        "req2": rec["req2"],
-                        "team_q4_lbl": rec["team_q4_lbl"],
-                        "dec": list(rec["dec"]) if rec["dec"] is not None else None,
-                        "reason": rec["reason"],
-                        "dna_dec": list(rec["dna_dec"]) if rec["dna_dec"] is not None else None,
-                        "dna_reason": rec["dna_reason"],
-                        "close_dec": list(rec["close_dec"]) if rec["close_dec"] is not None else None,
-                        "close_reason": rec["close_reason"],
-                    }
-                    dirty_lock = True
+            if gid in locked_recs:
+                saved_rec = locked_recs[gid]
+                for _rk in ("cur_sc", "cur_tot", "gap", "f1", "o1", "f2", "o2", "req1", "req2", "team_q4_lbl", "reason", "dna_reason", "close_reason"):
+                    if _rk in saved_rec:
+                        rec[_rk] = saved_rec[_rk]
+                for _dk in ("dec", "dna_dec", "close_dec"):
+                    if _dk in saved_rec:
+                        rec[_dk] = tuple(saved_rec[_dk]) if saved_rec[_dk] is not None else None
+                rec["min"] = dec_min
+            elif int(last_r["_min"]) == dec_min:
+                locked_recs[gid] = {
+                    "cur_sc": rec["cur_sc"],
+                    "cur_tot": rec["cur_tot"],
+                    "gap": rec["gap"],
+                    "f1": rec["f1"],
+                    "o1": rec["o1"],
+                    "f2": rec["f2"],
+                    "o2": rec["o2"],
+                    "req1": rec["req1"],
+                    "req2": rec["req2"],
+                    "team_q4_lbl": rec["team_q4_lbl"],
+                    "dec": list(rec["dec"]) if rec["dec"] is not None else None,
+                    "reason": rec["reason"],
+                    "dna_dec": list(rec["dna_dec"]) if rec["dna_dec"] is not None else None,
+                    "dna_reason": rec["dna_reason"],
+                    "close_dec": list(rec["close_dec"]) if rec["close_dec"] is not None else None,
+                    "close_reason": rec["close_reason"],
+                }
+                dirty_lock = True
 
             if act_b not in barem_names:
                 # Show and lock in the live box IMMEDIATELY once Minute 35 (35-36m NBA) or Minute 29 (29-30m Euro) is logged!
-                if int(last_r["_min"]) == dec_min:
+                if (gid in locked_recs) or (int(last_r["_min"]) == dec_min):
                     rec["is_q4_locked"] = True
                     rec["live_el"] = _live_el_val
                     rec["close_min_lg"] = _close_m_lg
