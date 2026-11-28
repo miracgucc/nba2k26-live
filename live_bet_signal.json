@@ -1,13 +1,13 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 17:04:49",
-  "timestamp": 1795874689.04,
+  "updated_at_tr": "2026-11-28 17:05:35",
+  "timestamp": 1795874735.58,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
   "chain_state": {
-    "prev_shift": 0,
-    "prev2_shift": -1
+    "prev_shift": -1,
+    "prev2_shift": 0
   },
   "has_active_play_signal": false,
   "current_play_signal": null,
@@ -21,15 +21,15 @@
       "home_team": "Golden State Warriors",
       "away_team": "Los Angeles Clippers",
       "quarter": 2,
-      "elapsed_mins": 17.0,
+      "elapsed_mins": 17.7,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "35-51",
-      "score_gap": 16,
+      "current_score": "37-54",
+      "score_gap": 17,
       "fav1_barem": "231+",
-      "fav1_odd": 1.45,
+      "fav1_odd": 1.58,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.79,
+      "fav2_odd": 3.29,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.45)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 231+: 1.58)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 17:04:47"
+      "updated_at_tr": "2026-11-28 17:05:34"
     },
     {
       "signal_id": "CB-774890420_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 17:04:47"
+      "updated_at_tr": "2026-11-28 17:05:34"
     }
   ],
   "recent_history": [
@@ -100,9 +100,9 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 191-200: 2.35)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "81-108",
+      "actual_range": "181-190",
+      "result": "PAS"
     },
     {
       "signal_id": "CB-774879411_35m",
