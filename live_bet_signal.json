@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 04:07:02",
-  "timestamp": 1795828022.06,
+  "updated_at_tr": "2026-11-28 04:07:39",
+  "timestamp": 1795828059.32,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Denver Nuggets",
       "away_team": "Los Angeles Lakers",
       "quarter": 1,
-      "elapsed_mins": 6.0,
+      "elapsed_mins": 6.5,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "8-12",
-      "score_gap": 4,
+      "current_score": "8-15",
+      "score_gap": 7,
       "fav1_barem": "201-210",
-      "fav1_odd": 3.74,
+      "fav1_odd": 3.85,
       "fav2_barem": "211-220",
-      "fav2_odd": 4.43,
+      "fav2_odd": 4.44,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.74)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 3.85)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 04:07:01"
+      "updated_at_tr": "2026-11-28 04:07:38"
     },
     {
       "signal_id": "CB-774738257_35m",
@@ -56,15 +56,15 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Atlanta Hawks",
       "quarter": 3,
-      "elapsed_mins": 30.3,
+      "elapsed_mins": 30.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "56-71",
+      "current_score": "58-73",
       "score_gap": 15,
       "fav1_barem": "191-200",
-      "fav1_odd": 2.65,
+      "fav1_odd": 2.42,
       "fav2_barem": "201-210",
-      "fav2_odd": 2.92,
+      "fav2_odd": 3.17,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.65)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 191-200: 2.42)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 04:07:01"
+      "updated_at_tr": "2026-11-28 04:07:38"
     }
   ],
   "recent_history": [
