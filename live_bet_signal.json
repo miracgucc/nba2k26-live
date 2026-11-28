@@ -1,13 +1,13 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 12:36:44",
-  "timestamp": 1795858604.64,
+  "updated_at_tr": "2026-11-28 12:37:42",
+  "timestamp": 1795858662.3,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
   "chain_state": {
-    "prev_shift": 1,
-    "prev2_shift": -1
+    "prev_shift": 0,
+    "prev2_shift": 1
   },
   "has_active_play_signal": false,
   "current_play_signal": null,
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 12:36:43"
+      "updated_at_tr": "2026-11-28 12:37:40"
     },
     {
       "signal_id": "CB-774830852_35m",
@@ -56,15 +56,15 @@
       "home_team": "Denver Nuggets",
       "away_team": "Detroit Pistons",
       "quarter": 3,
-      "elapsed_mins": 24.0,
+      "elapsed_mins": 25.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "56-56",
-      "score_gap": 0,
+      "current_score": "58-61",
+      "score_gap": 3,
       "fav1_barem": "211-220",
-      "fav1_odd": 2.77,
+      "fav1_odd": 2.8,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.59,
+      "fav2_odd": 3.43,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,49 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 2.77)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 2.80)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 12:36:43"
-    },
-    {
-      "signal_id": "CB-774822160_35m",
-      "game_id": "CB-774822160",
-      "raw_game_id": "774822160",
-      "game_name": "Indiana Pacers vs Atlanta Hawks",
-      "home_team": "Indiana Pacers",
-      "away_team": "Atlanta Hawks",
-      "quarter": 4,
-      "elapsed_mins": 48.0,
-      "in_decision_window_35m": false,
-      "is_barem_open": false,
-      "current_score": "115-104",
-      "score_gap": 11,
-      "fav1_barem": "211-220",
-      "fav1_odd": 0.0,
-      "fav2_barem": "-",
-      "fav2_odd": 0.0,
-      "decision": "PAS",
-      "pick_type": "PAS",
-      "target_barem": "",
-      "target_barem_tr": "",
-      "target_barem_en": "",
-      "target_t_id": 0,
-      "target_odd": 0.0,
-      "min_acceptable_odd": 0.0,
-      "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⏳ Oran Bekleniyor",
-      "stakes": {
-        "kasa_8000": 0,
-        "kasa_10000": 0,
-        "kasa_15000": 0,
-        "kasa_20000": 0
-      },
-      "updated_at_tr": "2026-11-28 12:36:43"
+      "updated_at_tr": "2026-11-28 12:37:40"
     }
   ],
   "recent_history": [
@@ -135,9 +100,9 @@
       "target_t_id": 0,
       "target_odd": 0.0,
       "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 5 Sayı Fark)",
-      "actual_score": "",
-      "actual_range": "",
-      "result": "BEKLIYOR"
+      "actual_score": "115-104",
+      "actual_range": "211-220",
+      "result": "PAS"
     },
     {
       "signal_id": "CB-774814073_35m",
