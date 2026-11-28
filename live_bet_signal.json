@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 13:50:04",
-  "timestamp": 1795863004.22,
+  "updated_at_tr": "2026-11-28 13:50:48",
+  "timestamp": 1795863048.95,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,42 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 13:50:03"
+      "updated_at_tr": "2026-11-28 13:50:48"
+    },
+    {
+      "signal_id": "CB-774857659_35m",
+      "game_id": "CB-774857659",
+      "raw_game_id": "774857659",
+      "game_name": "Indiana Pacers vs Los Angeles Lakers",
+      "home_team": "Indiana Pacers",
+      "away_team": "Los Angeles Lakers",
+      "quarter": 1,
+      "elapsed_mins": 0.0,
+      "in_decision_window_35m": false,
+      "is_barem_open": false,
+      "current_score": "0-0",
+      "score_gap": 0,
+      "fav1_barem": "-",
+      "fav1_odd": 0.0,
+      "fav2_barem": "-",
+      "fav2_odd": 0.0,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_barem_en": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "min_acceptable_odd": 0.0,
+      "zone_type": "PASS_CLUTCH",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 0 Sayı Fark)",
+      "stakes": {
+        "kasa_8000": 0,
+        "kasa_10000": 0,
+        "kasa_15000": 0,
+        "kasa_20000": 0
+      },
+      "updated_at_tr": "2026-11-28 13:50:48"
     },
     {
       "signal_id": "CB-774849463_35m",
@@ -59,8 +94,8 @@
       "elapsed_mins": 17.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "36-39",
-      "score_gap": 3,
+      "current_score": "36-40",
+      "score_gap": 4,
       "fav1_barem": "211-220",
       "fav1_odd": 3.17,
       "fav2_barem": "221-230",
@@ -81,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 13:50:03"
+      "updated_at_tr": "2026-11-28 13:50:48"
     }
   ],
   "recent_history": [
