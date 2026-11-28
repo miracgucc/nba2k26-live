@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 09:55:20",
-  "timestamp": 1795848920.43,
+  "updated_at_tr": "2026-11-28 09:55:57",
+  "timestamp": 1795848957.28,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,10 +21,10 @@
       "home_team": "Cleveland Cavaliers",
       "away_team": "Minnesota Timberwolves",
       "quarter": 4,
-      "elapsed_mins": 47.9,
+      "elapsed_mins": 48.0,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "97-96",
+      "current_score": "97-98",
       "score_gap": 1,
       "fav1_barem": "191-200",
       "fav1_odd": 0.0,
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 09:55:19"
+      "updated_at_tr": "2026-11-28 09:55:56"
     },
     {
       "signal_id": "CB-774798384_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 09:55:19"
+      "updated_at_tr": "2026-11-28 09:55:56"
     },
     {
       "signal_id": "CB-774805517_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 09:55:19"
+      "updated_at_tr": "2026-11-28 09:55:56"
     }
   ],
   "recent_history": [
