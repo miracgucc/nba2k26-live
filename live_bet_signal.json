@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 12:03:13",
-  "timestamp": 1795856593.96,
+  "updated_at_tr": "2026-11-28 12:03:59",
+  "timestamp": 1795856639.38,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 12:03:12"
+      "updated_at_tr": "2026-11-28 12:03:57"
     },
     {
       "signal_id": "CB-774822160_35m",
@@ -56,15 +56,15 @@
       "home_team": "Indiana Pacers",
       "away_team": "Atlanta Hawks",
       "quarter": 3,
-      "elapsed_mins": 27.4,
+      "elapsed_mins": 28.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "67-61",
-      "score_gap": 6,
+      "current_score": "70-61",
+      "score_gap": 9,
       "fav1_barem": "211-220",
-      "fav1_odd": 2.62,
+      "fav1_odd": 2.42,
       "fav2_barem": "221-230",
-      "fav2_odd": 3.21,
+      "fav2_odd": 3.56,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 2.62)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 211-220: 2.42)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 12:03:12"
+      "updated_at_tr": "2026-11-28 12:03:57"
     }
   ],
   "recent_history": [
