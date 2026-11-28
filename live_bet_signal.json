@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 04:08:15",
-  "timestamp": 1795828095.23,
+  "updated_at_tr": "2026-11-28 04:08:42",
+  "timestamp": 1795828122.8,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 04:08:14"
+      "updated_at_tr": "2026-11-28 04:08:41"
     },
     {
       "signal_id": "CB-774738257_35m",
@@ -56,15 +56,15 @@
       "home_team": "Minnesota Timberwolves",
       "away_team": "Atlanta Hawks",
       "quarter": 3,
-      "elapsed_mins": 31.5,
+      "elapsed_mins": 32.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "58-75",
       "score_gap": 17,
       "fav1_barem": "191-200",
-      "fav1_odd": 2.42,
+      "fav1_odd": 2.43,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.31,
+      "fav2_odd": 3.37,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,17 +74,36 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 191-200: 2.42)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 191-200: 2.43)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 04:08:14"
+      "updated_at_tr": "2026-11-28 04:08:41"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-774738257_35m",
+      "game_id": "CB-774738257",
+      "raw_game_id": "774738257",
+      "date": "2026-11-28",
+      "game_name": "Minnesota Timberwolves vs Atlanta Hawks",
+      "current_score": "58-75",
+      "score_gap": 17,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.30–2.50 Riskli Kırılım — 191-200: 2.43)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-774731127_35m",
       "game_id": "CB-774731127",
@@ -407,25 +426,6 @@
       "actual_score": "125-102",
       "actual_range": "221-230",
       "result": "PAS"
-    },
-    {
-      "signal_id": "CB-774572769_35m",
-      "game_id": "CB-774572769",
-      "raw_game_id": "774572769",
-      "date": "2026-11-27",
-      "game_name": "Oklahoma City Thunder vs Los Angeles Clippers",
-      "current_score": "87-71",
-      "score_gap": 16,
-      "decision": "OYNA",
-      "pick_type": "1. Favori",
-      "target_barem": "201-210",
-      "target_barem_tr": "201-210",
-      "target_t_id": 1843,
-      "target_odd": 2.18,
-      "zone_badge": "💎 NBA 2.10–2.30 BEKLENTİ 1. FAVORİSİ (Düşük Kalan Sayı (47.5 ≤ 48.5 — %56.5)): 201-210 (2.18)",
-      "actual_score": "113-98",
-      "actual_range": "211-220",
-      "result": "YATTI"
     }
   ]
 }
