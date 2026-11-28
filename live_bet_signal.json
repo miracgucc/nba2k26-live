@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 06:17:51",
-  "timestamp": 1795835871.3,
+  "updated_at_tr": "2026-11-28 06:18:30",
+  "timestamp": 1795835910.3,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "New York Knicks",
       "away_team": "Indiana Pacers",
       "quarter": 2,
-      "elapsed_mins": 12.1,
+      "elapsed_mins": 12.8,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "21-14",
-      "score_gap": 7,
+      "current_score": "25-14",
+      "score_gap": 11,
       "fav1_barem": "191-200",
-      "fav1_odd": 3.14,
+      "fav1_odd": 2.82,
       "fav2_barem": "181-190",
-      "fav2_odd": 3.5,
+      "fav2_odd": 3.34,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 3.14)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 191-200: 2.82)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 06:17:50"
+      "updated_at_tr": "2026-11-28 06:18:29"
     },
     {
       "signal_id": "CB-774758071_35m",
@@ -56,12 +56,12 @@
       "home_team": "Oklahoma City Thunder",
       "away_team": "Dallas Mavericks",
       "quarter": 4,
-      "elapsed_mins": 38.8,
+      "elapsed_mins": 39.4,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "69-82",
-      "score_gap": 13,
-      "fav1_barem": "191-200",
+      "current_score": "69-84",
+      "score_gap": 15,
+      "fav1_barem": "181-190",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
       "fav2_odd": 0.0,
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 06:17:50"
+      "updated_at_tr": "2026-11-28 06:18:29"
     }
   ],
   "recent_history": [
