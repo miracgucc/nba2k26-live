@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 18:51:47",
-  "timestamp": 1795881107.17,
+  "updated_at_tr": "2026-11-28 18:53:11",
+  "timestamp": 1795881191.56,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Golden State Warriors",
       "away_team": "Dallas Mavericks",
       "quarter": 1,
-      "elapsed_mins": 9.3,
+      "elapsed_mins": 9.4,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "19-28",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 18:51:45"
+      "updated_at_tr": "2026-11-28 18:53:09"
     },
     {
       "signal_id": "CB-774925870_35m",
@@ -56,15 +56,15 @@
       "home_team": "New York Knicks",
       "away_team": "Atlanta Hawks",
       "quarter": 3,
-      "elapsed_mins": 33.8,
+      "elapsed_mins": 34.5,
       "in_decision_window_35m": true,
       "is_barem_open": true,
-      "current_score": "71-84",
-      "score_gap": 13,
+      "current_score": "71-86",
+      "score_gap": 15,
       "fav1_barem": "211-220",
-      "fav1_odd": 2.13,
+      "fav1_odd": 2.12,
       "fav2_barem": "201-210",
-      "fav2_odd": 3.35,
+      "fav2_odd": 3.16,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 211-220: 2.13)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 211-220: 2.12)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 18:51:45"
+      "updated_at_tr": "2026-11-28 18:53:10"
     }
   ],
   "recent_history": [
@@ -91,15 +91,15 @@
       "raw_game_id": "774925870",
       "date": "2026-11-28",
       "game_name": "New York Knicks vs Atlanta Hawks",
-      "current_score": "71-81",
-      "score_gap": 10,
+      "current_score": "71-86",
+      "score_gap": 15,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
       "target_barem_tr": "",
       "target_t_id": 0,
       "target_odd": 0.0,
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 211-220: 2.10)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 211-220: 2.12)",
       "actual_score": "",
       "actual_range": "",
       "result": "BEKLIYOR"
