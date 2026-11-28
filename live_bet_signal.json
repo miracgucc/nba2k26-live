@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 08:51:41",
-  "timestamp": 1795845101.85,
+  "updated_at_tr": "2026-11-28 08:52:33",
+  "timestamp": 1795845153.14,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Cleveland Cavaliers",
       "away_team": "Minnesota Timberwolves",
       "quarter": 1,
-      "elapsed_mins": 8.0,
+      "elapsed_mins": 8.1,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "15-17",
-      "score_gap": 2,
+      "current_score": "17-17",
+      "score_gap": 0,
       "fav1_barem": "201-210",
       "fav1_odd": 4.2,
       "fav2_barem": "211-220",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 08:51:40"
+      "updated_at_tr": "2026-11-28 08:52:31"
     },
     {
       "signal_id": "CB-774782742_35m",
@@ -56,15 +56,15 @@
       "home_team": "Houston Rockets",
       "away_team": "Golden State Warriors",
       "quarter": 3,
-      "elapsed_mins": 31.8,
+      "elapsed_mins": 32.6,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "68-62",
+      "current_score": "70-64",
       "score_gap": 6,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.61,
+      "fav1_odd": 2.79,
       "fav2_barem": "211-220",
-      "fav2_odd": 3.5,
+      "fav2_odd": 3.32,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,17 +74,36 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.61)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.79)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 08:51:40"
+      "updated_at_tr": "2026-11-28 08:52:31"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-774782742_35m",
+      "game_id": "CB-774782742",
+      "raw_game_id": "774782742",
+      "date": "2026-11-28",
+      "game_name": "Houston Rockets vs Golden State Warriors",
+      "current_score": "70-64",
+      "score_gap": 6,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.79)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-774776629_35m",
       "game_id": "CB-774776629",
@@ -407,25 +426,6 @@
       "actual_score": "101-106",
       "actual_range": "201-210",
       "result": "PAS"
-    },
-    {
-      "signal_id": "CB-774637903_35m",
-      "game_id": "CB-774637903",
-      "raw_game_id": "774637903",
-      "date": "2026-11-27",
-      "game_name": "Denver Nuggets vs Cleveland Cavaliers",
-      "current_score": "80-59",
-      "score_gap": 21,
-      "decision": "OYNA",
-      "pick_type": "1. Favori",
-      "target_barem": "191-200",
-      "target_barem_tr": "191-200",
-      "target_t_id": 1842,
-      "target_odd": 2.01,
-      "zone_badge": "💎 NBA ALTIN TEK FAVORİ: 191-200 (2.01)",
-      "actual_score": "118-90",
-      "actual_range": "201-210",
-      "result": "YATTI"
     }
   ]
 }
