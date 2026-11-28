@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 13:32:29",
-  "timestamp": 1795861949.71,
+  "updated_at_tr": "2026-11-28 13:33:08",
+  "timestamp": 1795861988.55,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,11 +21,11 @@
       "home_team": "Dallas Mavericks",
       "away_team": "Oklahoma City Thunder",
       "quarter": 4,
-      "elapsed_mins": 36.8,
+      "elapsed_mins": 37.3,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "76-79",
-      "score_gap": 3,
+      "current_score": "78-82",
+      "score_gap": 4,
       "fav1_barem": "201-210",
       "fav1_odd": 0.0,
       "fav2_barem": "-",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_CLUTCH",
-      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 3 Sayı Fark)",
+      "zone_badge": "⛔ BAHİS ALMA / PAS GEÇ (Skor Çok Yakın: 4 Sayı Fark)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 13:32:28"
+      "updated_at_tr": "2026-11-28 13:33:07"
     },
     {
       "signal_id": "CB-774849463_35m",
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 13:32:28"
+      "updated_at_tr": "2026-11-28 13:33:07"
     }
   ],
   "recent_history": [
