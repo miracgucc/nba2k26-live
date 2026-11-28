@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 13:11:54",
-  "timestamp": 1795860714.05,
+  "updated_at_tr": "2026-11-28 13:12:35",
+  "timestamp": 1795860755.9,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,7 +21,7 @@
       "home_team": "Dallas Mavericks",
       "away_team": "Oklahoma City Thunder",
       "quarter": 2,
-      "elapsed_mins": 23.9,
+      "elapsed_mins": 24.0,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "47-52",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 13:11:53"
+      "updated_at_tr": "2026-11-28 13:12:34"
     },
     {
       "signal_id": "CB-774830852_35m",
@@ -56,10 +56,10 @@
       "home_team": "Denver Nuggets",
       "away_team": "Detroit Pistons",
       "quarter": 4,
-      "elapsed_mins": 45.3,
+      "elapsed_mins": 46.0,
       "in_decision_window_35m": false,
       "is_barem_open": false,
-      "current_score": "111-104",
+      "current_score": "113-106",
       "score_gap": 7,
       "fav1_barem": "221-230",
       "fav1_odd": 0.0,
@@ -81,7 +81,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 13:11:53"
+      "updated_at_tr": "2026-11-28 13:12:34"
     },
     {
       "signal_id": "CB-774849463_35m",
@@ -116,7 +116,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 13:11:53"
+      "updated_at_tr": "2026-11-28 13:12:34"
     }
   ],
   "recent_history": [
