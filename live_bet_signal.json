@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 11:32:56",
-  "timestamp": 1795854776.16,
+  "updated_at_tr": "2026-11-28 11:33:34",
+  "timestamp": 1795854814.67,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -24,8 +24,8 @@
       "elapsed_mins": 8.9,
       "in_decision_window_35m": false,
       "is_barem_open": true,
-      "current_score": "20-18",
-      "score_gap": 2,
+      "current_score": "20-20",
+      "score_gap": 0,
       "fav1_barem": "201-210",
       "fav1_odd": 3.53,
       "fav2_barem": "191-200",
@@ -46,7 +46,7 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 11:32:55"
+      "updated_at_tr": "2026-11-28 11:33:33"
     },
     {
       "signal_id": "CB-774814073_35m",
@@ -55,16 +55,16 @@
       "game_name": "New York Knicks vs Boston Celtics",
       "home_team": "New York Knicks",
       "away_team": "Boston Celtics",
-      "quarter": 3,
-      "elapsed_mins": 36.0,
+      "quarter": 4,
+      "elapsed_mins": 36.2,
       "in_decision_window_35m": false,
       "is_barem_open": false,
       "current_score": "71-78",
       "score_gap": 7,
       "fav1_barem": "201-210",
-      "fav1_odd": 2.17,
-      "fav2_barem": "191-200",
-      "fav2_odd": 3.92,
+      "fav1_odd": 0.0,
+      "fav2_barem": "-",
+      "fav2_odd": 0.0,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -74,14 +74,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (2.10–2.30 Beklenti Dışı — 201-210: 2.17)",
+      "zone_badge": "⏳ Oran Bekleniyor",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 11:32:55"
+      "updated_at_tr": "2026-11-28 11:33:33"
     }
   ],
   "recent_history": [
