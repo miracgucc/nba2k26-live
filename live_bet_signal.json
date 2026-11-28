@@ -1,7 +1,7 @@
 {
   "engine_version": "v7.1-selective-calibrated",
-  "updated_at_tr": "2026-11-28 10:49:48",
-  "timestamp": 1795852188.01,
+  "updated_at_tr": "2026-11-28 10:50:13",
+  "timestamp": 1795852213.98,
   "active_domain": "https://fswin-best.icu",
   "active_melbet_domain": "https://melbet-56831.pro",
   "active_melbet_nba2k26_url": "https://melbet-56831.pro/tr/live/basketball/2935701-nba-2k26-cyber-league",
@@ -21,15 +21,15 @@
       "home_team": "Miami Heat",
       "away_team": "Detroit Pistons",
       "quarter": 3,
-      "elapsed_mins": 31.6,
+      "elapsed_mins": 32.2,
       "in_decision_window_35m": false,
       "is_barem_open": true,
       "current_score": "63-82",
       "score_gap": 19,
-      "fav1_barem": "211-220",
-      "fav1_odd": 2.73,
-      "fav2_barem": "201-210",
-      "fav2_odd": 2.83,
+      "fav1_barem": "201-210",
+      "fav1_odd": 2.58,
+      "fav2_barem": "211-220",
+      "fav2_odd": 2.99,
       "decision": "PAS",
       "pick_type": "PAS",
       "target_barem": "",
@@ -39,14 +39,14 @@
       "target_odd": 0.0,
       "min_acceptable_odd": 0.0,
       "zone_type": "PASS_SELECTIVE",
-      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 211-220: 2.73)",
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.58)",
       "stakes": {
         "kasa_8000": 0,
         "kasa_10000": 0,
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 10:49:47"
+      "updated_at_tr": "2026-11-28 10:50:13"
     },
     {
       "signal_id": "CB-774814073_35m",
@@ -81,10 +81,29 @@
         "kasa_15000": 0,
         "kasa_20000": 0
       },
-      "updated_at_tr": "2026-11-28 10:49:47"
+      "updated_at_tr": "2026-11-28 10:50:13"
     }
   ],
   "recent_history": [
+    {
+      "signal_id": "CB-774805517_35m",
+      "game_id": "CB-774805517",
+      "raw_game_id": "774805517",
+      "date": "2026-11-28",
+      "game_name": "Miami Heat vs Detroit Pistons",
+      "current_score": "63-82",
+      "score_gap": 19,
+      "decision": "PAS",
+      "pick_type": "PAS",
+      "target_barem": "",
+      "target_barem_tr": "",
+      "target_t_id": 0,
+      "target_odd": 0.0,
+      "zone_badge": "⛔ SEÇİCİ PAS GEÇ (Net Üstünlük Yok — 201-210: 2.58)",
+      "actual_score": "",
+      "actual_range": "",
+      "result": "BEKLIYOR"
+    },
     {
       "signal_id": "CB-774798384_35m",
       "game_id": "CB-774798384",
@@ -406,25 +425,6 @@
       "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (Düşük Kalan Sayı (45.5 ≤ 50.5 — %78.6)): 181-190 (2.40)",
       "actual_score": "106-82",
       "actual_range": "181-190",
-      "result": "TUTTU"
-    },
-    {
-      "signal_id": "CB-774669641_35m",
-      "game_id": "CB-774669641",
-      "raw_game_id": "774669641",
-      "date": "2026-11-27",
-      "game_name": "Miami Heat vs Indiana Pacers",
-      "current_score": "86-77",
-      "score_gap": 9,
-      "decision": "OYNA",
-      "pick_type": "1. Favori",
-      "target_barem": "211-220",
-      "target_barem_tr": "211-220",
-      "target_t_id": 1844,
-      "target_odd": 2.31,
-      "zone_badge": "💎 NBA 2.30–2.50 SEÇİCİ 1. FAVORİ (6–15 İdeal Fark (%50.0 / +8.917 TL)): 211-220 (2.31)",
-      "actual_score": "112-107",
-      "actual_range": "211-220",
       "result": "TUTTU"
     }
   ]
